@@ -1,3 +1,9 @@
 {
-  "presets": ["es2015", "stage-0", "react"] //поддержка ES2015, ES7 и JSX
+  "presets": ["react", "es2015" , "stage-0"],
+  "plugins": [],
+  "env": {
+    "start": {
+      "presets": ["react-hmre"]
+    }
+  }
 }

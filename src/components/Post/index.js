@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom'
 
 
 
-export default class Page extends Component {
+export default class Post extends Component {
+
+
   componentDidMount() {
     if (!this.props.data.loaded) {
     this.props.actions.loadPosts();
@@ -60,8 +62,16 @@ export default class Page extends Component {
   }
 }
 
-Page.propTypes = {
+
+
+
+
+Post.propTypes = {
   //year: PropTypes.number.isRequired,
   //photos: PropTypes.array.isRequired,
   //setYear: PropTypes.func.isRequired
+}
+
+Post.contextTypes = {
+  router: PropTypes.object.isRequired
 }

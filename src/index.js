@@ -4,22 +4,30 @@ import { render } from 'react-dom' //Этот модуль делает
 //Мы из этого файла импортируем функцию
 
 
+
 import { Provider } from 'react-redux'
-import './styles/app.css'
+import { syncHistoryWithStore } from 'react-router-redux'
 //В реальном приложении, имеет смысл стили для компонентов импортировать в коде самих компонентов,
 // что даст очень большие удобства для переиспользования целых блоков, включая оформление.
-
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 import App from './containers/App'
+import Post from './components/Post'
+import Comment from './components/Comment'
 import configureStore from './store/configureStore'
 
+
 const store = configureStore();
+const history = syncHistoryWithStore(browserHistory, store)
 
 render(
   <Provider store={store}>
-    <div className='app'>
-    <App />
-    </div>
+      <Router history={history}>
+          <Route path="/" component={App}>
+              <IndexRoute component={Post} />
+              <Route path="/comment" component={Comment}/>
+          </Route>
+      </Router>
   </Provider>,
   document.getElementById('root')
 );

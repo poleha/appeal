@@ -23,7 +23,7 @@ export default function post(state = initialState, action) {
       return { ...state, adding: true};
     case ADD_POST_SUCCESS:
         let posts = [action.payload].concat(state.posts);
-      return { ...state, posts:posts, adding: false};
+        return { ...state, posts: posts, adding: false};
     case ADD_POST_FAIL:
       return { ...state, adding: false};
 

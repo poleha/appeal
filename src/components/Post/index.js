@@ -60,8 +60,20 @@ export default class Post extends Component {
           <div>{elem.author}</div>
           <div>{elem.title}</div>
           <div>{elem.body}</div>
-          <input disabled={this.props.data.posts[key].rating} onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)} type="button" value="Нравится"/>
-          <input disabled={this.props.data.posts[key].rating} onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)} type="button" value="Не нравится"/>
+          <input
+              hidden={this.props.data.posts[key].rated}
+              disabled={this.props.data.posts[key].rating}
+              onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)}
+              type="button"
+              value="Нравится"
+          />
+          <input
+              hidden={this.props.data.posts[key].rated}
+              disabled={this.props.data.posts[key].rating}
+              onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)}
+              type="button"
+              value="Не нравится"
+          />
         </div>
       });
     }
@@ -70,10 +82,34 @@ export default class Post extends Component {
     }
 
     return <div>
-      Автор<input disabled={this.getAddPostButtonDisabled.bind(this)()} ref="add_post_author" class="add_post_author" type="text"></input>
-      Название<input disabled={this.getAddPostButtonDisabled.bind(this)()} ref="add_post_title" class="add_post_title" type="text"></input>
-      Призыв<input disabled={this.getAddPostButtonDisabled.bind(this)()} ref="add_post_body" class="add_post_body" type="text"></input>
-      <input onClick={this.addPostClick.bind(this)} disabled={this.getAddPostButtonDisabled.bind(this)()} type="button" value="Добавить"></input>
+      Автор
+     <input
+        disabled={this.getAddPostButtonDisabled.bind(this)()}
+        ref="add_post_author"
+        className="add_post_author"
+        type="text">
+    </input>
+      Название
+        <input
+            disabled={this.getAddPostButtonDisabled.bind(this)()}
+            ref="add_post_title"
+            className="add_post_title"
+            type="text">
+
+        </input>
+      Призыв
+        <input
+            disabled={this.getAddPostButtonDisabled.bind(this)()}
+            ref="add_post_body"
+            class="add_post_body"
+            type="text">
+        </input>
+      <input
+          onClick={this.addPostClick.bind(this)}
+          disabled={this.getAddPostButtonDisabled.bind(this)()}
+          type="button"
+          value="Добавить">
+      </input>
       {postsBlock}
     </div>
   }

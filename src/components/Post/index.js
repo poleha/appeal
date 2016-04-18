@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
-
+import _ from 'lodash';
 
 export default class Post extends Component {
 
@@ -15,7 +15,6 @@ export default class Post extends Component {
 
   componentDidUpdate(){
     if (this.props.data.added){
-
       ReactDOM.findDOMNode(this.refs.add_post_author).value = ''
       ReactDOM.findDOMNode(this.refs.add_post_title).value = ''
       ReactDOM.findDOMNode(this.refs.add_post_body).value = ''
@@ -50,7 +49,7 @@ export default class Post extends Component {
     }
 
   render() {
-    let posts = this.props.data.posts;
+    let posts = _.values(this.props.data.posts);
     let addPost = this.props.actions.addPost;
 
     let postsBlock;
@@ -61,8 +60,8 @@ export default class Post extends Component {
           <div>{elem.author}</div>
           <div>{elem.title}</div>
           <div>{elem.body}</div>
-          <input disabled={this.props.data.rating[key]} onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)} type="button" value="Нравится"/>
-          <input disabled={this.props.data.rating[key]} onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)} type="button" value="Не нравится"/>
+          <input disabled={this.props.data.posts[key].rating} onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)} type="button" value="Нравится"/>
+          <input disabled={this.props.data.posts[key].rating} onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)} type="button" value="Не нравится"/>
         </div>
       });
     }

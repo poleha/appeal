@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "jquery": "latest",
+    "lodash": "4.11.1",
     "react": "latest",
     "react-dom": "~15.0.1",
     "react-redux": "~4.4.2",

@@ -1,10 +1,10 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
 
-let testPosts = [
-    {id:1, title: 'Test title1', body: 'Test body1', author:'Test author1', rated: false},
-    {id:2, title: 'Test title2', body: 'Test body1', author:'Test author1', rated: false},
-    {id:3, title: 'Test title3', body: 'Test body1', author:'Test author1', rated: false}
-];
+let testPosts = {
+    1: {id: 1, title: 'Test title1', body: 'Test body1', author: 'Test author1', rated: false},
+    2: {id: 2, title: 'Test title2', body: 'Test body1', author: 'Test author1', rated: false},
+    3: {id: 3, title: 'Test title3', body: 'Test body1', author: 'Test author1', rated: false}
+};
 
 
 export function loadPosts() {
@@ -71,11 +71,11 @@ export function addPostStart(post) {
 
 }
 
-export function addPostSuccess(posts) {
+export function addPostSuccess(post) {
 
     return {
         type: ADD_POST_SUCCESS,
-        payload: posts
+        payload: post
     }
 
 }

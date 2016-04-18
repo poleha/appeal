@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
-import _ from 'lodash';
 
 export default class Post extends Component {
 
@@ -15,7 +14,7 @@ export default class Post extends Component {
 
   componentDidUpdate(){
     if (this.props.data.added){
-      ReactDOM.findDOMNode(this.refs.add_post_author).value = ''
+      ReactDOM.findDOMNode(this.refs.add_post_username).value = ''
       ReactDOM.findDOMNode(this.refs.add_post_title).value = ''
       ReactDOM.findDOMNode(this.refs.add_post_body).value = ''
     }
@@ -23,10 +22,10 @@ export default class Post extends Component {
 
 
   getPost() {
-      let author = ReactDOM.findDOMNode(this.refs.add_post_author).value;
+      let username = ReactDOM.findDOMNode(this.refs.add_post_username).value;
       let title = ReactDOM.findDOMNode(this.refs.add_post_title).value;
       let body = ReactDOM.findDOMNode(this.refs.add_post_body).value;
-      let post = {title, author, body};
+      let post = {title, username, body};
       return post
   }
 
@@ -57,7 +56,7 @@ export default class Post extends Component {
       postsBlock = posts.map((elem, index)=>{
        let key =  elem.id;
         return <div key={key}>
-          <div>{elem.author}</div>
+          <div>{elem.username}</div>
           <div>{elem.title}</div>
           <div>{elem.body}</div>
             Liked:<div>{elem.liked}</div>
@@ -87,8 +86,8 @@ export default class Post extends Component {
       Автор
      <input
         disabled={this.getAddPostButtonDisabled.bind(this)()}
-        ref="add_post_author"
-        className="add_post_author"
+        ref="add_post_username"
+        className="add_post_username"
         type="text">
     </input>
       Название

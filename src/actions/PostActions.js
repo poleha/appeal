@@ -1,18 +1,15 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
+import { readCookie} from '../helper'
 
-let testPosts = {
-    1: {id: 1, title: 'Test title1', body: 'Test body1', username: 'Test username1', rated: false, liked: 0, disliked: 0},
-    2: {id: 2, title: 'Test title2', body: 'Test body2', username: 'Test username2', rated: false, liked: 0, disliked: 0},
-    3: {id: 3, title: 'Test title3', body: 'Test body3', username: 'Test username3', rated: false, liked: 0, disliked: 0}
-};
 
 
 export function loadPosts() {
     return function (dispatch, getState) {
         dispatch(loadPostsStart());
 
-
+        let token = readCookie('appeal_site_token');
         $.ajax({
+            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
             url: 'http://127.0.0.1:8000/posts/',
             success: function (data) {
@@ -62,8 +59,10 @@ export function loadPostsFail() {
 export function addPost(post) {
     return function (dispatch, getState) {
         dispatch(addPostStart());
+        let token = readCookie('appeal_site_token');
 
         $.ajax({
+            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'POST',
             url: 'http://127.0.0.1:8000/posts/',
             data: post,
@@ -118,7 +117,10 @@ export function ratePost(key, actionType) {
             post: key,
             mark_type:actionType
         };
+        let token = readCookie('appeal_site_token');
+
         $.ajax({
+            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'POST',
             url: 'http://127.0.0.1:8000/post_marks/',
             data: post_mark,
@@ -128,12 +130,6 @@ export function ratePost(key, actionType) {
             error: function (data) {
             }
         });
-
-
-        //setTimeout(function () {
-        //    dispatch(ratePostSuccess(key, actionType))
-        //}, 3000)
-
 
     }
 

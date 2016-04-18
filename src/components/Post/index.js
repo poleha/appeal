@@ -83,13 +83,15 @@ export default class Post extends Component {
     }
 
     return <div>
-      Автор
+      <div hidden={this.props.logged}>
+        Автор
      <input
         disabled={this.getAddPostButtonDisabled.bind(this)()}
         ref="add_post_username"
         className="add_post_username"
         type="text">
     </input>
+        </div>
       Название
         <input
             disabled={this.getAddPostButtonDisabled.bind(this)()}

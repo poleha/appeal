@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
-
+import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
 
 
 export default class Post extends Component {
@@ -45,6 +45,9 @@ export default class Post extends Component {
   }
   }
 
+    ratePostClick(key, actionType){
+    this.props.actions.ratePost(key, actionType)
+    }
 
   render() {
     let posts = this.props.data.posts;
@@ -53,10 +56,13 @@ export default class Post extends Component {
     let postsBlock;
     if (posts.length > 0) {
       postsBlock = posts.map((elem, index)=>{
-        return <div key={elem.id}>
+       let key =  elem.id;
+        return <div key={key}>
           <div>{elem.author}</div>
           <div>{elem.title}</div>
           <div>{elem.body}</div>
+          <input disabled={this.props.data.rating[key]} onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)} type="button" value="Нравится"/>
+          <input disabled={this.props.data.rating[key]} onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)} type="button" value="Не нравится"/>
         </div>
       });
     }

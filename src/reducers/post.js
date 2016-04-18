@@ -4,7 +4,8 @@ const initialState = {
   posts: [],
   loading: false,
   loaded: false,
-  adding: false
+  adding: false,
+  added: false
 
 };
 
@@ -20,10 +21,10 @@ export default function post(state = initialState, action) {
       return { ...state, posts:[], loading: false};
 
     case ADD_POST_START:
-      return { ...state, adding: true};
+      return { ...state, adding: true, added: false};
     case ADD_POST_SUCCESS:
         let posts = [action.payload].concat(state.posts);
-        return { ...state, posts: posts, adding: false};
+        return { ...state, posts: posts, adding: false, added: true};
     case ADD_POST_FAIL:
       return { ...state, adding: false};
 

@@ -10,7 +10,18 @@ export default class Post extends Component {
     if (!this.props.data.loaded) {
     this.props.actions.loadPosts();
     }
+
   }
+
+  componentDidUpdate(){
+    if (this.props.data.added){
+
+      ReactDOM.findDOMNode(this.refs.add_post_author).value = ''
+      ReactDOM.findDOMNode(this.refs.add_post_title).value = ''
+      ReactDOM.findDOMNode(this.refs.add_post_body).value = ''
+    }
+  }
+
 
   getPost() {
       let author = ReactDOM.findDOMNode(this.refs.add_post_author).value;
@@ -25,7 +36,7 @@ export default class Post extends Component {
    this.props.actions.addPost(post);
   }
 
-  getAddPostButtonState() {
+  getAddPostButtonDisabled() {
   if (!this.props.data.loaded || this.props.data.adding || this.props.data.loading){
     return true;
   }
@@ -33,6 +44,7 @@ export default class Post extends Component {
     return false;
   }
   }
+
 
   render() {
     let posts = this.props.data.posts;
@@ -53,10 +65,10 @@ export default class Post extends Component {
     }
 
     return <div>
-      Автор<input ref="add_post_author" class="add_post_author" type="text"></input>
-      Название<input ref="add_post_title" class="add_post_title" type="text"></input>
-      Призыв<input ref="add_post_body" class="add_post_body" type="text"></input>
-      <input onClick={this.addPostClick.bind(this)} disabled={this.getAddPostButtonState.bind(this)()} type="button" value="Добавить"></input>
+      Автор<input disabled={this.getAddPostButtonDisabled.bind(this)()} ref="add_post_author" class="add_post_author" type="text"></input>
+      Название<input disabled={this.getAddPostButtonDisabled.bind(this)()} ref="add_post_title" class="add_post_title" type="text"></input>
+      Призыв<input disabled={this.getAddPostButtonDisabled.bind(this)()} ref="add_post_body" class="add_post_body" type="text"></input>
+      <input onClick={this.addPostClick.bind(this)} disabled={this.getAddPostButtonDisabled.bind(this)()} type="button" value="Добавить"></input>
       {postsBlock}
     </div>
   }

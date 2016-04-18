@@ -1,4 +1,5 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
+import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../constants/Post'
 var posts, key;
 
 
@@ -40,7 +41,9 @@ export default function post(state = initialState, action) {
       key = action.payload.key;
       posts = {...state.posts};
       posts[key].rated = true;
-      posts[key].rating = false;  
+      posts[key].rating = false;
+      if (action.payload.actionType == RATE_POST_TYPE_LIKE) posts[key].liked += 1;
+      if (action.payload.actionType == RATE_POST_TYPE_DISLIKE) posts[key].disliked += 1;
       return { ...state, added: false, posts:posts};
     case RATE_POST_FAIL:
       key = action.payload.key;

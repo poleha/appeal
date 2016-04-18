@@ -1,9 +1,9 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
 
 let testPosts = {
-    1: {id: 1, title: 'Test title1', body: 'Test body1', author: 'Test author1', rated: false},
-    2: {id: 2, title: 'Test title2', body: 'Test body1', author: 'Test author1', rated: false},
-    3: {id: 3, title: 'Test title3', body: 'Test body1', author: 'Test author1', rated: false}
+    1: {id: 1, title: 'Test title1', body: 'Test body1', author: 'Test author1', rated: false, liked: 0, disliked: 0},
+    2: {id: 2, title: 'Test title2', body: 'Test body2', author: 'Test author2', rated: false, liked: 0, disliked: 0},
+    3: {id: 3, title: 'Test title3', body: 'Test body3', author: 'Test author3', rated: false, liked: 0, disliked: 0}
 };
 
 

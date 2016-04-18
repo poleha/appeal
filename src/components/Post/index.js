@@ -60,6 +60,8 @@ export default class Post extends Component {
           <div>{elem.author}</div>
           <div>{elem.title}</div>
           <div>{elem.body}</div>
+            Liked:<div>{elem.liked}</div>
+            Disliked:<div>{elem.disliked}</div>
           <input
               hidden={this.props.data.posts[key].rated}
               disabled={this.props.data.posts[key].rating}

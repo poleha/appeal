@@ -12,9 +12,9 @@ export function loadPosts() {
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
             url: 'http://127.0.0.1:8000/posts/',
-            success: function (posts) {
+            success: function (data) {
 
-                dispatch(loadPostsSuccess(posts))
+                dispatch(loadPostsSuccess(data.results))
             },
             error: function (data) {
             }

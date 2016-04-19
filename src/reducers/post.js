@@ -2,7 +2,6 @@ import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, 
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../constants/Post'
 import { LOAD_MORE_POSTS_START, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL } from '../constants/Post'
 import { REFRESH_POSTS_START, REFRESH_POSTS_SUCCESS, REFRESH_POSTS_FAIL } from '../constants/Post'
-import {cloneState} from '../helper'
 
 var posts, key, post, newPosts;
 
@@ -15,6 +14,17 @@ var initialState = {
   added: false
 
 };
+
+
+function cloneState(state) {
+  let newState = Object.assign({}, state);
+  newState.posts = [];
+  state.posts.forEach(function(elem){
+    let newObj = Object.assign({}, elem);
+    newState.posts.push(newObj);
+  });
+  return newState;
+}
 
 
 export default function post(state = initialState, action) {

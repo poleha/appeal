@@ -63,7 +63,8 @@ export function addPost(post) {
             url: 'http://127.0.0.1:8000/posts/',
             data: post,
             success: function (data) {
-                dispatch(addPostSuccess(post))
+                var newPost = {};
+                dispatch(addPostSuccess(data))
             },
             error: function (data) {
             }

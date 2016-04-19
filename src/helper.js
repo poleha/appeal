@@ -24,3 +24,16 @@ export function readCookie(name) {
 export function eraseCookie(name) {
     createCookie(name,'',-1);
 }
+
+
+//******************************
+
+export function cloneState(state) {
+    let newState = Object.assign({}, state);
+    newState.posts = [];
+    state.posts.forEach(function(elem){
+        let newObj = Object.assign({}, elem);
+        newState.posts.push(newObj);
+    });
+    return newState;
+}

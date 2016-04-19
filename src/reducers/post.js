@@ -6,6 +6,7 @@ var posts, key, post, newPosts;
 
 var initialState = {
   posts: [],
+  count: 0,
   loading: false,
   loaded: false,
   adding: false,
@@ -20,7 +21,7 @@ export default function post(state = initialState, action) {
     case LOAD_POSTS_START:
       return { ...state, posts:[], loading: true, added: false};
     case LOAD_POSTS_SUCCESS:
-      return { ...state, posts:action.payload, loading: false, loaded: true, added: false};
+      return { ...state, posts:action.payload.results, loading: false, loaded: true, added: false, count: action.payload.count};
     case LOAD_POSTS_FAIL:
       return { ...state, posts:[], loading: false, added: false};
 
@@ -28,8 +29,8 @@ export default function post(state = initialState, action) {
       return { ...state, adding: true, added: false};
     case ADD_POST_SUCCESS:
         posts = state.posts.slice(0);
-        newPosts = [action.payload].concat(posts)
-        return { ...state, posts: newPosts, adding: false, added: true};
+        newPosts = [action.payload].concat(posts);
+        return { ...state, posts: newPosts, adding: false, added: true, count: state.count + 1};
     case ADD_POST_FAIL:
       return { ...state, adding: false, added: false};
 
@@ -41,7 +42,7 @@ export default function post(state = initialState, action) {
     case RATE_POST_SUCCESS:
       key = action.payload.key;
       posts = state.posts.slice(0);
-      post = posts.findByValue('id', key)
+      post = posts.findByValue('id', key);
       post.rated = true;
       post.rating = false;
       if (action.payload.actionType == RATE_POST_TYPE_LIKE) post.liked += 1;
@@ -57,8 +58,8 @@ export default function post(state = initialState, action) {
       return { ...state, loading: true, added: false};
     case LOAD_MORE_POSTS_SUCCESS:
       posts = state.posts.slice(0);
-      newPosts = posts.concat(action.payload)
-      return { ...state, posts:newPosts, loading: false, loaded: true, added: false};
+      newPosts = posts.concat(action.payload.results);
+      return { ...state, posts:newPosts, loading: false, loaded: true, added: false, count: action.payload.count};
     case LOAD_MORE_POSTS_FAIL:
       return { ...state, loading: false, added: false};
     

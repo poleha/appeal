@@ -15,7 +15,7 @@ export function loadPosts() {
             url: 'http://127.0.0.1:8000/posts/',
             success: function (data) {
 
-                dispatch(loadPostsSuccess(data.results))
+                dispatch(loadPostsSuccess(data))
             },
             error: function (data) {
             }
@@ -33,11 +33,11 @@ export function loadPostsStart() {
 
 }
 
-export function loadPostsSuccess(posts) {
+export function loadPostsSuccess(data) {
 
     return {
         type: LOAD_POSTS_SUCCESS,
-        payload: posts
+        payload: data
     }
 
 }
@@ -176,7 +176,7 @@ export function loadMorePosts() {
             type: 'GET',
             url: 'http://127.0.0.1:8000/posts/?offset=' + postCount,
             success: function (data) {
-                dispatch(loadMorePostsSuccess(data.results))
+                dispatch(loadMorePostsSuccess(data))
             },
             error: function (data) {
             }
@@ -194,11 +194,11 @@ export function loadMorePostsStart() {
 
 }
 
-export function loadMorePostsSuccess(posts) {
+export function loadMorePostsSuccess(data) {
 
     return {
         type: LOAD_MORE_POSTS_SUCCESS,
-        payload: posts
+        payload: data
     }
 
 }

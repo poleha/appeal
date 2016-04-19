@@ -83,6 +83,11 @@ export default class Post extends Component {
     }
 
     return <div>
+      <input
+          onClick={this.props.actions.refreshPosts.bind(this)}
+          type="button"
+          value="Обновить">
+      </input>
       <div hidden={this.props.logged}>
         Автор
      <input
@@ -115,6 +120,7 @@ export default class Post extends Component {
       </input>
       {postsBlock}
       <input
+          hidden={this.props.data.count <= this.props.data.posts.length}
           onClick={this.props.actions.loadMorePosts.bind(this)}
           type="button"
           value="Показать еще">

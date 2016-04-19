@@ -1,5 +1,6 @@
 import React from 'react' //Импортируем файл React.js из react
 import { render } from 'react-dom' //Этот модуль делает
+import * as patches from 'monkey'
 // module.exports = require('react/lib/ReactDOM');
 //Мы из этого файла импортируем функцию
 

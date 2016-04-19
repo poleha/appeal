@@ -12,11 +12,7 @@ export function loadPosts() {
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
             url: 'http://127.0.0.1:8000/posts/',
-            success: function (data) {
-                let posts = {};
-                 data.forEach(function (elem) {
-                     posts[elem.id] = elem;
-                 });
+            success: function (posts) {
 
                 dispatch(loadPostsSuccess(posts))
             },

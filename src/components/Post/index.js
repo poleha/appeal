@@ -48,7 +48,7 @@ export default class Post extends Component {
     }
 
   render() {
-    let posts = _.values(this.props.data.posts);
+    let posts = this.props.data.posts;
     let addPost = this.props.actions.addPost;
 
     let postsBlock;
@@ -62,15 +62,15 @@ export default class Post extends Component {
             Liked:<div>{elem.liked}</div>
             Disliked:<div>{elem.disliked}</div>
           <input
-              hidden={this.props.data.posts[key].rated}
-              disabled={this.props.data.posts[key].rating}
+              hidden={elem.rated}
+              disabled={elem.rating}
               onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)}
               type="button"
               value="Нравится"
           />
           <input
-              hidden={this.props.data.posts[key].rated}
-              disabled={this.props.data.posts[key].rating}
+              hidden={elem.rated}
+              disabled={elem.rating}
               onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)}
               type="button"
               value="Не нравится"

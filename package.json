@@ -43,6 +43,7 @@
     "express": "~4.13.4"
   },
   "dependencies": {
+    "immutable": "3.8.0",
     "jquery": "latest",
     "lodash": "4.11.1",
     "react": "latest",

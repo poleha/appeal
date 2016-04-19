@@ -1,4 +1,5 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
+import { LOAD_MORE_POSTS_START, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL } from '../constants/Post'
 import { readCookie} from '../helper'
 
 
@@ -156,6 +157,57 @@ export function ratePostFail(key, actionType) {
     return {
         type: RATE_POST_FAIL,
         payload: {key, actionType}
+    }
+
+}
+
+
+//***********************************************
+
+
+export function loadMorePosts() {
+    return function (dispatch, getState) {
+        dispatch(loadMorePostsStart());
+        let state = getState();
+        let postCount = state.post.posts.length;
+        let token = readCookie('appeal_site_token');
+        $.ajax({
+            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
+            type: 'GET',
+            url: 'http://127.0.0.1:8000/posts/?offset=' + postCount,
+            success: function (data) {
+                dispatch(loadMorePostsSuccess(data.results))
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+}
+
+
+export function loadMorePostsStart() {
+
+    return {
+        type: LOAD_MORE_POSTS_START
+    }
+
+}
+
+export function loadMorePostsSuccess(posts) {
+
+    return {
+        type: LOAD_MORE_POSTS_SUCCESS,
+        payload: posts
+    }
+
+}
+
+
+export function loadMorePostsFail() {
+
+    return {
+        type: LOAD_MORE_POSTS_FAIL
     }
 
 }

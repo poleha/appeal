@@ -114,6 +114,11 @@ export default class Post extends Component {
           value="Добавить">
       </input>
       {postsBlock}
+      <input
+          onClick={this.props.actions.loadMorePosts.bind(this)}
+          type="button"
+          value="Показать еще">
+      </input>
     </div>
   }
 }

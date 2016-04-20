@@ -22,6 +22,10 @@ export default class App extends Component {
     return clonnedComponent;
   }
 
+  componentWillMount(){
+    this.props.userActions.reLoginUser();
+  }
+
   render() {
 
 

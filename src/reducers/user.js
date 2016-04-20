@@ -1,4 +1,6 @@
 import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../constants/User'
+import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/User'
+
 var posts, key;
 
 
@@ -6,7 +8,8 @@ const initialState = {
     logged: false,
     logging: false,
     userName: null,
-    userId: null
+    userId: null,
+    token: null
 
 };
 
@@ -20,13 +23,25 @@ export default function user(state = initialState, action) {
     switch (action.type) {
         case USER_LOGIN_START:
             state = cloneState(state);
-            return { ...state, logging: true};
+            return { ...state, logging: true, token: null};
         case USER_LOGIN_SUCCESS:
             state = cloneState(state);
-            return { ...state, logging: false, logged: true, userId: action.payload.user_id, userName:action.payload.username};
+            return { ...state, logging: false, logged: true, token: action.payload };
         case USER_LOGIN_FAIL:
             state = cloneState(state);
-            return { ...state, logging: false};
+            return { ...state, logging: false, token: null};
+
+        case GET_USER_INFO_START:
+            state = cloneState(state);
+            return { ...state };
+        case GET_USER_INFO_SUCCESS:
+            state = cloneState(state);
+            return { ...state, userName: action.payload.username, userId: action.payload.id };
+        case GET_USER_INFO_FAIL:
+            state = cloneState(state);
+            return { ...state, userName: null, userId: null };
+        
+        
         default:
             return state;
     }

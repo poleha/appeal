@@ -2,7 +2,8 @@ import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 
 export default class User extends Component {
-    loginUserClick() {
+    loginFormSubmit(e) {
+        e.preventDefault();
         let username = ReactDOM.findDOMNode(this.refs.username).value;
         let password = ReactDOM.findDOMNode(this.refs.password).value;
         this.props.actions.loginUser({username, password});
@@ -27,6 +28,7 @@ export default class User extends Component {
                  <div className="errors">
                      {loginErrors}
                  </div>
+                 <form onSubmit={this.loginFormSubmit.bind(this)}>
                  <input
                      type="text"
                      ref="username"
@@ -39,10 +41,10 @@ export default class User extends Component {
                  />
                  <input
                      type="submit"
-                     onClick={this.loginUserClick.bind(this)}
                      className="user__login"
                  />
-             </div>
+                </form>
+                </div>
         }
         else {
             loginBlockTemplate =

@@ -1,6 +1,11 @@
 import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../constants/User'
 import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/User'
 import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/User'
+import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
+
+import { ACTIVATE_USER_FORM } from '../constants/User'
+
+
 import { createCookie, readCookie, eraseCookie} from '../helper'
 import { refreshPosts } from '../actions/PostActions'
 
@@ -164,6 +169,68 @@ export function logoutUserFail() {
 
     return {
         type: LOGOUT_USER_FAIL
+    }
+
+}
+
+//***************************************
+
+export function activateForm(formType) {
+
+    return {
+        type: ACTIVATE_USER_FORM,
+        payload: formType
+    }
+
+}
+
+//*************************************
+export function registerUser(data) {
+    let loginData = {
+        username: data.username,
+        password: data.password
+    };
+    return function (dispatch, getState) {
+        dispatch(registerUserStart());
+        $.ajax({
+            type: 'POST',
+            data: data,
+            url: 'http://127.0.0.1:8000/auth/register/',
+            success: function (data) {
+
+                dispatch(registerUserSuccess());
+                dispatch(loginUser(loginData));
+            },
+            error: function (data) {
+                dispatch(registerUserFail());
+            }
+        });
+    }
+
+}
+
+
+export function registerUserStart() {
+
+    return {
+        type: REGISTER_USER_START
+    }
+
+}
+
+export function registerUserSuccess() {
+
+    return {
+        type: REGISTER_USER_SUCCESS
+    }
+
+}
+
+
+export function registerUserFail() {
+
+    return {
+        type: REGISTER_USER_FAIL
     }
 
 }

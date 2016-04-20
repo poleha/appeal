@@ -62,14 +62,14 @@ export default class Post extends Component {
             Liked:<div>{elem.liked}</div>
             Disliked:<div>{elem.disliked}</div>
           <input
-              hidden={elem.rated}
+              hidden={!this.props.logged || elem.rated}
               disabled={elem.rating}
               onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)}
               type="button"
               value="Нравится"
           />
           <input
-              hidden={elem.rated}
+              hidden={!this.props.logged || elem.rated}
               disabled={elem.rating}
               onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)}
               type="button"

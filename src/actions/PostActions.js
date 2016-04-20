@@ -110,7 +110,6 @@ export function addPostFail() {
 export function ratePost(key, actionType) {
     return function (dispatch, getState) {
         dispatch(ratePostStart(key, actionType));
-
         let post_mark = {
             post: key,
             mark_type:actionType

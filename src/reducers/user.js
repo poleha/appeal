@@ -10,12 +10,16 @@ const initialState = {
     logging: false,
     userName: null,
     userId: null,
-    token: null
+    token: null,
+    errors: []
 
 };
 
 function cloneState(state) {
-    return Object.assign({}, state);
+    let newState = Object.assign({}, state);
+    newState.errors = [];
+    newState.logging = false;
+    return newState;
 }
 
 
@@ -27,10 +31,10 @@ export default function user(state = initialState, action) {
             return { ...state, logging: true, token: null};
         case USER_LOGIN_SUCCESS:
             state = cloneState(state);
-            return { ...state, logging: false, logged: true, token: action.payload };
+            return { ...state, logged: true, token: action.payload };
         case USER_LOGIN_FAIL:
             state = cloneState(state);
-            return { ...state, logging: false, token: null};
+            return { ...state, token: null, errors: action.payload};
 
         case GET_USER_INFO_START:
             state = cloneState(state);

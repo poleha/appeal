@@ -10,10 +10,23 @@ export default class User extends Component {
 
     render() {
 
+        let loginErrors;
+
+        if (this.props.data.errors.length > 0) {
+            loginErrors = this.props.data.errors.map(function (elem, index) {
+            return <div className='error' id={index}>
+                    {elem}
+                </div>
+            });
+        }
+
         let loginBlockTemplate = '';
         if (!this.props.data.logged) {
          loginBlockTemplate =
              <div>
+                 <div className="errors">
+                     {loginErrors}
+                 </div>
                  <input
                      type="text"
                      ref="username"

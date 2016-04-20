@@ -20,6 +20,7 @@ export function loginUser(userData) {
                 dispatch(refreshPosts());
             },
             error: function (data) {
+                dispatch(loginUserFail(data.responseJSON.non_field_errors));
             }
         });
     }
@@ -45,10 +46,11 @@ export function loginUserSuccess(token) {
 }
 
 
-export function loginUserFail() {
+export function loginUserFail(errors) {
 
     return {
-        type: USER_LOGIN_FAIL
+        type: USER_LOGIN_FAIL,
+        payload: errors
     }
 
 }

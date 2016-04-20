@@ -1,5 +1,6 @@
 import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../constants/User'
 import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/User'
+import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/User'
 
 var posts, key;
 
@@ -40,6 +41,16 @@ export default function user(state = initialState, action) {
         case GET_USER_INFO_FAIL:
             state = cloneState(state);
             return { ...state, userName: null, userId: null };
+
+        case LOGOUT_USER_START:
+            state = cloneState(state);
+            return { ...state };
+        case LOGOUT_USER_SUCCESS:
+            state = cloneState(state);
+            return { ...state, userName: null, userId: null, token:null, logged: false };
+        case LOGOUT_USER_FAIL:
+            state = cloneState(state);
+            return { ...state };
         
         
         default:

@@ -1,6 +1,7 @@
 import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../constants/User'
 import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/User'
-import { createCookie, readCookie} from '../helper'
+import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/User'
+import { createCookie, readCookie, eraseCookie} from '../helper'
 import { refreshPosts } from '../actions/PostActions'
 
 export function loginUser(userData) {
@@ -113,6 +114,54 @@ export function getUserInfoFail() {
 
     return {
         type: GET_USER_INFO_FAIL
+    }
+
+}
+
+//*************************
+export function logoutUser() {
+    return function (dispatch, getState) {
+        dispatch(logoutUserStart());
+        let token = readCookie('appeal_site_token');
+        $.ajax({
+            type: 'POST',
+            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
+            url: 'http://127.0.0.1:8000/auth/logout/',
+            success: function (data) {
+                eraseCookie('appeal_site_token');
+                dispatch(logoutUserSuccess());
+                dispatch(refreshPosts())
+            },
+            error: function (data) {
+                dispatch(logoutUserFail());
+            }
+        });
+    }
+
+}
+
+
+export function logoutUserStart() {
+
+    return {
+        type: LOGOUT_USER_START
+    }
+
+}
+
+export function logoutUserSuccess() {
+
+    return {
+        type: LOGOUT_USER_SUCCESS
+    }
+
+}
+
+
+export function logoutUserFail() {
+
+    return {
+        type: LOGOUT_USER_FAIL
     }
 
 }

@@ -17,21 +17,33 @@ export default class User extends Component {
                  <input
                      type="text"
                      ref="username"
+                     className="user__username"
                  />
                  <input
                      type="text"
                      ref="password"
+                     className="user__password"
                  />
                  <input
                      type="submit"
                      onClick={this.loginUserClick.bind(this)}
+                     className="user__login"
                  />
              </div>
         }
         else {
-            loginBlockTemplate = <div>
-                {this.props.data.userName}
-            </div>
+            loginBlockTemplate =
+                <div>
+                <div>{this.props.data.userName}</div>
+                    <div>
+                    <input
+                        type="button"
+                        value="logout"
+                        className="user__logout"
+                        onClick={this.props.actions.logoutUser.bind(this)}
+                    />
+                    </div>
+                </div>
         }
 
 

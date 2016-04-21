@@ -16,15 +16,14 @@ export default class Post extends Component {
 
 
 
-  componentDidMount() {
-    if (!this.props.data.loaded) {
-    this.props.actions.loadPosts(this.props.path);
+  //componentDidMount() {
+  //  if (this.props.data.loaded) {
+  //      this.props.actions.refreshPosts(this.props.path);
+  //  }
+  //  else {
 
-    }
-    else {
-        this.props.actions.refreshPosts(this.props.path);
-    }
-  }
+  //  }
+ // }
 
   componentDidUpdate(){
 

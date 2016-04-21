@@ -31,7 +31,6 @@ export default class App extends Component {
   }
   
   render() {
-  let path = window.location.hash.substr(1);
 
     return (
         <div className='container'>

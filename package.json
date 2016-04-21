@@ -25,9 +25,11 @@
     "eslint-loader": "latest",
     "eslint-plugin-react": "latest",
     "estraverse-fb": "latest",
+    "express": "~4.13.4",
     "extract-text-webpack-plugin": "latest",
     "file-loader": "latest",
     "imports-loader": "latest",
+    "less-loader": "2.2.3",
     "node-sass": "latest",
     "postcss-import": "latest",
     "postcss-loader": "latest",
@@ -39,14 +41,13 @@
     "webpack-dev-middleware": "latest",
     "webpack-dev-server": "latest",
     "webpack-hot-middleware": "latest",
-    "webpack-merge": "latest",
-    "express": "~4.13.4"
+    "webpack-merge": "latest"
   },
   "dependencies": {
     "immutable": "3.8.0",
     "jquery": "latest",
     "lodash": "4.11.1",
-    "react": "latest",
+    "react": "15.0.1",
     "react-dom": "~15.0.1",
     "react-redux": "~4.4.2",
     "react-tinymce": "0.4.0",

@@ -6,6 +6,7 @@ import * as userActions from '../../actions/UserActions'
 import * as appActions from '../../actions/AppActions'
 import User from '../../components/User'
 import Post from '../../components/Post'
+import './styles.less'
 
 export default class App extends Component {
 
@@ -31,10 +32,19 @@ export default class App extends Component {
   }
   
   render() {
+    let path = this.props.app.path;
     let linksBlock = this.props.app.tags.map(function (tag, index) {
+      let className;
+      if (tag.alias ==  path) {
+        className = 'active';
+      }
+      else {
+        className = 'inactive'
+      }
       return (
           <li key={tag.id}>
-          <a href={'/#' + tag.alias }>{tag.title}
+          <a href={'/#' + tag.alias } className={className}>
+            {tag.title}
           </a>
           </li>
       )

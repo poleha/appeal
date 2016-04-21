@@ -2,26 +2,33 @@ import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, 
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../constants/Post'
 import { LOAD_MORE_POSTS_START, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL } from '../constants/Post'
 import { REFRESH_POSTS_START, REFRESH_POSTS_SUCCESS, REFRESH_POSTS_FAIL } from '../constants/Post'
+import { LOAD_TAGS_START, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAIL } from '../constants/Post'
 
 var posts, key, post, newPosts;
 
 var initialState = {
   posts: [],
+  tags : [],
   count: 0,
   loading: false,
   loaded: false,
   adding: false,
   added: false
-
 };
 
 
 function cloneState(state) {
   let newState = Object.assign({}, state);
   newState.posts = [];
+  newState.tags = [];
   state.posts.forEach(function(elem){
     let newObj = Object.assign({}, elem);
+    newObj.tags = newObj.tags.slice(0);
     newState.posts.push(newObj);
+  });
+  state.tags.forEach(function(elem){
+    let newObj = Object.assign({}, elem);
+    newState.tags.push(newObj);
   });
   newState.added = false;
   newState.loading = false;
@@ -41,6 +48,17 @@ export default function post(state = initialState, action) {
     case LOAD_POSTS_FAIL:
       state = cloneState(state);
       return { ...state, posts:[] };
+
+    case LOAD_TAGS_START:
+      state = cloneState(state);
+      return { ...state, tags:[] };
+    case LOAD_TAGS_SUCCESS:
+      state = cloneState(state);
+      return { ...state, tags:action.payload.results };
+    case LOAD_TAGS_FAIL:
+      state = cloneState(state);
+      return { ...state, tags:[] };
+
 
     case ADD_POST_START:
       state = cloneState(state);

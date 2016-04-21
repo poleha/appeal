@@ -16,6 +16,7 @@ export default class Post extends Component {
   componentDidMount() {
     if (!this.props.data.loaded) {
     this.props.actions.loadPosts();
+    this.props.actions.loadTags();
     }
 
   }
@@ -24,9 +25,10 @@ export default class Post extends Component {
     if (this.props.data.added){
 
       this.tinyMCE.setContent('');
-      ReactDOM.findDOMNode(this.refs.add_post_username).value = ''
-      ReactDOM.findDOMNode(this.refs.add_post_title).value = ''
-      //ReactDOM.findDOMNode(this.refs.add_post_body).value = ''
+      ReactDOM.findDOMNode(this.refs.add_post_username).value = '';
+      ReactDOM.findDOMNode(this.refs.add_post_title).value = '';
+
+      let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
 
     }
   }
@@ -36,7 +38,16 @@ export default class Post extends Component {
       let username = ReactDOM.findDOMNode(this.refs.add_post_username).value;
       let title = ReactDOM.findDOMNode(this.refs.add_post_title).value;
       let body = this.tinyMCE.getContent() || ReactDOM.findDOMNode(this.refs.add_post_body).value;
-    let post = {title, username, body};
+      let tagsElem = ReactDOM.findDOMNode(this.refs.tags);
+      let inputs = $(tagsElem).find('input');
+      let tags = [];
+      inputs.each(function(key) {
+      let elem = inputs[key];
+        let id = elem.getAttribute('data-id');
+      if (elem.checked) tags.push(id);
+      });
+      //tags = JSON.stringify(tags);
+    let post = {title, username, body, tags};
       return post
   }
 
@@ -60,7 +71,8 @@ export default class Post extends Component {
 
   render() {
     let posts = this.props.data.posts;
-    let addPost = this.props.actions.addPost;
+    let tags = this.props.data.tags;
+    //let addPost = this.props.actions.addPost;
 
     let postsBlock;
     if (posts.length > 0) {
@@ -72,6 +84,15 @@ export default class Post extends Component {
           <div dangerouslySetInnerHTML={{__html: elem.body}}></div>
             Liked:<div>{elem.liked}</div>
             Disliked:<div>{elem.disliked}</div>
+          <ul>
+          {
+            this.props.data.tags.map(function(tag) {
+              if (elem.tags.indexOf(tag.id) >= 0) {
+              return <li key={tag.id}>{tag.title}</li>
+              }
+            })
+          }
+          </ul>
           <input
               hidden={!this.props.logged || elem.rated}
               disabled={elem.rating}
@@ -91,6 +112,22 @@ export default class Post extends Component {
     }
     else {
       postsBlock = ''
+    }
+
+    let tagsBlock;
+    if (tags.length > 0) {
+      tagsBlock = tags.map((elem, index)=>{
+        let key =  elem.id;
+        return <li key={key}>
+          <label>{elem.title}</label>
+          <input key={key} data-id={key}
+              type="checkbox"
+          />
+        </li>
+      });
+    }
+    else {
+      tagsBlock = ''
     }
 
     return <div>
@@ -127,6 +164,9 @@ export default class Post extends Component {
         }}
           onChange={this.handleEditorChange.bind(this)}
       />
+      <ul className='tags_add' ref="tags">
+        {tagsBlock}
+      </ul>
 
 
       <input

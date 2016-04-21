@@ -1,6 +1,7 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
 import { LOAD_MORE_POSTS_START, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL } from '../constants/Post'
 import { REFRESH_POSTS_START, REFRESH_POSTS_SUCCESS, REFRESH_POSTS_FAIL } from '../constants/Post'
+import { LOAD_TAGS_START, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAIL } from '../constants/Post'
 import { readCookie} from '../helper'
 
 
@@ -47,7 +48,7 @@ export function loadPostsSuccess(data) {
 export function loadPostsFail() {
 
     return {
-        type: ADD_POST_START
+        type: LOAD_POSTS_FAIL
     }
 
 }
@@ -58,12 +59,12 @@ export function addPost(post) {
     return function (dispatch, getState) {
         dispatch(addPostStart());
         let token = readCookie('appeal_site_token');
-
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'POST',
+            contentType: 'application/json',
             url: 'http://127.0.0.1:8000/posts/',
-            data: post,
+            data: JSON.stringify(post),
             success: function (data) {
                 dispatch(addPostSuccess(data))
             },
@@ -258,6 +259,56 @@ export function refreshPostsFail() {
 
     return {
         type: REFRESH_POSTS_FAIL
+    }
+
+}
+
+//*******************************************
+
+
+export function loadTags() {
+    return function (dispatch, getState) {
+        dispatch(loadPostsStart());
+
+        let token = readCookie('appeal_site_token');
+        $.ajax({
+            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
+            type: 'GET',
+            url: 'http://127.0.0.1:8000/tags/',
+            success: function (data) {
+
+                dispatch(loadTagsSuccess(data))
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+}
+
+
+export function loadTagsStart() {
+
+    return {
+        type: LOAD_TAGS_START
+    }
+
+}
+
+export function loadTagsSuccess(data) {
+
+    return {
+        type: LOAD_TAGS_SUCCESS,
+        payload: data
+    }
+
+}
+
+
+export function loadTagsFail() {
+
+    return {
+        type: LOAD_TAGS_FAIL
     }
 
 }

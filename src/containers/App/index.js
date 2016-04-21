@@ -5,22 +5,10 @@ import NavLink from '../../components/NavLink'
 import * as postActions from '../../actions/PostActions'
 import * as userActions from '../../actions/UserActions'
 import User from '../../components/User'
+import Post from '../../components/Post'
 
 export default class App extends Component {
-  getChildren() {
-    let componentName = this.props.routes[this.props.routes.length - 1].component.displayName;
-    let clonnedComponent;
-    if (componentName == 'Post') {
-      clonnedComponent = React.cloneElement(
-          this.props.children,
-          {data: this.props.post, actions: this.props.postActions, logged: this.props.user.logged, userId: this.props.user.userId, path: this.props.location.pathname}
-      )
-    }
-    else {
-      clonnedComponent =  this.props.children;
-    }
-    return clonnedComponent;
-  }
+
 
   componentWillMount(){
     this.props.userActions.reLoginUser();
@@ -37,7 +25,12 @@ export default class App extends Component {
             <li><NavLink to='/ecology'>Экология</NavLink></li>
             <li><NavLink to='/politics'>Политика</NavLink></li>
           </ul>
-          {this.getChildren.bind(this)()}
+          <Post
+              data = {this.props.post}
+              actions = {this.props.postActions}
+              logged = {this.props.user.logged}
+              userId = {this.props.user.userId}
+          />
         </div>
     )
   }

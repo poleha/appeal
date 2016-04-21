@@ -7,28 +7,21 @@ import { loadPosts } from 'actions/PostActions'
 
 
 import { Provider } from 'react-redux'
-import { syncHistoryWithStore } from 'react-router-redux'
+
 //В реальном приложении, имеет смысл стили для компонентов импортировать в коде самих компонентов,
 // что даст очень большие удобства для переиспользования целых блоков, включая оформление.
 import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 import App from './containers/App'
-import Post from './components/Post'
 import configureStore from './store/configureStore'
 
 
 const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store)
+
 
 render(
   <Provider store={store}>
-      <Router history={history}>
-          <Route path="/" component={App}>
-              <IndexRoute component={Post} />
-              <Route path="/ecology" component={Post}/>
-              <Route path="/politics" component={Post}/>
-          </Route>
-      </Router>
+  <App />
   </Provider>,
   document.getElementById('root')
 );

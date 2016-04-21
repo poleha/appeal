@@ -19,11 +19,11 @@ export default class Post extends Component {
   componentDidMount() {
     if (!this.props.data.loaded) {
     this.props.actions.loadTags();
-    this.props.actions.loadPosts(this.props.path);
+    this.props.actions.loadPosts(this.props.data.path);
 
     }
     else {
-        this.props.actions.refreshPosts(this.props.path);
+        this.props.actions.refreshPosts(this.props.data.path);
     }
   }
 
@@ -140,7 +140,7 @@ export default class Post extends Component {
 
     return <div>
       <input
-          onClick={this.props.actions.refreshPosts.bind(this, this.props.path)}
+          onClick={this.props.actions.refreshPosts.bind(this, this.props.data.path)}
           type="button"
           value="Обновить">
       </input>

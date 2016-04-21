@@ -56,7 +56,7 @@ export default function user(state = initialState, action) {
             return { ...state };
         case LOGOUT_USER_SUCCESS:
             state = cloneState(state);
-            return { ...state, userName: null, userId: null, token:null, logged: false };
+            return { ...state, userName: null, userId: null, token:null, logged: false, activeForm: USER_FORM_LOGIN };
         case LOGOUT_USER_FAIL:
             state = cloneState(state);
             return { ...state };

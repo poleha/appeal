@@ -1,9 +1,17 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
+import TinyMCE from 'react-tinymce';
 
 export default class Post extends Component {
+  
+  tinyMCE = null
 
+  handleEditorChange(e) {
+    if (!this.tinyMCE) {
+    this.tinyMCE = e.target;
+    }
+  }
 
   componentDidMount() {
     if (!this.props.data.loaded) {
@@ -14,9 +22,12 @@ export default class Post extends Component {
 
   componentDidUpdate(){
     if (this.props.data.added){
+
+      this.tinyMCE.setContent('');
       ReactDOM.findDOMNode(this.refs.add_post_username).value = ''
       ReactDOM.findDOMNode(this.refs.add_post_title).value = ''
-      ReactDOM.findDOMNode(this.refs.add_post_body).value = ''
+      //ReactDOM.findDOMNode(this.refs.add_post_body).value = ''
+
     }
   }
 
@@ -24,8 +35,8 @@ export default class Post extends Component {
   getPost() {
       let username = ReactDOM.findDOMNode(this.refs.add_post_username).value;
       let title = ReactDOM.findDOMNode(this.refs.add_post_title).value;
-      let body = ReactDOM.findDOMNode(this.refs.add_post_body).value;
-      let post = {title, username, body};
+      let body = this.tinyMCE.getContent() || ReactDOM.findDOMNode(this.refs.add_post_body).value;
+    let post = {title, username, body};
       return post
   }
 
@@ -58,7 +69,7 @@ export default class Post extends Component {
         return <div key={key}>
           <div>{elem.username}</div>
           <div>{elem.title}</div>
-          <div>{elem.body}</div>
+          <div dangerouslySetInnerHTML={{__html: elem.body}}></div>
             Liked:<div>{elem.liked}</div>
             Disliked:<div>{elem.disliked}</div>
           <input
@@ -106,12 +117,18 @@ export default class Post extends Component {
 
         </input>
       Призыв
-        <input
-            disabled={this.getAddPostButtonDisabled.bind(this)()}
-            ref="add_post_body"
-            class="add_post_body"
-            type="text">
-        </input>
+      <TinyMCE
+          ref="add_post_body"
+          disabled={this.getAddPostButtonDisabled.bind(this)()}
+          content=''
+          config={{
+          plugins: 'link image code',
+          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+        }}
+          onChange={this.handleEditorChange.bind(this)}
+      />
+
+
       <input
           onClick={this.addPostClick.bind(this)}
           disabled={this.getAddPostButtonDisabled.bind(this)()}

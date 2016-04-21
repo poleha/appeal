@@ -51,6 +51,7 @@
     "react-redux": "~4.4.2",
     "react-router": "2.2.2",
     "react-router-redux": "4.0.2",
+    "react-tinymce": "0.4.0",
     "redux": "~3.4.0",
     "redux-logger": "~2.6.1",
     "redux-thunk": "~2.0.1"

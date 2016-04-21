@@ -19,11 +19,11 @@ export default class Post extends Component {
   componentDidMount() {
     if (!this.props.data.loaded) {
     this.props.actions.loadTags();
-    this.props.actions.loadPosts(this.props.data.path);
+    this.props.actions.loadPosts(this.props.path);
 
     }
     else {
-        this.props.actions.refreshPosts(this.props.data.path);
+        this.props.actions.refreshPosts(this.props.path);
     }
   }
 
@@ -140,7 +140,7 @@ export default class Post extends Component {
 
     return <div>
       <input
-          onClick={this.props.actions.refreshPosts.bind(this, this.props.data.path)}
+          onClick={this.props.actions.refreshPosts.bind(this, this.props.path)}
           type="button"
           value="Обновить">
       </input>
@@ -186,7 +186,7 @@ export default class Post extends Component {
       {postsBlock}
       <input
           hidden={this.props.data.count <= this.props.data.posts.length}
-          onClick={this.props.actions.loadMorePosts.bind(this)}
+          onClick={this.props.actions.loadMorePosts.bind(this, this.props.path)}
           type="button"
           value="Показать еще">
       </input>
@@ -205,5 +205,5 @@ Post.propTypes = {
 }
 
 Post.contextTypes = {
-  router: PropTypes.object.isRequired
+  //router: PropTypes.object.isRequired
 }

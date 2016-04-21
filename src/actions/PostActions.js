@@ -14,7 +14,7 @@ export function loadPosts(path) {
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/?tags__alias=' + path.replace('/', ''),
+            url: 'http://127.0.0.1:8000/posts/?tags__alias=' + path,
             success: function (data) {
 
                 dispatch(loadPostsSuccess(data))
@@ -166,7 +166,7 @@ export function ratePostFail(key, actionType) {
 //***********************************************
 
 
-export function loadMorePosts() {
+export function loadMorePosts(path) {
     return function (dispatch, getState) {
         dispatch(loadMorePostsStart());
         let state = getState();
@@ -175,7 +175,7 @@ export function loadMorePosts() {
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/?offset=' + postCount,
+            url: 'http://127.0.0.1:8000/posts/?offset=' + postCount + '&tags__alias=' + path,
             success: function (data) {
                 dispatch(loadMorePostsSuccess(data))
             },
@@ -216,7 +216,7 @@ export function loadMorePostsFail() {
 //***********************************************************
 
 
-export function refreshPosts() {
+export function refreshPosts(path) {
     return function (dispatch, getState) {
         dispatch(refreshPostsStart());
         let state = getState();
@@ -225,7 +225,7 @@ export function refreshPosts() {
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/?limit=500&id_gte=' + lastId,
+            url: 'http://127.0.0.1:8000/posts/?limit=500&id_gte=' + lastId + '&tags__alias=' + path,
             success: function (data) {
                 dispatch(refreshPostsSuccess(data))
             },

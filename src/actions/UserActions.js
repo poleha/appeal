@@ -7,7 +7,7 @@ import { ACTIVATE_USER_FORM } from '../constants/User'
 
 
 import { createCookie, readCookie, eraseCookie} from '../helper'
-import { refreshPosts } from '../actions/PostActions'
+import { loadPosts } from '../actions/PostActions'
 
 export function loginUser(userData) {
     return function (dispatch, getState) {
@@ -22,7 +22,7 @@ export function loginUser(userData) {
                 createCookie('appeal_site_token', data.auth_token);
                 dispatch(loginUserSuccess(data.auth_token));
                 dispatch(getUserInfo());
-                dispatch(refreshPosts());
+                dispatch(loadPosts());
             },
             error: function (data) {
                 dispatch(loginUserFail(data.responseJSON.non_field_errors));
@@ -137,7 +137,7 @@ export function logoutUser() {
             success: function (data) {
                 eraseCookie('appeal_site_token');
                 dispatch(logoutUserSuccess());
-                dispatch(refreshPosts())
+                dispatch(loadPosts())
             },
             error: function (data) {
                 dispatch(logoutUserFail());

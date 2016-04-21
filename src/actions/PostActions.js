@@ -14,7 +14,7 @@ export function loadPosts(path) {
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/?tags__alias=' + path,
+            url: 'http://127.0.0.1:8000/posts/' + (path ? '?tags__alias=' + path: ''),
             success: function (data) {
 
                 dispatch(loadPostsSuccess(data))

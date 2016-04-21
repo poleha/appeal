@@ -13,7 +13,7 @@ export default class App extends Component {
     if (componentName == 'Post') {
       clonnedComponent = React.cloneElement(
           this.props.children,
-          {data: this.props.post, actions: this.props.postActions, logged: this.props.user.logged, userId: this.props.user.userId}
+          {data: this.props.post, actions: this.props.postActions, logged: this.props.user.logged, userId: this.props.user.userId, path: this.props.location.pathname}
       )
     }
     else {
@@ -33,8 +33,9 @@ export default class App extends Component {
         <div className='container'>
           <User data={this.props.user} actions={this.props.userActions}/>
           <ul className='nav nav-pills'>
-            <li><NavLink onlyActiveOnIndex={true} to='/'>Главная</NavLink></li>
-            <li><NavLink to='/comment'>Комментарий(тест)</NavLink></li>
+            <li><NavLink onlyActiveOnIndex={true} to='/'>Все</NavLink></li>
+            <li><NavLink to='/ecology'>Экология</NavLink></li>
+            <li><NavLink to='/politics'>Политика</NavLink></li>
           </ul>
           {this.getChildren.bind(this)()}
         </div>

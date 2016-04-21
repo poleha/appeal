@@ -1,5 +1,3 @@
-
-
 Array.prototype.findByValue = function (valueName, value) {
 
     for (let i = 0; i < this.length; i++) {

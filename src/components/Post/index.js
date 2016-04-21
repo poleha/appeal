@@ -5,7 +5,8 @@ import TinyMCE from 'react-tinymce';
 
 export default class Post extends Component {
   
-  tinyMCE = null
+  tinyMCE = null;
+
 
   handleEditorChange(e) {
     if (!this.tinyMCE) {
@@ -13,15 +14,22 @@ export default class Post extends Component {
     }
   }
 
+
+
   componentDidMount() {
     if (!this.props.data.loaded) {
-    this.props.actions.loadPosts();
     this.props.actions.loadTags();
-    }
+    this.props.actions.loadPosts(this.props.path);
 
+    }
+    else {
+        this.props.actions.refreshPosts(this.props.path);
+    }
   }
 
   componentDidUpdate(){
+
+
     if (this.props.data.added){
 
       this.tinyMCE.setContent('');
@@ -132,7 +140,7 @@ export default class Post extends Component {
 
     return <div>
       <input
-          onClick={this.props.actions.refreshPosts.bind(this)}
+          onClick={this.props.actions.refreshPosts.bind(this, this.props.path)}
           type="button"
           value="Обновить">
       </input>

@@ -13,7 +13,8 @@ var initialState = {
   loading: false,
   loaded: false,
   adding: false,
-  added: false
+  added: false,
+  path: ''
 };
 
 

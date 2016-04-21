@@ -6,7 +6,7 @@ import { readCookie} from '../helper'
 
 
 
-export function loadPosts() {
+export function loadPosts(path) {
     return function (dispatch, getState) {
         dispatch(loadPostsStart());
 
@@ -14,7 +14,7 @@ export function loadPosts() {
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/',
+            url: 'http://127.0.0.1:8000/posts/?tags__alias=' + path.replace('/', ''),
             success: function (data) {
 
                 dispatch(loadPostsSuccess(data))
@@ -268,7 +268,7 @@ export function refreshPostsFail() {
 
 export function loadTags() {
     return function (dispatch, getState) {
-        dispatch(loadPostsStart());
+        dispatch(loadTagsStart());
 
         let token = readCookie('appeal_site_token');
         $.ajax({

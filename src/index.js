@@ -3,7 +3,7 @@ import { render } from 'react-dom' //Этот модуль делает
 import * as patches from 'monkey'
 // module.exports = require('react/lib/ReactDOM');
 //Мы из этого файла импортируем функцию
-
+import { loadPosts } from 'actions/PostActions'
 
 
 import { Provider } from 'react-redux'
@@ -14,7 +14,6 @@ import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 import App from './containers/App'
 import Post from './components/Post'
-import Comment from './components/Comment'
 import configureStore from './store/configureStore'
 
 
@@ -26,7 +25,8 @@ render(
       <Router history={history}>
           <Route path="/" component={App}>
               <IndexRoute component={Post} />
-              <Route path="/comment" component={Comment}/>
+              <Route path="/ecology" component={Post}/>
+              <Route path="/politics" component={Post}/>
           </Route>
       </Router>
   </Provider>,

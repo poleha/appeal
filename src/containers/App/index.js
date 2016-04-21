@@ -31,6 +31,16 @@ export default class App extends Component {
   }
   
   render() {
+    let linksBlock = this.props.app.tags.map(function (tag, index) {
+      return (
+          <li key={tag.id}>
+          <a href={'/#' + tag.alias }>{tag.title}
+          </a>
+          </li>
+      )
+    });
+
+
 
     return (
         <div className='container'>
@@ -40,8 +50,7 @@ export default class App extends Component {
           />
           <ul className='nav nav-pills'>
             <li><a href='/#'>Все</a></li>
-            <li><a href='/#ecology'>Экология</a></li>
-            <li><a href='/#politics'>Политика</a></li>
+            {linksBlock}
           </ul>
           <Post
               data = {this.props.post}

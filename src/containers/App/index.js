@@ -15,6 +15,8 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    this.props.appActions.loadTags();
+
 
     window.addEventListener('hashchange', () => {
       let path = window.location.hash.substr(1);
@@ -44,6 +46,7 @@ export default class App extends Component {
           </ul>
           <Post
               data = {this.props.post}
+              tags = {this.props.app.tags}
               actions = {this.props.postActions}
               logged = {this.props.user.logged}
               userId = {this.props.user.userId}

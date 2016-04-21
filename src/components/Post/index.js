@@ -18,7 +18,6 @@ export default class Post extends Component {
 
   componentDidMount() {
     if (!this.props.data.loaded) {
-    this.props.actions.loadTags();
     this.props.actions.loadPosts(this.props.path);
 
     }
@@ -79,7 +78,7 @@ export default class Post extends Component {
 
   render() {
     let posts = this.props.data.posts;
-    let tags = this.props.data.tags;
+    let tags = this.props.tags;
     //let addPost = this.props.actions.addPost;
 
     let postsBlock;
@@ -94,7 +93,7 @@ export default class Post extends Component {
             Disliked:<div>{elem.disliked}</div>
           <ul>
           {
-            this.props.data.tags.map(function(tag) {
+            this.props.tags.map(function(tag) {
               if (elem.tags.indexOf(tag.id) >= 0) {
               return <li key={tag.id}>{tag.title}</li>
               }

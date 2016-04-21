@@ -26,6 +26,3 @@ export const RATE_POST_TYPE_LIKE = 1;
 export const RATE_POST_TYPE_DISLIKE = 2;
 
 
-export const LOAD_TAGS_START = 'LOAD_TAGS_START';
-export const LOAD_TAGS_SUCCESS = 'LOAD_TAGS_SUCCESS';
-export const LOAD_TAGS_FAIL = 'LOAD_TAGS_FAIL';

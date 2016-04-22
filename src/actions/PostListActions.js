@@ -170,7 +170,7 @@ export function loadMorePosts(path) {
     return function (dispatch, getState) {
         dispatch(loadMorePostsStart());
         let state = getState();
-        let postCount = state.post.posts.length;
+        let postCount = state.postList.posts.length;
         let token = readCookie('appeal_site_token');
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
@@ -220,7 +220,7 @@ export function refreshPosts(path) {
     return function (dispatch, getState) {
         dispatch(refreshPostsStart());
         let state = getState();
-        let lastId = state.post.posts[state.post.posts.length - 1].id;
+        let lastId = state.postList.posts[state.postList.posts.length - 1].id || 0;
         let token = readCookie('appeal_site_token');
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,

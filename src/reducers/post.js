@@ -4,7 +4,7 @@ import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '
 
 const initialState = {
     id: null,
-    post: {},
+    post: {comments: []},
     comments: []
     
 };
@@ -54,10 +54,8 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
             return state;
         case LOAD_COMMENTS_SUCCESS:
-            let comments = state.comments;
             state = cloneState(state);
-            comments = comments.concat(action.payload.results);
-            state.comments = comments;
+            state.comments = action.payload.results;
 
             return state;
         case LOAD_COMMENTS_FAIL:

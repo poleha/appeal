@@ -105,15 +105,16 @@ export function addCommentFail() {
 }
 //***********************************
 
-export function loadComments(postId) {
+export function loadComments(params) {
     return function (dispatch, getState) {
         dispatch(loadCommentsStart());
+        let urlParams = jQuery.param( params );
 
         let token = readCookie('appeal_site_token');
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
-            url: 'http://127.0.0.1:8000/comments/?post=' + postId,
+            url: 'http://127.0.0.1:8000/comments/?' + urlParams,
             success: function (data) {
 
                 dispatch(loadCommentsSuccess(data))

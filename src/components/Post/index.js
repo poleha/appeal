@@ -7,7 +7,7 @@ export default class Post extends Component {
     componentDidMount() {
         let id = this.props.path.split('/')[1];
         this.props.actions.loadPost(id);
-        this.props.actions.loadComments(id);
+        this.props.actions.loadComments({post: id});
     }
 
     addCommentClick() {
@@ -16,6 +16,12 @@ export default class Post extends Component {
 
         let comment = { username, body, post: this.props.data.id };
         this.props.actions.addComment(comment);
+    }
+
+    loadMoreCommentsClick(e) {
+
+        this.props.actions.loadComments({post: this.props.data.id, limit: this.props.data.comments.length + 10} )
+
     }
 
     render() {
@@ -66,6 +72,12 @@ export default class Post extends Component {
             </div>
             Комменты:
             {commentsBlock}
+            <input
+                hidden={post.comments.length <= this.props.data.comments.length}
+                onClick={this.loadMoreCommentsClick.bind(this)}
+                type="button"
+                value="Показать еще">
+            </input>
 
         </div>
       )

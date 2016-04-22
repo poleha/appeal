@@ -66,6 +66,12 @@ export default class PostList extends Component {
     this.props.actions.ratePost(key, actionType)
     }
 
+  loadMorePostsClick(e) {
+
+    this.props.actions.loadPosts({tags__alias: this.props.path, limit: this.props.data.posts.length + 10} )
+
+  }
+
   render() {
     let posts = this.props.data.posts;
     let tags = this.props.tags;
@@ -174,7 +180,7 @@ export default class PostList extends Component {
       {postsBlock}
       <input
           hidden={this.props.data.count <= this.props.data.posts.length}
-          onClick={this.props.actions.loadMorePosts.bind(this, this.props.path)}
+          onClick={this.loadMorePostsClick.bind(this)}
           type="button"
           value="Показать еще">
       </input>

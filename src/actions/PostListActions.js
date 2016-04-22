@@ -1,20 +1,21 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/PostList'
-import { LOAD_MORE_POSTS_START, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL } from '../constants/PostList'
+
 
 
 import { readCookie} from '../helper'
 
 
 
-export function loadPosts(path) {
+export function loadPosts(params) {
     return function (dispatch, getState) {
         dispatch(loadPostsStart());
+        let urlParams = jQuery.param( params );
 
         let token = readCookie('appeal_site_token');
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/' + (path ? '?tags__alias=' + path: ''),
+            url: 'http://127.0.0.1:8000/posts/?' + urlParams,
             success: function (data) {
 
                 dispatch(loadPostsSuccess(data))
@@ -164,54 +165,4 @@ export function ratePostFail(key, actionType) {
 
 
 //***********************************************
-
-
-export function loadMorePosts(path) {
-    return function (dispatch, getState) {
-        dispatch(loadMorePostsStart());
-        let state = getState();
-        let postCount = state.postList.posts.length;
-        let token = readCookie('appeal_site_token');
-        $.ajax({
-            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
-            type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/?offset=' + postCount + '&tags__alias=' + path,
-            success: function (data) {
-                dispatch(loadMorePostsSuccess(data))
-            },
-            error: function (data) {
-            }
-        });
-    }
-
-}
-
-
-export function loadMorePostsStart() {
-
-    return {
-        type: LOAD_MORE_POSTS_START
-    }
-
-}
-
-export function loadMorePostsSuccess(data) {
-
-    return {
-        type: LOAD_MORE_POSTS_SUCCESS,
-        payload: data
-    }
-
-}
-
-
-export function loadMorePostsFail() {
-
-    return {
-        type: LOAD_MORE_POSTS_FAIL
-    }
-
-}
-
-//***********************************************************
 

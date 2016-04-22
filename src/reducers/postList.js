@@ -1,7 +1,5 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/PostList'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../constants/PostList'
-import { LOAD_MORE_POSTS_START, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL } from '../constants/PostList'
-import { REFRESH_POSTS_START, REFRESH_POSTS_SUCCESS, REFRESH_POSTS_FAIL } from '../constants/PostList'
 
 
 var posts, key, post, newPosts;
@@ -38,13 +36,13 @@ export default function post(state = initialState, action) {
   switch (action.type) {
     case LOAD_POSTS_START:
       state = cloneState(state);
-      return { ...state, posts:[], loading: true};
+      return state;
     case LOAD_POSTS_SUCCESS:
       state = cloneState(state);
       return { ...state, posts:action.payload.results, loaded: true, count: action.payload.count};
     case LOAD_POSTS_FAIL:
       state = cloneState(state);
-      return { ...state, posts:[] };
+      return state;
 
 
 
@@ -85,29 +83,6 @@ export default function post(state = initialState, action) {
       posts = state.posts;
       posts.findByValue('id', key).rating = true;
       return { ...state, posts:posts};
-
-    case LOAD_MORE_POSTS_START:
-      state = cloneState(state);
-      return { ...state, loading: true };
-    case LOAD_MORE_POSTS_SUCCESS:
-      state = cloneState(state);
-      posts = state.posts;
-      newPosts = posts.concat(action.payload.results);
-      return { ...state, posts:newPosts, loaded: true, count: action.payload.count};
-    case LOAD_MORE_POSTS_FAIL:
-      state = cloneState(state);
-      return { ...state };
-
-
-    case REFRESH_POSTS_START:
-      state = cloneState(state);
-      return { ...state, loading: true };
-    case REFRESH_POSTS_SUCCESS:
-      state = cloneState(state);
-      return { ...state, posts:action.payload.results, loaded: true };
-    case REFRESH_POSTS_FAIL:
-      state = cloneState(state);
-      return { ...state };
 
     default:
       return state;

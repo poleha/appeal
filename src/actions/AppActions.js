@@ -20,7 +20,7 @@ export function changePathStart(path) {
     pathData.path = path;
     dispatch(changePath(pathData));
     if (pathData.componentName == 'PostList'){
-     dispatch(loadPosts(path))   
+     dispatch(loadPosts({ tags__alias: path }))
     }
         
     }

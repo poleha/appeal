@@ -1,13 +1,44 @@
 import { CHANGE_PATH } from '../constants/App'
 import { LOAD_TAGS_START, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAIL } from '../constants/App'
+import { loadPosts } from '../actions/PostListActions'
 import { readCookie} from '../helper'
 
 
-export function changePath(path) {
+
+
+
+export function changePathStart(path) {
+    return function (dispatch, getState) {
+    
+    let pathData = {};
+    if (path.indexOf('/') < 0){
+        pathData.componentName = 'PostList';
+    }
+    else {
+        pathData.componentName = 'Post';
+    }
+    pathData.path = path;
+    dispatch(changePath(pathData));
+    if (pathData.componentName == 'PostList'){
+     dispatch(loadPosts(path))   
+    }
+        
+    }
+    
+
+}
+
+
+
+
+
+
+export function changePath(pathData) {
+
 
     return {
         type: CHANGE_PATH,
-        payload: path
+        payload: pathData
     }
 
 }

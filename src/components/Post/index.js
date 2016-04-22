@@ -6,10 +6,11 @@ export default class Post extends Component {
 
     render() {
 
-      return
+      return (
         <div>
          Post
         </div>
+      )
 
 
     }

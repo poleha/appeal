@@ -3,6 +3,7 @@ import { LOAD_TAGS_START, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAIL } from '../constants
 
 const initialState = {
     path: '',
+    componentName: null,
     tags : []
 };
 
@@ -24,7 +25,8 @@ export default function app(state = initialState, action) {
     switch (action.type) {
         case CHANGE_PATH:
             state = cloneState(state);
-            state.path = action.payload;
+            state.path = action.payload.path;
+            state.componentName = action.payload.componentName;
             return state;
 
         case LOAD_TAGS_START:

@@ -6,6 +6,7 @@ import * as userActions from '../../actions/UserActions'
 import * as appActions from '../../actions/AppActions'
 import User from '../../components/User'
 import PostList from '../../components/PostList'
+import Post from '../../components/Post'
 import './styles.less'
 
 export default class App extends Component {
@@ -15,20 +16,44 @@ export default class App extends Component {
     this.props.userActions.reLoginUser();
   }
 
+
   componentDidMount() {
     this.props.appActions.loadTags();
 
 
     window.addEventListener('hashchange', () => {
       let path = window.location.hash.substr(1);
-      this.props.appActions.changePath(path);
-      this.props.postListActions.loadPosts(path);
+
+      this.props.appActions.changePathStart(path);
+
 
       
     });
     let path = window.location.hash.substr(1);
     this.props.appActions.changePath(path);
-    this.props.postListActions.loadPosts(path);
+
+  }
+
+  getContent() {
+    let componentName = this.props.app.componentName;
+    switch (componentName) {
+      case 'PostList':
+            return  (
+                <PostList
+                    data = {this.props.postList}
+                    tags = {this.props.app.tags}
+                    actions = {this.props.postListActions}
+                    logged = {this.props.user.logged}
+                    userId = {this.props.user.userId}
+                    path = {this.props.app.path}
+                />
+            );
+      case 'Post':
+            return (
+                <Post/>
+            )
+
+    }
   }
   
   render() {
@@ -51,7 +76,6 @@ export default class App extends Component {
     });
 
 
-
     return (
         <div className='container'>
           <User
@@ -62,14 +86,7 @@ export default class App extends Component {
             <li><a href='/#'>Все</a></li>
             {linksBlock}
           </ul>
-          <PostList
-              data = {this.props.postList}
-              tags = {this.props.app.tags}
-              actions = {this.props.postListActions}
-              logged = {this.props.user.logged}
-              userId = {this.props.user.userId}
-              path = {this.props.app.path}
-          />
+          {this.getContent()}
         </div>
     )
   }

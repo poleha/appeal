@@ -1,6 +1,6 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/PostList'
 import { LOAD_MORE_POSTS_START, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL } from '../constants/PostList'
-import { REFRESH_POSTS_START, REFRESH_POSTS_SUCCESS, REFRESH_POSTS_FAIL } from '../constants/PostList'
+
 
 import { readCookie} from '../helper'
 
@@ -214,57 +214,4 @@ export function loadMorePostsFail() {
 }
 
 //***********************************************************
-
-
-export function refreshPosts(path) {
-    return function (dispatch, getState) {
-        dispatch(refreshPostsStart());
-        let state = getState();
-        let lastId = state.postList.posts[state.postList.posts.length - 1].id || 0;
-        let token = readCookie('appeal_site_token');
-        $.ajax({
-            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
-            type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/?limit=500&id_gte=' + lastId + '&tags__alias=' + path,
-            success: function (data) {
-                dispatch(refreshPostsSuccess(data))
-            },
-            error: function (data) {
-            }
-        });
-    }
-
-}
-
-
-export function refreshPostsStart() {
-
-    return {
-        type: REFRESH_POSTS_START
-    }
-
-}
-
-export function refreshPostsSuccess(data) {
-
-    return {
-        type: REFRESH_POSTS_SUCCESS,
-        payload: data
-    }
-
-}
-
-
-export function refreshPostsFail() {
-
-    return {
-        type: REFRESH_POSTS_FAIL
-    }
-
-}
-
-//*******************************************
-
-
-
 

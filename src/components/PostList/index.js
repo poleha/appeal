@@ -131,7 +131,7 @@ export default class PostList extends Component {
 
     return <div>
       <input
-          onClick={this.props.actions.refreshPosts.bind(this, this.props.path)}
+          onClick={this.props.actions.loadPosts.bind(this, this.props.path)}
           type="button"
           value="Обновить">
       </input>

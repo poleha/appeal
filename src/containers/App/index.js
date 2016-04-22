@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as postActions from '../../actions/PostActions'
+import * as postListActions from '../../actions/PostListActions'
 import * as userActions from '../../actions/UserActions'
 import * as appActions from '../../actions/AppActions'
 import User from '../../components/User'
-import Post from '../../components/Post'
+import PostList from '../../components/PostList'
 import './styles.less'
 
 export default class App extends Component {
@@ -22,13 +22,13 @@ export default class App extends Component {
     window.addEventListener('hashchange', () => {
       let path = window.location.hash.substr(1);
       this.props.appActions.changePath(path);
-      this.props.postActions.loadPosts(path);
+      this.props.postListActions.loadPosts(path);
 
       
     });
     let path = window.location.hash.substr(1);
     this.props.appActions.changePath(path);
-    this.props.postActions.loadPosts(path);
+    this.props.postListActions.loadPosts(path);
   }
   
   render() {
@@ -62,10 +62,10 @@ export default class App extends Component {
             <li><a href='/#'>Все</a></li>
             {linksBlock}
           </ul>
-          <Post
-              data = {this.props.post}
+          <PostList
+              data = {this.props.postList}
               tags = {this.props.app.tags}
-              actions = {this.props.postActions}
+              actions = {this.props.postListActions}
               logged = {this.props.user.logged}
               userId = {this.props.user.userId}
               path = {this.props.app.path}
@@ -75,13 +75,13 @@ export default class App extends Component {
   }
 }
 
-//      <Post data={this.props.post} actions={this.props.postActions} />
+//      <Post data={this.props.postList} actions={this.props.postListActions} />
 
 
 //Устанавливаем соответствие глобального state props каждого компонента
 function mapStateToProps(state) {
   return {
-    post: state.post,
+    postList: state.postList,
     user: state.user,
     app: state.app
   }
@@ -91,7 +91,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    postActions: bindActionCreators(postActions, dispatch),
+    postListActions: bindActionCreators(postListActions, dispatch),
     userActions: bindActionCreators(userActions, dispatch),
     appActions: bindActionCreators(appActions, dispatch)
     //we bind Action Creator to dispatch http://redux.js.org/docs/Glossary.html#action-creator

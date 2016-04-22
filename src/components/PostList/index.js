@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
-import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
+import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/PostList'
 import TinyMCE from 'react-tinymce';
 
 export default class Post extends Component {

@@ -72,6 +72,13 @@ export default class PostList extends Component {
 
   }
 
+  refreshPostsClick(e) {
+
+    this.props.actions.loadPosts({tags__alias: this.props.path} )
+
+  }
+
+
   render() {
     let posts = this.props.data.posts;
     let tags = this.props.tags;
@@ -137,7 +144,7 @@ export default class PostList extends Component {
 
     return <div>
       <input
-          onClick={this.props.actions.loadPosts.bind(this, this.props.path)}
+          onClick={this.refreshPostsClick.bind(this)}
           type="button"
           value="Обновить">
       </input>

@@ -14,7 +14,7 @@ export function loadPost(id) {
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/' + id,
+            url: `http://127.0.0.1:8000/posts/${id}/`,
             success: function (data) {
 
                 dispatch(loadPostSuccess(data))

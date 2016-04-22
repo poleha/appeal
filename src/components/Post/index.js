@@ -24,6 +24,12 @@ export default class Post extends Component {
 
     }
 
+    refreshCommentsClick(e) {
+        this.props.actions.loadPost(this.props.data.id);
+        this.props.actions.loadComments({post: this.props.data.id} )
+
+    }
+
     render() {
       let post = this.props.data.post;
       let comments = this.props.data.comments;
@@ -43,6 +49,11 @@ export default class Post extends Component {
 
       return (
         <div>
+            <input
+                onClick={this.refreshCommentsClick.bind(this)}
+                type="button"
+                value="Обновить">
+            </input>
             <input
                 ref="add_comment_username"
                 className="add_comment_username"

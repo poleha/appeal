@@ -43,7 +43,7 @@ export default function app(state = initialState, action) {
             return state;
         case ADD_COMMENT_SUCCESS:
             state = cloneState(state);
-            state.comments.push(action.payload);
+            state.comments = [action.payload].concat(state.comments);
                         
             return state;
         case ADD_COMMENT_FAIL:

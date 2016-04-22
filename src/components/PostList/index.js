@@ -1,20 +1,10 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/PostList'
-import TinyMCE from 'react-tinymce';
+
 
 export default class PostList extends Component {
   
-  tinyMCE = null;
-
-
-  handleEditorChange(e) {
-    if (!this.tinyMCE) {
-    this.tinyMCE = e.target;
-    }
-  }
-
-
 
   //componentDidMount() {
   //  if (this.props.data.loaded) {
@@ -30,9 +20,10 @@ export default class PostList extends Component {
 
     if (this.props.data.added){
 
-      this.tinyMCE.setContent('');
+      
       ReactDOM.findDOMNode(this.refs.add_post_username).value = '';
       ReactDOM.findDOMNode(this.refs.add_post_title).value = '';
+      ReactDOM.findDOMNode(this.refs.add_post_body).value = '';
 
       let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
 
@@ -43,7 +34,7 @@ export default class PostList extends Component {
   getPost() {
       let username = ReactDOM.findDOMNode(this.refs.add_post_username).value;
       let title = ReactDOM.findDOMNode(this.refs.add_post_title).value;
-      let body = this.tinyMCE.getContent() || ReactDOM.findDOMNode(this.refs.add_post_body).value;
+      let body = ReactDOM.findDOMNode(this.refs.add_post_body).value;
       let tagsElem = ReactDOM.findDOMNode(this.refs.tags);
       let inputs = $(tagsElem).find('input');
       let tags = [];
@@ -52,7 +43,7 @@ export default class PostList extends Component {
         let id = elem.getAttribute('data-id');
       if (elem.checked) tags.push(id);
       });
-      //tags = JSON.stringify(tags);
+
     let post = {title, username, body, tags};
       return post
   }
@@ -89,7 +80,7 @@ export default class PostList extends Component {
           <div>
             <a href={'#post/' + key}>{elem.title}</a>
           </div>
-          <div dangerouslySetInnerHTML={{__html: elem.body}}></div>
+          <div>{elem.body}</div>
             Liked:<div>{elem.liked}</div>
             Disliked:<div>{elem.disliked}</div>
           <ul>
@@ -162,16 +153,13 @@ export default class PostList extends Component {
 
         </input>
       Призыв
-      <TinyMCE
-          ref="add_post_body"
+      <input
           disabled={this.getAddPostButtonDisabled.bind(this)()}
-          content=''
-          config={{
-          plugins: 'link image code',
-          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
-        }}
-          onChange={this.handleEditorChange.bind(this)}
-      />
+          ref="add_post_body"
+          className="add_post_body"
+          type="text">
+
+      </input>
       <ul className='tags_add' ref="tags">
         {tagsBlock}
       </ul>

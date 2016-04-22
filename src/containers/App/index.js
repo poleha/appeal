@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import * as postListActions from '../../actions/PostListActions'
 import * as userActions from '../../actions/UserActions'
 import * as appActions from '../../actions/AppActions'
+import * as postActions from '../../actions/PostActions'
 import User from '../../components/User'
 import PostList from '../../components/PostList'
 import Post from '../../components/Post'
@@ -30,7 +31,7 @@ export default class App extends Component {
       
     });
     let path = window.location.hash.substr(1);
-    this.props.appActions.changePath(path);
+    this.props.appActions.changePathStart(path);
 
   }
 
@@ -50,7 +51,11 @@ export default class App extends Component {
             );
       case 'Post':
             return (
-                <Post/>
+                <Post
+                    data = {this.props.post}
+                    actions = {this.props.postActions}
+                    path = {this.props.app.path}
+                />
             )
 
     }
@@ -100,7 +105,8 @@ function mapStateToProps(state) {
   return {
     postList: state.postList,
     user: state.user,
-    app: state.app
+    app: state.app,
+    post: state.post
   }
 }
 
@@ -110,7 +116,8 @@ function mapDispatchToProps(dispatch) {
   return {
     postListActions: bindActionCreators(postListActions, dispatch),
     userActions: bindActionCreators(userActions, dispatch),
-    appActions: bindActionCreators(appActions, dispatch)
+    appActions: bindActionCreators(appActions, dispatch),
+    postActions: bindActionCreators(postActions, dispatch)
     //we bind Action Creator to dispatch http://redux.js.org/docs/Glossary.html#action-creator
     //this created action is immediately dispatched
     //Вместо этого мы можем передавать store во все компоненты, начиная с App, при нажатии на кнопку генерировать

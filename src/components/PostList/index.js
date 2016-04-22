@@ -86,7 +86,9 @@ export default class PostList extends Component {
        let key =  elem.id;
         return <div key={key}>
           <div>{elem.username}</div>
-          <div>{elem.title}</div>
+          <div>
+            <a href={'#post/' + key}>{elem.title}</a>
+          </div>
           <div dangerouslySetInnerHTML={{__html: elem.body}}></div>
             Liked:<div>{elem.liked}</div>
             Disliked:<div>{elem.disliked}</div>

@@ -3,15 +3,15 @@ import { readCookie} from '../helper'
 
 
 
-export function loadPost() {
+export function loadPost(id) {
     return function (dispatch, getState) {
-        dispatch(loadTagsStart());
+        dispatch(loadPostStart());
 
         let token = readCookie('appeal_site_token');
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
-            url: 'http://127.0.0.1:8000/posts/',
+            url: 'http://127.0.0.1:8000/posts/' + id,
             success: function (data) {
 
                 dispatch(loadPostSuccess(data))

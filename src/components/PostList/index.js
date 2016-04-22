@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/PostList'
 import TinyMCE from 'react-tinymce';
 
-export default class Post extends Component {
+export default class PostList extends Component {
   
   tinyMCE = null;
 
@@ -196,12 +196,12 @@ export default class Post extends Component {
 
 
 
-Post.propTypes = {
+PostList.propTypes = {
   //year: PropTypes.number.isRequired,
   //photos: PropTypes.array.isRequired,
   //setYear: PropTypes.func.isRequired
 }
 
-Post.contextTypes = {
+PostList.contextTypes = {
   //router: PropTypes.object.isRequired
 }

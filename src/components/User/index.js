@@ -129,7 +129,7 @@ export default class User extends Component {
     }
 }
 
-Comment.propTypes = {
+User.propTypes = {
     //year: PropTypes.number.isRequired,
     //photos: PropTypes.array.isRequired,
     //setYear: PropTypes.func.isRequired

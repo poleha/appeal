@@ -75,6 +75,26 @@ export default class PostList extends Component {
 
   }
 
+  getFieldErrors(fieldName){
+    console.log(this.props.data, '3333333333333333333333333')
+    let fieldErrors = this.props.data.addPostErrors[fieldName];
+    if (fieldErrors) {
+    let errorsBlock;
+    errorsBlock = fieldErrors.map(function (error, index) {
+    return (
+      <li key={index}>
+        {error}
+      </li>
+    )
+    });
+    return (
+    <ul>
+      {errorsBlock}
+      </ul>
+    )
+    }
+  }
+
 
   render() {
     let posts = this.props.data.posts;
@@ -147,7 +167,9 @@ export default class PostList extends Component {
       <div hidden={this.props.logged}>
         <label htmlFor="add_post_username">Автор</label>
 
-     <input
+        {this.getFieldErrors.call(this, 'username')}
+
+        <input
         disabled={this.getAddPostButtonDisabled.bind(this)()}
         ref="add_post_username"
         className="add_post_username"
@@ -156,7 +178,11 @@ export default class PostList extends Component {
         type="text">
     </input>
         </div>
+
       <label htmlFor="add_post_body">Призыв</label>
+
+        {this.getFieldErrors.call(this, 'body')}
+
       <textarea cols="70" rows="10"
           disabled={this.getAddPostButtonDisabled.bind(this)()}
           ref="add_post_body"
@@ -166,7 +192,11 @@ export default class PostList extends Component {
           type="text">
 
       </textarea>
-       <label htmlFor="tags_add_ul">Разделы</label>
+
+        <label htmlFor="tags_add_ul">Разделы</label>
+
+        {this.getFieldErrors.call(this, 'tags')}
+
       <ul className='tags_add' ref="tags" id="tags_add_ul">
         {tagsBlock}
       </ul>

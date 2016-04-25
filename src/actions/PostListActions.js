@@ -17,10 +17,11 @@ export function loadPosts(params) {
             type: 'GET',
             url: 'http://127.0.0.1:8000/posts/?' + urlParams,
             success: function (data) {
-
                 dispatch(loadPostsSuccess(data))
             },
             error: function (data) {
+
+                loadPostsFail(data);
             }
         });
     }
@@ -67,9 +68,10 @@ export function addPost(post) {
             url: 'http://127.0.0.1:8000/posts/',
             data: JSON.stringify(post),
             success: function (data) {
-                dispatch(addPostSuccess(data))
+                dispatch(addPostSuccess(data));
             },
             error: function (data) {
+                dispatch(addPostFail(data.responseJSON));
             }
         });
 
@@ -97,10 +99,11 @@ export function addPostSuccess(post) {
 }
 
 
-export function addPostFail() {
+export function addPostFail(errors) {
 
     return {
-        type: ADD_POST_FAIL
+        type: ADD_POST_FAIL,
+        payload: errors
     }
 
 }

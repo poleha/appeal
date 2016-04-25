@@ -10,7 +10,8 @@ var initialState = {
   loading: false,
   loaded: false,
   adding: false,
-  added: false
+  added: false,
+  addPostErrors: {}
 
 };
 
@@ -24,7 +25,8 @@ function cloneState(state) {
     newObj.tags = newObj.tags.slice(0);
     newState.posts.push(newObj);
   });
-  
+
+  newState.addPostErrors = Object.assign({}, state.addPostErrors);
   newState.added = false;
   newState.loading = false;
   return newState;
@@ -45,11 +47,9 @@ export default function post(state = initialState, action) {
       return state;
 
 
-
-
     case ADD_POST_START:
       state = cloneState(state);
-      return { ...state, adding: true};
+      return { ...state, adding: true, addPostErrors: {}};
     case ADD_POST_SUCCESS:
       state = cloneState(state);
         posts = state.posts;
@@ -59,12 +59,13 @@ export default function post(state = initialState, action) {
         return { ...state, posts: newPosts, adding: false, added: true, count: state.count + 1};
     case ADD_POST_FAIL:
       state = cloneState(state);
-      return { ...state, adding: false };
+      let addPostErrors = action.payload;
+      return { ...state, adding: false, addPostErrors: addPostErrors};
 
     case RATE_POST_START:
       state = cloneState(state);
         key = action.payload.key;
-        posts = state.posts
+        posts = state.posts;
         posts.findByValue('id', key).rating = true;
       return { ...state, posts:posts};
     case RATE_POST_SUCCESS:

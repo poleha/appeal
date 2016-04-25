@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
+import classNames from 'classnames'
 
 
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/PostList'
@@ -94,9 +95,34 @@ export default class PostList extends Component {
     }
   }
 
+  getRateBlock(elem) {
+    let key = elem.id;
+    let rateBlock;
+    console.log(this.props.logged , !elem.rated, '3333333333333333333333333');
+   if (this.props.logged && !elem.rated) {
+     rateBlock = (
+       <div>
+        <input
+        disabled={elem.rating}
+        onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)}
+        type="button"
+        className="btn btn-success"
+        value="Нравится"
+        />
+        <input
+        disabled={elem.rating}
+        onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)}
+        type="button"
+        className="btn btn-danger"
+        value="Не нравится"
+        />
+         </div>
+   )
+   }
+    return rateBlock;
+  }
 
   render() {
-    console.log(this.props.data.count, this.props.data.posts.length, '1111111111111111111111');
     let posts = this.props.data.posts;
     let tags = this.props.tags;
     //let addPost = this.props.actions.addPost;
@@ -131,20 +157,7 @@ export default class PostList extends Component {
             })
           }
           </ul>
-          <input
-              hidden={!this.props.logged || elem.rated}
-              disabled={elem.rating}
-              onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)}
-              type="button"
-              value="Нравится"
-          />
-          <input
-              hidden={!this.props.logged || elem.rated}
-              disabled={elem.rating}
-              onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)}
-              type="button"
-              value="Не нравится"
-          />
+          {this.getRateBlock.call(this, elem)}
         </div>
       });
     }
@@ -157,8 +170,12 @@ export default class PostList extends Component {
       tagsBlock = tags.map((elem, index)=>{
         let key =  elem.id;
         return <li key={key}>
-          <input key={key} data-id={key} id={`tags_input-${key}`}
+          <input
+              key={key}
+              data-id={key}
+              id={`tags_input-${key}`}
               type="checkbox"
+              disabled={this.getAddPostButtonDisabled.call(this)}
           />
           <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
         </li>
@@ -172,6 +189,7 @@ export default class PostList extends Component {
       <input
           onClick={this.refreshPostsClick.bind(this)}
           type="button"
+          className="btn btn-default"
           value="Обновить">
       </input>
 
@@ -182,7 +200,7 @@ export default class PostList extends Component {
         {this.getFieldErrors.call(this, 'username')}
 
         <input
-        disabled={this.getAddPostButtonDisabled.bind(this)()}
+        disabled={this.getAddPostButtonDisabled.call(this)}
         ref="add_post_username"
         className="add_post_username"
         id="add_post_username"
@@ -214,14 +232,16 @@ export default class PostList extends Component {
       </ul>
 
       <input
-          disabled={this.getAddPostButtonDisabled.bind(this)()}
+          disabled={this.getAddPostButtonDisabled.call(this)}
           type="submit"
           className="btn btn-default"
           value="Добавить">
       </input>
       </form>
 
+      <div className="posts">
       {postsBlock}
+        </div>
 
       {showMoreInput}
     </div>

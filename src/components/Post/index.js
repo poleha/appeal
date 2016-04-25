@@ -52,6 +52,7 @@ export default class Post extends Component {
             <input
                 onClick={this.refreshCommentsClick.bind(this)}
                 type="button"
+                className="btn btn-default"
                 value="Обновить">
             </input>
             <input
@@ -71,6 +72,7 @@ export default class Post extends Component {
         <input
             onClick={this.addCommentClick.bind(this)}
             type="button"
+            className="btn btn-default"
             value="Добавить">
         </input>
 
@@ -87,6 +89,7 @@ export default class Post extends Component {
                 hidden={post.comments.length <= this.props.data.comments.length}
                 onClick={this.loadMoreCommentsClick.bind(this)}
                 type="button"
+                className="btn btn-default"
                 value="Показать еще">
             </input>
 

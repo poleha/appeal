@@ -122,16 +122,19 @@ export default class User extends Component {
          }
 
             loginBlockButtonsTemplate = <div>
-                <input type="button"
-                       value='login'
-                       onClick={this.props.actions.activateForm.bind(this, USER_FORM_LOGIN)}
-                       disabled={this.props.data.activeForm == USER_FORM_LOGIN }
+                <input
+                    type="button"
+                    value='login'
+                    onClick={this.props.actions.activateForm.bind(this, USER_FORM_LOGIN)}
+                    disabled={this.props.data.activeForm == USER_FORM_LOGIN }
+                    className="btn btn-default"
                 />
                 <input
                     type="button"
                     value='register'
                     onClick={this.props.actions.activateForm.bind(this, USER_FORM_REGISTRATION)}
                     disabled={this.props.data.activeForm == USER_FORM_REGISTRATION }
+                    className="btn btn-default"
                 />
             </div>
         }
@@ -144,7 +147,7 @@ export default class User extends Component {
                     <input
                         type="button"
                         value="logout"
-                        className="user__logout"
+                        className="user__logout btn btn-default"
                         onClick={this.props.actions.logoutUser.bind(this)}
                     />
                     </div>

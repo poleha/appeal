@@ -1,3 +1,24 @@
 .active {
   color: #0000cc;
 }
+
+
+.form-mixin {
+  input, select {
+    display: block;
+    &[type="checkbox"] {
+      display: inline;
+      width: inherit;
+    }
+    width: 400px;
+  }
+  textarea {
+    display: block;
+    width: 60%;
+  }
+}
+
+
+.add_post_form {
+  .form-mixin;
+}

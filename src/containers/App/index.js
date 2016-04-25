@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
 import * as postListActions from '../../actions/PostListActions'
 import * as userActions from '../../actions/UserActions'
 import * as appActions from '../../actions/AppActions'
@@ -64,16 +65,12 @@ export default class App extends Component {
   render() {
     let path = this.props.app.path;
     let linksBlock = this.props.app.tags.map(function (tag, index) {
-      let className;
-      if (tag.alias ==  path) {
-        className = 'active';
-      }
-      else {
-        className = 'inactive'
-      }
       return (
           <li key={tag.id}>
-          <a href={'/#' + tag.alias } className={className}>
+          <a href={'/#' + tag.alias } className={classNames(
+          {
+              active: tag.alias ==  path
+          })}>
             {tag.title}
           </a>
           </li>
@@ -88,7 +85,7 @@ export default class App extends Component {
               actions={this.props.userActions}
           />
           <ul className='nav nav-pills'>
-            <li><a href='/#'>Все</a></li>
+            <li><a className={classNames({ active: path == '' })} href='/#'>Все</a></li>
             {linksBlock}
           </ul>
           {this.getContent()}

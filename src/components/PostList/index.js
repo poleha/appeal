@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
+
+
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/PostList'
 
 
@@ -19,23 +21,17 @@ export default class PostList extends Component {
 
 
     if (this.props.data.added){
-
-      
       ReactDOM.findDOMNode(this.refs.add_post_username).value = '';
-      ReactDOM.findDOMNode(this.refs.add_post_title).value = '';
       ReactDOM.findDOMNode(this.refs.add_post_body).value = '';
-
       let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
-
     }
   }
 
-
   getPost() {
       let username = ReactDOM.findDOMNode(this.refs.add_post_username).value;
-      let title = ReactDOM.findDOMNode(this.refs.add_post_title).value;
       let body = ReactDOM.findDOMNode(this.refs.add_post_body).value;
       let tagsElem = ReactDOM.findDOMNode(this.refs.tags);
+    //TODO
       let inputs = $(tagsElem).find('input');
       let tags = [];
       inputs.each(function(key) {
@@ -44,11 +40,12 @@ export default class PostList extends Component {
       if (elem.checked) tags.push(id);
       });
 
-    let post = {title, username, body, tags};
+    let post = {username, body, tags};
       return post
   }
 
-  addPostClick(e) {
+  addPostSubmit(e) {
+    e.preventDefault();
   let post = this.getPost();
    this.props.actions.addPost(post);
   }
@@ -90,10 +87,7 @@ export default class PostList extends Component {
        let key =  elem.id;
         return <div key={key}>
           <div>{elem.username}</div>
-          <div>
-            <a href={'#post/' + key}>{elem.title}</a>
-          </div>
-          <div>{elem.body}</div>
+          <div><a href={'#post/' + key}>{elem.body}</a></div>
             Liked:<div>{elem.liked}</div>
             Disliked:<div>{elem.disliked}</div>
           <ul>
@@ -131,10 +125,10 @@ export default class PostList extends Component {
       tagsBlock = tags.map((elem, index)=>{
         let key =  elem.id;
         return <li key={key}>
-          <label>{elem.title}</label>
-          <input key={key} data-id={key}
+          <input key={key} data-id={key} id={`tags_input-${key}`}
               type="checkbox"
           />
+          <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
         </li>
       });
     }
@@ -148,46 +142,48 @@ export default class PostList extends Component {
           type="button"
           value="Обновить">
       </input>
+
+      <form onSubmit={this.addPostSubmit.bind(this)} className="add_post_form">
       <div hidden={this.props.logged}>
-        Автор
+        <label htmlFor="add_post_username">Автор</label>
+
      <input
         disabled={this.getAddPostButtonDisabled.bind(this)()}
         ref="add_post_username"
         className="add_post_username"
+        id="add_post_username"
+        name="username"
         type="text">
     </input>
         </div>
-      Название
-        <input
-            disabled={this.getAddPostButtonDisabled.bind(this)()}
-            ref="add_post_title"
-            className="add_post_title"
-            type="text">
-
-        </input>
-      Призыв
-      <input
+      <label htmlFor="add_post_body">Призыв</label>
+      <textarea cols="70" rows="10"
           disabled={this.getAddPostButtonDisabled.bind(this)()}
           ref="add_post_body"
           className="add_post_body"
+          id="add_post_body"
+          name="body"
           type="text">
 
-      </input>
-      <ul className='tags_add' ref="tags">
+      </textarea>
+       <label htmlFor="tags_add_ul">Разделы</label>
+      <ul className='tags_add' ref="tags" id="tags_add_ul">
         {tagsBlock}
       </ul>
 
-
       <input
-          onClick={this.addPostClick.bind(this)}
           disabled={this.getAddPostButtonDisabled.bind(this)()}
-          type="button"
+          type="submit"
+          className="btn btn-default"
           value="Добавить">
       </input>
+      </form>
+
       {postsBlock}
       <input
           hidden={this.props.data.count <= this.props.data.posts.length}
           onClick={this.loadMorePostsClick.bind(this)}
+          className="btn btn-default"
           type="button"
           value="Показать еще">
       </input>

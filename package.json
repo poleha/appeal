@@ -44,14 +44,16 @@
     "webpack-merge": "latest"
   },
   "dependencies": {
+    "classnames": "2.2.3",
     "immutable": "3.8.0",
     "jquery": "latest",
     "lodash": "4.11.1",
     "react": "15.0.1",
-    "react-dom": "~15.0.1",
+    "react-dom": "15.0.1",
     "react-redux": "~4.4.2",
     "redux": "~3.4.0",
     "redux-logger": "~2.6.1",
-    "redux-thunk": "~2.0.1"
+    "redux-thunk": "~2.0.1",
+    "save": "2.3.0"
   }
 }

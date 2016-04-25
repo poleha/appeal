@@ -15,14 +15,35 @@ export default class User extends Component {
         let password = ReactDOM.findDOMNode(this.refs.password).value;
         let password2 = ReactDOM.findDOMNode(this.refs.password2).value;
         let email = ReactDOM.findDOMNode(this.refs.email).value;
-        this.props.actions.registerUser({username, password, email });
+        this.props.actions.registerUser({username, password, password2, email });
     }
+
+    getFieldErrors(fieldName){
+        let fieldErrors = this.props.data.registerErrors[fieldName];
+        if (fieldErrors) {
+            let errorsBlock;
+            errorsBlock = fieldErrors.map(function (error, index) {
+                return (
+                    <li key={index}>
+                        {error}
+                    </li>
+                )
+            });
+            return (
+                <ul>
+                    {errorsBlock}
+                </ul>
+            )
+        }
+    }
+
+
     render() {
 
         let loginErrors;
 
-        if (this.props.data.errors.length > 0) {
-            loginErrors = this.props.data.errors.map(function (elem, index) {
+        if (this.props.data.loginErrors.length > 0) {
+            loginErrors = this.props.data.loginErrors.map(function (elem, index) {
             return <div className='error' key={index}>
                     {elem}
                 </div>
@@ -58,37 +79,46 @@ export default class User extends Component {
          }
             else if(this.props.data.activeForm == USER_FORM_REGISTRATION) {
              loginBlockTemplate =
-                 <div>
-                     <div className="errors">
-                         {loginErrors}
-                     </div>
-                     <form onSubmit={this.registrationFormSubmit.bind(this)}>
+                 <form className="registration_form" onSubmit={this.registrationFormSubmit.bind(this)}>
+                     {this.getFieldErrors.call(this, 'non_field_errors')}
+                     <label htmlFor="user_email">E-mail</label>
+                     {this.getFieldErrors.call(this, 'email')}
                          <input
                              type="text"
                              ref="email"
-                             className="user__email"
+                             className="user_email"
+                             id="user_email"
                          />
+                        <label htmlFor="user_username">Имя пользователя</label>
+                         {this.getFieldErrors.call(this, 'username')}
                          <input
                              type="text"
                              ref="username"
-                             className="user__username"
+                             className="user_username"
+                             id="user_username"
                          />
+                     <label htmlFor="user_password">Пароль</label>
+                         {this.getFieldErrors.call(this, 'password')}
                          <input
                              type="text"
                              ref="password"
-                             className="user__password"
+                             className="user_password"
+                             id="user_password"
                          />
+                     <label htmlFor="user_password2">Пароль еще раз</label>
+                         {this.getFieldErrors.call(this, 'password2')}
                          <input
                              type="text"
                              ref="password2"
-                             className="user__password2"
+                             className="user_password2"
+                             id="user_password2"
                          />
                          <input
                              type="submit"
-                             className="user__login"
+                             className="user_submit btn btn-default"
+                             value="Зарегистрироваться"
                          />
                      </form>
-                 </div>
          }
 
             loginBlockButtonsTemplate = <div>

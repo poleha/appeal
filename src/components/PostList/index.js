@@ -76,7 +76,6 @@ export default class PostList extends Component {
   }
 
   getFieldErrors(fieldName){
-    console.log(this.props.data, '3333333333333333333333333')
     let fieldErrors = this.props.data.addPostErrors[fieldName];
     if (fieldErrors) {
     let errorsBlock;
@@ -97,9 +96,22 @@ export default class PostList extends Component {
 
 
   render() {
+    console.log(this.props.data.count, this.props.data.posts.length, '1111111111111111111111');
     let posts = this.props.data.posts;
     let tags = this.props.tags;
     //let addPost = this.props.actions.addPost;
+
+    let showMoreInput;
+    if (this.props.data.count > this.props.data.posts.length) {
+      showMoreInput = (
+    <input
+        onClick={this.loadMorePostsClick.bind(this)}
+        className="btn btn-default"
+        type="button"
+        value="Показать еще">
+    </input>
+      )
+    }
 
     let postsBlock;
     if (posts.length > 0) {
@@ -210,13 +222,8 @@ export default class PostList extends Component {
       </form>
 
       {postsBlock}
-      <input
-          hidden={this.props.data.count <= this.props.data.posts.length}
-          onClick={this.loadMorePostsClick.bind(this)}
-          className="btn btn-default"
-          type="button"
-          value="Показать еще">
-      </input>
+
+      {showMoreInput}
     </div>
   }
 }

@@ -9,7 +9,10 @@ import { readCookie} from '../helper'
 export function loadPosts(params) {
     return function (dispatch, getState) {
         dispatch(loadPostsStart());
-        let urlParams = jQuery.param( params );
+        let urlParams = '';
+        if (params) {
+         urlParams = jQuery.param( params );
+        }
 
         let token = readCookie('appeal_site_token');
         $.ajax({

@@ -16,13 +16,15 @@ const initialState = {
     userId: null,
     token: null,
     activeForm: USER_FORM_LOGIN,
-    errors: []
+    loginErrors: [],
+    registerErrors: {}
 
 };
 
 function cloneState(state) {
     let newState = Object.assign({}, state);
-    newState.errors = [];
+    newState.loginErrors = [];
+    newState.registerErrors = Object.assign({}, state.registerErrors);
     newState.logging = false;
     return newState;
 }
@@ -39,7 +41,7 @@ export default function user(state = initialState, action) {
             return { ...state, logged: true, token: action.payload };
         case USER_LOGIN_FAIL:
             state = cloneState(state);
-            return { ...state, token: null, errors: action.payload };
+            return { ...state, token: null, loginErrors: action.payload };
 
         case GET_USER_INFO_START:
             state = cloneState(state);
@@ -64,13 +66,16 @@ export default function user(state = initialState, action) {
 
         case REGISTER_USER_START:
             state = cloneState(state);
-            return { ...state };
+            state.registerErrors = {};
+            return state;
         case REGISTER_USER_SUCCESS:
             state = cloneState(state);
-            return { ...state };
+            state.registerErrors = {};
+            return state;
         case REGISTER_USER_FAIL:
             state = cloneState(state);
-            return { ...state };
+            state.registerErrors = action.payload;
+            return state;
 
 
         case ACTIVATE_USER_FORM:

@@ -202,7 +202,7 @@ export function registerUser(data) {
                 dispatch(loginUser(loginData));
             },
             error: function (data) {
-                dispatch(registerUserFail());
+                dispatch(registerUserFail(data.responseJSON));
             }
         });
     }
@@ -227,10 +227,11 @@ export function registerUserSuccess() {
 }
 
 
-export function registerUserFail() {
+export function registerUserFail(errors) {
 
     return {
-        type: REGISTER_USER_FAIL
+        type: REGISTER_USER_FAIL,
+        payload: errors
     }
 
 }

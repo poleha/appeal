@@ -27,3 +27,23 @@ export function eraseCookie(name) {
 
 
 //******************************
+
+
+export function formArrayToJson(formArray) {
+    let obj = {};
+    formArray.forEach(function (elem) {
+    if (elem.name.indexOf('__') > 0) {
+        let nameAndKey = elem.name.split('__');
+        let name = nameAndKey[0];
+        let key = nameAndKey[1];
+        if(!obj[name]) obj[name] = [];
+        obj[name].push(key);
+    }
+        else {
+        obj[elem.name] = elem.value;
+    }
+
+    });
+    return JSON.stringify(obj);
+
+}

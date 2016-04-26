@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
-
+import formArrayToJson from '../../helper'
 
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/PostList'
 
@@ -29,20 +29,8 @@ export default class PostList extends Component {
   }
 
   getPost() {
-      let username = ReactDOM.findDOMNode(this.refs.add_post_username).value;
-      let body = ReactDOM.findDOMNode(this.refs.add_post_body).value;
-      let tagsElem = ReactDOM.findDOMNode(this.refs.tags);
-    //TODO
-      let inputs = $(tagsElem).find('input');
-      let tags = [];
-      inputs.each(function(key) {
-      let elem = inputs[key];
-        let id = elem.getAttribute('data-id');
-      if (elem.checked) tags.push(id);
-      });
-
-    let post = {username, body, tags};
-      return post
+      let postForm = $(ReactDOM.findDOMNode(this.refs.add_post_form));
+      return formArrayToJson(postForm.serializeArray());
   }
 
   addPostSubmit(e) {
@@ -165,9 +153,9 @@ export default class PostList extends Component {
       postsBlock = ''
     }
 
-    let tagsBlock;
+    let tagsAddBlock;
     if (tags.length > 0) {
-      tagsBlock = tags.map((elem, index)=>{
+      tagsAddBlock = tags.map((elem, index)=>{
         let key =  elem.id;
         return <li key={key}>
           <input
@@ -175,6 +163,7 @@ export default class PostList extends Component {
               data-id={key}
               id={`tags_input-${key}`}
               type="checkbox"
+              name={`tags__${key}`}
               disabled={this.getAddPostButtonDisabled.call(this)}
           />
           <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
@@ -182,12 +171,16 @@ export default class PostList extends Component {
       });
     }
     else {
-      tagsBlock = ''
+      tagsAddBlock = ''
     }
 
     return <div>
 
-      <form onSubmit={this.addPostSubmit.bind(this)} className="add_post_form">
+      <form
+          onSubmit={this.addPostSubmit.bind(this)}
+          className="add_post_form"
+          ref="add_post_form"
+      >
       <div hidden={this.props.logged}>
 
         {this.getFieldErrors.call(this, 'username')}
@@ -222,7 +215,7 @@ export default class PostList extends Component {
         {this.getFieldErrors.call(this, 'tags')}
 
       <ul className='tags_add' ref="tags" id="tags_add_ul">
-        {tagsBlock}
+        {tagsAddBlock}
       </ul>
 
       <input

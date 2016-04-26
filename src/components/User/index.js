@@ -59,20 +59,23 @@ export default class User extends Component {
                  <div className="errors">
                      {loginErrors}
                  </div>
-                 <form onSubmit={this.loginFormSubmit.bind(this)}>
+                 <form onSubmit={this.loginFormSubmit.bind(this)} className="login_form">
                  <input
                      type="text"
                      ref="username"
-                     className="user__username"
+                     placeholder="Имя пользователя"
+                     className="user_username"
                  />
                  <input
                      type="text"
                      ref="password"
-                     className="user__password"
+                     placeholder="Пароль"
+                     className="user_password"
                  />
                  <input
                      type="submit"
-                     className="user__login"
+                     value="Войти"
+                     className="user_login btn btn-default"
                  />
                 </form>
                 </div>
@@ -81,37 +84,37 @@ export default class User extends Component {
              loginBlockTemplate =
                  <form className="registration_form" onSubmit={this.registrationFormSubmit.bind(this)}>
                      {this.getFieldErrors.call(this, 'non_field_errors')}
-                     <label htmlFor="user_email">E-mail</label>
                      {this.getFieldErrors.call(this, 'email')}
                          <input
                              type="text"
                              ref="email"
                              className="user_email"
                              id="user_email"
+                             placeholder="E-mail"
                          />
-                        <label htmlFor="user_username">Имя пользователя</label>
                          {this.getFieldErrors.call(this, 'username')}
                          <input
                              type="text"
                              ref="username"
                              className="user_username"
                              id="user_username"
+                             placeholder="Имя пользователя"
                          />
-                     <label htmlFor="user_password">Пароль</label>
                          {this.getFieldErrors.call(this, 'password')}
                          <input
                              type="text"
                              ref="password"
                              className="user_password"
                              id="user_password"
+                             placeholder="Пароль"
                          />
-                     <label htmlFor="user_password2">Пароль еще раз</label>
                          {this.getFieldErrors.call(this, 'password2')}
                          <input
                              type="text"
                              ref="password2"
                              className="user_password2"
                              id="user_password2"
+                             placeholder="Пароль еще раз"
                          />
                          <input
                              type="submit"
@@ -124,14 +127,14 @@ export default class User extends Component {
             loginBlockButtonsTemplate = <div>
                 <input
                     type="button"
-                    value='login'
+                    value='Войти'
                     onClick={this.props.actions.activateForm.bind(this, USER_FORM_LOGIN)}
                     disabled={this.props.data.activeForm == USER_FORM_LOGIN }
                     className="btn btn-default"
                 />
                 <input
                     type="button"
-                    value='register'
+                    value='Зарегистрироваться'
                     onClick={this.props.actions.activateForm.bind(this, USER_FORM_REGISTRATION)}
                     disabled={this.props.data.activeForm == USER_FORM_REGISTRATION }
                     className="btn btn-default"

@@ -186,16 +186,9 @@ export default class PostList extends Component {
     }
 
     return <div>
-      <input
-          onClick={this.refreshPostsClick.bind(this)}
-          type="button"
-          className="btn btn-default"
-          value="Обновить">
-      </input>
 
       <form onSubmit={this.addPostSubmit.bind(this)} className="add_post_form">
       <div hidden={this.props.logged}>
-        <label htmlFor="add_post_username">Автор</label>
 
         {this.getFieldErrors.call(this, 'username')}
 
@@ -205,11 +198,11 @@ export default class PostList extends Component {
         className="add_post_username"
         id="add_post_username"
         name="username"
+        placeholder="Автор"
         type="text">
     </input>
         </div>
 
-      <label htmlFor="add_post_body">Призыв</label>
 
         {this.getFieldErrors.call(this, 'body')}
 
@@ -219,11 +212,12 @@ export default class PostList extends Component {
           className="add_post_body"
           id="add_post_body"
           name="body"
+          placeholder="Сообщение"
           type="text">
 
       </textarea>
 
-        <label htmlFor="tags_add_ul">Разделы</label>
+        <label htmlFor="tags_add_ul">Разделы:</label>
 
         {this.getFieldErrors.call(this, 'tags')}
 
@@ -238,6 +232,13 @@ export default class PostList extends Component {
           value="Добавить">
       </input>
       </form>
+
+      <input
+          onClick={this.refreshPostsClick.bind(this)}
+          type="button"
+          className="btn btn-default"
+          value="Обновить">
+      </input>
 
       <div className="posts">
       {postsBlock}

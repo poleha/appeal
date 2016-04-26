@@ -66,11 +66,11 @@ export default class App extends Component {
     let path = this.props.app.path;
     let linksBlock = this.props.app.tags.map(function (tag, index) {
       return (
-          <li key={tag.id}>
-          <a href={'/#' + tag.alias } className={classNames(
+          <li key={tag.id} className={classNames(
           {
               active: tag.alias ==  path
           })}>
+          <a href={'/#' + tag.alias }>
             {tag.title}
           </a>
           </li>
@@ -84,8 +84,8 @@ export default class App extends Component {
               data={this.props.user}
               actions={this.props.userActions}
           />
-          <ul className='nav nav-pills'>
-            <li><a className={classNames({ active: path == '' })} href='/#'>Все</a></li>
+          <ul className={classNames('nav', 'nav-pills')}>
+            <li className={classNames({ active: path == '' })}><a href='/#'>Все</a></li>
             {linksBlock}
           </ul>
           {this.getContent()}

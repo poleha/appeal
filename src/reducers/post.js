@@ -19,7 +19,8 @@ const initialState = {
     loaded: false,
     adding: false,
     added: false,
-    addPostErrors: {}
+    addPostErrors: {},
+    addCommentErrors: {}
 
 
 };
@@ -41,6 +42,7 @@ function cloneState(state) {
     });
 
     newState.addPostErrors = Object.assign({}, state.addPostErrors);
+    newState.addCommentErrors = Object.assign({}, state.addPostErrors);
     newState.added = false;
     newState.loading = false;
     
@@ -53,6 +55,7 @@ export default function app(state = initialState, action) {
     switch (action.type) {
         case ADD_COMMENT_START:
             state = cloneState(state);
+            state.addCommentErrors = {};
             return state;
         case ADD_COMMENT_SUCCESS:
             state = cloneState(state);
@@ -61,6 +64,7 @@ export default function app(state = initialState, action) {
             return state;
         case ADD_COMMENT_FAIL:
             state = cloneState(state);
+            state.addCommentErrors = action.payload;
             return state;
 
         case LOAD_COMMENTS_START:

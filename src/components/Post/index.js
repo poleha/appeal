@@ -1,9 +1,29 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import PostDetail from '../../components/PostDetail'
+import classNames from 'classnames'
 
 export default class Post extends Component {
 
+    getFieldErrors(fieldName){
+        let fieldErrors = this.props.data.addCommentErrors[fieldName];
+        if (fieldErrors) {
+            let errorsBlock;
+            errorsBlock = fieldErrors.map(function (error, index) {
+                return (
+                    <li key={index}>
+                        {error}
+                    </li>
+                )
+            });
+            return (
+                <ul>
+                    {errorsBlock}
+                </ul>
+            )
+        }
+    }
+    
     componentDidMount() {
         let id = this.props.path.split('/')[1];
         this.props.actions.loadPosts({id});
@@ -31,6 +51,41 @@ export default class Post extends Component {
 
     }
 
+    getAddCommentForm() {
+
+        let usernameInputClass = classNames('add_comment_body',
+        {
+            hidden: this.props.logged
+        });
+
+        return (
+            <form
+                onSubmit={this.addCommentFormSubmit.bind(this)}
+                className="add_comment_form"
+            >
+                {this.getFieldErrors.call(this, 'username')}
+                <input
+                    ref="add_comment_username"
+                    className={usernameInputClass}
+                    placeholder="Автор"
+                    type="text"
+                />
+                {this.getFieldErrors.call(this, 'body')}
+            <textarea cols="70" rows="10"
+                      ref="add_comment_body"
+                      className='add_comment_body'
+                      placeholder="Комментарий"
+            />
+
+                <input
+                    type="submit"
+                    className="btn btn-default"
+                    value="Добавить"
+                />
+            </form>
+        )
+    }
+
     render() {
       let post = this.props.data.posts[0];
       if (post) {
@@ -52,29 +107,7 @@ export default class Post extends Component {
       return (
         <div>
             <label>Добавить комментарий</label>
-            <form
-                onSubmit={this.addCommentFormSubmit.bind(this)}
-                className="add_comment_form"
-            >
-            <input
-                ref="add_comment_username"
-                className="add_comment_username"
-                placeholder="Автор"
-                type="text"
-            />
-
-            <textarea cols="70" rows="10"
-        ref="add_comment_body"
-        className="add_comment_body"
-        placeholder="Комментарий"
-        />
-
-        <input
-            type="submit"
-            className="btn btn-default"
-            value="Добавить"
-        />
-                </form>
+            {this.getAddCommentForm.call(this)}
 
 
             <PostDetail key={post.id} post={post} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.ratePost} />

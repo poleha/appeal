@@ -25,6 +25,7 @@ export function addComment(data) {
                 dispatch(addCommentSuccess(data))
             },
             error: function (data) {
+                dispatch(addCommentFail(data.responseJSON))
             }
         });
     }
@@ -50,10 +51,11 @@ export function addCommentSuccess(data) {
 }
 
 
-export function addCommentFail() {
+export function addCommentFail(errors) {
 
     return {
-        type: ADD_COMMENT_FAIL
+        type: ADD_COMMENT_FAIL,
+        payload: errors
     }
 
 }

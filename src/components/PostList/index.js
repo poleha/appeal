@@ -5,6 +5,80 @@ import { formArrayToJson } from '../../helper'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/PostList'
 
 
+class PostDetail extends Component {
+
+  getRateBlock(post) {
+    let key = post.id;
+    let rateBlock;
+    if (this.props.logged && !post.rated) {
+      rateBlock = (
+          <div>
+            <input
+                disabled={post.rating}
+                onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)}
+                type="button"
+                className="btn btn-success"
+                value="Нравится"
+            />
+            <input
+                disabled={post.rating}
+                onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)}
+                type="button"
+                className="btn btn-danger"
+                value="Не нравится"
+            />
+          </div>
+      )
+    }
+    return rateBlock;
+  }
+
+  ratePostClick(key, actionType){
+    this.props.ratePost(key, actionType)
+  }
+
+  render() {
+    let post = this.props.post;
+    let key =  post.id;
+    return (
+      <div>
+      <label>Автор:</label>
+      <div>{post.username}</div>
+
+      <label>Призыв:</label>
+      <div><a href={'#post/' + key}>{post.body}</a></div>
+
+      <label>Опубликовано:</label>
+      <div>{post.created}</div>
+
+      <label>Нравится:</label>
+      <div>{post.liked}</div>
+
+      <label>Не нравится:</label>
+      <div>{post.disliked}</div>
+
+      <div><a href={'#post/' + key}>Комментариев: {post.comment_count}</a></div>
+
+      <label>Метки:</label>
+      <ul className="tags">
+        {
+          this.props.tags.map(function(tag) {
+            if (post.tags.indexOf(tag.id) >= 0) {
+              return <li className="tag_elem" key={tag.id}>{tag.title}</li>
+            }
+          })
+        }
+      </ul>
+      {this.getRateBlock.call(this, post)}
+    </div>
+
+
+    )
+  }
+
+}
+
+
 export default class PostList extends Component {
   
 
@@ -48,9 +122,7 @@ export default class PostList extends Component {
   }
   }
 
-    ratePostClick(key, actionType){
-    this.props.actions.ratePost(key, actionType)
-    }
+
 
   loadMorePostsClick(e) {
 
@@ -83,31 +155,7 @@ export default class PostList extends Component {
     }
   }
 
-  getRateBlock(elem) {
-    let key = elem.id;
-    let rateBlock;
-   if (this.props.logged && !elem.rated) {
-     rateBlock = (
-       <div>
-        <input
-        disabled={elem.rating}
-        onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)}
-        type="button"
-        className="btn btn-success"
-        value="Нравится"
-        />
-        <input
-        disabled={elem.rating}
-        onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)}
-        type="button"
-        className="btn btn-danger"
-        value="Не нравится"
-        />
-         </div>
-   )
-   }
-    return rateBlock;
-  }
+
 
   render() {
     let posts = this.props.data.posts;
@@ -128,38 +176,10 @@ export default class PostList extends Component {
 
     let postsBlock;
     if (posts.length > 0) {
-      postsBlock = posts.map((elem, index)=>{
-       let key =  elem.id;
-        return <div key={key}>
-          <label>Автор:</label>
-          <div>{elem.username}</div>
+      postsBlock = posts.map((elem)=>{
 
-          <label>Призыв:</label>
-          <div><a href={'#post/' + key}>{elem.body}</a></div>
+      return<PostDetail key={elem.id} post={elem} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.actions.ratePost} />
 
-          <label>Опубликовано:</label>
-          <div>{elem.created}</div>
-
-           <label>Нравится:</label>
-          <div>{elem.liked}</div>
-
-          <label>Не нравится:</label>
-          <div>{elem.disliked}</div>
-
-           <div><a href={'#post/' + key}>Комментариев: {elem.comment_count}</a></div>
-
-          <label>Метки:</label>
-          <ul className="tags">
-          {
-            this.props.tags.map(function(tag) {
-              if (elem.tags.indexOf(tag.id) >= 0) {
-              return <li className="tag_elem" key={tag.id}>{tag.title}</li>
-              }
-            })
-          }
-          </ul>
-          {this.getRateBlock.call(this, elem)}
-        </div>
       });
     }
     else {

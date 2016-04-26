@@ -132,15 +132,29 @@ export default class PostList extends Component {
       postsBlock = posts.map((elem, index)=>{
        let key =  elem.id;
         return <div key={key}>
+          <label>Автор:</label>
           <div>{elem.username}</div>
+
+          <label>Призыв:</label>
           <div><a href={'#post/' + key}>{elem.body}</a></div>
-            Liked:<div>{elem.liked}</div>
-            Disliked:<div>{elem.disliked}</div>
-          <ul>
+
+          <label>Опубликовано:</label>
+          <div>{elem.created}</div>
+
+           <label>Нравится:</label>
+          <div>{elem.liked}</div>
+
+          <label>Не нравится:</label>
+          <div>{elem.disliked}</div>
+
+           <div><a href={'#post/' + key}>Комментариев: {elem.comment_count}</a></div>
+
+          <label>Метки:</label>
+          <ul className="tags">
           {
             this.props.tags.map(function(tag) {
               if (elem.tags.indexOf(tag.id) >= 0) {
-              return <li key={tag.id}>{tag.title}</li>
+              return <li className="tag_elem" key={tag.id}>{tag.title}</li>
               }
             })
           }

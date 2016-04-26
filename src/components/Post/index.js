@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 
-
 export default class Post extends Component {
 
     componentDidMount() {
@@ -10,7 +9,8 @@ export default class Post extends Component {
         this.props.actions.loadComments({post: id});
     }
 
-    addCommentClick() {
+    addCommentFormSubmit(e) {
+        e.preventDefault();
         let username = ReactDOM.findDOMNode(this.refs.add_comment_username).value;
         let body = ReactDOM.findDOMNode(this.refs.add_comment_body).value;
 
@@ -49,32 +49,30 @@ export default class Post extends Component {
 
       return (
         <div>
-            <input
-                onClick={this.refreshCommentsClick.bind(this)}
-                type="button"
-                className="btn btn-default"
-                value="Обновить">
-            </input>
+            <label>Добавить комментарий</label>
+            <form
+                onSubmit={this.addCommentFormSubmit.bind(this)}
+                className="add_comment_form"
+            >
             <input
                 ref="add_comment_username"
                 className="add_comment_username"
-                type="text">
-            </input>
+                placeholder="Автор"
+                type="text"
+            />
 
-
-            Комментарий
-            <input
+            <textarea cols="70" rows="10"
         ref="add_comment_body"
         className="add_comment_body"
-        type="text">
-        </input>
+        placeholder="Комментарий"
+        />
 
         <input
-            onClick={this.addCommentClick.bind(this)}
-            type="button"
+            type="submit"
             className="btn btn-default"
-            value="Добавить">
-        </input>
+            value="Добавить"
+        />
+                </form>
 
 
             <div>
@@ -84,14 +82,20 @@ export default class Post extends Component {
                 {post.body}
             </div>
             Комменты:
+            <input
+                onClick={this.refreshCommentsClick.bind(this)}
+                type="button"
+                className="btn btn-default"
+                value="Обновить"
+            />
             {commentsBlock}
             <input
                 hidden={post.comments.length <= this.props.data.comments.length}
                 onClick={this.loadMoreCommentsClick.bind(this)}
                 type="button"
                 className="btn btn-default"
-                value="Показать еще">
-            </input>
+                value="Показать еще"
+            />
 
         </div>
       )

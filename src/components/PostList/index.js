@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
-import classNames from 'classnames'
 import { formArrayToJson } from '../../helper'
 
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/PostList'
@@ -206,8 +205,8 @@ export default class PostList extends Component {
         id="add_post_username"
         name="username"
         placeholder="Автор"
-        type="text">
-    </input>
+        type="text"
+        />
         </div>
 
 
@@ -220,9 +219,9 @@ export default class PostList extends Component {
           id="add_post_body"
           name="body"
           placeholder="Сообщение"
-          type="text">
+          type="text"
+      />
 
-      </textarea>
 
         <label htmlFor="tags_add_ul">Разделы:</label>
 

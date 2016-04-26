@@ -1,4 +1,3 @@
-import { LOAD_POST_START, LOAD_POST_SUCCESS, LOAD_POST_FAIL } from '../constants/Post'
 import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../constants/Post'
 import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Post'
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
@@ -8,10 +7,10 @@ var posts, newPosts, post, key;
 
 const initialState = {
     id: null,
-    post: {
-        comments: [],
-        tags: []
-    },
+    //post: {
+    //    comments: [],
+    //    tags: []
+    //},
     comments: [],
 
     posts: [],
@@ -27,7 +26,6 @@ const initialState = {
 
 function cloneState(state) {
     let newState = Object.assign({}, state);
-    newState.post = Object.assign({}, state.post);
     newState.comments = [];
     state.comments.forEach(function(elem){
         let newObj = Object.assign({}, elem);
@@ -53,19 +51,6 @@ function cloneState(state) {
 export default function app(state = initialState, action) {
 
     switch (action.type) {
-        case LOAD_POST_START:
-            state = cloneState(state);
-            return state;
-        case LOAD_POST_SUCCESS:
-            state = cloneState(state);
-            state.post = action.payload;
-            state.id = action.payload.id;
-            return state;
-        case LOAD_POST_FAIL:
-            state = cloneState(state);
-            return state;
-
-
         case ADD_COMMENT_START:
             state = cloneState(state);
             return state;
@@ -124,7 +109,7 @@ export default function app(state = initialState, action) {
             key = action.payload.key;
             posts = state.posts;
             posts.findByValue('id', key).rating = true;
-            return { ...state, posts:posts};
+            return { ...state, posts: posts};
         case RATE_POST_SUCCESS:
             state = cloneState(state);
             key = action.payload.key;
@@ -140,7 +125,7 @@ export default function app(state = initialState, action) {
             key = action.payload.key;
             posts = state.posts;
             posts.findByValue('id', key).rating = true;
-            return { ...state, posts:posts};
+            return { ...state, posts: posts};
         
 
         default:

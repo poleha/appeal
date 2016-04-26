@@ -6,7 +6,7 @@ export default class Post extends Component {
 
     componentDidMount() {
         let id = this.props.path.split('/')[1];
-        this.props.actions.loadPost(id);
+        this.props.actions.loadPosts({id});
         this.props.actions.loadComments({post: id});
     }
 
@@ -15,24 +15,25 @@ export default class Post extends Component {
         let username = ReactDOM.findDOMNode(this.refs.add_comment_username).value;
         let body = ReactDOM.findDOMNode(this.refs.add_comment_body).value;
 
-        let comment = { username, body, post: this.props.data.id };
+        let comment = { username, body, post: this.props.data.posts[0].id };
         this.props.actions.addComment(comment);
     }
 
     loadMoreCommentsClick(e) {
 
-        this.props.actions.loadComments({post: this.props.data.id, limit: this.props.data.comments.length + 10} )
+        this.props.actions.loadComments({post: this.props.data.posts[0].id, limit: this.props.data.comments.length + 10} )
 
     }
 
     refreshCommentsClick(e) {
-        this.props.actions.loadPost(this.props.data.id);
-        this.props.actions.loadComments({post: this.props.data.id} )
+        this.props.actions.loadPosts({id: this.props.data.posts[0].id});
+        this.props.actions.loadComments({post: this.props.data.posts[0].id} )
 
     }
 
     render() {
-      let post = this.props.data.post;
+      let post = this.props.data.posts[0];
+      if (post) {
       let comments = this.props.data.comments;
         let commentsBlock;
         if (comments.length > 0) {
@@ -97,7 +98,10 @@ export default class Post extends Component {
         </div>
       )
 
-
+      }
+        else {
+          return null;
+      }
     }
 }
 

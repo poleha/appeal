@@ -1,4 +1,3 @@
-import { LOAD_POST_START, LOAD_POST_SUCCESS, LOAD_POST_FAIL } from '../constants/Post'
 import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../constants/Post'
 import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Post'
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
@@ -7,52 +6,6 @@ import { readCookie} from '../helper'
 
 
 
-export function loadPost(id) {
-    return function (dispatch, getState) {
-        dispatch(loadPostStart());
-
-        let token = readCookie('appeal_site_token');
-        $.ajax({
-            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
-            type: 'GET',
-            url: `http://127.0.0.1:8000/posts/${id}/`,
-            success: function (data) {
-
-                dispatch(loadPostSuccess(data))
-            },
-            error: function (data) {
-            }
-        });
-    }
-
-}
-
-
-export function loadPostStart() {
-
-    return {
-        type: LOAD_POST_START
-    }
-
-}
-
-export function loadPostSuccess(data) {
-
-    return {
-        type: LOAD_POST_SUCCESS,
-        payload: data
-    }
-
-}
-
-
-export function loadPostFail() {
-
-    return {
-        type: LOAD_POST_FAIL
-    }
-
-}
 
 //*********************************************************
 

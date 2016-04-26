@@ -29,6 +29,7 @@
     "extract-text-webpack-plugin": "latest",
     "file-loader": "latest",
     "imports-loader": "latest",
+    "jquery": "2.2.3",
     "less-loader": "2.2.3",
     "node-sass": "latest",
     "postcss-import": "latest",

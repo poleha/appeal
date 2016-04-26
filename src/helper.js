@@ -44,6 +44,6 @@ export function formArrayToJson(formArray) {
     }
 
     });
-    return JSON.stringify(obj);
+    return obj;
 
 }

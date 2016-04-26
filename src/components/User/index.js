@@ -1,21 +1,18 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/User'
+import { formArrayToJson } from '../../helper'
 
 export default class User extends Component {
     loginFormSubmit(e) {
         e.preventDefault();
-        let username = ReactDOM.findDOMNode(this.refs.username).value;
-        let password = ReactDOM.findDOMNode(this.refs.password).value;
-        this.props.actions.loginUser({username, password});
+        let loginForm = $(ReactDOM.findDOMNode(this.refs.login_form));
+        this.props.actions.loginUser(formArrayToJson(loginForm.serializeArray()));
     }
     registrationFormSubmit(e) {
         e.preventDefault();
-        let username = ReactDOM.findDOMNode(this.refs.username).value;
-        let password = ReactDOM.findDOMNode(this.refs.password).value;
-        let password2 = ReactDOM.findDOMNode(this.refs.password2).value;
-        let email = ReactDOM.findDOMNode(this.refs.email).value;
-        this.props.actions.registerUser({username, password, password2, email });
+        let registerForm = $(ReactDOM.findDOMNode(this.refs.register_form));
+        this.props.actions.registerUser(formArrayToJson(registerForm.serializeArray()));
     }
 
     getFieldErrors(fieldName){
@@ -59,17 +56,23 @@ export default class User extends Component {
                  <div className="errors">
                      {loginErrors}
                  </div>
-                 <form onSubmit={this.loginFormSubmit.bind(this)} className="login_form">
+                 <form
+                     onSubmit={this.loginFormSubmit.bind(this)}
+                     className="login_form"
+                     ref="login_form"
+                 >
                  <input
                      type="text"
                      ref="username"
                      placeholder="Имя пользователя"
                      className="user_username"
+                     name="username"
                  />
                  <input
                      type="text"
                      ref="password"
                      placeholder="Пароль"
+                     name="password"
                      className="user_password"
                  />
                  <input
@@ -82,7 +85,11 @@ export default class User extends Component {
          }
             else if(this.props.data.activeForm == USER_FORM_REGISTRATION) {
              loginBlockTemplate =
-                 <form className="registration_form" onSubmit={this.registrationFormSubmit.bind(this)}>
+                 <form
+                     className="registration_form"
+                     onSubmit={this.registrationFormSubmit.bind(this)}
+                     ref="register_form"
+                 >
                      {this.getFieldErrors.call(this, 'non_field_errors')}
                      {this.getFieldErrors.call(this, 'email')}
                          <input
@@ -90,6 +97,7 @@ export default class User extends Component {
                              ref="email"
                              className="user_email"
                              id="user_email"
+                             name="email"
                              placeholder="E-mail"
                          />
                          {this.getFieldErrors.call(this, 'username')}
@@ -98,6 +106,7 @@ export default class User extends Component {
                              ref="username"
                              className="user_username"
                              id="user_username"
+                             name="username"
                              placeholder="Имя пользователя"
                          />
                          {this.getFieldErrors.call(this, 'password')}
@@ -106,6 +115,7 @@ export default class User extends Component {
                              ref="password"
                              className="user_password"
                              id="user_password"
+                             name="password"
                              placeholder="Пароль"
                          />
                          {this.getFieldErrors.call(this, 'password2')}
@@ -114,6 +124,7 @@ export default class User extends Component {
                              ref="password2"
                              className="user_password2"
                              id="user_password2"
+                             name="password2"
                              placeholder="Пароль еще раз"
                          />
                          <input

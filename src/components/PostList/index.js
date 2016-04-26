@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
-import formArrayToJson from '../../helper'
+import { formArrayToJson } from '../../helper'
 
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/PostList'
 
@@ -30,6 +30,7 @@ export default class PostList extends Component {
 
   getPost() {
       let postForm = $(ReactDOM.findDOMNode(this.refs.add_post_form));
+    
       return formArrayToJson(postForm.serializeArray());
   }
 
@@ -86,7 +87,6 @@ export default class PostList extends Component {
   getRateBlock(elem) {
     let key = elem.id;
     let rateBlock;
-    console.log(this.props.logged , !elem.rated, '3333333333333333333333333');
    if (this.props.logged && !elem.rated) {
      rateBlock = (
        <div>

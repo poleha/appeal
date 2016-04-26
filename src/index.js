@@ -3,7 +3,7 @@ import { render } from 'react-dom' //Этот модуль делает
 import * as patches from 'monkey'
 // module.exports = require('react/lib/ReactDOM');
 //Мы из этого файла импортируем функцию
-import { loadPosts } from 'actions/PostListActions'
+
 
 
 import { Provider } from 'react-redux'

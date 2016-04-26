@@ -7,7 +7,7 @@ import { ACTIVATE_USER_FORM } from '../constants/User'
 
 
 import { createCookie, readCookie, eraseCookie} from '../helper'
-import { loadPosts } from '../actions/PostListActions'
+import { loadPosts } from '../actions/PostActions'
 
 export function loginUser(userData) {
     return function (dispatch, getState) {

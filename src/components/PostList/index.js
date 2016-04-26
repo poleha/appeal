@@ -103,7 +103,7 @@ export default class PostList extends Component {
     if (posts.length > 0) {
       postsBlock = posts.map((elem)=>{
 
-      return<PostDetail key={elem.id} post={elem} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.actions.ratePost} />
+      return <PostDetail key={elem.id} post={elem} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.actions.ratePost} />
 
       });
     }

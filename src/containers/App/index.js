@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
-import * as postListActions from '../../actions/PostListActions'
 import * as userActions from '../../actions/UserActions'
 import * as appActions from '../../actions/AppActions'
 import * as postActions from '../../actions/PostActions'
@@ -42,9 +41,9 @@ export default class App extends Component {
       case 'PostList':
             return  (
                 <PostList
-                    data = {this.props.postList}
+                    data = {this.props.post}
                     tags = {this.props.app.tags}
-                    actions = {this.props.postListActions}
+                    actions = {this.props.postActions}
                     logged = {this.props.user.logged}
                     userId = {this.props.user.userId}
                     path = {this.props.app.path}
@@ -56,6 +55,9 @@ export default class App extends Component {
                     data = {this.props.post}
                     actions = {this.props.postActions}
                     path = {this.props.app.path}
+                    tags = {this.props.app.tags}
+                    logged = {this.props.user.logged}
+                    ratePost = {this.props.postActions.ratePost}
                 />
             )
 
@@ -100,7 +102,6 @@ export default class App extends Component {
 //Устанавливаем соответствие глобального state props каждого компонента
 function mapStateToProps(state) {
   return {
-    postList: state.postList,
     user: state.user,
     app: state.app,
     post: state.post
@@ -111,7 +112,6 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    postListActions: bindActionCreators(postListActions, dispatch),
     userActions: bindActionCreators(userActions, dispatch),
     appActions: bindActionCreators(appActions, dispatch),
     postActions: bindActionCreators(postActions, dispatch)

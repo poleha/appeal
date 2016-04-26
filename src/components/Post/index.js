@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
+import PostDetail from '../../components/PostDetail'
 
 export default class Post extends Component {
 
@@ -75,12 +76,8 @@ export default class Post extends Component {
                 </form>
 
 
-            <div>
-                {post.title}
-            </div>
-            <div>
-                {post.body}
-            </div>
+            <PostDetail key={post.id} post={post} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.ratePost} />
+
             Комменты:
             <input
                 onClick={this.refreshCommentsClick.bind(this)}

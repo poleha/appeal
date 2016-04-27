@@ -44,7 +44,9 @@ function cloneState(state) {
     newState.addPostErrors = Object.assign({}, state.addPostErrors);
     newState.addCommentErrors = Object.assign({}, state.addPostErrors);
     newState.added = false;
+    newState.adding = false;
     newState.loading = false;
+    newState.loaded = false;
     
     return newState;
 }
@@ -55,10 +57,12 @@ export default function app(state = initialState, action) {
     switch (action.type) {
         case ADD_COMMENT_START:
             state = cloneState(state);
+            state.adding = true;
             state.addCommentErrors = {};
             return state;
         case ADD_COMMENT_SUCCESS:
             state = cloneState(state);
+            state.added = true;
             state.comments = [action.payload].concat(state.comments);
                         
             return state;

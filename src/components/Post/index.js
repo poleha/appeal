@@ -30,6 +30,14 @@ export default class Post extends Component {
         this.props.actions.loadComments({post: id});
     }
 
+    componentDidUpdate() {
+        if (this.props.data.added) {
+
+            ReactDOM.findDOMNode(this.refs.add_comment_username).value = '';
+            ReactDOM.findDOMNode(this.refs.add_comment_body).value = '';
+        }
+    }
+
     addCommentFormSubmit(e) {
         e.preventDefault();
         let username = ReactDOM.findDOMNode(this.refs.add_comment_username).value;
@@ -106,13 +114,13 @@ export default class Post extends Component {
 
       return (
         <div>
+            <PostDetail key={post.id} post={post} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.ratePost} />
+
+
+            <h3>Комментарии</h3>
             <label>Добавить комментарий</label>
             {this.getAddCommentForm.call(this)}
 
-
-            <PostDetail key={post.id} post={post} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.ratePost} />
-
-            Комменты:
             <input
                 onClick={this.refreshCommentsClick.bind(this)}
                 type="button"
@@ -121,10 +129,9 @@ export default class Post extends Component {
             />
             {commentsBlock}
             <input
-                hidden={post.comments.length <= this.props.data.comments.length}
                 onClick={this.loadMoreCommentsClick.bind(this)}
                 type="button"
-                className="btn btn-default"
+                className={classNames('btn', 'btn-default', {hidden: post.comments.length <= this.props.data.comments.length})}
                 value="Показать еще"
             />
 

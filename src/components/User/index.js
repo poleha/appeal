@@ -21,13 +21,13 @@ export default class User extends Component {
             let errorsBlock;
             errorsBlock = fieldErrors.map(function (error, index) {
                 return (
-                    <li key={index}>
+                    <li className="error" key={index}>
                         {error}
                     </li>
                 )
             });
             return (
-                <ul>
+                <ul className="errors">
                     {errorsBlock}
                 </ul>
             )

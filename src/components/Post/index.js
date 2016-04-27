@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import PostDetail from '../../components/PostDetail'
+import Comment from '../../components/Comment'
 import classNames from 'classnames'
 
 export default class Post extends Component {
@@ -100,14 +101,10 @@ export default class Post extends Component {
       let comments = this.props.data.comments;
         let commentsBlock;
         if (comments.length > 0) {
-            commentsBlock = comments.map((elem, index)=>{
-                let key =  elem.id;
-                return <div key={key}>
-                    <div>{elem.username}</div>
+            commentsBlock = comments.map((comment)=>{
 
-                    <div>{elem.body}</div>
+               return <Comment key={comment.id} comment={comment}/>
 
-                </div>
             });
         }
 

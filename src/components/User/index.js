@@ -35,6 +35,29 @@ export default class User extends Component {
     }
 
 
+    getLoginBlockButtons() {
+        let loginBlockButtons;
+        if (!this.props.data.logged) {
+            loginBlockButtons = <div className="login_block_buttons">
+                <input
+                    type="button"
+                    value='Войти'
+                    onClick={this.props.actions.activateForm.bind(this, USER_FORM_LOGIN)}
+                    disabled={this.props.data.activeForm == USER_FORM_LOGIN }
+                    className="btn btn-default"
+                />
+                <input
+                    type="button"
+                    value='Зарегистрироваться'
+                    onClick={this.props.actions.activateForm.bind(this, USER_FORM_REGISTRATION)}
+                    disabled={this.props.data.activeForm == USER_FORM_REGISTRATION }
+                    className="btn btn-default"
+                />
+            </div>
+        }
+        return loginBlockButtons
+    }
+
     render() {
 
         let loginErrors;
@@ -48,11 +71,10 @@ export default class User extends Component {
         }
 
         let loginBlockTemplate = '';
-        let loginBlockButtonsTemplate = '';
         if (!this.props.data.logged) {
          if(this.props.data.activeForm == USER_FORM_LOGIN){
          loginBlockTemplate =
-             <div>
+             <div className="login_block">
                  <div className="errors">
                      {loginErrors}
                  </div>
@@ -86,6 +108,7 @@ export default class User extends Component {
          }
             else if(this.props.data.activeForm == USER_FORM_REGISTRATION) {
              loginBlockTemplate =
+                 <div className="registration_block">
                  <form
                      className="registration_form"
                      onSubmit={this.registrationFormSubmit.bind(this)}
@@ -136,45 +159,30 @@ export default class User extends Component {
                              value="Зарегистрироваться"
                          />
                      </form>
+                     </div>
          }
 
-            loginBlockButtonsTemplate = <div>
-                <input
-                    type="button"
-                    value='Войти'
-                    onClick={this.props.actions.activateForm.bind(this, USER_FORM_LOGIN)}
-                    disabled={this.props.data.activeForm == USER_FORM_LOGIN }
-                    className="btn btn-default"
-                />
-                <input
-                    type="button"
-                    value='Зарегистрироваться'
-                    onClick={this.props.actions.activateForm.bind(this, USER_FORM_REGISTRATION)}
-                    disabled={this.props.data.activeForm == USER_FORM_REGISTRATION }
-                    className="btn btn-default"
-                />
-            </div>
+
         }
 
         else {
             loginBlockTemplate =
                 <div>
-                <div>{this.props.data.userName}</div>
-                    <div>
+                <div className="logged_user"><label>Вы вошли как: </label>{this.props.data.userName}</div>
                     <input
                         type="button"
-                        value="logout"
+                        value="Выйти"
                         className="user__logout btn btn-default"
                         onClick={this.props.actions.logoutUser.bind(this)}
                     />
-                    </div>
                 </div>
         }
 
 
-        return <div>
+        return <div className="user_block">
+            {this.getLoginBlockButtons.call(this)}
             {loginBlockTemplate}
-            {loginBlockButtonsTemplate}
+
             </div>
     }
 }

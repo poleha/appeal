@@ -40,20 +40,30 @@ export default class PostDetail extends Component {
         let key =  post.id;
         return (
             <div className="post">
+                <div>
                 <label>Автор:</label>
-                <div>{post.username}</div>
+                <div className="inline">{post.username}</div>
+                </div>
 
+                <div>
                 <label>Призыв:</label>
                 <div><a href={'#post/' + key}>{post.body}</a></div>
+                </div>
 
-                <label>Опубликовано:</label>
-                <div>{post.created}</div>
+                    <div>
+                    <label>Опубликовано:</label>
+                <div className="inline">{post.created}</div>
+                    </div>
 
-                <label>Нравится:</label>
-                <div>{post.liked}</div>
+                        <div>
+                        <label>Нравится:</label>
+                <div className="inline">{post.liked}</div>
+                        </div>
 
-                <label>Не нравится:</label>
-                <div>{post.disliked}</div>
+                            <div>
+                            <label>Не нравится:</label>
+                <div className="inline">{post.disliked}</div>
+                            </div>
 
                 <div><a href={'#post/' + key}>Комментариев: {post.comment_count}</a></div>
 
@@ -62,7 +72,7 @@ export default class PostDetail extends Component {
                     {
                         this.props.tags.map(function(tag) {
                             if (post.tags.indexOf(tag.id) >= 0) {
-                                return <li className="tag_elem" key={tag.id}>{tag.title}</li>
+                                return <li className="tag_elem inline" key={tag.id}>{tag.title}</li>
                             }
                         })
                     }

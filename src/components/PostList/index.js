@@ -146,7 +146,7 @@ export default class PostList extends Component {
     }
 
     return <div className="post_list">
-
+      <h3>Опубликовать призыв</h3>
       <form
           onSubmit={this.addPostSubmit.bind(this)}
           className="add_post_form"

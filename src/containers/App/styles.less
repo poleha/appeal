@@ -19,7 +19,7 @@
 }
 
 
-.add_post_form, .registration_form, .login_form, .add_comment_form {
+.add_post_form, .add_comment_form {
   .form-mixin;
 }
 
@@ -44,6 +44,30 @@
   }
 }
 
+
+.user_block {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 300px;
+  z-index: 10;
+  padding: 20px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.1),0 3px 4px -3px rgba(0,0,0,0.3);
+  background-color: white;
+
+  .login_form, .registration_form {
+  input {
+    display: block;
+    width: 100%;
+  }
+  }
+.logged_user {
+  display: inline;
+  margin-right: 10px;
+}
+
+}
+
 .errors {
   .error {
     color: firebrick;
@@ -55,4 +79,9 @@
   font-size: 1.2em;
   color: #008800;
   text-align: center;
+}
+
+.inline {
+  display: inline;
+  margin-right: 10px;
 }

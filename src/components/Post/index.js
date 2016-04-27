@@ -110,7 +110,7 @@ export default class Post extends Component {
 
 
       return (
-        <div>
+        <div className="full_post">
             <PostDetail key={post.id} post={post} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.ratePost} />
 
 
@@ -124,7 +124,9 @@ export default class Post extends Component {
                 className="btn btn-default"
                 value="Обновить"
             />
+            <div className="comments">
             {commentsBlock}
+            </div>    
             <input
                 onClick={this.loadMoreCommentsClick.bind(this)}
                 type="button"

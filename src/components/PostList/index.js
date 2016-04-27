@@ -132,7 +132,7 @@ export default class PostList extends Component {
       tagsAddBlock = ''
     }
 
-    return <div>
+    return <div className="post_list">
 
       <form
           onSubmit={this.addPostSubmit.bind(this)}

@@ -39,7 +39,7 @@ export default class PostDetail extends Component {
         let post = this.props.post;
         let key =  post.id;
         return (
-            <div>
+            <div className="post">
                 <label>Автор:</label>
                 <div>{post.username}</div>
 

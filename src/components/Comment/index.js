@@ -7,10 +7,11 @@ export default class Comment extends Component {
     
     render() {
         let comment = this.props.comment;
-        return <div>
-            <div>{comment.username}</div>
+        return <div className="comment">
+            <label>Опубликован:</label><div>{comment.created}</div>
+            <label>Автор:</label><div>{comment.username}</div>
 
-            <div>{comment.body}</div>
+            <label>Комментарий:</label><div>{comment.body}</div>
 
         </div>
     }

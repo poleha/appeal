@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
-
+import classNames from 'classnames'
 
 export default class PostDetail extends Component {
 
@@ -39,7 +39,7 @@ export default class PostDetail extends Component {
         let post = this.props.post;
         let key =  post.id;
         return (
-            <div className="post">
+            <div className={classNames('post', {added: this.props.added})}>
                 <div>
                 <label>Автор:</label>
                 <div className="inline">{post.username}</div>

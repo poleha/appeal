@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import { formArrayToJson } from '../../helper'
 import PostDetail from '../../components/PostDetail'
 
-
 export default class PostList extends Component {
 
 
@@ -19,6 +18,7 @@ export default class PostList extends Component {
 
     if (this.props.data.added){
       ReactDOM.findDOMNode(this.refs.add_post_username).value = '';
+      ReactDOM.findDOMNode(this.refs.add_post_email).value = '';
       ReactDOM.findDOMNode(this.refs.add_post_body).value = '';
       let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
     }
@@ -87,7 +87,7 @@ export default class PostList extends Component {
 
   getAddedBlock() {
     if (this.props.data.added) {
-      return <div className="added">
+      return <div className="added_message">
         Ваш призыв добавлен
       </div>
     }
@@ -112,10 +112,18 @@ export default class PostList extends Component {
 
     let postsBlock;
     if (posts.length > 0) {
-      postsBlock = posts.map((elem)=>{
+      postsBlock = posts.map((elem, index)=>{
+      let added = this.props.data.added && index == 0;
 
-      return <PostDetail key={elem.id} post={elem} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.actions.ratePost} />
-
+      return <PostDetail 
+          key={elem.id}
+          post={elem} 
+          tags={this.props.tags}
+          logged={this.props.logged} 
+          ratePost={this.props.actions.ratePost}
+          added={added} 
+      />
+        
       });
     }
     else {
@@ -165,6 +173,21 @@ export default class PostList extends Component {
         placeholder="Автор"
         type="text"
         />
+        </div>
+
+        <div hidden={this.props.logged}>
+
+          {this.getFieldErrors.call(this, 'email')}
+
+          <input
+              disabled={this.getAddPostButtonDisabled.call(this)}
+              ref="add_post_email"
+              className="add_post_email"
+              id="add_post_email"
+              name="email"
+              placeholder="E-mail"
+              type="text"
+          />
         </div>
 
 

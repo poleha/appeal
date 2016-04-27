@@ -27,9 +27,13 @@
 .full_post {
   .comments {
     .comment {
-      border: 1px solid #e0ebea;
+      border: 2px solid #e0ebea;
       margin: 5px;
       padding: 5px;
+
+      &.added {
+        border: 4px solid #008800;
+      }
     }
   }
 }
@@ -37,9 +41,14 @@
 .post_list {
   .posts {
     .post {
-      border: 1px solid #e0ebea;
+      border: 2px solid #e0ebea;
       margin: 5px;
       padding: 5px;
+
+      &.added {
+        border: 4px solid #008800;
+      }
+
     }
   }
 }
@@ -75,7 +84,7 @@
   }
 }
 
-.added {
+.added_message {
   font-size: 1.2em;
   color: #008800;
   text-align: center;

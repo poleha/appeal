@@ -35,6 +35,7 @@ export default class Post extends Component {
         if (this.props.data.added) {
 
             ReactDOM.findDOMNode(this.refs.add_comment_username).value = '';
+            ReactDOM.findDOMNode(this.refs.add_comment_email).value = '';
             ReactDOM.findDOMNode(this.refs.add_comment_body).value = '';
         }
     }
@@ -42,9 +43,10 @@ export default class Post extends Component {
     addCommentFormSubmit(e) {
         e.preventDefault();
         let username = ReactDOM.findDOMNode(this.refs.add_comment_username).value;
+        let email = ReactDOM.findDOMNode(this.refs.add_comment_email).value;
         let body = ReactDOM.findDOMNode(this.refs.add_comment_body).value;
 
-        let comment = { username, body, post: this.props.data.posts[0].id };
+        let comment = { username, body, email, post: this.props.data.posts[0].id };
         this.props.actions.addComment(comment);
     }
 
@@ -61,11 +63,15 @@ export default class Post extends Component {
     }
 
     getAddCommentForm() {
-
-        let usernameInputClass = classNames('add_comment_body',
+        let usernameInputClass = classNames('add_comment_username',
         {
             hidden: this.props.logged
         });
+        
+        let emailImputClass = classNames('add_comment_email',
+            {
+                hidden: this.props.logged
+            });
 
         return (
             <div>
@@ -78,6 +84,13 @@ export default class Post extends Component {
                     ref="add_comment_username"
                     className={usernameInputClass}
                     placeholder="Автор"
+                    type="text"
+                />
+                {this.getFieldErrors.call(this, 'email')}
+                <input
+                    ref="add_comment_email"
+                    className={emailImputClass}
+                    placeholder="E-mail"
                     type="text"
                 />
                 {this.getFieldErrors.call(this, 'body')}
@@ -100,7 +113,7 @@ export default class Post extends Component {
 
     getAddedBlock() {
         if (this.props.data.added) {
-            return <div className="added">
+            return <div className="added_message">
                 Ваш комментарий добавлен
             </div>
         }
@@ -112,9 +125,13 @@ export default class Post extends Component {
       let comments = this.props.data.comments;
         let commentsBlock;
         if (comments.length > 0) {
-            commentsBlock = comments.map((comment)=>{
-
-               return <Comment key={comment.id} comment={comment}/>
+            commentsBlock = comments.map((comment, index)=>{
+                let added = this.props.data.added && index == 0;
+               return <Comment 
+                   key={comment.id} 
+                   comment={comment}
+                   added={added}
+               />
 
             });
         }

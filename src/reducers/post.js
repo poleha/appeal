@@ -46,7 +46,7 @@ function cloneState(state) {
     newState.added = false;
     newState.adding = false;
     newState.loading = false;
-    
+
     return newState;
 }
 
@@ -62,6 +62,7 @@ export default function app(state = initialState, action) {
         case ADD_COMMENT_SUCCESS:
             state = cloneState(state);
             state.added = true;
+            state.addCommentErrors = {};
             state.comments = [action.payload].concat(state.comments);
                         
             return state;

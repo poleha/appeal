@@ -73,6 +73,7 @@ export default class User extends Component {
                      ref="password"
                      placeholder="Пароль"
                      name="password"
+                     type="password"
                      className="user_password"
                  />
                  <input
@@ -116,6 +117,7 @@ export default class User extends Component {
                              className="user_password"
                              id="user_password"
                              name="password"
+                             type="password"
                              placeholder="Пароль"
                          />
                          {this.getFieldErrors.call(this, 'password2')}
@@ -125,6 +127,7 @@ export default class User extends Component {
                              className="user_password2"
                              id="user_password2"
                              name="password2"
+                             type="password"
                              placeholder="Пароль еще раз"
                          />
                          <input

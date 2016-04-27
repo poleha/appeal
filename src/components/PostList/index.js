@@ -67,20 +67,26 @@ export default class PostList extends Component {
     let errorsBlock;
     errorsBlock = fieldErrors.map(function (error, index) {
     return (
-      <li key={index}>
+      <li className="error" key={index}>
         {error}
       </li>
     )
     });
     return (
-    <ul>
+    <ul className="errors">
       {errorsBlock}
       </ul>
     )
     }
   }
 
-
+  getAddedBlock() {
+    if (this.props.data.added) {
+      return <div className="added">
+        Ваш призыв добавлен
+      </div>
+    }
+  }
 
   render() {
     let posts = this.props.data.posts;
@@ -183,7 +189,7 @@ export default class PostList extends Component {
           value="Добавить">
       </input>
       </form>
-
+      {this.getAddedBlock.call(this)}
       <input
           onClick={this.refreshPostsClick.bind(this)}
           type="button"

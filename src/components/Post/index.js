@@ -12,13 +12,13 @@ export default class Post extends Component {
             let errorsBlock;
             errorsBlock = fieldErrors.map(function (error, index) {
                 return (
-                    <li key={index}>
+                    <li className="error" key={index}>
                         {error}
                     </li>
                 )
             });
             return (
-                <ul>
+                <ul className="errors">
                     {errorsBlock}
                 </ul>
             )
@@ -68,6 +68,7 @@ export default class Post extends Component {
         });
 
         return (
+            <div>
             <form
                 onSubmit={this.addCommentFormSubmit.bind(this)}
                 className="add_comment_form"
@@ -92,7 +93,17 @@ export default class Post extends Component {
                     value="Добавить"
                 />
             </form>
+        {this.getAddedBlock.call(this)}
+        </div>
         )
+    }
+
+    getAddedBlock() {
+        if (this.props.data.added) {
+            return <div className="added">
+                Ваш комментарий добавлен
+            </div>
+        }
     }
 
     render() {

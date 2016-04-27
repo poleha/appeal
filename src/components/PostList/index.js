@@ -23,7 +23,7 @@ export default class PostList extends Component {
       let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
     }
 
-    for (let key in this.props.tags) {
+    for (let key = 0; key < this.props.tags.length; key++) {
       let alias = this.props.tags[key].alias;
       let checked = this.props.path == alias;
       ReactDOM.findDOMNode(this.refs[`tag_to_add__${alias}`]).checked = checked;

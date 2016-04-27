@@ -5,15 +5,13 @@ import PostDetail from '../../components/PostDetail'
 
 
 export default class PostList extends Component {
-  
 
-  //componentDidMount() {
-  //  if (this.props.data.loaded) {
-  //      this.props.actions.refreshPosts(this.props.path);
-  //  }
-  //  else {
 
-  //  }
+  //constructor(props) {
+  //  super(props);
+  //  this.state = {
+  //
+  //  };
  // }
 
   componentDidUpdate(){
@@ -24,6 +22,13 @@ export default class PostList extends Component {
       ReactDOM.findDOMNode(this.refs.add_post_body).value = '';
       let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
     }
+
+    for (let key in this.props.tags) {
+      let alias = this.props.tags[key].alias;
+      let checked = this.props.path == alias;
+      ReactDOM.findDOMNode(this.refs[`tag_to_add__${alias}`]).checked = checked;
+    }
+
   }
 
   getPost() {
@@ -124,9 +129,11 @@ export default class PostList extends Component {
         return <li key={key}>
           <input
               key={key}
+              defaultChecked={this.props.path == elem.alias}
               data-id={key}
               id={`tags_input-${key}`}
               type="checkbox"
+              ref={`tag_to_add__${elem.alias}`}
               name={`tags__${key}`}
               disabled={this.getAddPostButtonDisabled.call(this)}
           />

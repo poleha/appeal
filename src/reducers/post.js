@@ -46,7 +46,6 @@ function cloneState(state) {
     newState.added = false;
     newState.adding = false;
     newState.loading = false;
-    newState.loaded = false;
     
     return newState;
 }

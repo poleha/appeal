@@ -60,40 +60,29 @@ export function loginUserFail(errors) {
 
 }
 
-//*******************************************
-
-
-export function reLoginUser(userData) {
-    return function (dispatch, getState) {
-
-        let token = readCookie('appeal_site_token');
-      
-        if (token){
-         dispatch(loginUserSuccess(token));
-         dispatch(getUserInfo());
-        }
-
-    }
-
-}
 
 //*************************
 export function getUserInfo() {
     return function (dispatch, getState) {
         dispatch(getUserInfoStart());
         let token = readCookie('appeal_site_token');
+        if (token) {
 
         $.ajax({
             type: 'GET',
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             url: 'http://127.0.0.1:8000/auth/me/',
             success: function (data) {
+                dispatch(loginUserSuccess(token));
                 dispatch(getUserInfoSuccess(data));
+                
             },
             error: function (data) {
+                eraseCookie('appeal_site_token');
                 dispatch(getUserInfoFail());
             }
         });
+    }
     }
 
 }
@@ -129,7 +118,7 @@ export function getUserInfoFail() {
 export function logoutUser() {
     return function (dispatch, getState) {
         dispatch(logoutUserStart());
-        let token = readCookie('appeal_site_token');
+        let token = getState().user.token;
         $.ajax({
             type: 'POST',
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,

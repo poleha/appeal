@@ -1,9 +1,6 @@
 import { CHANGE_PATH } from '../constants/App'
 import { LOAD_TAGS_START, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAIL } from '../constants/App'
 import { loadPosts } from '../actions/PostActions'
-import { readCookie} from '../helper'
-
-
 
 
 
@@ -25,12 +22,7 @@ export function changePathStart(path) {
         
     }
     
-
 }
-
-
-
-
 
 
 export function changePath(pathData) {
@@ -50,7 +42,7 @@ export function loadTags() {
     return function (dispatch, getState) {
         dispatch(loadTagsStart());
 
-        let token = readCookie('appeal_site_token');
+        let token = getState().user.token;
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',

@@ -1,12 +1,6 @@
 import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../constants/Post'
 import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Post'
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
-
-import { readCookie} from '../helper'
-
-
-
-
 //*********************************************************
 
 
@@ -14,7 +8,7 @@ export function addComment(data) {
     return function (dispatch, getState) {
         dispatch(addCommentStart());
 
-        let token = readCookie('appeal_site_token');
+        let token = getState().user.token;
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'POST',
@@ -66,7 +60,7 @@ export function loadComments(params) {
         dispatch(loadCommentsStart());
         let urlParams = jQuery.param( params );
 
-        let token = readCookie('appeal_site_token');
+        let token = getState().user.token;
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
@@ -121,7 +115,7 @@ export function loadPosts(params) {
             urlParams = jQuery.param( params );
         }
 
-        let token = readCookie('appeal_site_token');
+        let token = getState().user.token;
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'GET',
@@ -170,7 +164,7 @@ export function loadPostsFail() {
 export function addPost(post) {
     return function (dispatch, getState) {
         dispatch(addPostStart());
-        let token = readCookie('appeal_site_token');
+        let token = getState().user.token;
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
             type: 'POST',
@@ -225,8 +219,8 @@ export function addPostFail(errors) {
 export function ratePost(data) {
     return function (dispatch, getState) {
         dispatch(ratePostStart(data));
-        
-        let token = readCookie('appeal_site_token');
+
+        let token = getState().user.token;
 
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,

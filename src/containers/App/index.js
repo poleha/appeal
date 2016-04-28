@@ -14,7 +14,7 @@ export default class App extends Component {
 
 
   componentWillMount(){
-    this.props.userActions.reLoginUser();
+    this.props.userActions.getUserInfo();
   }
 
 

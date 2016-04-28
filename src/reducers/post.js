@@ -92,7 +92,6 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
             posts = state.posts;
             post = action.payload;
-            post.rated = true;
             newPosts = [post].concat(posts);
             return { ...state, posts: newPosts, adding: false, added: true, count: state.count + 1};
         case ADD_POST_FAIL:

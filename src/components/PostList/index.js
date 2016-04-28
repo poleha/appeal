@@ -123,6 +123,7 @@ export default class PostList extends Component {
           logged={this.props.logged} 
           ratePost={this.props.actions.ratePost}
           added={added} 
+          userId={this.props.userId}
       />
         
       });
@@ -155,6 +156,7 @@ export default class PostList extends Component {
     }
 
     return <div className="post_list">
+      <div className="add_post_form_block">
       <h3>Опубликовать призыв</h3>
       <form
           onSubmit={this.addPostSubmit.bind(this)}
@@ -220,6 +222,7 @@ export default class PostList extends Component {
           value="Добавить">
       </input>
       </form>
+        </div>
       {this.getAddedBlock.call(this)}
       <input
           onClick={this.refreshPostsClick.bind(this)}

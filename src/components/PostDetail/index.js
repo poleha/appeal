@@ -7,27 +7,27 @@ export default class PostDetail extends Component {
 
     getRateBlock(post) {
         let key = post.id;
+        let likeButtonInactive = !this.props.logged || post.liked || post.user==this.props.userId;
+        let dislikeButtonInactive = !this.props.logged || post.disliked || post.user==this.props.userId;
         let rateBlock;
-        if (this.props.logged && !post.rated) {
             rateBlock = (
-                <div>
+                <div className='rate_block'>
                     <input
-                        disabled={post.rating}
+                        disabled={likeButtonInactive}
                         onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)}
                         type="button"
-                        className="btn btn-success"
-                        value="Нравится"
+                        className={classNames('button_like', {active: !likeButtonInactive}, {inactive: likeButtonInactive}, {rated:post.liked})}
+                        value={post.liked_count}
                     />
                     <input
-                        disabled={post.rating}
+                        disabled={dislikeButtonInactive}
                         onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)}
                         type="button"
-                        className="btn btn-danger"
-                        value="Не нравится"
+                        className={classNames('button_dislike', {active: !dislikeButtonInactive}, {inactive: dislikeButtonInactive}, {rated:post.disliked})}
+                        value={post.disliked_count}
                     />
                 </div>
             )
-        }
         return rateBlock;
     }
 
@@ -40,6 +40,7 @@ export default class PostDetail extends Component {
         let key =  post.id;
         return (
             <div className={classNames('post', {added: this.props.added})}>
+                {this.getRateBlock.call(this, post)}
                 <div>
                 <label>Автор:</label>
                 <div className="inline">{post.username}</div>
@@ -55,16 +56,6 @@ export default class PostDetail extends Component {
                 <div className="inline">{post.created}</div>
                     </div>
 
-                        <div>
-                        <label>Нравится:</label>
-                <div className="inline">{post.liked}</div>
-                        </div>
-
-                            <div>
-                            <label>Не нравится:</label>
-                <div className="inline">{post.disliked}</div>
-                            </div>
-
                 <div><a href={'#post/' + key}>Комментариев: {post.comment_count}</a></div>
 
                 <label>Метки:</label>
@@ -77,7 +68,7 @@ export default class PostDetail extends Component {
                         })
                     }
                 </ul>
-                {this.getRateBlock.call(this, post)}
+
             </div>
 
 

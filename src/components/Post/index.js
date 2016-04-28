@@ -139,13 +139,15 @@ export default class Post extends Component {
 
       return (
         <div className="full_post">
+            <div className="full_post_detail">
             <PostDetail key={post.id} post={post} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.ratePost} />
-
+            </div>
 
             <h3>Комментарии</h3>
+            <div className="add_comment_form_block">
             <label>Добавить комментарий</label>
             {this.getAddCommentForm.call(this)}
-
+             </div>   
             <input
                 onClick={this.refreshCommentsClick.bind(this)}
                 type="button"

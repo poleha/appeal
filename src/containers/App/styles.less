@@ -28,7 +28,7 @@
   .comments {
     .comment {
       border: 2px solid #e0ebea;
-      margin: 5px;
+      margin: 5px 0 5px 0;
       padding: 5px;
 
       &.added {
@@ -42,7 +42,7 @@
   .posts {
     .post {
       border: 2px solid #e0ebea;
-      margin: 5px;
+      margin: 5px 0 5px 0;
       padding: 5px;
 
       &.added {
@@ -93,4 +93,91 @@
 .inline {
   display: inline;
   margin-right: 10px;
+}
+
+.add_post_form_block {
+  border: 2px solid #e0ebea;
+  margin: 5px 0 20px 0;
+  padding: 10px;
+
+  .tags_add {
+    li {
+      list-style-type: none;
+    }
+  }
+
+}
+
+
+.add_comment_form_block {
+  border: 2px solid #e0ebea;
+  margin: 5px 0 20px 0;
+  padding: 10px;
+}
+
+
+.rate_block {
+
+  float: right;
+
+.button_like {
+  background: url(  /images/button_like.png) no-repeat;
+  width: 70px;
+  height: 70px;
+  border: 0;
+  margin-right: 20px;
+  text-align: left;
+  padding-left: 20px;
+  padding-top: 18px;
+
+  &.active {
+    background: url(  /images/button_like.png) no-repeat;
+
+    &:hover {
+      background: url(  /images/button_like_hover.png) no-repeat;
+    }
+
+  }
+
+  &.inactive {
+    background: url(  /images/button_like_inactive.png) no-repeat;
+  }
+
+  &.rated {
+    background: url(  /images/button_like_rated.png) no-repeat;
+  }
+
+
+
+}
+
+.button_dislike {
+  background: url(  /images/button_dislike.png) no-repeat;
+  width: 70px;
+  height: 70px;
+  border: 0;
+  text-align: left;
+  padding-bottom: 18px;
+  padding-left: 20px;
+
+
+  &.active {
+    background: url(  /images/button_dislike.png) no-repeat;
+
+    &:hover {
+      background: url(  /images/button_dislike_hover.png) no-repeat;
+    }
+
+  }
+
+  &.inactive {
+    background: url(  /images/button_dislike_inactive.png) no-repeat;
+  }
+
+  &.rated {
+    background: url(  /images/button_dislike_rated.png) no-repeat;
+  }
+
+}
+
 }

@@ -113,8 +113,20 @@ export default function app(state = initialState, action) {
             post = posts.findByValue('id', key);
             post.rated = true;
             post.rating = false;
-            if (action.payload.actionType == RATE_POST_TYPE_LIKE) post.liked += 1;
-            if (action.payload.actionType == RATE_POST_TYPE_DISLIKE) post.disliked += 1;
+            if (action.payload.actionType == RATE_POST_TYPE_LIKE) {
+                post.liked_count += 1;
+                if (post.disliked) post.disliked_count -= 1;
+                post.rated = true;
+                post.liked = true;
+                post.disliked = false;
+            }
+            if (action.payload.actionType == RATE_POST_TYPE_DISLIKE) {
+                post.disliked_count += 1;
+                if (post.liked) post.liked_count -= 1;
+                post.rated = false;
+                post.liked = false;
+                post.disliked = true;
+            }
             return { ...state, posts:posts};
         case RATE_POST_FAIL:
             state = cloneState(state);

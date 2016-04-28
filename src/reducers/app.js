@@ -8,14 +8,7 @@ const initialState = {
 };
 
 function cloneState(state) {
-    let newState = Object.assign({}, state);
-    newState.tags = [];
-
-    state.tags.forEach(function(elem){
-        let newObj = Object.assign({}, elem);
-        newState.tags.push(newObj);
-    });
-    
+    let newState = _.cloneDeep(state);
     return newState;
 }
 

@@ -22,9 +22,7 @@ const initialState = {
 };
 
 function cloneState(state) {
-    let newState = Object.assign({}, state);
-    newState.loginErrors = [];
-    newState.registerErrors = Object.assign({}, state.registerErrors);
+    let newState = _.cloneDeep(state);
     newState.logging = false;
     return newState;
 }

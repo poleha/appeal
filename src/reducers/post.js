@@ -26,23 +26,7 @@ const initialState = {
 };
 
 function cloneState(state) {
-    let newState = Object.assign({}, state);
-    newState.comments = [];
-    state.comments.forEach(function(elem){
-        let newObj = Object.assign({}, elem);
-        newState.comments.push(newObj);
-    });
-
-    newState.posts = [];
-
-    state.posts.forEach(function(elem){
-        let newObj = Object.assign({}, elem);
-        newObj.tags = newObj.tags.slice(0);
-        newState.posts.push(newObj);
-    });
-
-    newState.addPostErrors = Object.assign({}, state.addPostErrors);
-    newState.addCommentErrors = Object.assign({}, state.addPostErrors);
+    let newState = _.cloneDeep(state);
     newState.added = false;
     newState.adding = false;
     newState.loading = false;
@@ -73,27 +57,31 @@ export default function app(state = initialState, action) {
 
         case LOAD_COMMENTS_START:
             state = cloneState(state);
+            state.loading = true;
             return state;
         case LOAD_COMMENTS_SUCCESS:
             state = cloneState(state);
+            state.loading = false;
             state.comments = action.payload.results;
 
             return state;
         case LOAD_COMMENTS_FAIL:
             state = cloneState(state);
+            state.loading = false;
             return state;
-
 
 
 
         case LOAD_POSTS_START:
             state = cloneState(state);
+            state.loading = true;
             return state;
         case LOAD_POSTS_SUCCESS:
             state = cloneState(state);
             return { ...state, posts:action.payload.results, loaded: true, count: action.payload.count};
         case LOAD_POSTS_FAIL:
             state = cloneState(state);
+            state.loading = false;
             return state;
 
 

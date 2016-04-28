@@ -222,24 +222,22 @@ export function addPostFail(errors) {
 //**********************
 
 
-export function ratePost(key, actionType) {
+export function ratePost(data) {
     return function (dispatch, getState) {
-        dispatch(ratePostStart(key, actionType));
-        let post_mark = {
-            post: key,
-            mark_type:actionType
-        };
+        dispatch(ratePostStart(data));
+        
         let token = readCookie('appeal_site_token');
 
         $.ajax({
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
-            type: 'POST',
-            url: 'http://127.0.0.1:8000/post_marks/',
-            data: post_mark,
+            type: 'PATCH',
+            url: `http://127.0.0.1:8000/posts/${data.id}/rate/`,
+            data: data,
             success: function (data) {
-                dispatch(ratePostSuccess(key, actionType))
+                dispatch(ratePostSuccess(data))
             },
             error: function (data) {
+                dispatch(ratePostFail(data))
             }
         });
 
@@ -248,30 +246,30 @@ export function ratePost(key, actionType) {
 }
 
 
-export function ratePostStart(key, actionType) {
+export function ratePostStart(data) {
 
     return {
         type: RATE_POST_START,
-        payload: {key, actionType}
+        payload: data
     }
 
 }
 
-export function ratePostSuccess(key, actionType) {
+export function ratePostSuccess(data) {
 
     return {
         type: RATE_POST_SUCCESS,
-        payload: {key, actionType}
+        payload: data
     }
 
 }
 
 
-export function ratePostFail(key, actionType) {
+export function ratePostFail(data) {
 
     return {
         type: RATE_POST_FAIL,
-        payload: {key, actionType}
+        payload: data
     }
 
 }

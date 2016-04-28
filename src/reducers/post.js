@@ -102,37 +102,23 @@ export default function app(state = initialState, action) {
 
         case RATE_POST_START:
             state = cloneState(state);
-            key = action.payload.key;
+            key = action.payload.id;
             posts = state.posts;
             posts.findByValue('id', key).rating = true;
             return { ...state, posts: posts};
         case RATE_POST_SUCCESS:
             state = cloneState(state);
-            key = action.payload.key;
+            key = action.payload.id;
             posts = state.posts;
-            post = posts.findByValue('id', key);
-            post.rated = true;
-            post.rating = false;
-            if (action.payload.actionType == RATE_POST_TYPE_LIKE) {
-                post.liked_count += 1;
-                if (post.disliked) post.disliked_count -= 1;
-                post.rated = true;
-                post.liked = true;
-                post.disliked = false;
-            }
-            if (action.payload.actionType == RATE_POST_TYPE_DISLIKE) {
-                post.disliked_count += 1;
-                if (post.liked) post.liked_count -= 1;
-                post.rated = false;
-                post.liked = false;
-                post.disliked = true;
-            }
+            let index = posts.getIndexByValue('id', key);
+            posts[index] = action.payload;
+
             return { ...state, posts:posts};
         case RATE_POST_FAIL:
             state = cloneState(state);
-            key = action.payload.key;
+            key = action.payload.id;
             posts = state.posts;
-            posts.findByValue('id', key).rating = true;
+            posts.findByValue('id', key).rating = false;
             return { ...state, posts: posts};
         
 

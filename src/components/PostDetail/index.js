@@ -7,23 +7,23 @@ export default class PostDetail extends Component {
 
     getRateBlock(post) {
         let key = post.id;
-        let likeButtonInactive = !this.props.logged || post.liked || post.user==this.props.userId;
-        let dislikeButtonInactive = !this.props.logged || post.disliked || post.user==this.props.userId;
+        let likeButtonInactive = !this.props.logged || post.user==this.props.userId || post.rating;
+        let dislikeButtonInactive = !this.props.logged  || post.user==this.props.userId || post.rating;
         let rateBlock;
             rateBlock = (
                 <div className='rate_block'>
                     <input
                         disabled={likeButtonInactive}
-                        onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_LIKE)}
+                        onClick={this.ratePostClick.bind(this, RATE_POST_TYPE_LIKE)}
                         type="button"
-                        className={classNames('button_like', {active: !likeButtonInactive}, {inactive: likeButtonInactive}, {rated:post.liked})}
+                        className={classNames('button_like', {active: !likeButtonInactive}, {inactive: likeButtonInactive}, {rated:post.rated == RATE_POST_TYPE_LIKE})}
                         value={post.liked_count}
                     />
                     <input
                         disabled={dislikeButtonInactive}
-                        onClick={this.ratePostClick.bind(this, key, RATE_POST_TYPE_DISLIKE)}
+                        onClick={this.ratePostClick.bind(this, RATE_POST_TYPE_DISLIKE)}
                         type="button"
-                        className={classNames('button_dislike', {active: !dislikeButtonInactive}, {inactive: dislikeButtonInactive}, {rated:post.disliked})}
+                        className={classNames('button_dislike', {active: !dislikeButtonInactive}, {inactive: dislikeButtonInactive}, {rated:post.rated == RATE_POST_TYPE_DISLIKE})}
                         value={post.disliked_count}
                     />
                 </div>
@@ -31,8 +31,8 @@ export default class PostDetail extends Component {
         return rateBlock;
     }
 
-    ratePostClick(key, actionType){
-        this.props.ratePost(key, actionType)
+    ratePostClick(actionType){
+        this.props.ratePost({...this.props.post, rated: actionType})
     }
 
     render() {

@@ -37,7 +37,7 @@ export default class User extends Component {
 
     getLoginBlockButtons() {
         let loginBlockButtons;
-        if (!this.props.data.logged) {
+        if (!this.props.data.token) {
             loginBlockButtons = <div className="login_block_buttons">
                 <input
                     type="button"
@@ -71,7 +71,7 @@ export default class User extends Component {
         }
 
         let loginBlockTemplate = '';
-        if (!this.props.data.logged) {
+        if (!this.props.data.token) {
          if(this.props.data.activeForm == USER_FORM_LOGIN){
          loginBlockTemplate =
              <div className="login_block">

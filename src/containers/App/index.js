@@ -49,6 +49,7 @@ export default class App extends Component {
   }
   
   render() {
+      console.log('222222222222222222')
     let path = this.props.app.path;
     let linksBlock = this.props.app.tags.map(function (tag, index) {
       return (

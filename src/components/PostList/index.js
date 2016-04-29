@@ -12,6 +12,7 @@ function mapStateToProps(state) {
     data: state.post,
     tags: state.app.tags,
     logged: state.user.logged,
+    token: state.user.token,
     userId: state.user.userId,
     path: state.app.path
     };
@@ -40,8 +41,7 @@ export default class PostList extends Component {
     return this.props.data.posts && this.props.logged;
   }
 
-  componentDidUpdate(){
-
+  loadAjax() {
     if(this.props.logged) {
 
       if ((this.props.data.posts === null || this.props.path != this.props.data.path) && !this.props.data.loadingPosts) {
@@ -51,7 +51,16 @@ export default class PostList extends Component {
       }
 
     }
-      
+
+  }
+
+  componentDidMount() {
+    this.loadAjax();
+
+  }
+
+  componentDidUpdate(){
+    this.loadAjax();
 
     if (this.props.data.added){
       ReactDOM.findDOMNode(this.refs.add_post_username).value = '';
@@ -159,6 +168,7 @@ export default class PostList extends Component {
               post={elem}
               tags={this.props.tags}
               logged={this.props.logged}
+              token={this.props.token}
               ratePost={this.props.actions.ratePost}
               added={added}
               userId={this.props.userId}
@@ -201,7 +211,7 @@ export default class PostList extends Component {
               className="add_post_form"
               ref="add_post_form"
           >
-            <div hidden={this.props.logged}>
+            <div hidden={this.props.token}>
 
               {this.getFieldErrors.call(this, 'username')}
 
@@ -216,7 +226,7 @@ export default class PostList extends Component {
               />
             </div>
 
-            <div hidden={this.props.logged}>
+            <div hidden={this.props.token}>
 
               {this.getFieldErrors.call(this, 'email')}
 

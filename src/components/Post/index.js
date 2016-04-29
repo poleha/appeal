@@ -14,6 +14,7 @@ function mapStateToProps(state) {
         path: state.app.path,
         tags: state.app.tags,
         logged: state.user.logged,
+        token: state.user.token,
         userId: state.user.userId
     };
 }
@@ -53,8 +54,8 @@ export default class Post extends Component {
         return this.props.data.posts && this.props.data.comments && this.props.logged;
     }
 
-    componentDidUpdate() {
 
+    loadAjax() {
 
         if(this.props.logged) {
             let id = this.props.path.split('/')[1];
@@ -68,6 +69,16 @@ export default class Post extends Component {
 
 
         }
+    }
+
+    componentDidMount() {
+        this.loadAjax();
+    }
+
+    componentDidUpdate() {
+
+        this.loadAjax();
+
 
 
         if (this.props.data.added) {
@@ -160,7 +171,6 @@ export default class Post extends Component {
     }
 
     render() {
-      console.log('1111111111111111', this.isReady());
       if (this.isReady()) {
        let post = this.props.data.posts[0];
       let comments = this.props.data.comments;
@@ -187,6 +197,7 @@ export default class Post extends Component {
                 post={post}
                 tags={this.props.tags}
                 logged={this.props.logged}
+                token={this.props.token}
                 rated={post.rated}
                 ratePost={this.props.actions.ratePost}
             />

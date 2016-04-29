@@ -4,10 +4,9 @@ import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../con
 import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
 
 import { ACTIVATE_USER_FORM } from '../constants/User'
-
+import { loadPosts } from '../actions/PostActions'
 
 import { createCookie, readCookie, eraseCookie} from '../helper'
-import { loadPosts } from '../actions/PostActions'
 
 export function loginUser(userData) {
     return function (dispatch, getState) {
@@ -22,7 +21,6 @@ export function loginUser(userData) {
                 createCookie('appeal_site_token', data.auth_token);
                 dispatch(loginUserSuccess(data.auth_token));
                 dispatch(getUserInfo());
-                dispatch(loadPosts());
             },
             error: function (data) {
                 dispatch(loginUserFail(data.responseJSON.non_field_errors));
@@ -67,7 +65,7 @@ export function getUserInfo() {
         dispatch(getUserInfoStart());
         let token = readCookie('appeal_site_token');
         if (token) {
-
+        let path = getState().app.path;
         $.ajax({
             type: 'GET',
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
@@ -75,7 +73,7 @@ export function getUserInfo() {
             success: function (data) {
                 dispatch(loginUserSuccess(token));
                 dispatch(getUserInfoSuccess(data));
-                
+
             },
             error: function (data) {
                 eraseCookie('appeal_site_token');
@@ -83,6 +81,9 @@ export function getUserInfo() {
             }
         });
     }
+        else {
+            dispatch(getUserInfoFail());
+        }
     }
 
 }
@@ -126,7 +127,7 @@ export function logoutUser() {
             success: function (data) {
                 eraseCookie('appeal_site_token');
                 dispatch(logoutUserSuccess());
-                dispatch(loadPosts())
+                window.location.hash = '';
             },
             error: function (data) {
                 dispatch(logoutUserFail());

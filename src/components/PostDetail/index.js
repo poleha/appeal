@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react'
-import ReactDOM from 'react-dom'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
 import classNames from 'classnames'
 
@@ -27,7 +26,7 @@ export default class PostDetail extends Component {
                         value={post.disliked_count}
                     />
                 </div>
-            )
+            );
         return rateBlock;
     }
 
@@ -41,23 +40,19 @@ export default class PostDetail extends Component {
         return (
             <div className={classNames('post', {added: this.props.added})}>
                 {this.getRateBlock.call(this, post)}
-                <div>
+                <div className="post_created">{post.created}</div>
+                <div className="post_author inline">
                 <label>Автор:</label>
                 <div className="inline">{post.username}</div>
                 </div>
 
-                <div>
+                <div className="post_body">
                 <label>Призыв:</label>
                 <div><a href={'#post/' + key}>{post.body}</a></div>
                 </div>
-
-                    <div>
-                    <label>Опубликовано:</label>
-                <div className="inline">{post.created}</div>
-                    </div>
-
-                <div><a href={'#post/' + key}>Комментариев: {post.comment_count}</a></div>
-
+               
+                
+                <div className="post_tags">
                 <label>Метки:</label>
                 <ul className="tags">
                     {
@@ -68,7 +63,8 @@ export default class PostDetail extends Component {
                         })
                     }
                 </ul>
-
+                </div>
+                <div className="post_comment_count"><a href={'#post/' + key}>Комментариев: {post.comment_count}</a></div>
             </div>
 
 

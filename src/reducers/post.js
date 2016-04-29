@@ -11,12 +11,12 @@ const initialState = {
     //    comments: [],
     //    tags: []
     //},
-    comments: [],
+    comments: null,
 
-    posts: [],
+    posts: null,
     count: 0,
-    loading: false,
-    loaded: false,
+    loadingPosts: false,
+    loadingComments: false,
     adding: false,
     added: false,
     addPostErrors: {},
@@ -29,7 +29,8 @@ function cloneState(state) {
     let newState = _.cloneDeep(state);
     newState.added = false;
     newState.adding = false;
-    newState.loading = false;
+    //newState.loadingPosts = false;
+    //newState.loadingComments = false;
 
     return newState;
 }
@@ -57,31 +58,32 @@ export default function app(state = initialState, action) {
 
         case LOAD_COMMENTS_START:
             state = cloneState(state);
-            state.loading = true;
+            state.loadingComments = true;
             return state;
         case LOAD_COMMENTS_SUCCESS:
             state = cloneState(state);
-            state.loading = false;
+            state.loadingComments = false;
             state.comments = action.payload.results;
 
             return state;
         case LOAD_COMMENTS_FAIL:
             state = cloneState(state);
-            state.loading = false;
             return state;
 
 
 
         case LOAD_POSTS_START:
             state = cloneState(state);
-            state.loading = true;
+            state.loadingPosts = true;
             return state;
         case LOAD_POSTS_SUCCESS:
             state = cloneState(state);
-            return { ...state, posts:action.payload.results, loaded: true, count: action.payload.count};
+            state.posts = action.payload.results;
+            state.count = action.payload.count;
+            state.loadingPosts = false;
+            return state;
         case LOAD_POSTS_FAIL:
             state = cloneState(state);
-            state.loading = false;
             return state;
 
 

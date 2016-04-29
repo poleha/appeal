@@ -109,6 +109,8 @@ export function loadCommentsFail() {
 
 export function loadPosts(params) {
     return function (dispatch, getState) {
+        let loading = getState().post.loadingPosts;
+        if (!loading) {
         dispatch(loadPostsStart());
         let urlParams = '';
         if (params) {
@@ -129,7 +131,7 @@ export function loadPosts(params) {
             }
         });
     }
-
+    }
 }
 
 

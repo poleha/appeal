@@ -2,7 +2,29 @@ import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { formArrayToJson } from '../../helper'
 import PostDetail from '../../components/PostDetail'
+import { bindActionCreators } from 'redux'
+import * as postActions from '../../actions/PostActions'
+import { connect } from 'react-redux'
 
+
+function mapStateToProps(state) {
+  return {
+    data: state.post,
+    tags: state.app.tags,
+    logged: state.user.logged,
+    userId: state.user.userId,
+    path: state.app.path
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(postActions, dispatch)
+  };
+}
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class PostList extends Component {
 
 
@@ -13,8 +35,23 @@ export default class PostList extends Component {
   //  };
  // }
 
+
+  isReady() {
+    return this.props.data.posts && this.props.logged;
+  }
+
   componentDidUpdate(){
 
+    if(this.props.logged) {
+
+      if (this.props.data.posts === null && !this.props.data.loadingPosts) {
+
+        this.props.actions.loadPosts({tags__alias: this.props.path} )
+
+      }
+
+    }
+      
 
     if (this.props.data.added){
       ReactDOM.findDOMNode(this.refs.add_post_username).value = '';
@@ -45,7 +82,7 @@ export default class PostList extends Component {
   }
 
   getAddPostButtonDisabled() {
-  if (!this.props.data.loaded || this.props.data.adding || this.props.data.loading){
+  if (!this.props.data.posts || this.props.data.adding || this.props.data.loading){
     return true;
   }
     else {
@@ -95,148 +132,151 @@ export default class PostList extends Component {
   }
 
   render() {
-    let posts = this.props.data.posts;
-    let tags = this.props.tags;
-    //let addPost = this.props.actions.addPost;
+    if (this.isReady()) {
+      let posts = this.props.data.posts;
+      let tags = this.props.tags;
+      //let addPost = this.props.actions.addPost;
 
-    let showMoreInput;
-    if (this.props.data.count > this.props.data.posts.length) {
-      showMoreInput = (
-    <input
-        onClick={this.loadMorePostsClick.bind(this)}
-        className="btn btn-default"
-        type="button"
-        value="Показать еще">
-    </input>
-      )
-    }
+      let showMoreInput;
+      if (this.props.data.count > this.props.data.posts.length) {
+        showMoreInput = (
+            <input
+                onClick={this.loadMorePostsClick.bind(this)}
+                className="btn btn-default"
+                type="button"
+                value="Показать еще">
+            </input>
+        )
+      }
 
-    let postsBlock;
-    if (posts.length > 0) {
-      postsBlock = posts.map((elem, index)=>{
-      let added = this.props.data.added && index == 0;
+      let postsBlock;
+      if (posts.length > 0) {
+        postsBlock = posts.map((elem, index)=> {
+          let added = this.props.data.added && index == 0;
 
-      return <PostDetail 
-          key={elem.id}
-          post={elem} 
-          tags={this.props.tags}
-          logged={this.props.logged} 
-          ratePost={this.props.actions.ratePost}
-          added={added} 
-          userId={this.props.userId}
-      />
-        
-      });
-    }
-    else {
-      postsBlock = ''
-    }
-
-    let tagsAddBlock;
-    if (tags.length > 0) {
-      tagsAddBlock = tags.map((elem, index)=>{
-        let key =  elem.id;
-        return <li key={key}>
-          <input
-              key={key}
-              defaultChecked={this.props.path == elem.alias}
-              data-id={key}
-              id={`tags_input-${key}`}
-              type="checkbox"
-              ref={`tag_to_add__${elem.alias}`}
-              name={`tags__${key}`}
-              disabled={this.getAddPostButtonDisabled.call(this)}
+          return <PostDetail
+              key={elem.id}
+              post={elem}
+              tags={this.props.tags}
+              logged={this.props.logged}
+              ratePost={this.props.actions.ratePost}
+              added={added}
+              userId={this.props.userId}
           />
-          <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
-        </li>
-      });
-    }
-    else {
-      tagsAddBlock = ''
-    }
 
-    return <div className="post_list">
-      <div className="add_post_form_block">
-      <h3>Опубликовать призыв</h3>
-      <form
-          onSubmit={this.addPostSubmit.bind(this)}
-          className="add_post_form"
-          ref="add_post_form"
-      >
-      <div hidden={this.props.logged}>
+        });
+      }
+      else {
+        postsBlock = ''
+      }
 
-        {this.getFieldErrors.call(this, 'username')}
+      let tagsAddBlock;
+      if (tags.length > 0) {
+        tagsAddBlock = tags.map((elem, index)=> {
+          let key = elem.id;
+          return <li key={key}>
+            <input
+                key={key}
+                defaultChecked={this.props.path == elem.alias}
+                data-id={key}
+                id={`tags_input-${key}`}
+                type="checkbox"
+                ref={`tag_to_add__${elem.alias}`}
+                name={`tags__${key}`}
+                disabled={this.getAddPostButtonDisabled.call(this)}
+            />
+            <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
+          </li>
+        });
+      }
+      else {
+        tagsAddBlock = ''
+      }
 
-        <input
-        disabled={this.getAddPostButtonDisabled.call(this)}
-        ref="add_post_username"
-        className="add_post_username"
-        id="add_post_username"
-        name="username"
-        placeholder="Автор"
-        type="text"
-        />
-        </div>
+      return <div className="post_list">
+        <div className="add_post_form_block">
+          <h3>Опубликовать призыв</h3>
+          <form
+              onSubmit={this.addPostSubmit.bind(this)}
+              className="add_post_form"
+              ref="add_post_form"
+          >
+            <div hidden={this.props.logged}>
 
-        <div hidden={this.props.logged}>
+              {this.getFieldErrors.call(this, 'username')}
 
-          {this.getFieldErrors.call(this, 'email')}
+              <input
+                  disabled={this.getAddPostButtonDisabled.call(this)}
+                  ref="add_post_username"
+                  className="add_post_username"
+                  id="add_post_username"
+                  name="username"
+                  placeholder="Автор"
+                  type="text"
+              />
+            </div>
 
-          <input
-              disabled={this.getAddPostButtonDisabled.call(this)}
-              ref="add_post_email"
-              className="add_post_email"
-              id="add_post_email"
-              name="email"
-              placeholder="E-mail"
-              type="text"
-          />
-        </div>
+            <div hidden={this.props.logged}>
+
+              {this.getFieldErrors.call(this, 'email')}
+
+              <input
+                  disabled={this.getAddPostButtonDisabled.call(this)}
+                  ref="add_post_email"
+                  className="add_post_email"
+                  id="add_post_email"
+                  name="email"
+                  placeholder="E-mail"
+                  type="text"
+              />
+            </div>
 
 
-        {this.getFieldErrors.call(this, 'body')}
+            {this.getFieldErrors.call(this, 'body')}
 
       <textarea cols="70" rows="10"
-          disabled={this.getAddPostButtonDisabled.bind(this)()}
-          ref="add_post_body"
-          className="add_post_body"
-          id="add_post_body"
-          name="body"
-          placeholder="Сообщение"
-          type="text"
+                disabled={this.getAddPostButtonDisabled.bind(this)()}
+                ref="add_post_body"
+                className="add_post_body"
+                id="add_post_body"
+                name="body"
+                placeholder="Сообщение"
+                type="text"
       />
 
 
-        <label htmlFor="tags_add_ul">Разделы:</label>
+            <label htmlFor="tags_add_ul">Разделы:</label>
 
-        {this.getFieldErrors.call(this, 'tags')}
+            {this.getFieldErrors.call(this, 'tags')}
 
-      <ul className='tags_add' ref="tags" id="tags_add_ul">
-        {tagsAddBlock}
-      </ul>
+            <ul className='tags_add' ref="tags" id="tags_add_ul">
+              {tagsAddBlock}
+            </ul>
 
-      <input
-          disabled={this.getAddPostButtonDisabled.call(this)}
-          type="submit"
-          className="btn btn-default"
-          value="Добавить">
-      </input>
-      </form>
+            <input
+                disabled={this.getAddPostButtonDisabled.call(this)}
+                type="submit"
+                className="btn btn-default"
+                value="Добавить">
+            </input>
+          </form>
         </div>
-      {this.getAddedBlock.call(this)}
-      <input
-          onClick={this.refreshPostsClick.bind(this)}
-          type="button"
-          className="btn btn-default"
-          value="Обновить">
-      </input>
+        {this.getAddedBlock.call(this)}
+        <input
+            onClick={this.refreshPostsClick.bind(this)}
+            type="button"
+            className="btn btn-default"
+            value="Обновить">
+        </input>
 
-      <div className="posts">
-      {postsBlock}
+        <div className="posts">
+          {postsBlock}
         </div>
 
-      {showMoreInput}
-    </div>
+        {showMoreInput}
+      </div>
+    }
+    else return null;
   }
 }
 
@@ -244,12 +284,12 @@ export default class PostList extends Component {
 
 
 
-PostList.propTypes = {
+//PostList.propTypes = {
   //year: PropTypes.number.isRequired,
   //photos: PropTypes.array.isRequired,
   //setYear: PropTypes.func.isRequired
-}
+//}
 
-PostList.contextTypes = {
+//PostList.contextTypes = {
   //router: PropTypes.object.isRequired
-}
+//}

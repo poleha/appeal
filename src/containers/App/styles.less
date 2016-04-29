@@ -40,19 +40,40 @@
 
 .post_list {
   .posts {
-    .post {
-      border: 2px solid #e0ebea;
-      margin: 5px 0 5px 0;
-      padding: 5px;
 
-      &.added {
-        border: 4px solid #008800;
-      }
-
-    }
   }
 }
 
+
+.post {
+  border: 2px solid #e0ebea;
+  margin: 5px 0 5px 0;
+  padding: 5px 0 20px 5px;
+
+  .post_created {
+    color: #999988;
+    font-size: 0.9em;
+    margin-left: 30px;
+  }
+
+  .post_body {
+    margin: 10px 0 10px 0;
+  }
+
+  .post_author, .post_comment_count, .post_tags, .post_author {
+    font-size: 0.9em;
+    color: #999777;
+  }
+
+  .post_comment_count {
+    float: right;
+  }
+
+  &.added {
+    border: 4px solid #008800;
+  }
+
+}
 
 .user_block {
   position: absolute;
@@ -133,9 +154,7 @@
   &.active {
     background: url(  /images/button_like.png) no-repeat;
 
-    &:hover {
-      background: url(  /images/button_like_hover.png) no-repeat;
-    }
+
 
   }
 
@@ -164,9 +183,6 @@
   &.active {
     background: url(  /images/button_dislike.png) no-repeat;
 
-    &:hover {
-      background: url(  /images/button_dislike_hover.png) no-repeat;
-    }
 
   }
 

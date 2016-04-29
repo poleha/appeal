@@ -33,33 +33,45 @@ export default function user(state = initialState, action) {
     switch (action.type) {
         case USER_LOGIN_START:
             state = cloneState(state);
-            return { ...state, logging: true, token: null};
+            return { ...state, token: null};
         case USER_LOGIN_SUCCESS:
             state = cloneState(state);
-            return { ...state, logged: true, token: action.payload };
+            return { ...state, token: action.payload };
         case USER_LOGIN_FAIL:
             state = cloneState(state);
             return { ...state, token: null, loginErrors: action.payload };
 
         case GET_USER_INFO_START:
             state = cloneState(state);
-            return { ...state };
+            return state;
         case GET_USER_INFO_SUCCESS:
             state = cloneState(state);
-            return { ...state, userName: action.payload.username, userId: action.payload.id };
+            state.userName = action.payload.username;
+            state.userId = action.payload.id;
+            state.logged = true;
+            return state;
+
         case GET_USER_INFO_FAIL:
             state = cloneState(state);
-            return { ...state, userName: null, userId: null };
+            state.logged = true;
+            state.userName = null;
+            state.userId = null;
+            state.token = null;
+            return state;
 
         case LOGOUT_USER_START:
             state = cloneState(state);
-            return { ...state };
+            return state;
         case LOGOUT_USER_SUCCESS:
             state = cloneState(state);
-            return { ...state, userName: null, userId: null, token:null, logged: false, activeForm: USER_FORM_LOGIN };
+            state.userName = null;
+            state.userId = null;
+            state.token = null;
+            state.activeForm = USER_FORM_LOGIN;
+            return state;
         case LOGOUT_USER_FAIL:
             state = cloneState(state);
-            return { ...state };
+            return state;
 
 
         case REGISTER_USER_START:

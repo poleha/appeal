@@ -3,7 +3,29 @@ import ReactDOM from 'react-dom'
 import PostDetail from '../../components/PostDetail'
 import Comment from '../../components/Comment'
 import classNames from 'classnames'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as postActions from '../../actions/PostActions'
 
+
+function mapStateToProps(state) {
+    return {
+        data: state.post,
+        path: state.app.path,
+        tags: state.app.tags,
+        logged: state.user.logged,
+        userId: state.user.userId
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+   return {
+       actions: bindActionCreators(postActions, dispatch)
+   };
+}
+
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class Post extends Component {
 
     getFieldErrors(fieldName){
@@ -24,14 +46,33 @@ export default class Post extends Component {
             )
         }
     }
-    
-    componentDidMount() {
-        let id = this.props.path.split('/')[1];
-        this.props.actions.loadPosts({id});
-        this.props.actions.loadComments({post: id});
+
+
+
+    isReady() {
+        return this.props.data.posts && this.props.data.comments && this.props.logged;
     }
 
     componentDidUpdate() {
+
+
+        if(this.props.logged) {
+            let id = this.props.path.split('/')[1];
+
+            if (this.props.data.posts === null && !this.props.data.loadingPosts) {
+
+                this.props.actions.loadPosts({id});
+
+            }
+            if (this.props.data.comments === null && !this.props.data.loadingComments) {
+
+                this.props.actions.loadComments({post: id});
+
+            }
+
+        }
+
+
         if (this.props.data.added) {
 
             ReactDOM.findDOMNode(this.refs.add_comment_username).value = '';
@@ -72,7 +113,7 @@ export default class Post extends Component {
             {
                 hidden: this.props.logged
             });
-
+        if (this.props.data.posts && this.props.data.comments){
         return (
             <div>
             <form
@@ -109,6 +150,8 @@ export default class Post extends Component {
         {this.getAddedBlock.call(this)}
         </div>
         )
+        }
+        else return null;
     }
 
     getAddedBlock() {
@@ -120,8 +163,9 @@ export default class Post extends Component {
     }
 
     render() {
-      let post = this.props.data.posts[0];
-      if (post) {
+      console.log('1111111111111111', this.isReady());
+      if (this.isReady()) {
+       let post = this.props.data.posts[0];
       let comments = this.props.data.comments;
         let commentsBlock;
         if (comments.length > 0) {
@@ -140,7 +184,15 @@ export default class Post extends Component {
       return (
         <div className="full_post">
             <div className="full_post_detail">
-            <PostDetail key={post.id} post={post} tags={this.props.tags} logged={this.props.logged} ratePost={this.props.ratePost} />
+            <PostDetail
+                key={post.id}
+                userId={this.props.userId}
+                post={post}
+                tags={this.props.tags}
+                logged={this.props.logged}
+                rated={post.rated}
+                ratePost={this.props.actions.ratePost}
+            />
             </div>
 
             <h3>Комментарии</h3>

@@ -19,7 +19,9 @@ export default class App extends Component {
 
 
   componentDidMount() {
-    this.props.appActions.loadTags();
+    this.props.userActions.getUserInfo();
+      this.props.appActions.loadTags();
+
 
 
     window.addEventListener('hashchange', () => {
@@ -35,30 +37,17 @@ export default class App extends Component {
 
   }
 
+   
   getContent() {
     let componentName = this.props.app.componentName;
     switch (componentName) {
       case 'PostList':
             return  (
-                <PostList
-                    data = {this.props.post}
-                    tags = {this.props.app.tags}
-                    actions = {this.props.postActions}
-                    logged = {this.props.user.logged}
-                    userId = {this.props.user.userId}
-                    path = {this.props.app.path}
-                />
+                <PostList />
             );
       case 'Post':
             return (
-                <Post
-                    data = {this.props.post}
-                    actions = {this.props.postActions}
-                    path = {this.props.app.path}
-                    tags = {this.props.app.tags}
-                    logged = {this.props.user.logged}
-                    ratePost = {this.props.postActions.ratePost}
-                />
+                <Post/>
             )
 
     }

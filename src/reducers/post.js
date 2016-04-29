@@ -28,8 +28,8 @@ function cloneState(state) {
     let newState = _.cloneDeep(state);
     newState.added = false;
     newState.adding = false;
-    //newState.loadingPosts = false;
-    //newState.loadingComments = false;
+    newState.addPostErrors = {};
+    newState.addCommentErrors = {};
 
     return newState;
 }

@@ -44,9 +44,9 @@ export default class PostList extends Component {
 
     if(this.props.logged) {
 
-      if (this.props.data.posts === null && !this.props.data.loadingPosts) {
+      if ((this.props.data.posts === null || this.props.path != this.props.data.path) && !this.props.data.loadingPosts) {
 
-        this.props.actions.loadPosts({tags__alias: this.props.path} )
+        this.props.actions.loadPosts({tags__alias: this.props.path}, this.props.path )
 
       }
 
@@ -94,13 +94,13 @@ export default class PostList extends Component {
 
   loadMorePostsClick(e) {
 
-    this.props.actions.loadPosts({tags__alias: this.props.path, limit: this.props.data.posts.length + 10} )
+    this.props.actions.loadPosts({tags__alias: this.props.path, limit: this.props.data.posts.length + 10}, this.props.path )
 
   }
 
   refreshPostsClick(e) {
 
-    this.props.actions.loadPosts({tags__alias: this.props.path} )
+    this.props.actions.loadPosts({tags__alias: this.props.path} , this.props.path)
 
   }
 

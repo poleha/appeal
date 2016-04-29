@@ -59,16 +59,13 @@ export default class Post extends Component {
         if(this.props.logged) {
             let id = this.props.path.split('/')[1];
 
-            if (this.props.data.posts === null && !this.props.data.loadingPosts) {
+            if ((this.props.data.posts === null || this.props.path != this.props.data.path) && !this.props.data.loadingPosts) {
 
-                this.props.actions.loadPosts({id});
-
-            }
-            if (this.props.data.comments === null && !this.props.data.loadingComments) {
-
+                this.props.actions.loadPosts({id}, this.props.path);
                 this.props.actions.loadComments({post: id});
 
             }
+
 
         }
 
@@ -98,7 +95,7 @@ export default class Post extends Component {
     }
 
     refreshCommentsClick(e) {
-        this.props.actions.loadPosts({id: this.props.data.posts[0].id});
+        this.props.actions.loadPosts({id: this.props.data.posts[0].id}, this.props.path);
         this.props.actions.loadComments({post: this.props.data.posts[0].id} )
 
     }

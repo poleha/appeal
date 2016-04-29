@@ -4,7 +4,6 @@ import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../con
 import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
 
 import { ACTIVATE_USER_FORM } from '../constants/User'
-import { loadPosts } from '../actions/PostActions'
 
 import { createCookie, readCookie, eraseCookie} from '../helper'
 

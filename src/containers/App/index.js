@@ -13,11 +13,6 @@ import './styles.less'
 export default class App extends Component {
 
 
-  componentWillMount(){
-    this.props.userActions.getUserInfo();
-  }
-
-
   componentDidMount() {
     this.props.userActions.getUserInfo();
       this.props.appActions.loadTags();

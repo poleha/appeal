@@ -107,7 +107,7 @@ export function loadCommentsFail() {
 
 //***********************************
 
-export function loadPosts(params) {
+export function loadPosts(params, path) {
     return function (dispatch, getState) {
         let loading = getState().post.loadingPosts;
         if (!loading) {
@@ -123,6 +123,7 @@ export function loadPosts(params) {
             type: 'GET',
             url: 'http://127.0.0.1:8000/posts/?' + urlParams,
             success: function (data) {
+                data.path = path;
                 dispatch(loadPostsSuccess(data))
             },
             error: function (data) {

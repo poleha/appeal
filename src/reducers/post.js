@@ -1,7 +1,6 @@
 import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../constants/Post'
 import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Post'
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
-import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../constants/Post'
 
 var posts, newPosts, post, key;
 
@@ -12,7 +11,7 @@ const initialState = {
     //    tags: []
     //},
     comments: null,
-
+    path: null,
     posts: null,
     count: 0,
     loadingPosts: false,
@@ -81,6 +80,7 @@ export default function app(state = initialState, action) {
             state.posts = action.payload.results;
             state.count = action.payload.count;
             state.loadingPosts = false;
+            state.path = action.payload.path;
             return state;
         case LOAD_POSTS_FAIL:
             state = cloneState(state);

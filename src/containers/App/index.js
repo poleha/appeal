@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import * as userActions from '../../actions/UserActions'
 import * as appActions from '../../actions/AppActions'
 import * as postActions from '../../actions/PostActions'
+import * as commentActions from '../../actions/CommentActions'
 import User from '../../components/User'
 import PostList from '../../components/PostList'
 import Post from '../../components/Post'
@@ -49,7 +50,6 @@ export default class App extends Component {
   }
   
   render() {
-      console.log('222222222222222222')
     let path = this.props.app.path;
     let linksBlock = this.props.app.tags.map(function (tag, index) {
       return (
@@ -81,25 +81,23 @@ export default class App extends Component {
   }
 }
 
-//      <Post data={this.props.postList} actions={this.props.postListActions} />
-
 
 //Устанавливаем соответствие глобального state props каждого компонента
 function mapStateToProps(state) {
   return {
     user: state.user,
     app: state.app,
-    post: state.post
+    post: state.post,
+    comment: state.comment
   }
 }
-
-
 
 function mapDispatchToProps(dispatch) {
   return {
     userActions: bindActionCreators(userActions, dispatch),
     appActions: bindActionCreators(appActions, dispatch),
-    postActions: bindActionCreators(postActions, dispatch)
+    postActions: bindActionCreators(postActions, dispatch),
+    commentActions: bindActionCreators(commentActions, dispatch)
     //we bind Action Creator to dispatch http://redux.js.org/docs/Glossary.html#action-creator
     //this created action is immediately dispatched
     //Вместо этого мы можем передавать store во все компоненты, начиная с App, при нажатии на кнопку генерировать

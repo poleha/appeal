@@ -9,7 +9,8 @@ import { connect } from 'react-redux'
 
 function mapStateToProps(state) {
   return {
-    data: state.post,
+    post: state.post,
+    comment: state.comment,
     tags: state.app.tags,
     logged: state.user.logged,
     token: state.user.token,
@@ -20,7 +21,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(postActions, dispatch)
+    postActions: bindActionCreators(postActions, dispatch)
   };
 }
 
@@ -38,15 +39,15 @@ export default class PostList extends Component {
 
 
   isReady() {
-    return this.props.data.posts && this.props.logged;
+    return this.props.post.posts && this.props.logged;
   }
 
   loadAjax() {
     if(this.props.logged) {
 
-      if ((this.props.data.posts === null || this.props.path != this.props.data.path) && !this.props.data.loadingPosts) {
+      if ((this.props.post.posts === null || this.props.path != this.props.post.path) && !this.props.post.loading) {
 
-        this.props.actions.loadPosts({tags__alias: this.props.path}, this.props.path )
+        this.props.postActions.loadPosts({tags__alias: this.props.path}, this.props.path )
 
       }
 
@@ -62,13 +63,13 @@ export default class PostList extends Component {
   componentDidUpdate(){
     this.loadAjax();
 
-    if (this.props.data.added){
+    if (this.props.post.added){
       ReactDOM.findDOMNode(this.refs.add_post_username).value = '';
       ReactDOM.findDOMNode(this.refs.add_post_email).value = '';
       ReactDOM.findDOMNode(this.refs.add_post_body).value = '';
       //let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
     }
-    if (this.props.data.loading || this.props.data.added) {
+    if (this.props.post.loading || this.props.post.added) {
     for (let key = 0; key < this.props.tags.length; key++) {
       let alias = this.props.tags[key].alias;
       let checked = this.props.path == alias;
@@ -87,11 +88,11 @@ export default class PostList extends Component {
   addPostSubmit(e) {
     e.preventDefault();
   let post = this.getPost();
-   this.props.actions.addPost(post);
+   this.props.postActions.addPost(post);
   }
 
   getAddPostButtonDisabled() {
-  if (!this.props.data.posts || this.props.data.adding || this.props.data.loading){
+  if (!this.props.post.posts || this.props.post.adding || this.props.post.loading){
     return true;
   }
     else {
@@ -103,18 +104,18 @@ export default class PostList extends Component {
 
   loadMorePostsClick(e) {
 
-    this.props.actions.loadPosts({tags__alias: this.props.path, limit: this.props.data.posts.length + 10}, this.props.path )
+    this.props.postActions.loadPosts({tags__alias: this.props.path, limit: this.props.post.posts.length + 10}, this.props.path )
 
   }
 
   refreshPostsClick(e) {
 
-    this.props.actions.loadPosts({tags__alias: this.props.path} , this.props.path)
+    this.props.postActions.loadPosts({tags__alias: this.props.path} , this.props.path)
 
   }
 
   getFieldErrors(fieldName){
-    let fieldErrors = this.props.data.addPostErrors[fieldName];
+    let fieldErrors = this.props.post.errors[fieldName];
     if (fieldErrors) {
     let errorsBlock;
     errorsBlock = fieldErrors.map(function (error, index) {
@@ -133,7 +134,7 @@ export default class PostList extends Component {
   }
 
   getAddedBlock() {
-    if (this.props.data.added) {
+    if (this.props.post.added) {
       return <div className="added_message">
         Ваш призыв добавлен
       </div>
@@ -142,12 +143,12 @@ export default class PostList extends Component {
 
   render() {
     if (this.isReady()) {
-      let posts = this.props.data.posts;
+      let posts = this.props.post.posts;
       let tags = this.props.tags;
       //let addPost = this.props.actions.addPost;
 
       let showMoreInput;
-      if (this.props.data.count > this.props.data.posts.length) {
+      if (this.props.post.count > this.props.post.posts.length) {
         showMoreInput = (
             <input
                 onClick={this.loadMorePostsClick.bind(this)}
@@ -161,7 +162,7 @@ export default class PostList extends Component {
       let postsBlock;
       if (posts.length > 0) {
         postsBlock = posts.map((elem, index)=> {
-          let added = this.props.data.added && index == 0;
+          let added = this.props.post.added && index == 0;
 
           return <PostDetail
               key={elem.id}
@@ -169,7 +170,7 @@ export default class PostList extends Component {
               tags={this.props.tags}
               logged={this.props.logged}
               token={this.props.token}
-              ratePost={this.props.actions.ratePost}
+              ratePost={this.props.postActions.ratePost}
               added={added}
               userId={this.props.userId}
           />

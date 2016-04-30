@@ -6,11 +6,13 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as postActions from '../../actions/PostActions'
+import * as commentActions from '../../actions/CommentActions'
 
 
 function mapStateToProps(state) {
     return {
-        data: state.post,
+        post: state.post,
+        comment: state.comment,
         path: state.app.path,
         tags: state.app.tags,
         logged: state.user.logged,
@@ -21,7 +23,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
    return {
-       actions: bindActionCreators(postActions, dispatch)
+       postActions: bindActionCreators(postActions, dispatch),
+       commentActions: bindActionCreators(commentActions, dispatch)
    };
 }
 
@@ -30,7 +33,7 @@ function mapDispatchToProps(dispatch) {
 export default class Post extends Component {
 
     getFieldErrors(fieldName){
-        let fieldErrors = this.props.data.addCommentErrors[fieldName];
+        let fieldErrors = this.props.comment.errors[fieldName];
         if (fieldErrors) {
             let errorsBlock;
             errorsBlock = fieldErrors.map(function (error, index) {
@@ -51,7 +54,7 @@ export default class Post extends Component {
 
 
     isReady() {
-        return this.props.data.posts && this.props.data.comments && this.props.logged;
+        return this.props.post.posts && this.props.comment.comments && this.props.logged;
     }
 
 
@@ -60,10 +63,10 @@ export default class Post extends Component {
         if(this.props.logged) {
             let id = this.props.path.split('/')[1];
 
-            if ((this.props.data.posts === null || this.props.path != this.props.data.path) && !this.props.data.loadingPosts) {
+            if ((this.props.post.posts === null || this.props.path != this.props.post.path) && !this.props.post.loading) {
 
-                this.props.actions.loadPosts({id}, this.props.path);
-                this.props.actions.loadComments({post: id});
+                this.props.postActions.loadPosts({id}, this.props.path);
+                this.props.commentActions.loadComments({post: id});
 
             }
 
@@ -81,7 +84,7 @@ export default class Post extends Component {
 
 
 
-        if (this.props.data.added) {
+        if (this.props.comment.added) {
 
             ReactDOM.findDOMNode(this.refs.add_comment_username).value = '';
             ReactDOM.findDOMNode(this.refs.add_comment_email).value = '';
@@ -95,19 +98,19 @@ export default class Post extends Component {
         let email = ReactDOM.findDOMNode(this.refs.add_comment_email).value;
         let body = ReactDOM.findDOMNode(this.refs.add_comment_body).value;
 
-        let comment = { username, body, email, post: this.props.data.posts[0].id };
-        this.props.actions.addComment(comment);
+        let comment = { username, body, email, post: this.props.post.posts[0].id };
+        this.props.commentActions.addComment(comment);
     }
 
     loadMoreCommentsClick(e) {
 
-        this.props.actions.loadComments({post: this.props.data.posts[0].id, limit: this.props.data.comments.length + 10} )
+        this.props.commentActions.loadComments({post: this.props.post.posts[0].id, limit: this.props.comment.comments.length + 10} )
 
     }
 
     refreshCommentsClick(e) {
-        this.props.actions.loadPosts({id: this.props.data.posts[0].id}, this.props.path);
-        this.props.actions.loadComments({post: this.props.data.posts[0].id} )
+        this.props.postActions.loadPosts({id: this.props.post.posts[0].id}, this.props.path);
+        this.props.commentActions.loadComments({post: this.props.post.posts[0].id} )
 
     }
 
@@ -121,7 +124,7 @@ export default class Post extends Component {
             {
                 hidden: this.props.logged
             });
-        if (this.props.data.posts && this.props.data.comments){
+        if (this.props.post.posts && this.props.comment.comments){
         return (
             <div>
             <form
@@ -163,7 +166,7 @@ export default class Post extends Component {
     }
 
     getAddedBlock() {
-        if (this.props.data.added) {
+        if (this.props.comment.added) {
             return <div className="added_message">
                 Ваш комментарий добавлен
             </div>
@@ -172,12 +175,12 @@ export default class Post extends Component {
 
     render() {
       if (this.isReady()) {
-       let post = this.props.data.posts[0];
-      let comments = this.props.data.comments;
+       let post = this.props.post.posts[0];
+      let comments = this.props.comment.comments;
         let commentsBlock;
         if (comments.length > 0) {
             commentsBlock = comments.map((comment, index)=>{
-                let added = this.props.data.added && index == 0;
+                let added = this.props.comment.added && index == 0;
                return <Comment 
                    key={comment.id} 
                    comment={comment}
@@ -199,7 +202,7 @@ export default class Post extends Component {
                 logged={this.props.logged}
                 token={this.props.token}
                 rated={post.rated}
-                ratePost={this.props.actions.ratePost}
+                ratePost={this.props.postActions.ratePost}
             />
             </div>
 
@@ -220,7 +223,7 @@ export default class Post extends Component {
             <input
                 onClick={this.loadMoreCommentsClick.bind(this)}
                 type="button"
-                className={classNames('btn', 'btn-default', {hidden: post.comments.length <= this.props.data.comments.length})}
+                className={classNames('btn', 'btn-default', {hidden: post.comments.length <= this.props.comment.comments.length})}
                 value="Показать еще"
             />
 

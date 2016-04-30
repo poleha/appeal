@@ -1,35 +1,23 @@
-import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../constants/Post'
-import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Post'
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
 
 var posts, newPosts, post, key;
 
 const initialState = {
     id: null,
-    //post: {
-    //    comments: [],
-    //    tags: []
-    //},
-    comments: null,
     path: null,
     posts: null,
     count: 0,
-    loadingPosts: false,
-    loadingComments: false,
+    loading: false,
     adding: false,
     added: false,
-    addPostErrors: {},
-    addCommentErrors: {}
-
-
+    errors: {}
 };
 
 function cloneState(state) {
     let newState = _.cloneDeep(state);
     newState.added = false;
     newState.adding = false;
-    newState.addPostErrors = {};
-    newState.addCommentErrors = {};
+    newState.errors = {};
 
     return newState;
 }
@@ -38,48 +26,15 @@ function cloneState(state) {
 export default function app(state = initialState, action) {
 
     switch (action.type) {
-        case ADD_COMMENT_START:
-            state = cloneState(state);
-            state.adding = true;
-            state.addCommentErrors = {};
-            return state;
-        case ADD_COMMENT_SUCCESS:
-            state = cloneState(state);
-            state.added = true;
-            state.addCommentErrors = {};
-            state.comments = [action.payload].concat(state.comments);
-                        
-            return state;
-        case ADD_COMMENT_FAIL:
-            state = cloneState(state);
-            state.addCommentErrors = action.payload;
-            return state;
-
-        case LOAD_COMMENTS_START:
-            state = cloneState(state);
-            state.loadingComments = true;
-            return state;
-        case LOAD_COMMENTS_SUCCESS:
-            state = cloneState(state);
-            state.loadingComments = false;
-            state.comments = action.payload.results;
-
-            return state;
-        case LOAD_COMMENTS_FAIL:
-            state = cloneState(state);
-            return state;
-
-
-
         case LOAD_POSTS_START:
             state = cloneState(state);
-            state.loadingPosts = true;
+            state.loading = true;
             return state;
         case LOAD_POSTS_SUCCESS:
             state = cloneState(state);
             state.posts = action.payload.results;
             state.count = action.payload.count;
-            state.loadingPosts = false;
+            state.loading = false;
             state.path = action.payload.path;
             return state;
         case LOAD_POSTS_FAIL:
@@ -89,7 +44,7 @@ export default function app(state = initialState, action) {
 
         case ADD_POST_START:
             state = cloneState(state);
-            return { ...state, adding: true, addPostErrors: {}};
+            return { ...state, adding: true, errors: {}};
         case ADD_POST_SUCCESS:
             state = cloneState(state);
             posts = state.posts;
@@ -98,8 +53,8 @@ export default function app(state = initialState, action) {
             return { ...state, posts: newPosts, adding: false, added: true, count: state.count + 1};
         case ADD_POST_FAIL:
             state = cloneState(state);
-            let addPostErrors = action.payload;
-            return { ...state, adding: false, addPostErrors: addPostErrors};
+            let errors = action.payload;
+            return { ...state, adding: false, errors: errors};
 
         case RATE_POST_START:
             state = cloneState(state);

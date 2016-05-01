@@ -6,6 +6,7 @@ import * as userActions from '../../actions/UserActions'
 import * as appActions from '../../actions/AppActions'
 import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
+import * as tagActions from '../../actions/TagActions'
 import User from '../../components/User'
 import PostList from '../../components/PostList'
 import Post from '../../components/Post'
@@ -14,9 +15,23 @@ import './styles.less'
 export default class App extends Component {
 
 
+    loadAjax() {
+        if (!this.props.user.logged && !this.props.user.logging) {
+        this.props.userActions.getUserInfo();
+        }
+        if (!this.props.tag.loaded && !this.props.tag.loading) {
+
+        this.props.tagActions.loadTags();
+        }
+    }
+
+    componentDidUpdate() {
+        this.loadAjax();
+    }
+
+
   componentDidMount() {
-    this.props.userActions.getUserInfo();
-      this.props.appActions.loadTags();
+    this.loadAjax();
 
 
 
@@ -49,9 +64,15 @@ export default class App extends Component {
     }
   }
   
-  render() {
+  isReady() {
+      return this.props.user.logged && this.props.tag.loaded;
+  }
+
+    render() {
+        if (!this.isReady()) return null;
+
     let path = this.props.app.path;
-    let linksBlock = this.props.app.tags.map(function (tag, index) {
+    let linksBlock = this.props.tag.tags.map(function (tag, index) {
       return (
           <li key={tag.id} className={classNames(
           {
@@ -88,7 +109,8 @@ function mapStateToProps(state) {
     user: state.user,
     app: state.app,
     post: state.post,
-    comment: state.comment
+    comment: state.comment,
+    tag: state.tag
   }
 }
 
@@ -97,7 +119,8 @@ function mapDispatchToProps(dispatch) {
     userActions: bindActionCreators(userActions, dispatch),
     appActions: bindActionCreators(appActions, dispatch),
     postActions: bindActionCreators(postActions, dispatch),
-    commentActions: bindActionCreators(commentActions, dispatch)
+    commentActions: bindActionCreators(commentActions, dispatch),
+    tagActions: bindActionCreators(tagActions, dispatch)
     //we bind Action Creator to dispatch http://redux.js.org/docs/Glossary.html#action-creator
     //this created action is immediately dispatched
     //Вместо этого мы можем передавать store во все компоненты, начиная с App, при нажатии на кнопку генерировать

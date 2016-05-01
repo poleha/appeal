@@ -14,7 +14,7 @@ function mapStateToProps(state) {
         post: state.post,
         comment: state.comment,
         path: state.app.path,
-        tags: state.app.tags,
+        tags: state.tag.tags,
         logged: state.user.logged,
         token: state.user.token,
         userId: state.user.userId

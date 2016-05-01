@@ -1,5 +1,1 @@
 export const CHANGE_PATH = 'CHANGE_PATH';
-
-export const LOAD_TAGS_START = 'LOAD_TAGS_START';
-export const LOAD_TAGS_SUCCESS = 'LOAD_TAGS_SUCCESS';
-export const LOAD_TAGS_FAIL = 'LOAD_TAGS_FAIL';

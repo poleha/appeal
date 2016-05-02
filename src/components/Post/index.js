@@ -117,12 +117,12 @@ export default class Post extends Component {
     getAddCommentForm() {
         let usernameInputClass = classNames('add_comment_username',
         {
-            hidden: this.props.logged
+            hidden: this.props.token
         });
         
         let emailImputClass = classNames('add_comment_email',
             {
-                hidden: this.props.logged
+                hidden: this.props.token
             });
         if (this.props.post.posts && this.props.comment.comments){
         return (

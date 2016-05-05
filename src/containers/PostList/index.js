@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { formArrayToJson } from '../../helper'
-import PostDetail from '../../components/PostDetail'
+import Post from '../../components/Post'
 import { bindActionCreators } from 'redux'
 import * as postActions from '../../actions/PostActions'
 import { connect } from 'react-redux'
@@ -73,7 +73,8 @@ export default class PostList extends Component {
     for (let key = 0; key < this.props.tags.length; key++) {
       let alias = this.props.tags[key].alias;
       let checked = this.props.path == alias;
-      ReactDOM.findDOMNode(this.refs[`tag_to_add__${alias}`]).checked = checked;
+      let elem = ReactDOM.findDOMNode(this.refs[`tag_to_add__${alias}`]);
+      if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
     }
     }
 
@@ -164,7 +165,7 @@ export default class PostList extends Component {
         postsBlock = posts.map((elem, index)=> {
           let added = this.props.post.added && index == 0;
 
-          return <PostDetail
+          return <Post
               key={elem.id}
               post={elem}
               tags={this.props.tags}

@@ -1,239 +1,74 @@
 import React, { PropTypes, Component } from 'react'
-import ReactDOM from 'react-dom'
-import PostDetail from '../../components/PostDetail'
-import Comment from '../../components/Comment'
+import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
 import classNames from 'classnames'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as postActions from '../../actions/PostActions'
-import * as commentActions from '../../actions/CommentActions'
 
-
-function mapStateToProps(state) {
-    return {
-        post: state.post,
-        comment: state.comment,
-        path: state.app.path,
-        tags: state.tag.tags,
-        logged: state.user.logged,
-        token: state.user.token,
-        userId: state.user.userId
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-   return {
-       postActions: bindActionCreators(postActions, dispatch),
-       commentActions: bindActionCreators(commentActions, dispatch)
-   };
-}
-
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class Post extends Component {
 
-    getFieldErrors(fieldName){
-        let fieldErrors = this.props.comment.errors[fieldName];
-        if (fieldErrors) {
-            let errorsBlock;
-            errorsBlock = fieldErrors.map(function (error, index) {
-                return (
-                    <li className="error" key={index}>
-                        {error}
-                    </li>
-                )
-            });
-            return (
-                <ul className="errors">
-                    {errorsBlock}
-                </ul>
-            )
-        }
+    getRateBlock(post) {
+        let key = post.id;
+        let likeButtonInactive = !this.props.token || post.user==this.props.userId || post.rating;
+        let dislikeButtonInactive = !this.props.token  || post.user==this.props.userId || post.rating;
+        let rateBlock;
+            rateBlock = (
+                <div className='rate_block'>
+                    <input
+                        disabled={likeButtonInactive}
+                        onClick={this.ratePostClick.bind(this, RATE_POST_TYPE_LIKE)}
+                        type="button"
+                        className={classNames('button_like', {active: !likeButtonInactive}, {inactive: likeButtonInactive}, {rated:post.rated == RATE_POST_TYPE_LIKE})}
+                        value={post.liked_count}
+                    />
+                    <input
+                        disabled={dislikeButtonInactive}
+                        onClick={this.ratePostClick.bind(this, RATE_POST_TYPE_DISLIKE)}
+                        type="button"
+                        className={classNames('button_dislike', {active: !dislikeButtonInactive}, {inactive: dislikeButtonInactive}, {rated:post.rated == RATE_POST_TYPE_DISLIKE})}
+                        value={post.disliked_count}
+                    />
+                </div>
+            );
+        return rateBlock;
     }
 
-
-
-    isReady() {
-        return this.props.post.posts && this.props.comment.comments && this.props.logged;
-    }
-
-
-    loadAjax() {
-
-        if(this.props.logged) {
-            let id = this.props.path.split('/')[1];
-
-            if ((this.props.post.posts === null || this.props.path != this.props.post.path) && !this.props.post.loading) {
-
-                this.props.postActions.loadPosts({id}, this.props.path);
-                this.props.commentActions.loadComments({post: id});
-
-            }
-
-
-        }
-    }
-
-    componentDidMount() {
-        this.loadAjax();
-    }
-
-    componentDidUpdate() {
-
-        this.loadAjax();
-
-
-
-        if (this.props.comment.added) {
-
-            ReactDOM.findDOMNode(this.refs.add_comment_username).value = '';
-            ReactDOM.findDOMNode(this.refs.add_comment_email).value = '';
-            ReactDOM.findDOMNode(this.refs.add_comment_body).value = '';
-        }
-    }
-
-    addCommentFormSubmit(e) {
-        e.preventDefault();
-        let username = ReactDOM.findDOMNode(this.refs.add_comment_username).value;
-        let email = ReactDOM.findDOMNode(this.refs.add_comment_email).value;
-        let body = ReactDOM.findDOMNode(this.refs.add_comment_body).value;
-
-        let comment = { username, body, email, post: this.props.post.posts[0].id };
-        this.props.commentActions.addComment(comment);
-    }
-
-    loadMoreCommentsClick(e) {
-
-        this.props.commentActions.loadComments({post: this.props.post.posts[0].id, limit: this.props.comment.comments.length + 10} )
-
-    }
-
-    refreshCommentsClick(e) {
-        this.props.postActions.loadPosts({id: this.props.post.posts[0].id}, this.props.path);
-        this.props.commentActions.loadComments({post: this.props.post.posts[0].id} )
-
-    }
-
-    getAddCommentForm() {
-        let usernameInputClass = classNames('add_comment_username',
-        {
-            hidden: this.props.token
-        });
-        
-        let emailImputClass = classNames('add_comment_email',
-            {
-                hidden: this.props.token
-            });
-        if (this.props.post.posts && this.props.comment.comments){
-        return (
-            <div>
-            <form
-                onSubmit={this.addCommentFormSubmit.bind(this)}
-                className="add_comment_form"
-            >
-                {this.getFieldErrors.call(this, 'username')}
-                <input
-                    ref="add_comment_username"
-                    className={usernameInputClass}
-                    placeholder="Автор"
-                    type="text"
-                />
-                {this.getFieldErrors.call(this, 'email')}
-                <input
-                    ref="add_comment_email"
-                    className={emailImputClass}
-                    placeholder="E-mail"
-                    type="text"
-                />
-                {this.getFieldErrors.call(this, 'body')}
-            <textarea cols="70" rows="10"
-                      ref="add_comment_body"
-                      className='add_comment_body'
-                      placeholder="Комментарий"
-            />
-
-                <input
-                    type="submit"
-                    className="btn btn-default"
-                    value="Добавить"
-                />
-            </form>
-        {this.getAddedBlock.call(this)}
-        </div>
-        )
-        }
-        else return null;
-    }
-
-    getAddedBlock() {
-        if (this.props.comment.added) {
-            return <div className="added_message">
-                Ваш комментарий добавлен
-            </div>
-        }
+    ratePostClick(actionType){
+        this.props.ratePost({...this.props.post, rated: actionType})
     }
 
     render() {
-      if (this.isReady()) {
-       let post = this.props.post.posts[0];
-      let comments = this.props.comment.comments;
-        let commentsBlock;
-        if (comments.length > 0) {
-            commentsBlock = comments.map((comment, index)=>{
-                let added = this.props.comment.added && index == 0;
-               return <Comment 
-                   key={comment.id} 
-                   comment={comment}
-                   added={added}
-               />
+        let post = this.props.post;
+        let key =  post.id;
+        return (
+            <div className={classNames('post', {added: this.props.added})}>
+                {this.getRateBlock.call(this, post)}
+                <div className="post_created">{post.created}</div>
+                <div className="post_author inline">
+                <label>Автор:</label>
+                <div className="inline">{post.username}</div>
+                </div>
 
-            });
-        }
-
-
-      return (
-        <div className="full_post">
-            <div className="full_post_detail">
-            <PostDetail
-                key={post.id}
-                userId={this.props.userId}
-                post={post}
-                tags={this.props.tags}
-                logged={this.props.logged}
-                token={this.props.token}
-                rated={post.rated}
-                ratePost={this.props.postActions.ratePost}
-            />
+                <div className="post_body">
+                <label>Призыв:</label>
+                <div><a href={'#post/' + key}>{post.body}</a></div>
+                </div>
+               
+                
+                <div className="post_tags">
+                <label>Метки:</label>
+                <ul className="tags">
+                    {
+                        this.props.tags.map(function(tag) {
+                            if (post.tags.indexOf(tag.id) >= 0) {
+                                return <li className="tag_elem inline" key={tag.id}>{tag.title}</li>
+                            }
+                        })
+                    }
+                </ul>
+                </div>
+                <div className="post_comment_count"><a href={'#post/' + key}>Комментариев: {post.comment_count}</a></div>
             </div>
 
-            <h3>Комментарии</h3>
-            <div className="add_comment_form_block">
-            <label>Добавить комментарий</label>
-            {this.getAddCommentForm.call(this)}
-             </div>   
-            <input
-                onClick={this.refreshCommentsClick.bind(this)}
-                type="button"
-                className="btn btn-default"
-                value="Обновить"
-            />
-            <div className="comments">
-            {commentsBlock}
-            </div>    
-            <input
-                onClick={this.loadMoreCommentsClick.bind(this)}
-                type="button"
-                className={classNames('btn', 'btn-default', {hidden: post.comments.length <= this.props.comment.comments.length})}
-                value="Показать еще"
-            />
 
-        </div>
-      )
-
-      }
-        else {
-          return null;
-      }
+        )
     }
-}
 
+}

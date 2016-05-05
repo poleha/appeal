@@ -8,8 +8,8 @@ import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
 import * as tagActions from '../../actions/TagActions'
 import User from '../../components/User'
-import PostList from '../../components/PostList'
-import Post from '../../components/Post'
+import PostList from '../../containers/PostList'
+import PostDetail from '../../containers/PostDetail'
 import './styles.less'
 
 export default class App extends Component {
@@ -56,9 +56,9 @@ export default class App extends Component {
             return  (
                 <PostList />
             );
-      case 'Post':
+      case 'PostDetail':
             return (
-                <Post/>
+                <PostDetail/>
             )
 
     }

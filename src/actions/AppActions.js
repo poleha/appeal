@@ -11,7 +11,7 @@ export function changePathStart(path) {
         pathData.componentName = 'PostList';
     }
     else {
-        pathData.componentName = 'Post';
+        pathData.componentName = 'PostDetail';
     }
     pathData.path = path;
     dispatch(changePath(pathData));

@@ -35,7 +35,7 @@ export default function app(state = initialState, action) {
             state.posts = action.payload.results;
             state.count = action.payload.count;
             state.loading = false;
-            state.path = action.payload.path;
+            state.path = action.path;
             return state;
         case LOAD_POSTS_FAIL:
             state = cloneState(state);

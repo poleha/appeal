@@ -38,55 +38,10 @@ export function addPost(post) {
             }
         }
         return dispatch(action);
-        /*
-        dispatch(addPostStart());
-        let token = getState().user.token;
-        $.ajax({
-            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
-            type: 'POST',
-            contentType: 'application/json',
-            url: 'http://127.0.0.1:8000/posts/',
-            data: JSON.stringify(post),
-            success: function (data) {
-                dispatch(addPostSuccess(data));
-            },
-            error: function (data) {
-                dispatch(addPostFail(data.responseJSON));
-            }
-        });
-
-*/
-    }
+           }
 
 }
 
-
-export function addPostStart() {
-
-    return {
-        type: ADD_POST_START
-    }
-
-}
-
-export function addPostSuccess(post) {
-
-    return {
-        type: ADD_POST_SUCCESS,
-        payload: post
-    }
-
-}
-
-
-export function addPostFail(errors) {
-
-    return {
-        type: ADD_POST_FAIL,
-        payload: errors
-    }
-
-}
 
 
 //**********************

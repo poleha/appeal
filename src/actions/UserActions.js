@@ -2,16 +2,35 @@ import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../consta
 import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/User'
 import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/User'
 import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
-
 import { ACTIVATE_USER_FORM } from '../constants/User'
+import { API_KEY } from '../middleware/api'
+
 
 import { createCookie, readCookie, eraseCookie} from '../helper'
 
 export function loginUser(userData) {
     return function (dispatch, getState) {
-        dispatch(loginUserStart());
 
-
+        let action = {
+            [API_KEY]: {
+                method: 'post',
+                endpoint: 'http://127.0.0.1:8000/auth/login/',
+                actions: [USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL],
+                body: userData
+            }
+        }
+        
+        dispatch(action).then((response) => {
+            createCookie('appeal_site_token', response.auth_token);
+            console.log('111111111111', response)
+            dispatch(getUserInfo());
+        }).catch((error) => {
+            console.log('2222222222', error)
+        });
+        
+        
+        
+        /*
         $.ajax({
             type: 'POST',
             data: userData,
@@ -25,6 +44,7 @@ export function loginUser(userData) {
                 dispatch(loginUserFail(data.responseJSON.non_field_errors));
             }
         });
+    */
     }
 
 }
@@ -64,7 +84,6 @@ export function getUserInfo() {
         dispatch(getUserInfoStart());
         let token = readCookie('appeal_site_token');
         if (token) {
-        let path = getState().app.path;
         $.ajax({
             type: 'GET',
             beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,

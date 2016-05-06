@@ -49,55 +49,19 @@ export function addPost(post) {
 
 export function ratePost(data) {
     return function (dispatch, getState) {
-        dispatch(ratePostStart(data));
-
-        let token = getState().user.token;
-
-        $.ajax({
-            beforeSend: token ? function (xhr) { xhr.setRequestHeader ('Authorization', `Token ${token}`) }: null,
-            type: 'PATCH',
-            url: `http://127.0.0.1:8000/posts/${data.id}/rate/`,
-            data: data,
-            success: function (data) {
-                dispatch(ratePostSuccess(data))
-            },
-            error: function (data) {
-                dispatch(ratePostFail(data))
+        let action = {
+            [API_KEY]: {
+                method: 'post',
+                endpoint: `http://127.0.0.1:8000/posts/${data.id}/rate/`,
+                body: data,
+                actions: [RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL]
             }
-        });
-
+        }
+        return dispatch(action);
     }
-
 }
 
 
-export function ratePostStart(data) {
-
-    return {
-        type: RATE_POST_START,
-        payload: data
-    }
-
-}
-
-export function ratePostSuccess(data) {
-
-    return {
-        type: RATE_POST_SUCCESS,
-        payload: data
-    }
-
-}
-
-
-export function ratePostFail(data) {
-
-    return {
-        type: RATE_POST_FAIL,
-        payload: data
-    }
-
-}
 
 
 //***********************************************

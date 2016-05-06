@@ -41,14 +41,16 @@ export const api = store => dispatch => action => {
 
 
         dispatch(actionStart);
-        fetchApi(endpoint, method, headers, body).then(response => {
+        return fetchApi(endpoint, method, headers, body).then(response => {
             actionSuccess.payload = response;
             dispatch(actionSuccess);
+            return Promise.resolve(response);
         },
         ).catch(error => {
             actionFail.payload = error;
             dispatch(actionFail);
-            
+            return Promise.reject(error);
+
         })
     }
     else return dispatch(action);

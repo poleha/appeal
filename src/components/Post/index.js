@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
 import classNames from 'classnames'
+import { Link } from 'react-router'
 
 export default class Post extends Component {
 
@@ -48,7 +49,7 @@ export default class Post extends Component {
 
                 <div className="post_body">
                 <label>Призыв:</label>
-                <div><a href={'#post/' + key}>{post.body}</a></div>
+                <div><Link to={'/post/' + key}>{post.body}</Link></div>
                 </div>
                
                 
@@ -64,7 +65,7 @@ export default class Post extends Component {
                     }
                 </ul>
                 </div>
-                <div className="post_comment_count"><a href={'#post/' + key}>Комментариев: {post.comment_count}</a></div>
+                <div className="post_comment_count"><Link to={'/post/' + key}>Комментариев: {post.comment_count}</Link></div>
             </div>
 
 

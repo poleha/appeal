@@ -14,8 +14,7 @@ function mapStateToProps(state) {
     tags: state.tag.tags,
     logged: state.user.logged,
     token: state.user.token,
-    userId: state.user.userId,
-    path: state.app.path
+    userId: state.user.userId
     };
 }
 
@@ -45,9 +44,9 @@ export default class PostList extends Component {
   loadAjax() {
     if(this.props.logged) {
 
-      if ((this.props.post.posts === null || this.props.path != this.props.post.path) && !this.props.post.loading) {
+      if ((this.props.post.posts === null || this.props.params.tag != this.props.post.path) && !this.props.post.loading) {
 
-        this.props.postActions.loadPosts({tags__alias: this.props.path}, this.props.path )
+        this.props.postActions.loadPosts({tags__alias: this.props.params.tag}, this.props.params.tag )
 
       }
 

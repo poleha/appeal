@@ -13,7 +13,6 @@ function mapStateToProps(state) {
     return {
         post: state.post,
         comment: state.comment,
-        path: state.app.path,
         tags: state.tag.tags,
         logged: state.user.logged,
         token: state.user.token,
@@ -61,7 +60,7 @@ export default class PostDetail extends Component {
     loadAjax() {
 
         if(this.props.logged) {
-            let id = this.props.path.split('/')[1];
+            let id = this.props.params.id;
 
             if ((this.props.post.posts === null || this.props.path != this.props.post.path) && !this.props.post.loading) {
 

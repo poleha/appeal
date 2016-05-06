@@ -2,7 +2,7 @@ import 'isomorphic-fetch'
 
 export const API_KEY = Symbol('Api');
 
-function fetchApi(endpoint, method, body={}, headers) {
+function fetchApi(endpoint, method, headers, body) {
     let options = {method, headers};
     if (['get', 'head'].indexOf(method) < 0) {
         options.body = JSON.stringify(body);
@@ -41,7 +41,7 @@ export const api = store => dispatch => action => {
 
 
         dispatch(actionStart);
-        fetchApi(endpoint, method, body, headers).then(response => {
+        fetchApi(endpoint, method, headers, body).then(response => {
             actionSuccess.payload = response;
             dispatch(actionSuccess);
         },

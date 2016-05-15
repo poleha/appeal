@@ -120,7 +120,7 @@ export default class User extends Component {
                      ref="register_form"
                  >
                      {this.getFieldErrors.call(this, 'registerErrors', 'non_field_errors')}
-                     {this.getFieldErrors.call(this, 'email')}
+                     {this.getFieldErrors.call(this,'registerErrors', 'email')}
                          <input
                              type="text"
                              ref="email"

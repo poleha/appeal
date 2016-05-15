@@ -94,48 +94,20 @@ export function registerUser(data) {
         username: data.username,
         password: data.password
     };
+
     return function (dispatch, getState) {
-        dispatch(registerUserStart());
-        $.ajax({
-            type: 'POST',
-            data: data,
-            url: 'http://127.0.0.1:8000/auth/register/',
-            success: function (data) {
-
-                dispatch(registerUserSuccess());
-                dispatch(loginUser(loginData));
-            },
-            error: function (data) {
-                dispatch(registerUserFail(data.responseJSON));
+        let action = {
+            [API_KEY]: {
+                method: 'post',
+                endpoint: 'http://127.0.0.1:8000/auth/register/',
+                actions: [REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL],
+                body: data
             }
+        }
+
+        dispatch(action).then(response => {
+            dispatch(loginUser(loginData));
         });
+
     }
-
-}
-
-
-export function registerUserStart() {
-
-    return {
-        type: REGISTER_USER_START
-    }
-
-}
-
-export function registerUserSuccess() {
-
-    return {
-        type: REGISTER_USER_SUCCESS
-    }
-
-}
-
-
-export function registerUserFail(errors) {
-
-    return {
-        type: REGISTER_USER_FAIL,
-        payload: errors
-    }
-
 }

@@ -116,12 +116,12 @@ export default class PostDetail extends Component {
     getAddCommentForm() {
         let usernameInputClass = classNames('add_comment_username',
         {
-            hidden: this.props.token
+            hidden: this.props.userId
         });
         
         let emailImputClass = classNames('add_comment_email',
             {
-                hidden: this.props.token
+                hidden: this.props.userId
             });
         if (this.props.post.posts && this.props.comment.comments){
         return (
@@ -200,6 +200,7 @@ export default class PostDetail extends Component {
                 tags={this.props.tags}
                 logged={this.props.logged}
                 token={this.props.token}
+                userId={this.props.userId}
                 rated={post.rated}
                 ratePost={this.props.postActions.ratePost}
             />

@@ -1,4 +1,5 @@
 import 'isomorphic-fetch'
+import {readCookie} from '../helper'
 
 export const API_KEY = Symbol('Api');
 
@@ -13,7 +14,10 @@ function fetchApi(endpoint, method, headers, body) {
     return fetch(endpoint, options).then(response => response.json().then((json) => {
         if (response.ok) return json;
         else return Promise.reject(json);
-    }))
+    })).catch(error => {
+        if( error.__proto__.constructor === SyntaxError ) return null;
+        else return Promise.reject(error)
+    })
 
 }
 
@@ -29,7 +33,7 @@ export const api = store => dispatch => action => {
     let endpoint = apiAction.endpoint;
     let method = apiAction.method;
     let body = apiAction.body;
-    let token = store.getState().token;
+    let token = readCookie('appeal_site_token');
     let headers = {};
         if (token) {
         headers.Authorization = `Token ${token}`;

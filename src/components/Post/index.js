@@ -7,8 +7,8 @@ export default class Post extends Component {
 
     getRateBlock(post) {
         let key = post.id;
-        let likeButtonInactive = !this.props.token || post.user==this.props.userId || post.rating;
-        let dislikeButtonInactive = !this.props.token  || post.user==this.props.userId || post.rating;
+        let likeButtonInactive = !this.props.userId || post.user==this.props.userId || post.rating;
+        let dislikeButtonInactive = !this.props.userId  || post.user==this.props.userId || post.rating;
         let rateBlock;
             rateBlock = (
                 <div className='rate_block'>

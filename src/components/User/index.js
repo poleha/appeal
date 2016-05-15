@@ -15,8 +15,8 @@ export default class User extends Component {
         this.props.actions.registerUser(formArrayToJson(registerForm.serializeArray()));
     }
 
-    getFieldErrors(fieldName){
-        let fieldErrors = this.props.data.registerErrors[fieldName];
+    getFieldErrors(propName, fieldName){
+        let fieldErrors = this.props.data[propName][fieldName];
         if (fieldErrors) {
             let errorsBlock;
             errorsBlock = fieldErrors.map(function (error, index) {
@@ -37,7 +37,7 @@ export default class User extends Component {
 
     getLoginBlockButtons() {
         let loginBlockButtons;
-        if (!this.props.data.token) {
+        if (!this.props.data.userId) {
             loginBlockButtons = <div className="login_block_buttons">
                 <input
                     type="button"
@@ -58,6 +58,9 @@ export default class User extends Component {
         return loginBlockButtons
     }
 
+
+
+
     render() {
 
         let loginErrors;
@@ -71,7 +74,7 @@ export default class User extends Component {
         }
 
         let loginBlockTemplate = '';
-        if (!this.props.data.token) {
+        if (!this.props.data.userId) {
          if(this.props.data.activeForm == USER_FORM_LOGIN){
          loginBlockTemplate =
              <div className="login_block">
@@ -83,13 +86,15 @@ export default class User extends Component {
                      className="login_form"
                      ref="login_form"
                  >
-                 <input
+                     {this.getFieldErrors.call(this, 'loginErrors', 'username')}
+                     <input
                      type="text"
                      ref="username"
                      placeholder="Имя пользователя"
                      className="user_username"
                      name="username"
                  />
+                     {this.getFieldErrors.call(this, 'loginErrors', 'password')}
                  <input
                      type="text"
                      ref="password"
@@ -114,7 +119,7 @@ export default class User extends Component {
                      onSubmit={this.registrationFormSubmit.bind(this)}
                      ref="register_form"
                  >
-                     {this.getFieldErrors.call(this, 'non_field_errors')}
+                     {this.getFieldErrors.call(this, 'registerErrors', 'non_field_errors')}
                      {this.getFieldErrors.call(this, 'email')}
                          <input
                              type="text"
@@ -124,7 +129,7 @@ export default class User extends Component {
                              name="email"
                              placeholder="E-mail"
                          />
-                         {this.getFieldErrors.call(this, 'username')}
+                         {this.getFieldErrors.call(this, 'registerErrors','username')}
                          <input
                              type="text"
                              ref="username"
@@ -133,7 +138,7 @@ export default class User extends Component {
                              name="username"
                              placeholder="Имя пользователя"
                          />
-                         {this.getFieldErrors.call(this, 'password')}
+                         {this.getFieldErrors.call(this,'registerErrors', 'password')}
                          <input
                              type="text"
                              ref="password"
@@ -143,7 +148,7 @@ export default class User extends Component {
                              type="password"
                              placeholder="Пароль"
                          />
-                         {this.getFieldErrors.call(this, 'password2')}
+                         {this.getFieldErrors.call(this, 'registerErrors', 'password2')}
                          <input
                              type="text"
                              ref="password2"

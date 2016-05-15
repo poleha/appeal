@@ -212,7 +212,7 @@ export default class PostList extends Component {
               className="add_post_form"
               ref="add_post_form"
           >
-            <div hidden={this.props.token}>
+            <div hidden={this.props.userId}>
 
               {this.getFieldErrors.call(this, 'username')}
 
@@ -227,7 +227,7 @@ export default class PostList extends Component {
               />
             </div>
 
-            <div hidden={this.props.token}>
+            <div hidden={this.props.userId}>
 
               {this.getFieldErrors.call(this, 'email')}
 

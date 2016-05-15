@@ -16,7 +16,7 @@ const initialState = {
     userId: null,
     token: null,
     activeForm: USER_FORM_LOGIN,
-    loginErrors: [],
+    loginErrors: {},
     registerErrors: {}
 
 };
@@ -36,19 +36,21 @@ export default function user(state = initialState, action) {
             return { ...state, token: null};
         case USER_LOGIN_SUCCESS:
             state = cloneState(state);
-            return { ...state, token: action.payload };
+            return { ...state, token: action.payload.auth_token };
         case USER_LOGIN_FAIL:
             state = cloneState(state);
             return { ...state, token: null, loginErrors: action.payload };
 
         case GET_USER_INFO_START:
             state = cloneState(state);
+            state.logging = true;
             return state;
         case GET_USER_INFO_SUCCESS:
             state = cloneState(state);
             state.userName = action.payload.username;
             state.userId = action.payload.id;
             state.logged = true;
+            state.logging = false;
             return state;
 
         case GET_USER_INFO_FAIL:
@@ -57,6 +59,7 @@ export default function user(state = initialState, action) {
             state.userName = null;
             state.userId = null;
             state.token = null;
+            state.logging = false;
             return state;
 
         case LOGOUT_USER_START:

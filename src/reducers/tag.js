@@ -22,7 +22,7 @@ export default function app(state = initialState, action) {
             return state;
         case LOAD_TAGS_SUCCESS:
             state = cloneState(state);
-            state.tags = action.payload.results;
+            state.tags = action.payload.entities.tags;
             state.loading = false;
             state.loaded = true;
             return state;

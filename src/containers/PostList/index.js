@@ -144,7 +144,7 @@ export default class PostList extends Component {
   render() {
     if (this.isReady()) {
       let posts = this.props.post.posts;
-      let tags = this.props.tags;
+      let tags = Object.values(this.props.tags);
       //let addPost = this.props.actions.addPost;
 
       let showMoreInput;
@@ -167,7 +167,7 @@ export default class PostList extends Component {
           return <Post
               key={elem.id}
               post={elem}
-              tags={this.props.tags}
+              tags={tags}
               logged={this.props.logged}
               token={this.props.token}
               ratePost={this.props.postActions.ratePost}

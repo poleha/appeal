@@ -40,7 +40,7 @@ export default class App extends Component {
         if (!this.isReady()) return null;
 
     let path = this.props.params.tag;
-    let linksBlock = this.props.tag.tags.map(function (tag, index) {
+    let linksBlock = Object.values(this.props.tag.tags).map(function (tag, index) {
       return <li key={tag.id}><Link to={`/${tag.alias}`}>{tag.title}</Link></li>
     });
 

@@ -1,9 +1,11 @@
 import 'isomorphic-fetch'
+import { normalize, arrayOf } from 'normalizr'
 import {readCookie} from '../helper'
+
 
 export const API_KEY = Symbol('Api');
 
-function fetchApi(endpoint, method, headers, body) {
+function fetchApi(endpoint, method, headers, body, schema) {
     let options = {method, headers};
     if (['get', 'head'].indexOf(method) < 0) {
         options.body = JSON.stringify(body);
@@ -12,7 +14,11 @@ function fetchApi(endpoint, method, headers, body) {
     }
 
     return fetch(endpoint, options).then(response => response.json().then((json) => {
-        if (response.ok) return json;
+        if (response.ok) {
+            console.log(json, '11111111111')
+            if (schema) return Object.assign({}, normalize(json.results, arrayOf(schema)));
+            else return json;
+        }
         else return Promise.reject(json);
     })).catch(error => {
         if( error.__proto__.constructor === SyntaxError ) return null;
@@ -32,6 +38,7 @@ export const api = store => dispatch => action => {
     let [actionStart, actionSuccess, actionFail] = apiAction.actions;
     let endpoint = apiAction.endpoint;
     let method = apiAction.method;
+    let schema = apiAction.schema || null;
     let body = apiAction.body;
     let token = readCookie('appeal_site_token');
     let headers = {};
@@ -45,7 +52,7 @@ export const api = store => dispatch => action => {
 
 
         dispatch(actionStart);
-        return fetchApi(endpoint, method, headers, body).then(response => {
+        return fetchApi(endpoint, method, headers, body, schema).then(response => {
             actionSuccess.payload = response;
             dispatch(actionSuccess);
             return Promise.resolve(response);

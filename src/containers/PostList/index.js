@@ -54,6 +54,7 @@ export default class PostList extends Component {
 
   }
 
+
   componentDidMount() {
     this.loadAjax();
 
@@ -71,7 +72,7 @@ export default class PostList extends Component {
     if (this.props.post.loading || this.props.post.added) {
     for (let key = 0; key < this.props.tags.ids.length; key++) {
       let alias = this.props.tags.entities[this.props.tags.ids[key]].alias;
-      let checked = this.props.path == alias;
+      let checked = this.props.params.tag == alias;
       let elem = ReactDOM.findDOMNode(this.refs[`tag_to_add__${alias}`]);
       if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
     }
@@ -188,7 +189,7 @@ export default class PostList extends Component {
           return <li key={key}>
             <input
                 key={key}
-                defaultChecked={this.props.path == elem.alias}
+                defaultChecked={this.props.params.tag == elem.alias}
                 data-id={key}
                 id={`tags_input-${key}`}
                 type="checkbox"

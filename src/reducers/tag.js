@@ -18,11 +18,12 @@ export default function app(state = initialState, action) {
         case LOAD_TAGS_START:
             state = cloneState(state);
             state.loading = true;
-            state.tags = {};
             return state;
-        case LOAD_TAGS_SUCCESS:
+            case LOAD_TAGS_SUCCESS:
             state = cloneState(state);
-            state.tags = action.payload.entities.tags;
+            state.tags = {};
+            state.tags.entities = action.payload.entities.tags;
+            state.tags.ids = action.payload.result;
             state.loading = false;
             state.loaded = true;
             return state;

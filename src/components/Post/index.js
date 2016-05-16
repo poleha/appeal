@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
 import classNames from 'classnames'
 import { Link } from 'react-router'
+import { mapNodes } from '../../helper'
 
 export default class Post extends Component {
 
@@ -57,7 +58,7 @@ export default class Post extends Component {
                 <label>Метки:</label>
                 <ul className="tags">
                     {
-                        this.props.tags.map(function(tag) {
+                        mapNodes(this.props.tags, function(tag) {
                             if (post.tags.indexOf(tag.id) >= 0) {
                                 return <li className="tag_elem inline" key={tag.id}>{tag.title}</li>
                             }

@@ -8,7 +8,7 @@ import * as commentActions from '../../actions/CommentActions'
 import * as tagActions from '../../actions/TagActions'
 import User from '../../components/User'
 import { Link } from 'react-router'
-
+import { mapNodes } from '../../helper'
 
 export default class App extends Component {
 
@@ -40,7 +40,7 @@ export default class App extends Component {
         if (!this.isReady()) return null;
 
     let path = this.props.params.tag;
-    let linksBlock = Object.values(this.props.tag.tags).map(function (tag, index) {
+        let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
       return <li key={tag.id}><Link to={`/${tag.alias}`}>{tag.title}</Link></li>
     });
 

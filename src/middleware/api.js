@@ -15,8 +15,7 @@ function fetchApi(endpoint, method, headers, body, schema) {
 
     return fetch(endpoint, options).then(response => response.json().then((json) => {
         if (response.ok) {
-            console.log(json, '11111111111')
-            if (schema) return Object.assign({}, normalize(json.results, arrayOf(schema)));
+            if (schema) return Object.assign(json, normalize(json.results, arrayOf(schema)));
             else return json;
         }
         else return Promise.reject(json);

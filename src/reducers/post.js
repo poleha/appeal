@@ -3,7 +3,7 @@ import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, 
 var posts, newPosts, post, key;
 
 const initialState = {
-    id: null,
+    //id: null,
     path: null,
     posts: null,
     count: 0,
@@ -32,7 +32,9 @@ export default function app(state = initialState, action) {
             return state;
         case LOAD_POSTS_SUCCESS:
             state = cloneState(state);
-            state.posts = action.payload.results;
+            state.posts = {};
+            state.posts.entities = action.payload.entities.posts;
+            state.posts.ids = action.payload.result;
             state.count = action.payload.count;
             state.loading = false;
             state.path = action.path;

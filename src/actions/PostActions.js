@@ -1,5 +1,6 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
 import { API_KEY } from '../middleware/api'
+import { post } from '../schemas'
 
 export function loadPosts(params, path) {
     return function (dispatch, getState) {
@@ -14,6 +15,7 @@ export function loadPosts(params, path) {
             [API_KEY]: {
                 method: 'get',
                 endpoint: 'http://127.0.0.1:8000/posts/?' + urlParams,
+                schema: post,
                 actions: [LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL]
             },
             path: path

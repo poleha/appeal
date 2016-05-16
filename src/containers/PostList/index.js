@@ -5,7 +5,7 @@ import Post from '../../components/Post'
 import { bindActionCreators } from 'redux'
 import * as postActions from '../../actions/PostActions'
 import { connect } from 'react-redux'
-
+import { mapNodes } from '../../helper'
 
 function mapStateToProps(state) {
   return {
@@ -69,8 +69,8 @@ export default class PostList extends Component {
       //let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
     }
     if (this.props.post.loading || this.props.post.added) {
-    for (let key = 0; key < this.props.tags.length; key++) {
-      let alias = this.props.tags[key].alias;
+    for (let key = 0; key < this.props.tags.ids.length; key++) {
+      let alias = this.props.tags.entities[this.props.tags.ids[key]].alias;
       let checked = this.props.path == alias;
       let elem = ReactDOM.findDOMNode(this.refs[`tag_to_add__${alias}`]);
       if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
@@ -104,7 +104,7 @@ export default class PostList extends Component {
 
   loadMorePostsClick(e) {
 
-    this.props.postActions.loadPosts({tags__alias: this.props.path, limit: this.props.post.posts.length + 10}, this.props.path )
+    this.props.postActions.loadPosts({tags__alias: this.props.path, limit: Object.values(this.props.post.posts).length + 10}, this.props.path )
 
   }
 
@@ -144,11 +144,11 @@ export default class PostList extends Component {
   render() {
     if (this.isReady()) {
       let posts = this.props.post.posts;
-      let tags = Object.values(this.props.tags);
+      let tags = this.props.tags;
       //let addPost = this.props.actions.addPost;
 
       let showMoreInput;
-      if (this.props.post.count > this.props.post.posts.length) {
+      if (this.props.post.count > posts.ids.length) {
         showMoreInput = (
             <input
                 onClick={this.loadMorePostsClick.bind(this)}
@@ -160,8 +160,8 @@ export default class PostList extends Component {
       }
 
       let postsBlock;
-      if (posts.length > 0) {
-        postsBlock = posts.map((elem, index)=> {
+      if (posts.ids.length > 0) {
+        postsBlock = mapNodes(posts, function(elem, index){
           let added = this.props.post.added && index == 0;
 
           return <Post
@@ -175,15 +175,15 @@ export default class PostList extends Component {
               userId={this.props.userId}
           />
 
-        });
+        }.bind(this));
       }
       else {
         postsBlock = ''
       }
 
       let tagsAddBlock;
-      if (tags.length > 0) {
-        tagsAddBlock = tags.map((elem, index)=> {
+      if (tags.ids.length > 0) {
+        tagsAddBlock = mapNodes(tags, function(elem){
           let key = elem.id;
           return <li key={key}>
             <input
@@ -198,7 +198,7 @@ export default class PostList extends Component {
             />
             <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
           </li>
-        });
+        }.bind(this));
       }
       else {
         tagsAddBlock = ''

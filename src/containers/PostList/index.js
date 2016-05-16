@@ -104,7 +104,7 @@ export default class PostList extends Component {
 
   loadMorePostsClick(e) {
 
-    this.props.postActions.loadPosts({tags__alias: this.props.path, limit: Object.values(this.props.post.posts).length + 10}, this.props.path )
+    this.props.postActions.loadPosts({tags__alias: this.props.path, limit: this.props.post.posts.ids.length + 10}, this.props.path )
 
   }
 

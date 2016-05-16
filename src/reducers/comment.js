@@ -33,6 +33,7 @@ export default function app(state = initialState, action) {
         case ADD_COMMENT_SUCCESS:
             state = cloneState(state);
             state.added = true;
+            state.comments = state.comments || {};
             state.errors = {};
             state.comments.entities[action.payload.id] = action.payload;
             state.comments.ids = [action.payload.id].concat(state.comments.ids);

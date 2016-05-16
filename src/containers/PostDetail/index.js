@@ -106,7 +106,7 @@ export default class PostDetail extends Component {
 
     loadMoreCommentsClick(e) {
 
-        this.props.commentActions.loadComments({post: this.props.params.id, limit: this.props.comment.comments.length + 10} )
+        this.props.commentActions.loadComments({post: this.props.params.id, limit: this.props.comment.comments.ids.length + 10} )
 
     }
 
@@ -226,7 +226,7 @@ export default class PostDetail extends Component {
             <input
                 onClick={this.loadMoreCommentsClick.bind(this)}
                 type="button"
-                className={classNames('btn', 'btn-default', {hidden: post.comments.length <= this.props.comment.comments.length})}
+                className={classNames('btn', 'btn-default', {hidden: post.comments.length <= this.props.comment.comments.ids.length})}
                 value="Показать еще"
             />
 

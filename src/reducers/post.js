@@ -51,8 +51,12 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
             posts = state.posts;
             post = action.payload;
-            newPosts = [post].concat(posts);
-            return { ...state, posts: newPosts, adding: false, added: true, count: state.count + 1};
+            posts.entities[post.id] = post;
+            posts.ids = [post.id].concat(posts.ids);
+            state.adding = false;
+            state.added = true;
+            state.count += 1;
+            return state;
         case ADD_POST_FAIL:
             state = cloneState(state);
             let errors = action.payload;
@@ -62,22 +66,20 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
             key = action.payload.id;
             posts = state.posts;
-            posts.findByValue('id', key).rating = true;
-            return { ...state, posts: posts};
+            posts.entities[key].rating = true;
+            return state;
         case RATE_POST_SUCCESS:
             state = cloneState(state);
             key = action.payload.id;
             posts = state.posts;
-            let index = posts.getIndexByValue('id', key);
-            posts[index] = action.payload;
-
-            return { ...state, posts:posts};
+            posts.entities[key] = action.payload
+            return state;
         case RATE_POST_FAIL:
             state = cloneState(state);
             key = action.payload.id;
             posts = state.posts;
-            posts.findByValue('id', key).rating = false;
-            return { ...state, posts: posts};
+            posts.entities[key].rating = false;
+            return state;
         
 
         default:

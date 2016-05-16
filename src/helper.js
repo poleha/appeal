@@ -65,8 +65,8 @@ export function mapNodes(nodes, func) {
     }
     return iterator;
     */
-    return ids.map(function (id) {
-    return func(entities[id]);    
+    return ids.map(function (id, index) {
+    return func(entities[id], index);
     })
 
 }

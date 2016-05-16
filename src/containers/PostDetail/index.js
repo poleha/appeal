@@ -65,9 +65,9 @@ export default class PostDetail extends Component {
         if(this.props.logged) {
             let id = this.props.params.id;
 
-            if ((this.props.post.posts === null || this.props.path != this.props.post.path) && !this.props.post.loading) {
+            if ((this.props.post.posts === null || this.props.params.id != this.props.post.path) && !this.props.post.loading) {
 
-                this.props.postActions.loadPosts({id}, this.props.path);
+                this.props.postActions.loadPosts({id}, this.props.params.id);
                 this.props.commentActions.loadComments({post: id});
 
             }
@@ -111,7 +111,7 @@ export default class PostDetail extends Component {
     }
 
     refreshCommentsClick(e) {
-        this.props.postActions.loadPosts({id: this.props.params.id}, this.props.path);
+        this.props.postActions.loadPosts({id: this.props.params.id}, this.props.params.id);
         this.props.commentActions.loadComments({post: this.props.params.id} )
 
     }
@@ -177,7 +177,7 @@ export default class PostDetail extends Component {
 
     render() {
       if (this.isReady()) {
-       let post = this.props.post.posts[this.props.params.id];
+       let post = this.props.post.posts.entities[this.props.params.id];
       let comments = this.props.comment.comments;
         let commentsBlock;
         if (comments.length > 0) {
@@ -200,7 +200,7 @@ export default class PostDetail extends Component {
                 key={post.id}
                 userId={this.props.userId}
                 post={post}
-                tags={Object.values(this.props.tags)}
+                tags={this.props.tags}
                 logged={this.props.logged}
                 token={this.props.token}
                 userId={this.props.userId}

@@ -34,11 +34,12 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
             state.added = true;
             state.errors = {};
-            state.comments = [action.payload].concat(state.comments);
-
+            state.comments.entities[action.payload.id] = action.payload;
+            state.comments.ids = [action.payload.id].concat(state.comments.ids);
             return state;
         case ADD_COMMENT_FAIL:
             state = cloneState(state);
+            state.added = false;
             state.errors = action.payload;
             return state;
 
@@ -49,8 +50,9 @@ export default function app(state = initialState, action) {
         case LOAD_COMMENTS_SUCCESS:
             state = cloneState(state);
             state.loading = false;
-            state.comments = action.payload.results;
-
+            state.comments = {};
+            state.comments.entities = action.payload.entities.comments;
+            state.comments.ids = action.payload.result;
             return state;
         case LOAD_COMMENTS_FAIL:
             state = cloneState(state);

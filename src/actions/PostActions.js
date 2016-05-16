@@ -53,12 +53,13 @@ export function ratePost(data) {
     return function (dispatch, getState) {
         let action = {
             [API_KEY]: {
-                method: 'post',
+                method: 'put',
                 endpoint: `http://127.0.0.1:8000/posts/${data.id}/rate/`,
                 body: data,
                 actions: [RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL]
-            }
-        }
+            },
+            body: data
+        };
         return dispatch(action);
     }
 }

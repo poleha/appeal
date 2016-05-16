@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
-
+import { mapNodes } from '../../helper'
 
 function mapStateToProps(state) {
     return {
@@ -180,16 +180,16 @@ export default class PostDetail extends Component {
        let post = this.props.post.posts.entities[this.props.params.id];
       let comments = this.props.comment.comments;
         let commentsBlock;
-        if (comments.length > 0) {
-            commentsBlock = comments.map((comment, index)=>{
+        if (comments.ids.length > 0) {
+            commentsBlock = mapNodes(comments, function(comment, index){
                 let added = this.props.comment.added && index == 0;
-               return <Comment 
+               return <Comment
                    key={comment.id} 
                    comment={comment}
                    added={added}
                />
 
-            });
+            }.bind(this));
         }
 
 

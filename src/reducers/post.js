@@ -64,7 +64,7 @@ export default function app(state = initialState, action) {
 
         case RATE_POST_START:
             state = cloneState(state);
-            key = action.payload.id;
+            key = action.body.id;
             posts = state.posts;
             posts.entities[key].rating = true;
             return state;
@@ -76,7 +76,7 @@ export default function app(state = initialState, action) {
             return state;
         case RATE_POST_FAIL:
             state = cloneState(state);
-            key = action.payload.id;
+            key = action.body.id;
             posts = state.posts;
             posts.entities[key].rating = false;
             return state;

@@ -1,6 +1,7 @@
 import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../constants/Comment'
 import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Comment'
 import { API_KEY } from '../middleware/api'
+import { comment } from '../schemas'
 
 
 export function addComment(data) {
@@ -28,6 +29,7 @@ export function loadComments(params) {
             [API_KEY]: {
                 method: 'get',
                 endpoint: 'http://127.0.0.1:8000/comments/?' + urlParams,
+                schema: comment,
                 actions: [LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL]
             }
         }

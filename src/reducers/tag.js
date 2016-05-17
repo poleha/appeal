@@ -1,4 +1,6 @@
 import { LOAD_TAGS_START, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAIL } from '../constants/Tag'
+import update from 'react-addons-update'
+var newState;
 
 const initialState = {
     loading: false,
@@ -6,31 +8,30 @@ const initialState = {
     tags : null
 };
 
-function cloneState(state) {
-    let newState = _.cloneDeep(state);
-    return newState;
-}
+
 
 
 export default function app(state = initialState, action) {
         switch (action.type) {
 
         case LOAD_TAGS_START:
-            state = cloneState(state);
-            state.loading = true;
-            return state;
+            newState = update(state, {
+                loading: {$set: true}
+            });
+            return newState;
             case LOAD_TAGS_SUCCESS:
-            state = cloneState(state);
-            state.tags = {};
-            state.tags.entities = action.payload.entities.tags;
-            state.tags.ids = action.payload.result;
-            state.loading = false;
-            state.loaded = true;
-            return state;
+            newState = update(state, {
+                tags: {$set: {entities:action.payload.entities.tags, ids:action.payload.result}},
+                loading: {$set: false},
+                loaded: {$set: true}
+
+            });
+            return newState;
         case LOAD_TAGS_FAIL:
-            state = cloneState(state);
-            state.loading = false;
-            return state;
+            newState = update(state, {
+                loading: {$set: true}
+            });
+            return newState;
 
         default:
             return state;

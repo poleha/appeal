@@ -1,6 +1,6 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
 import update from 'react-addons-update'
-var posts, post, key, newState, newPost;
+var posts, post, key, newState;
 
 const initialState = {
     path: null,
@@ -58,10 +58,8 @@ export default function app(state = initialState, action) {
             posts = state.posts;
             post = action.payload;
 
-            newPost = Object.create(null);
-            newPost[post.id] = post;
             newState = update(state, {
-               posts: {entities: {$merge: newPost}, ids: {$unshift: [post.id]}},
+               posts: {entities: {[post.id]: {$set: post}}, ids: {$unshift: [post.id]}},
                adding: {$set: false},
                added: {$set: true},
                count: {$set: state.count + 1}
@@ -80,12 +78,8 @@ export default function app(state = initialState, action) {
             posts = state.posts;
             key = action.body.id;
             posts = state.posts;
-            newPost = Object.create(null);
-            newPost[key] = Object.assign({}, posts.entities[key]);
-            newPost[key].rating = true;
-
             newState = update(state, {
-                posts: {entities: {$merge: newPost}}
+                posts: {entities: {[key]: {rating: {$set: true}}}}
             });
 
             return newState;
@@ -93,10 +87,9 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
             key = action.payload.id;
             posts = state.posts;
-            newPost = Object.create(null);
-            newPost[key] = Object.assign({}, action.payload);
+            
             newState = update(state, {
-                posts: {entities: {$merge: newPost}}
+                posts: {entities: {[key]: {$set: action.payload}}}
             });
 
             return newState;
@@ -104,12 +97,8 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
             key = action.body.id;
             posts = state.posts;
-            newPost = Object.create(null);
-            newPost[key] = Object.assign({}, posts.entities[key]);
-            newPost[key].rating = false;
-
             newState = update(state, {
-                posts: {entities: {$merge: newPost}}
+                posts: {entities: {[key]: {rating: {$set: false}}}}
             });
 
 

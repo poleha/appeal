@@ -2,7 +2,7 @@ import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../con
 import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Comment'
 import update from 'react-addons-update'
 
-var newState, newComment;
+var newState;
 
 const initialState = {
     id: null,
@@ -38,21 +38,12 @@ export default function app(state = initialState, action) {
             return newState;
         case ADD_COMMENT_SUCCESS:
             state = cloneState(state);
-
-            newComment = Object.create(null);
-            newComment[action.payload.id] = action.payload;
-            console.log(newComment, '11111111111111')
             newState = update(state, {
                 added: {$set: true},
-                comments: {entities: {$merge: newComment}, ids: {$unshift: [action.payload.id]}},
+                comments: {entities: {[action.payload.id]: {$set: action.payload}}, ids: {$unshift: [action.payload.id]}},
                 errors: {$set: {}}
             });
 
-            //state.added = true;
-            //state.comments = state.comments || {};
-            //state.errors = {};
-            //state.comments.entities[action.payload.id] = action.payload;
-            //state.comments.ids = [action.payload.id].concat(state.comments.ids);
             return newState;
         case ADD_COMMENT_FAIL:
             state = cloneState(state);

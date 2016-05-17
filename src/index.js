@@ -5,7 +5,6 @@ import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import Root from './containers/Root'
 import configureStore from './store/configureStore'
-import * as patches from 'monkey'
 
 const store = configureStore();
 export const history = syncHistoryWithStore(browserHistory, store);

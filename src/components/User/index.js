@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/User'
 import { formArrayToJson } from '../../helper'
+import VKLogin from '../VKLogin'
 
 export default class User extends Component {
     loginFormSubmit(e) {
@@ -183,8 +184,17 @@ export default class User extends Component {
                 </div>
         }
 
+       let socialLoginTemplate;
+        if (!this.props.data.userId) {
+            socialLoginTemplate = (
+                <VKLogin
+                    actions={this.props.actions}
+                />
+            )
+        }
 
         return <div className="user_block">
+            {socialLoginTemplate}
             {this.getLoginBlockButtons.call(this)}
             {loginBlockTemplate}
 

@@ -2,6 +2,8 @@ import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../consta
 import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/User'
 import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/User'
 import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
+import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '../constants/User'
+import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
 import { ACTIVATE_USER_FORM } from '../constants/User'
 import { API_KEY } from '../middleware/api'
 
@@ -108,6 +110,56 @@ export function registerUser(data) {
         dispatch(action).then(response => {
             dispatch(loginUser(loginData));
         });
+
+    }
+}
+
+
+export function VKLogin() {
+    return function (dispatch, getState) {
+        dispatch({type: USER_VK_LOGIN_START});
+
+        VK.Auth.login((r) => {
+            if (r.session) {
+                let user = r.session.user;
+                let username = user.nickname || user.first_name;
+                let id = user.id;
+                let body = {
+                    username,
+                    id,
+                    network: 'vk'
+                };
+
+
+                let action = {
+                    [API_KEY]: {
+                        method: 'post',
+                        endpoint: 'http://127.0.0.1:8000/social_login/',
+                        body: body,
+                        actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
+                    }
+                };
+
+                dispatch(action).then(response => {
+                    createCookie('appeal_site_token', response.auth_token);
+                    dispatch(getUserInfo());
+                    }).then(response => {
+                    dispatch({
+                        type: USER_VK_LOGIN_SUCCESS
+                })
+
+                });
+
+
+            } else {
+                dispatch({
+                    type: USER_VK_LOGIN_FAIL,
+                    error: true,
+                    payload: new Error('Ошибка авторизации')
+                })
+            }
+        },4, 4194304); // запрос прав на доступ к photo и email
+
 
     }
 }

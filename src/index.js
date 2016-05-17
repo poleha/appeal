@@ -7,10 +7,10 @@ import Root from './containers/Root'
 import configureStore from './store/configureStore'
 import * as patches from 'monkey'
 
-const store = configureStore()
-const history = syncHistoryWithStore(browserHistory, store)
+const store = configureStore();
+export const history = syncHistoryWithStore(browserHistory, store);
 
 render(
     <Root store={store} history={history} />,
     document.getElementById('root')
-)
+);

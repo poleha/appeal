@@ -6,6 +6,7 @@ import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
 import { ACTIVATE_USER_FORM } from '../constants/User'
 import { API_KEY } from '../middleware/api'
+import { history } from  '../index'
 
 
 import { createCookie, readCookie, eraseCookie} from '../helper'
@@ -47,7 +48,7 @@ export function getUserInfo() {
         }
 
         dispatch(action).then((response) => {
-            let token = readCookie('appeal_site_token');
+            //let token = readCookie('appeal_site_token');
             //dispatch(loginUserSuccess(token));
         }).catch((error) => {
             eraseCookie('appeal_site_token');
@@ -71,7 +72,7 @@ export function logoutUser() {
 
         dispatch(action).then((response) => {
             eraseCookie('appeal_site_token');
-            window.location.hash = '';
+            history.push('');
         })
 
 
@@ -109,7 +110,7 @@ export function registerUser(data) {
 
         dispatch(action).then(response => {
             dispatch(loginUser(loginData));
-        });
+        }).then(() => history.push(''));
 
     }
 }
@@ -148,7 +149,7 @@ export function VKLogin() {
                         type: USER_VK_LOGIN_SUCCESS
                 })
 
-                });
+                }).then(() => history.push(''));
 
 
             } else {

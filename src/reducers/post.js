@@ -36,7 +36,7 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
 
             newState = update(state, {
-                posts: {$set: {entities: action.payload.entities.posts, ids: action.payload.result}},
+                posts: {$set: {entities: action.payload.entities.posts || {}, ids: action.payload.result}},
                 count: {$set: action.payload.count},
                 loading: {$set: false},
                 path: {$set: action.path}

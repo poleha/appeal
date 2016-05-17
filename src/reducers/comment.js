@@ -10,12 +10,14 @@ const initialState = {
     path: null,
     count: 0,
     loading: false,
-    errors: {}
+    errors: {},
+    added: false
 };
 
 function cloneState(state) {
     let newState = update(state, {
-        errors: {$set: {}}
+        errors: {$set: {}},
+        added: {$set: false}
     });
 
     return newState;
@@ -39,7 +41,7 @@ export default function app(state = initialState, action) {
 
             newComment = Object.create(null);
             newComment[action.payload.id] = action.payload;
-
+            console.log(newComment, '11111111111111')
             newState = update(state, {
                 added: {$set: true},
                 comments: {entities: {$merge: newComment}, ids: {$unshift: [action.payload.id]}},
@@ -73,7 +75,7 @@ export default function app(state = initialState, action) {
 
             newState = update(state, {
                 loading: {$set: false},
-                comments: {$set: {entities: action.payload.entities.comments, ids :action.payload.result}}
+                comments: {$set: {entities: action.payload.entities.comments || {}, ids :action.payload.result}}
 
             });
 

@@ -4,6 +4,8 @@ import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../con
 import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
 import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '../constants/User'
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
+import { USER_GOOGLE_LOGIN } from '../constants/User'
+import { USER_GOOGLE_LOGOUT } from '../constants/User'
 import { ACTIVATE_USER_FORM } from '../constants/User'
 import { API_KEY } from '../middleware/api'
 import { history } from  '../index'
@@ -163,4 +165,28 @@ export function VKLogin() {
 
 
     }
+}
+
+export function GoogleLogin(data) {
+    return function (dispatch, getState) {
+
+
+        let action = {
+            [API_KEY]: {
+                method: 'post',
+                endpoint: 'http://127.0.0.1:8000/social_login/',
+                body: data,
+                actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
+            }
+        };
+
+        dispatch(action).then(response => {
+            createCookie('appeal_site_token', response.auth_token);
+            dispatch(getUserInfo());
+        }).then(() => history.push(''));
+
+
+    }
+
+
 }

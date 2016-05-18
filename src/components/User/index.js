@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/User'
 import { formArrayToJson } from '../../helper'
 import VKLogin from '../VKLogin'
+import GoogleLogin from '../GoogleLogin'
 
 export default class User extends Component {
     loginFormSubmit(e) {
@@ -187,9 +188,14 @@ export default class User extends Component {
        let socialLoginTemplate;
         if (!this.props.data.userId) {
             socialLoginTemplate = (
+                <div>
                 <VKLogin
                     actions={this.props.actions}
                 />
+                <GoogleLogin
+                    actions={this.props.actions} 
+                />
+                </div>
             )
         }
 

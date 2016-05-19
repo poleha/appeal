@@ -4,6 +4,7 @@ import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/User'
 import { formArrayToJson } from '../../helper'
 import VKLogin from '../VKLogin'
 import GoogleLogin from '../GoogleLogin'
+import classNames from 'classnames'
 
 export default class User extends Component {
     loginFormSubmit(e) {
@@ -185,10 +186,8 @@ export default class User extends Component {
                 </div>
         }
 
-       let socialLoginTemplate;
-        if (!this.props.data.userId) {
-            socialLoginTemplate = (
-                <div>
+           let socialLoginTemplate = (
+                <div className={classNames({hidden: this.props.data.userId})}>
                 <VKLogin
                     actions={this.props.actions}
                 />
@@ -197,7 +196,7 @@ export default class User extends Component {
                 />
                 </div>
             )
-        }
+
 
         return <div className="user_block">
             {socialLoginTemplate}

@@ -74,6 +74,12 @@ export function logoutUser() {
 
         dispatch(action).then((response) => {
             eraseCookie('appeal_site_token');
+        }).then(() => {
+            if (getState().user.network == 'google') {
+                var auth2 = gapi.auth2.getAuthInstance();
+                return auth2.signOut()
+            }
+        }).then(() => {
             history.push('');
         })
 
@@ -140,7 +146,8 @@ export function VKLogin() {
                         endpoint: 'http://127.0.0.1:8000/social_login/',
                         body: body,
                         actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
-                    }
+                    },
+                    body: body
                 };
 
                 dispatch(action).then(response => {
@@ -177,7 +184,8 @@ export function GoogleLogin(data) {
                 endpoint: 'http://127.0.0.1:8000/social_login/',
                 body: data,
                 actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
-            }
+            },
+            body: data
         };
 
         dispatch(action).then(response => {

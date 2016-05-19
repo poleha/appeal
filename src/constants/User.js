@@ -33,3 +33,8 @@ export const USER_SOCIAL_LOGIN_FAIL = 'USER_SOCIAL_LOGIN_FAIL';
 
 export const USER_GOOGLE_LOGIN = 'USER_GOOGLE_LOGIN';
 export const USER_GOOGLE_LOGOUT = 'USER_GOOGLE_LOGOUT';
+
+
+export const NETWORK_TYPE_GOOGLE = 'google';
+export const NETWORK_TYPE_VK = 'vk';
+export const NETWORK_TYPE_FACEBOOK = 'facebook';

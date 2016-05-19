@@ -4,9 +4,9 @@ import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../con
 import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
 import update from 'react-addons-update'
 import { ACTIVATE_USER_FORM, USER_FORM_LOGIN } from '../constants/User'
+import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
+
 var newState;
-
-
 
 const initialState = {
     logged: false,
@@ -16,7 +16,9 @@ const initialState = {
     //token: null,
     activeForm: USER_FORM_LOGIN,
     loginErrors: {},
-    registerErrors: {}
+    registerErrors: {},
+    network: null,
+    externalId: null
 
 };
 
@@ -106,8 +108,29 @@ export default function user(state = initialState, action) {
 
             return newState;
         case REGISTER_USER_FAIL:
+            state = cloneState(state);
             newState = update(state, {
                 registerErrors: {$set: action.payload}
+            });
+
+            return newState;
+
+        case USER_SOCIAL_LOGIN_START:
+            state = cloneState(state);
+            return state;
+        case USER_SOCIAL_LOGIN_SUCCESS:
+            state = cloneState(state);
+            newState = update(state, {
+                externalId: {$set: action.body.id},
+                network: {$set: action.body.network}
+            });
+
+            return newState;
+        case USER_SOCIAL_LOGIN_FAIL:
+            state = cloneState(state);
+            newState = update(state, {
+                externalId: {$set: null},
+                network: {$set: null}
             });
 
             return newState;

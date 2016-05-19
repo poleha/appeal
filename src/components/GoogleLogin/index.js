@@ -1,17 +1,38 @@
 import React, { PropTypes, Component } from 'react'
+import './styles.less'
+
 
 export default class GoogleLogin extends Component {
 
 
     componentDidMount() {
-        gapi.signin2.render('g-signin2', {
-            'scope': 'https://www.googleapis.com/auth/plus.login',
-            'width': 200,
-            'height': 50,
-            'longtitle': true,
-            'theme': 'dark',
-            'onsuccess': this.onSignIn.bind(this)
-        });
+        let self = this;
+        var startApp = function() {
+            gapi.load('auth2', function(){
+                // Retrieve the singleton for the GoogleAuth library and set up the client.
+                window.auth2 = gapi.auth2.init({
+                    client_id: '652386564088-g829fhjk5jqdpuerod7qi2srp3tn42l4.apps.googleusercontent.com',
+                    cookiepolicy: 'single_host_origin'
+                    // Request scopes in addition to 'profile' and 'email'
+                    //scope: 'additional_scope'
+                });
+                attachSignin(document.getElementById('google_login_button'));
+            });
+        };
+
+
+        function attachSignin(element) {
+            console.log(element.id);
+            auth2.attachClickHandler(element, {},
+                self.onSignIn.bind(self));
+        }
+
+        startApp();
+
+      //  gapi.signin2.render('google_login_button', {
+      //      'scope': 'https://www.googleapis.com/auth/plus.login',
+      //      'onsuccess': this.onSignIn.bind(this)
+      //  });
 
     }
 
@@ -41,9 +62,9 @@ export default class GoogleLogin extends Component {
 */
     render() {
         return (<div>
-            <div
-                id="g-signin2"
-            />
+                <div id="google_login_button">
+                    <span class="buttonText">Google</span>
+                </div>
             </div>
         )
     }

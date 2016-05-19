@@ -66,15 +66,6 @@ export default class User extends Component {
 
     render() {
 
-        let loginErrors;
-
-        if (this.props.data.loginErrors.length > 0) {
-            loginErrors = this.props.data.loginErrors.map(function (elem, index) {
-            return <div className='error' key={index}>
-                    {elem}
-                </div>
-            });
-        }
 
         let loginBlockTemplate = '';
         if (!this.props.data.userId) {
@@ -82,7 +73,7 @@ export default class User extends Component {
          loginBlockTemplate =
              <div className="login_block">
                  <div className="errors">
-                     {loginErrors}
+                     {this.getFieldErrors.call(this, 'loginErrors', 'non_field_errors')}
                  </div>
                  <form
                      onSubmit={this.loginFormSubmit.bind(this)}

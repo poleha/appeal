@@ -9,12 +9,12 @@ import classNames from 'classnames'
 export default class User extends Component {
     loginFormSubmit(e) {
         e.preventDefault();
-        let loginForm = $(ReactDOM.findDOMNode(this.refs.login_form));
+        let loginForm = $(ReactDOM.findDOMNode(this._login_form));
         this.props.actions.loginUser(formArrayToJson(loginForm.serializeArray()));
     }
     registrationFormSubmit(e) {
         e.preventDefault();
-        let registerForm = $(ReactDOM.findDOMNode(this.refs.register_form));
+        let registerForm = $(ReactDOM.findDOMNode(this._register_form));
         this.props.actions.registerUser(formArrayToJson(registerForm.serializeArray()));
     }
 
@@ -87,12 +87,12 @@ export default class User extends Component {
                  <form
                      onSubmit={this.loginFormSubmit.bind(this)}
                      className="login_form"
-                     ref="login_form"
+                     ref={(c) => this._login_form = c}
                  >
                      {this.getFieldErrors.call(this, 'loginErrors', 'username')}
                      <input
                      type="text"
-                     ref="username"
+                     ref={(c) => this._username = c}
                      placeholder="Имя пользователя"
                      className="user_username"
                      name="username"
@@ -100,7 +100,7 @@ export default class User extends Component {
                      {this.getFieldErrors.call(this, 'loginErrors', 'password')}
                  <input
                      type="text"
-                     ref="password"
+                     ref={(c) => this._password = c}
                      placeholder="Пароль"
                      name="password"
                      type="password"
@@ -120,13 +120,13 @@ export default class User extends Component {
                  <form
                      className="registration_form"
                      onSubmit={this.registrationFormSubmit.bind(this)}
-                     ref="register_form"
+                     ref={(c) => this._register_form = c}
                  >
                      {this.getFieldErrors.call(this, 'registerErrors', 'non_field_errors')}
                      {this.getFieldErrors.call(this,'registerErrors', 'email')}
                          <input
                              type="text"
-                             ref="email"
+                             ref={(c) => this._email = c}
                              className="user_email"
                              id="user_email"
                              name="email"
@@ -135,7 +135,7 @@ export default class User extends Component {
                          {this.getFieldErrors.call(this, 'registerErrors','username')}
                          <input
                              type="text"
-                             ref="username"
+                             ref={(c) => this._username = c}
                              className="user_username"
                              id="user_username"
                              name="username"
@@ -144,7 +144,7 @@ export default class User extends Component {
                          {this.getFieldErrors.call(this,'registerErrors', 'password')}
                          <input
                              type="text"
-                             ref="password"
+                             ref={(c) => this._password = c}
                              className="user_password"
                              id="user_password"
                              name="password"
@@ -154,7 +154,7 @@ export default class User extends Component {
                          {this.getFieldErrors.call(this, 'registerErrors', 'password2')}
                          <input
                              type="text"
-                             ref="password2"
+                             ref={(c) => this._password2 = c}
                              className="user_password2"
                              id="user_password2"
                              name="password2"

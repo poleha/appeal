@@ -88,17 +88,17 @@ export default class PostDetail extends Component {
 
         if (this.props.comment.added) {
 
-            ReactDOM.findDOMNode(this.refs.add_comment_username).value = '';
-            ReactDOM.findDOMNode(this.refs.add_comment_email).value = '';
-            ReactDOM.findDOMNode(this.refs.add_comment_body).value = '';
+            ReactDOM.findDOMNode(this._add_comment_username).value = '';
+            ReactDOM.findDOMNode(this._add_comment_email).value = '';
+            ReactDOM.findDOMNode(this._add_comment_body).value = '';
         }
     }
 
     addCommentFormSubmit(e) {
         e.preventDefault();
-        let username = ReactDOM.findDOMNode(this.refs.add_comment_username).value;
-        let email = ReactDOM.findDOMNode(this.refs.add_comment_email).value;
-        let body = ReactDOM.findDOMNode(this.refs.add_comment_body).value;
+        let username = ReactDOM.findDOMNode(this._add_comment_username).value;
+        let email = ReactDOM.findDOMNode(this._add_comment_email).value;
+        let body = ReactDOM.findDOMNode(this._add_comment_body).value;
 
         let comment = { username, body, email, post: this.props.params.id };
         this.props.commentActions.addComment(comment);
@@ -135,21 +135,21 @@ export default class PostDetail extends Component {
             >
                 {this.getFieldErrors.call(this, 'username')}
                 <input
-                    ref="add_comment_username"
+                    ref={(c) => this._add_comment_username = c}
                     className={usernameInputClass}
                     placeholder="Автор"
                     type="text"
                 />
                 {this.getFieldErrors.call(this, 'email')}
                 <input
-                    ref="add_comment_email"
+                    ref={(c) => this._add_comment_email = c}
                     className={emailImputClass}
                     placeholder="E-mail"
                     type="text"
                 />
                 {this.getFieldErrors.call(this, 'body')}
             <textarea cols="70" rows="10"
-                      ref="add_comment_body"
+                      ref={(c) => this._add_comment_body = c}
                       className='add_comment_body'
                       placeholder="Комментарий"
             />

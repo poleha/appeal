@@ -64,16 +64,16 @@ export default class PostList extends Component {
     this.loadAjax();
 
     if (this.props.post.added){
-      ReactDOM.findDOMNode(this.refs.add_post_username).value = '';
-      ReactDOM.findDOMNode(this.refs.add_post_email).value = '';
-      ReactDOM.findDOMNode(this.refs.add_post_body).value = '';
+      ReactDOM.findDOMNode(this._add_post_username).value = '';
+      ReactDOM.findDOMNode(this._add_post_email).value = '';
+      ReactDOM.findDOMNode(this._add_post_body).value = '';
       //let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
     }
     if (this.props.post.loading || this.props.post.added) {
     for (let key = 0; key < this.props.tags.ids.length; key++) {
       let alias = this.props.tags.entities[this.props.tags.ids[key]].alias;
       let checked = this.props.params.tag == alias;
-      let elem = ReactDOM.findDOMNode(this.refs[`tag_to_add__${alias}`]);
+      let elem = ReactDOM.findDOMNode(this[`_tag_to_add__${alias}`]);
       if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
     }
     }
@@ -81,7 +81,7 @@ export default class PostList extends Component {
   }
 
   getPost() {
-      let postForm = $(ReactDOM.findDOMNode(this.refs.add_post_form));
+      let postForm = $(ReactDOM.findDOMNode(this._add_post_form));
     
       return formArrayToJson(postForm.serializeArray());
   }
@@ -193,7 +193,7 @@ export default class PostList extends Component {
                 data-id={key}
                 id={`tags_input-${key}`}
                 type="checkbox"
-                ref={`tag_to_add__${elem.alias}`}
+                ref={(c) => this[`_tag_to_add__${elem.alias}`] = c}
                 name={`tags__${key}`}
                 disabled={this.getAddPostButtonDisabled.call(this)}
             />
@@ -211,7 +211,7 @@ export default class PostList extends Component {
           <form
               onSubmit={this.addPostSubmit.bind(this)}
               className="add_post_form"
-              ref="add_post_form"
+              ref={(c) => this._add_post_form = c}
           >
             <div hidden={this.props.userId}>
 
@@ -219,7 +219,7 @@ export default class PostList extends Component {
 
               <input
                   disabled={this.getAddPostButtonDisabled.call(this)}
-                  ref="add_post_username"
+                  ref={(c) => this._add_post_username = c}
                   className="add_post_username"
                   id="add_post_username"
                   name="username"
@@ -234,7 +234,7 @@ export default class PostList extends Component {
 
               <input
                   disabled={this.getAddPostButtonDisabled.call(this)}
-                  ref="add_post_email"
+                  ref={(c) => this._add_post_email = c}
                   className="add_post_email"
                   id="add_post_email"
                   name="email"
@@ -248,7 +248,7 @@ export default class PostList extends Component {
 
       <textarea cols="70" rows="10"
                 disabled={this.getAddPostButtonDisabled.bind(this)()}
-                ref="add_post_body"
+                ref={(c) => this._add_post_body = c}
                 className="add_post_body"
                 id="add_post_body"
                 name="body"
@@ -261,7 +261,10 @@ export default class PostList extends Component {
 
             {this.getFieldErrors.call(this, 'tags')}
 
-            <ul className='tags_add' ref="tags" id="tags_add_ul">
+            <ul
+                className='tags_add'
+                //ref="tags"
+                id="tags_add_ul">
               {tagsAddBlock}
             </ul>
 

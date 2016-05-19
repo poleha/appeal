@@ -3,6 +3,7 @@ import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '
 import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/User'
 import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
 import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '../constants/User'
+import { USER_FACEBOOK_LOGIN_START, USER_FACEBOOK_LOGIN_SUCCESS, USER_FACEBOOK_LOGIN_FAIL } from '../constants/User'
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
 import { USER_GOOGLE_LOGIN } from '../constants/User'
 import { USER_GOOGLE_LOGOUT } from '../constants/User'
@@ -197,4 +198,51 @@ export function GoogleLogin(data) {
     }
 
 
+}
+
+
+export function FacebookLogin() {
+    return function (dispatch, getState) {
+        dispatch({type: USER_FACEBOOK_LOGIN_START});
+        
+        FB.login(function(response) {
+            if (response.authResponse) {
+                FB.api('/me', function(response) {
+
+
+                    let body = {
+                        username: response.name,
+                        id: response.id,
+                        network: 'facebook'
+                    };
+
+                    let action = {
+                        [API_KEY]: {
+                            method: 'post',
+                            endpoint: 'http://127.0.0.1:8000/social_login/',
+                            body: body,
+                            actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
+                        },
+                        body: body
+                    };
+
+                    dispatch(action).then(response => {
+                        createCookie('appeal_site_token', response.auth_token);
+                        dispatch(getUserInfo());
+                    }).then(response => {
+                        dispatch({
+                            type: USER_FACEBOOK_LOGIN_SUCCESS
+                        })
+
+                    }).then(() => history.push(''));
+
+
+                });
+            } else {
+                dispatch({type: USER_FACEBOOK_LOGIN_FAIL});
+                console.log('User cancelled login or did not fully authorize.');
+            }
+        });
+
+    }
 }

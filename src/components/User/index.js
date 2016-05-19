@@ -4,6 +4,7 @@ import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/User'
 import { formArrayToJson } from '../../helper'
 import VKLogin from '../VKLogin'
 import GoogleLogin from '../GoogleLogin'
+import FacebookLogin from '../FacebookLogin'
 import classNames from 'classnames'
 
 export default class User extends Component {
@@ -184,6 +185,9 @@ export default class User extends Component {
                 />
                 <GoogleLogin
                     actions={this.props.actions} 
+                />
+                <FacebookLogin
+                    actions={this.props.actions}
                 />
                 </div>
             )

@@ -5,8 +5,7 @@ import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '
 import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '../constants/User'
 import { USER_FACEBOOK_LOGIN_START, USER_FACEBOOK_LOGIN_SUCCESS, USER_FACEBOOK_LOGIN_FAIL } from '../constants/User'
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
-import { USER_GOOGLE_LOGIN } from '../constants/User'
-import { USER_GOOGLE_LOGOUT } from '../constants/User'
+import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/User'
 import { ACTIVATE_USER_FORM } from '../constants/User'
 import { API_KEY } from '../middleware/api'
 import { history } from  '../index'
@@ -164,9 +163,7 @@ export function VKLogin() {
 
             } else {
                 dispatch({
-                    type: USER_VK_LOGIN_FAIL,
-                    error: true,
-                    payload: new Error('Ошибка авторизации')
+                    type: USER_VK_LOGIN_FAIL
                 })
             }
         },4, 4194304); // запрос прав на доступ к photo и email
@@ -177,25 +174,39 @@ export function VKLogin() {
 
 export function GoogleLogin(data) {
     return function (dispatch, getState) {
+        dispatch({type: USER_GOOGLE_LOGIN_START});
 
+        let prom = window.auth2.signIn()
+            prom.then((googleUser) => {
+            let profile = googleUser.getBasicProfile();
+            let data = {
+                id: profile.getId(),
+                username: profile.getName(),
+                network: 'google'
+            };
+            let action = {
+                [API_KEY]: {
+                    method: 'post',
+                    endpoint: 'http://127.0.0.1:8000/social_login/',
+                    body: data,
+                    actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
+                },
+                body: data
+            };
+            return dispatch(action);
 
-        let action = {
-            [API_KEY]: {
-                method: 'post',
-                endpoint: 'http://127.0.0.1:8000/social_login/',
-                body: data,
-                actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
-            },
-            body: data
-        };
-
-        dispatch(action).then(response => {
+        }).then(response => {
             createCookie('appeal_site_token', response.auth_token);
-            dispatch(getUserInfo());
-        }).then(() => history.push(''));
+            return dispatch(getUserInfo());
+        }).then(() => {
+            dispatch({type: USER_GOOGLE_LOGIN_SUCCESS})
+            history.push('')
+        })
+            }
 
 
-    }
+
+
 
 
 }
@@ -240,7 +251,6 @@ export function FacebookLogin() {
                 });
             } else {
                 dispatch({type: USER_FACEBOOK_LOGIN_FAIL});
-                console.log('User cancelled login or did not fully authorize.');
             }
         });
 

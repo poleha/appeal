@@ -193,7 +193,7 @@ export default class User extends Component {
             )
 
 
-        return <div className="user_block">
+        return <div className={classNames('user_block', {disabled: this.props.data.logging})} >
             {socialLoginTemplate}
             {this.getLoginBlockButtons.call(this)}
             {loginBlockTemplate}

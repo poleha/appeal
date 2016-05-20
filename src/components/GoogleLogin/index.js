@@ -1,8 +1,13 @@
 import React, { PropTypes, Component } from 'react'
 import './styles.less'
 
+//function onSignIn(currentUser) {
+//console.log('22222222222222222')
+//}
 
 export default class GoogleLogin extends Component {
+
+
 
 
     componentDidMount() {
@@ -16,17 +21,19 @@ export default class GoogleLogin extends Component {
                     // Request scopes in addition to 'profile' and 'email'
                     //scope: 'additional_scope'
                 });
-                attachSignin(document.getElementById('google_login_button'));
+                
+                //window.auth2.isSignedIn.listen(onSignIn);
+                //attachSignin(document.getElementById('google_login_button'));
             });
         };
 
 
+        /*
         function attachSignin(element) {
-            console.log(element.id);
             auth2.attachClickHandler(element, {},
                 self.onSignIn.bind(self));
         }
-
+        */
         startApp();
 
       //  gapi.signin2.render('google_login_button', {
@@ -36,6 +43,7 @@ export default class GoogleLogin extends Component {
 
     }
 
+    /*
     onSignIn(googleUser) {
         let profile = googleUser.getBasicProfile();
         
@@ -44,14 +52,10 @@ export default class GoogleLogin extends Component {
             username: profile.getName(),
             network: 'google'
         };
-        /*
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
-        */
+    
         this.props.actions.GoogleLogin(data)
     }
+    */
 /*
         signOut() {
         var auth2 = gapi.auth2.getAuthInstance();
@@ -62,9 +66,7 @@ export default class GoogleLogin extends Component {
 */
     render() {
         return (<div>
-                <div id="google_login_button">
-                    <span class="buttonText">Google</span>
-                </div>
+                <input type="button" value="google" onClick={this.props.actions.GoogleLogin.bind(this)} />
             </div>
         )
     }

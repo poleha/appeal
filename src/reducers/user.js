@@ -5,12 +5,16 @@ import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '
 import update from 'react-addons-update'
 import { ACTIVATE_USER_FORM, USER_FORM_LOGIN } from '../constants/User'
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
+import { USER_FACEBOOK_LOGIN_START, USER_FACEBOOK_LOGIN_SUCCESS, USER_FACEBOOK_LOGIN_FAIL } from '../constants/User'
+import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '../constants/User'
+import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/User'
 
 var newState;
 
 const initialState = {
     logged: false,
     logging: false,
+    socialLogging: false,
     userName: null,
     userId: null,
     //token: null,
@@ -134,8 +138,8 @@ export default function user(state = initialState, action) {
             });
 
             return newState;
-
-
+        
+       
         case ACTIVATE_USER_FORM:
             state = cloneState(state);
             newState = update(state, {

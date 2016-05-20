@@ -41,7 +41,7 @@ export default class App extends Component {
 
     let path = this.props.params.tag;
         let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
-      return <li key={tag.id}><Link to={`/${tag.alias}`}>{tag.title}</Link></li>
+      return <li key={tag.id}><Link activeClassName='active' to={`/${tag.alias}`}>{tag.title}</Link></li>
     });
 
 
@@ -52,7 +52,7 @@ export default class App extends Component {
               actions={this.props.userActions}
           />
           <ul className={classNames('nav', 'nav-pills')}>
-              <li><Link to='/'>Все</Link></li>
+              <li><Link activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</Link></li>
             {linksBlock}
           </ul>
           {this.props.children}

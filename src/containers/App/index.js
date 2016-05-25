@@ -37,13 +37,18 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
+
 @asyncConnect([{
     promise: (params, helpers) => {
         let store = params.store
+        let state = store.getState();
         let promises = []
-
+        if (!state.user.logged) {
         promises.push(store.dispatch(getUserInfo()))
+        }
+        if (!state.tag.loaded) {
         promises.push(store.dispatch(loadTags()))
+        }
         return Promise.all(promises);
     }
 }])

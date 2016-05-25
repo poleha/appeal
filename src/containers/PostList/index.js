@@ -1,10 +1,11 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
+import { connect } from 'react-redux'
+import {  asyncConnect } from 'redux-async-connect'
 import { formArrayToJson } from '../../helper'
 import Post from '../../components/Post'
 import { bindActionCreators } from 'redux'
 import * as postActions from '../../actions/PostActions'
-import { connect } from 'react-redux'
 import { mapNodes } from '../../helper'
 
 function mapStateToProps(state) {
@@ -24,7 +25,16 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+@asyncConnect([{
+  promise: (params, helpers) => {
+    let store = params.store
+    let tag = params.params.tag
+    let promises = []
+    promises.push(store.dispatch(postActions.loadPosts({tags__alias: tag}, tag)))
 
+    return Promise.all(promises);
+  }
+}])
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PostList extends Component {
 
@@ -37,31 +47,9 @@ export default class PostList extends Component {
  // }
 
 
-  isReady() {
-    return this.props.post.posts && this.props.logged;
-  }
 
-  loadAjax() {
-    if(this.props.logged) {
-
-      if ((this.props.post.posts === null || this.props.params.tag != this.props.post.path) && !this.props.post.loading) {
-
-        this.props.postActions.loadPosts({tags__alias: this.props.params.tag}, this.props.params.tag )
-
-      }
-
-    }
-
-  }
-
-
-  componentDidMount() {
-    this.loadAjax();
-
-  }
 
   componentDidUpdate(){
-    this.loadAjax();
 
     if (this.props.post.added){
       ReactDOM.findDOMNode(this._add_post_username).value = '';
@@ -143,7 +131,6 @@ export default class PostList extends Component {
   }
 
   render() {
-    if (this.isReady()) {
       let posts = this.props.post.posts;
       let tags = this.props.tags;
       //let addPost = this.props.actions.addPost;
@@ -290,8 +277,6 @@ export default class PostList extends Component {
 
         {showMoreInput}
       </div>
-    }
-    else return null;
   }
 }
 

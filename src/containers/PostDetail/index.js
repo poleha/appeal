@@ -33,7 +33,6 @@ function mapDispatchToProps(dispatch) {
         let store = params.store
         let id = params.params.id
         let promises = []
-        console.log(postActions, '111111111111111111111')
         promises.push(store.dispatch(postActions.loadPosts({id}, id)))
         promises.push(store.dispatch(commentActions.loadComments({post: id})))
 
@@ -66,40 +65,8 @@ export default class PostDetail extends Component {
         return this.props.post.posts[this.props.params.id];
     }
 
-    /*
-
-    isReady() {
-        return this.props.post.posts && this.props.comment.comments && this.props.logged;
-    }
-
-
-    loadAjax() {
-
-        if(this.props.logged) {
-            let id = this.props.params.id;
-
-            if ((this.props.post.posts === null || this.props.params.id != this.props.post.path) && !this.props.post.loading) {
-
-                this.props.postActions.loadPosts({id}, this.props.params.id);
-                this.props.commentActions.loadComments({post: id});
-
-            }
-
-
-        }
-    }
-
-    componentDidMount() {
-        this.loadAjax();
-    }
-
-*/
+  
     componentDidUpdate() {
-
-        //this.loadAjax();
-
-
-
         if (this.props.comment.added) {
 
             ReactDOM.findDOMNode(this._add_comment_username).value = '';

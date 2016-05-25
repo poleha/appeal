@@ -49,35 +49,7 @@ function mapDispatchToProps(dispatch) {
 }])
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
-
-
-    loadAjax() {
-        if (!this.props.user.logged && !this.props.user.logging) {
-            //this.props.userActions.getUserInfo();
-        }
-        if (!this.props.tag.loaded && !this.props.tag.loading) {
-
-            //this.props.tagActions.loadTags();
-        }
-    }
-
-
-    componentDidUpdate() {
-        this.loadAjax();
-    }
-
-
-    componentDidMount() {
-        this.loadAjax();
-    }
-
-
-  isReady() {
-      return this.props.user.logged && this.props.tag.loaded;
-  }
-
     render() {
-        if (!this.isReady()) return null;
 
     let path = this.props.params.tag;
         let linksBlock = mapNodes(this.props.tag.tags, function (tag) {

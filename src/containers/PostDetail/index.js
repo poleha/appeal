@@ -5,6 +5,7 @@ import Comment from '../../components/Comment'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import {  asyncConnect } from 'redux-async-connect'
 import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
 import { mapNodes } from '../../helper'
@@ -27,7 +28,18 @@ function mapDispatchToProps(dispatch) {
    };
 }
 
+@asyncConnect([{
+    promise: (params, helpers) => {
+        let store = params.store
+        let id = params.params.id
+        let promises = []
+        console.log(postActions, '111111111111111111111')
+        promises.push(store.dispatch(postActions.loadPosts({id}, id)))
+        promises.push(store.dispatch(commentActions.loadComments({post: id})))
 
+        return Promise.all(promises);
+    }
+}])
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PostDetail extends Component {
 
@@ -54,6 +66,7 @@ export default class PostDetail extends Component {
         return this.props.post.posts[this.props.params.id];
     }
 
+    /*
 
     isReady() {
         return this.props.post.posts && this.props.comment.comments && this.props.logged;
@@ -80,9 +93,10 @@ export default class PostDetail extends Component {
         this.loadAjax();
     }
 
+*/
     componentDidUpdate() {
 
-        this.loadAjax();
+        //this.loadAjax();
 
 
 
@@ -176,7 +190,6 @@ export default class PostDetail extends Component {
     }
 
     render() {
-      if (this.isReady()) {
        let post = this.props.post.posts.entities[this.props.params.id];
       let comments = this.props.comment.comments;
         let commentsBlock;
@@ -234,9 +247,6 @@ export default class PostDetail extends Component {
       )
 
       }
-        else {
-          return null;
-      }
-    }
+
 }
 

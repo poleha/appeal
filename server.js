@@ -1,6 +1,20 @@
 const http = require('http');
 const express = require('express');
+import React from 'react';
+import ReactDOM from 'react-dom/server';
+import Html from './src/helpers/Html';
+import { match } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
+import createHistory from 'react-router/lib/createMemoryHistory';
+import {Provider} from 'react-redux';
+import configureStore from './src/store/configureStore'
+import routes from './src/routes'
+
+
 const app = express();
+
+
 
 (function initWebpack() {
   const webpack = require('webpack');
@@ -18,9 +32,48 @@ const app = express();
   app.use(express.static(__dirname + '/'));
 })();
 
-app.get(/.*/, function root(req, res) {
-  res.sendFile(__dirname + '/index.html');
+
+app.use((req, res) => {
+
+  const memoryHistory = createHistory(req.originalUrl);
+  const store = configureStore();
+  const history = syncHistoryWithStore(memoryHistory, store);
+
+
+  match({ history, routes: routes, location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+    if (redirectLocation) {
+      res.redirect(redirectLocation.pathname + redirectLocation.search);
+    } else if (error) {
+      console.error('ROUTER ERROR:',error);
+      res.status(500);
+      //hydrateOnClient();
+    } else if (renderProps) {
+      loadOnServer({...renderProps, store}).then(() => {
+        const component = (
+            <Provider store={store} key="provider">
+              <ReduxAsyncConnect {...renderProps} />
+            </Provider>
+        );
+        res.status(200);
+        //console.log(history)
+        //res.send(ReactDOM.renderToString(component)
+        //res.end()
+        global.navigator = {userAgent: req.headers['user-agent']};
+
+        res.send('<!doctype html>\n' +
+            ReactDOM.renderToStaticMarkup(<Html component={component} store={store}/>));
+      });
+
+    } else {
+      res.status(404).send('Not found');
+    }
+
+  });
+
+
+  //res.sendFile(__dirname + '/index.html');
 });
+
 
 const server = http.createServer(app);
 server.listen(process.env.PORT || 3000, function onListen() {

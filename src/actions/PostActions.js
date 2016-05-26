@@ -2,13 +2,22 @@ import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, 
 import { API_KEY } from '../middleware/api'
 import { post } from '../schemas'
 
+function serialize(obj) {
+    var str = [];
+    for(var p in obj)
+        if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+        }
+    return str.join('&');
+}
+
 export function loadPosts(params, path) {
     return function (dispatch, getState) {
         let loading = getState().post.loading;
         if (!loading) {
         let urlParams = '';
         if (params) {
-            urlParams = jQuery.param(params);
+            urlParams = serialize(params);
         }
 
         let action = {

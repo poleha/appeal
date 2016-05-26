@@ -8,7 +8,7 @@ import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_F
 import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/User'
 import { ACTIVATE_USER_FORM } from '../constants/User'
 import { API_KEY } from '../middleware/api'
-import { history } from  '../index'
+import { push } from 'react-router-redux';
 
 
 import { createCookie, readCookie, eraseCookie} from '../helper'
@@ -80,7 +80,7 @@ export function logoutUser() {
                 return auth2.signOut()
             }
         }).then(() => {
-            history.push('');
+            push('');
         })
 
 
@@ -118,7 +118,7 @@ export function registerUser(data) {
 
         dispatch(action).then(response => {
             dispatch(loginUser(loginData));
-        }).then(() => history.push(''));
+        }).then(() => push(''));
 
     }
 }
@@ -158,7 +158,7 @@ export function VKLogin() {
                         type: USER_VK_LOGIN_SUCCESS
                 })
 
-                }).then(() => history.push(''));
+                }).then(() => push(''));
 
 
             } else {
@@ -200,7 +200,7 @@ export function GoogleLogin(data) {
             return dispatch(getUserInfo());
         }).then(() => {
             dispatch({type: USER_GOOGLE_LOGIN_SUCCESS})
-            history.push('')
+            push('')
         })
             }
 
@@ -245,7 +245,7 @@ export function FacebookLogin() {
                             type: USER_FACEBOOK_LOGIN_SUCCESS
                         })
 
-                    }).then(() => history.push(''));
+                    }).then(() => push(''));
 
 
                 });

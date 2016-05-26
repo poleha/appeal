@@ -11,6 +11,7 @@ export function createCookie(name,value,days) {
 }
 
 export function readCookie(name) {
+    try {
     nameEQ = name + '=';
     ca = document.cookie.split(';');
     for(var i=0;i < ca.length;i++) {
@@ -19,6 +20,10 @@ export function readCookie(name) {
         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
     }
     return null;
+    }
+    catch (e) {
+      console.log('Error writing cookies')
+    }
 }
 
 export function eraseCookie(name) {

@@ -3,14 +3,16 @@ import { Provider } from 'react-redux'
 import { ReduxAsyncConnect } from 'redux-async-connect'
 import routes from '../../routes'
 import { Router } from 'react-router'
-import './styles.less'
+//import './styles.less'
 
 export default class Root extends Component {
     render() {
         const { store, history } = this.props
         return (
             <Provider store={store}>
-                <Router history={history} routes={routes} render={(props) => <ReduxAsyncConnect { ...props }/>} />
+                <Router history={history} key="provider" routes={routes} render={(props) =>
+                <ReduxAsyncConnect { ...props } />}
+                />
             </Provider>
         )
     }

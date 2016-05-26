@@ -184,7 +184,7 @@ export default class User extends Component {
                     actions={this.props.actions}
                 />
                 <GoogleLogin
-                    actions={this.props.actions} 
+                    actions={this.props.actions}
                 />
                 <FacebookLogin
                     actions={this.props.actions}

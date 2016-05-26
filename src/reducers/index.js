@@ -7,8 +7,8 @@ import tag from './tag'
 import { reducer as reduxAsyncConnect } from 'redux-async-connect'
 
 export default combineReducers({
-  routing,
   reduxAsyncConnect,
+  routing,
   tag,
   user,
   post,

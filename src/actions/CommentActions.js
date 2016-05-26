@@ -4,6 +4,15 @@ import { API_KEY } from '../middleware/api'
 import { comment } from '../schemas'
 
 
+function serialize(obj) {
+    var str = [];
+    for (var p in obj)
+        if (obj.hasOwnProperty(p)) {
+            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+        }
+    return str.join('&');
+}
+
 export function addComment(data) {
     return function (dispatch, getState) {
         let action = {
@@ -24,7 +33,7 @@ export function addComment(data) {
 export function loadComments(params) {
 
     return function (dispatch, getState) {
-        let urlParams = jQuery.param( params );
+        let urlParams = serialize( params );
         let action = {
             [API_KEY]: {
                 method: 'get',

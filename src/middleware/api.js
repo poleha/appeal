@@ -30,40 +30,44 @@ function fetchApi(endpoint, method, headers, body, schema) {
 function createAction(action, actionType){
     return Object.assign({}, action, {type: actionType});
 }
-
-export const api = store => dispatch => action => {
-    if (action[API_KEY]) {
-    let apiAction = action[API_KEY];
-    let [actionStart, actionSuccess, actionFail] = apiAction.actions;
-    let endpoint = apiAction.endpoint;
-    let method = apiAction.method;
-    let schema = apiAction.schema || null;
-    let body = apiAction.body;
-    let token = readCookie('appeal_site_token');
-    let headers = {};
-        if (token) {
-        headers.Authorization = `Token ${token}`;
-    }
-    delete action[API_KEY];
-    actionStart = createAction(action, actionStart);
-    actionSuccess = createAction(action, actionSuccess);
-    actionFail = createAction(action, actionFail);
-
-
-        dispatch(actionStart);
-        return fetchApi(endpoint, method, headers, body, schema).then(response => {
-            actionSuccess.payload = response;
-            dispatch(actionSuccess);
-            return Promise.resolve(response);
-        },
-        ).catch(error => {
-            actionFail.payload = error;
-            dispatch(actionFail);
-            return Promise.reject(error);
-
-        })
-    }
-    else return dispatch(action);
+export function createApiMiddelware(req) {
+    
+    return store => dispatch => action => {
+        if (action[API_KEY]) {
+            let apiAction = action[API_KEY];
+            let [actionStart, actionSuccess, actionFail] = apiAction.actions;
+            let endpoint = apiAction.endpoint;
+            let method = apiAction.method;
+            let schema = apiAction.schema || null;
+            let body = apiAction.body;
+            let token = readCookie('appeal_site_token', req);
+            let headers = {};
+            if (token) {
+                headers.Authorization = `Token ${token}`;
+            }
+            delete action[API_KEY];
+            actionStart = createAction(action, actionStart);
+            actionSuccess = createAction(action, actionSuccess);
+            actionFail = createAction(action, actionFail);
 
 
-};
+            dispatch(actionStart);
+            return fetchApi(endpoint, method, headers, body, schema).then(response => {
+                    actionSuccess.payload = response;
+                    dispatch(actionSuccess);
+                    return Promise.resolve(response);
+                },
+            ).catch(error => {
+                actionFail.payload = error;
+                dispatch(actionFail);
+                return Promise.reject(error);
+
+            })
+        }
+        else return dispatch(action);
+
+
+    };
+
+
+}

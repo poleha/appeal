@@ -1,29 +1,28 @@
 var expires, date, nameEQ, ca, c;
 
-export function createCookie(name,value,days) {
+export function createCookie(name, value, days, req) {
     if (days) {
         date = new Date();
         date.setTime(date.getTime()+(days*24*60*60*1000));
         expires = '; expires='+date.toGMTString();
     }
     else expires = '';
-    document.cookie = name+'='+value+expires+'; path=/';
+    if (req == undefined) document.cookie = name+'='+value+expires+'; path=/';
+    else req.cookie(name, value, {expires});
 }
 
-export function readCookie(name) {
-    try {
-    nameEQ = name + '=';
-    ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+export function readCookie(name, req) {
+    if (req == undefined) {
+        nameEQ = name + '=';
+        ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
     }
-    return null;
-    }
-    catch (e) {
-      console.log('Error writing cookies')
-    }
+    else return req.cookies[name]
+    
 }
 
 export function eraseCookie(name) {

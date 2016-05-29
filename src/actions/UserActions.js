@@ -11,10 +11,10 @@ import { API_KEY } from '../middleware/api'
 import { push } from 'react-router-redux';
 
 
-import { createCookie, readCookie, eraseCookie} from '../helper'
+import { createCookie, eraseCookie} from '../helper'
 
 export function loginUser(userData) {
-    return function (dispatch, getState) {
+    return function (dispatch, getState, req) {
 
         let action = {
             [API_KEY]: {
@@ -26,7 +26,7 @@ export function loginUser(userData) {
         }
         
         dispatch(action).then((response) => {
-            createCookie('appeal_site_token', response.auth_token);
+            createCookie('appeal_site_token', response.auth_token, req);
             dispatch(getUserInfo());
         }).catch((error) => {
         });
@@ -38,7 +38,7 @@ export function loginUser(userData) {
 
 //*************************
 export function getUserInfo() {
-    return function (dispatch, getState) {
+    return function (dispatch, getState, req) {
 
 
         let action = {
@@ -53,7 +53,7 @@ export function getUserInfo() {
             //let token = readCookie('appeal_site_token');
             //dispatch(loginUserSuccess(token));
         }).catch((error) => {
-            eraseCookie('appeal_site_token');
+            eraseCookie('appeal_site_token', req);
         });
 
 
@@ -125,7 +125,7 @@ export function registerUser(data) {
 
 
 export function VKLogin() {
-    return function (dispatch, getState) {
+    return function (dispatch, getState, req) {
         dispatch({type: USER_VK_LOGIN_START});
 
         VK.Auth.login((r) => {
@@ -151,7 +151,7 @@ export function VKLogin() {
                 };
 
                 dispatch(action).then(response => {
-                    createCookie('appeal_site_token', response.auth_token);
+                    createCookie('appeal_site_token', response.auth_token, req);
                     dispatch(getUserInfo());
                     }).then(response => {
                     dispatch({
@@ -173,7 +173,7 @@ export function VKLogin() {
 }
 
 export function GoogleLogin(data) {
-    return function (dispatch, getState) {
+    return function (dispatch, getState, req) {
         dispatch({type: USER_GOOGLE_LOGIN_START});
 
         let prom = window.auth2.signIn()
@@ -196,7 +196,7 @@ export function GoogleLogin(data) {
             return dispatch(action);
 
         }).then(response => {
-            createCookie('appeal_site_token', response.auth_token);
+            createCookie('appeal_site_token', response.auth_token, req);
             return dispatch(getUserInfo());
         }).then(() => {
             dispatch({type: USER_GOOGLE_LOGIN_SUCCESS})
@@ -213,7 +213,7 @@ export function GoogleLogin(data) {
 
 
 export function FacebookLogin() {
-    return function (dispatch, getState) {
+    return function (dispatch, getState, req) {
         dispatch({type: USER_FACEBOOK_LOGIN_START});
         
         FB.login(function(response) {
@@ -238,7 +238,7 @@ export function FacebookLogin() {
                     };
 
                     dispatch(action).then(response => {
-                        createCookie('appeal_site_token', response.auth_token);
+                        createCookie('appeal_site_token', response.auth_token, req);
                         dispatch(getUserInfo());
                     }).then(response => {
                         dispatch({

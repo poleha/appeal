@@ -1,5 +1,7 @@
 const http = require('http');
 const express = require('express');
+var cookieParser = require('cookie-parser')
+//var RedisStore = require('connect-redis')(session);
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Html from './src/helpers/Html';
@@ -13,7 +15,6 @@ import routes from './src/routes'
 
 
 const app = express();
-
 
 
 (function initWebpack() {
@@ -33,11 +34,14 @@ const app = express();
 })();
 
 
+app.use(cookieParser())
+
 app.use((req, res) => {
 
   const memoryHistory = createHistory(req.originalUrl);
-  const store = configureStore();
+  const store = configureStore({}, req);
   const history = syncHistoryWithStore(memoryHistory, store);
+  let token = req.cookies.appeal_site_token;
 
 
   match({ history, routes: routes, location: req.originalUrl }, (error, redirectLocation, renderProps) => {
@@ -48,7 +52,7 @@ app.use((req, res) => {
       res.status(500);
       //hydrateOnClient();
     } else if (renderProps) {
-      loadOnServer({...renderProps, store}).then(() => {
+      loadOnServer({...renderProps, store, helpers: {req}}).then(() => {
         const component = (
             <Provider store={store} key="provider">
               <ReduxAsyncConnect {...renderProps} />
@@ -81,3 +85,42 @@ server.listen(process.env.PORT || 3000, function onListen() {
   console.log('Listening on: %j', address);
   console.log(' -> that probably means: http://localhost:%d', address.port);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

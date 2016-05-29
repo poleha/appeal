@@ -39,7 +39,7 @@ function mapDispatchToProps(dispatch) {
 
 
 @asyncConnect([{
-    promise: (params, helpers) => {
+    promise: (params) => {
         let store = params.store
         let state = store.getState();
         let promises = []

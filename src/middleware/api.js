@@ -23,7 +23,6 @@ function fetchApi(endpoint, method, headers, body, schema) {
         if( error.__proto__.constructor === SyntaxError ) return null;
         else return Promise.reject(error)
     })
-
 }
 
 
@@ -32,7 +31,7 @@ function createAction(action, actionType){
 }
 export function createApiMiddelware(req) {
     
-    return store => dispatch => action => {
+    return  store => dispatch => action => {
         if (action[API_KEY]) {
             let apiAction = action[API_KEY];
             let [actionStart, actionSuccess, actionFail] = apiAction.actions;
@@ -50,7 +49,6 @@ export function createApiMiddelware(req) {
             actionSuccess = createAction(action, actionSuccess);
             actionFail = createAction(action, actionFail);
 
-
             dispatch(actionStart);
             return fetchApi(endpoint, method, headers, body, schema).then(response => {
                     actionSuccess.payload = response;
@@ -60,7 +58,6 @@ export function createApiMiddelware(req) {
             ).catch(error => {
                 actionFail.payload = error;
                 dispatch(actionFail);
-                return Promise.reject(error);
 
             })
         }

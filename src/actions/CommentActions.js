@@ -2,16 +2,9 @@ import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../con
 import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Comment'
 import { API_KEY } from '../middleware/api'
 import { comment } from '../schemas'
+import { serializeParams } from '../helper'
 
 
-function serialize(obj) {
-    var str = [];
-    for (var p in obj)
-        if (obj.hasOwnProperty(p)) {
-            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-        }
-    return str.join('&');
-}
 
 export function addComment(data) {
     return function (dispatch, getState) {
@@ -33,7 +26,7 @@ export function addComment(data) {
 export function loadComments(params) {
 
     return function (dispatch, getState) {
-        let urlParams = serialize( params );
+        let urlParams = serializeParams( params );
         let action = {
             [API_KEY]: {
                 method: 'get',

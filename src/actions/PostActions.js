@@ -1,15 +1,8 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
 import { API_KEY } from '../middleware/api'
 import { post } from '../schemas'
+import { serializeParams} from '../helper'
 
-function serialize(obj) {
-    var str = [];
-    for(var p in obj)
-        if (obj.hasOwnProperty(p)) {
-            str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
-        }
-    return str.join('&');
-}
 
 export function loadPosts(params, path) {
     return function (dispatch, getState) {
@@ -17,7 +10,7 @@ export function loadPosts(params, path) {
         if (!loading) {
         let urlParams = '';
         if (params) {
-            urlParams = serialize(params);
+            urlParams = serializeParams(params);
         }
 
         let action = {

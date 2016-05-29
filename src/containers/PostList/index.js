@@ -38,17 +38,6 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PostList extends Component {
 
-
-  //constructor(props) {
-  //  super(props);
-  //  this.state = {
-  //
-  //  };
- // }
-
-
-
-
   componentDidUpdate(){
 
     if (this.props.post.added){
@@ -57,13 +46,11 @@ export default class PostList extends Component {
       ReactDOM.findDOMNode(this._add_post_body).value = '';
       //let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
     }
-    if (this.props.post.loading || this.props.post.added) {
     for (let key = 0; key < this.props.tags.ids.length; key++) {
       let alias = this.props.tags.entities[this.props.tags.ids[key]].alias;
       let checked = this.props.params.tag == alias;
       let elem = ReactDOM.findDOMNode(this[`_tag_to_add__${alias}`]);
       if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
-    }
     }
 
   }

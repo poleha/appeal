@@ -66,10 +66,27 @@ export default class User extends Component {
 
 
     render() {
+        let socialLoginTemplate;
 
-
-        let loginBlockTemplate = '';
+        let loginBlockTemplate;
         if (!this.props.data.userId) {
+
+
+            socialLoginTemplate = (
+                <div className={classNames({hidden: this.props.data.userId})}>
+                    <VKLogin
+                        actions={this.props.actions}
+                    />
+                    <GoogleLogin
+                        actions={this.props.actions}
+                    />
+                    <FacebookLogin
+                        actions={this.props.actions}
+                    />
+                </div>
+            )
+
+
          if(this.props.data.activeForm == USER_FORM_LOGIN){
          loginBlockTemplate =
              <div className="login_block">
@@ -178,19 +195,6 @@ export default class User extends Component {
                 </div>
         }
 
-           let socialLoginTemplate = (
-                <div className={classNames({hidden: this.props.data.userId})}>
-                <VKLogin
-                    actions={this.props.actions}
-                />
-                <GoogleLogin
-                    actions={this.props.actions}
-                />
-                <FacebookLogin
-                    actions={this.props.actions}
-                />
-                </div>
-            )
 
 
         return <div className={classNames('user_block', {disabled: this.props.data.logging})} >

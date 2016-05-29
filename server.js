@@ -52,7 +52,7 @@ app.use((req, res) => {
       res.status(500);
       //hydrateOnClient();
     } else if (renderProps) {
-      loadOnServer({...renderProps, store, helpers: {req}}).then(() => {
+      loadOnServer({...renderProps, store }).then(() => {
         const component = (
             <Provider store={store} key="provider">
               <ReduxAsyncConnect {...renderProps} />

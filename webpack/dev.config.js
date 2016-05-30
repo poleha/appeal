@@ -1,11 +1,11 @@
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
   entry: [
     //'bootstrap-loader',
-    'webpack-hot-middleware/client',
+    //'webpack-hot-middleware/client',
     './src/index',
   ],
   output: {
@@ -13,15 +13,7 @@ module.exports = {
   },
 
   module: {
-    loaders: [{
-      test: /\.scss$/,
-      loader: 'style!css?localIdentName=[path][name]--[local]!postcss-loader!sass',
-    },
-      {
-        test: /\.less$/,
-        loader: "style!css!less"
-      }
-    ],
+    loaders: []
   },
 
   plugins: [
@@ -29,14 +21,14 @@ module.exports = {
       'process.env': {
         NODE_ENV: '"development"',
       },
-      __DEVELOPMENT__: true,
+    //  __DEVELOPMENT__: true,
     }),
-    new ExtractTextPlugin('bundle.css'),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.ProvidePlugin({
-      jQuery: 'jquery',
-    }),
+    //new ExtractTextPlugin('bundle.css'),
+    //new webpack.optimize.OccurenceOrderPlugin(),
+    //new webpack.HotModuleReplacementPlugin(),
+    //new webpack.NoErrorsPlugin(),
+    //new webpack.ProvidePlugin({
+    //  jQuery: 'jquery',
+    //}),
   ],
 };

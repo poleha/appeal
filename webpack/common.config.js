@@ -1,21 +1,23 @@
 const path = require('path');
-const autoprefixer = require('autoprefixer');
+//const autoprefixer = require('autoprefixer');
 //const postcssImport = require('postcss-import');
 const merge = require('webpack-merge');
 
 const development = require('./dev.config.js');
 const production = require('./prod.config.js');
 
-require('babel-polyfill').default;
+require('babel-polyfill');
 
 const TARGET = process.env.npm_lifecycle_event;
+//'start' for npm start
+
 
 const PATHS = {
   app: path.join(__dirname, '../src'),
   build: path.join(__dirname, '../dist'),
 };
 
-process.env.BABEL_ENV = TARGET;
+//process.env.BABEL_ENV = TARGET;
 
 const common = {
   entry: [
@@ -46,12 +48,6 @@ const common = {
       test: /\.js$/,
       loaders: ['babel-loader'],
       exclude: /node_modules/,
-    }, {
-      test: /\.png$/,
-      loader: 'file?name=[name].[ext]',
-    }, {
-      test: /\.jpg$/,
-      loader: 'file?name=[name].[ext]',
     }],
   },
 };

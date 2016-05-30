@@ -11,7 +11,7 @@ export default function configureStore(initialState, req) {
   const store = createStore(
       rootReducer,
       initialState,
-      applyMiddleware(thunk.withExtraArgument(req), api, logger));
+      applyMiddleware(thunk.withExtraArgument(req), api));
 
   //A store holds the whole state tree of your application.
   //The only way to change the state inside it is to dispatch an action on it.

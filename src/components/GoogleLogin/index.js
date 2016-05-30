@@ -1,9 +1,7 @@
 import React, { PropTypes, Component } from 'react'
-import './styles.less'
+//import './styles.less'
 
-//function onSignIn(currentUser) {
-//console.log('22222222222222222')
-//}
+
 
 export default class GoogleLogin extends Component {
 

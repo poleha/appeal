@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom/server';
 import serialize from 'serialize-javascript';
+import Helmet from 'react-helmet';
 
 
 /**
@@ -22,13 +23,18 @@ export default class Html extends Component {
     render() {
         const {component, store, assets} = this.props;
         const content = component ? ReactDOM.renderToString(component) : '';
+        const head = Helmet.rewind();
 
         return (
             <html lang="en-us">
             <head>
                 <link rel="shortcut icon" href="/favicon.ico" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+                {head.base.toComponent()}
+                {head.title.toComponent()}
+                {head.meta.toComponent()}
+                {head.link.toComponent()}
+                {head.script.toComponent()}
 
                 { Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{__html: require('../containers/Root/styles.less')._style}}/> : null }
             </head>
@@ -43,7 +49,7 @@ export default class Html extends Component {
 
             <div><div id="root" dangerouslySetInnerHTML={{__html: content}}/></div>
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
-            <script src="/dist/bundle.js"></script>
+            <script src={assets.javascript.main} charSet="UTF-8"/>
             </body>
             </html>
         );

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import Post from '../../components/Post'
 import Comment from '../../components/Comment'
 import classNames from 'classnames'
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
@@ -175,6 +176,7 @@ export default class PostDetail extends Component {
 
       return (
         <div className="full_post">
+            <Helmet title={post.body.slice(0, 20)}/>
             <div className="full_post_detail">
             <Post
                 key={post.id}

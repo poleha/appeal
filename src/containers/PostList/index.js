@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
 import { formArrayToJson } from '../../helper'
@@ -121,7 +122,12 @@ export default class PostList extends Component {
       let posts = this.props.post.posts;
       let tags = this.props.tags;
       //let addPost = this.props.actions.addPost;
-
+      let currentTagTitle;
+      Object.getOwnPropertyNames.call(this, tags.entities).forEach(function(key) {
+          let tag = tags.entities[key]
+          if (tag.alias == this.props.params.tag) currentTagTitle = tag.title;
+      }.bind(this))
+  
       let showMoreInput;
       if (this.props.post.count > posts.ids.length) {
         showMoreInput = (
@@ -180,6 +186,7 @@ export default class PostList extends Component {
       }
 
       return <div className="post_list">
+          <Helmet title={currentTagTitle} />
         <div className="add_post_form_block">
           <h3>Опубликовать призыв</h3>
           <form

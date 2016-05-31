@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
+import Helmet from 'react-helmet';
 import classNames from 'classnames'
 import * as userActions from '../../actions/UserActions'
 import * as postActions from '../../actions/PostActions'
@@ -12,6 +13,7 @@ import { Link } from 'react-router'
 import { mapNodes } from '../../helper'
 import { getUserInfo } from '../../actions/UserActions'
 import { loadTags } from '../../actions/TagActions'
+import config from '../../config'
 
 
 //Устанавливаем соответствие глобального state props каждого компонента
@@ -64,6 +66,7 @@ export default class App extends Component {
 
     return (
         <div className='container'>
+            <Helmet {...config.app.head} title={config.app.title}/>
           <User
               data={this.props.user}
               actions={this.props.userActions}

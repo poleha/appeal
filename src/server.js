@@ -4,14 +4,14 @@ var cookieParser = require('cookie-parser')
 //var RedisStore = require('connect-redis')(session);
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import Html from './src/helpers/Html';
+import Html from './helpers/Html';
 import { match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 import createHistory from 'react-router/lib/createMemoryHistory';
 import {Provider} from 'react-redux';
-import configureStore from './src/store/configureStore'
-import routes from './src/routes'
+import configureStore from './store/configureStore'
+import routes from './routes'
 
 
 const app = express();
@@ -19,7 +19,7 @@ const app = express();
 
 (function initWebpack() {
   const webpack = require('webpack');
-  const webpackConfig = require('./webpack/common.config');
+  const webpackConfig = require('../webpack/common.config');
   const compiler = webpack(webpackConfig);
 
   app.use(require('webpack-dev-middleware')(compiler, {

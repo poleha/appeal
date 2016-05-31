@@ -3,7 +3,8 @@ import { Provider } from 'react-redux'
 import { ReduxAsyncConnect } from 'redux-async-connect'
 import routes from '../../routes'
 import { Router } from 'react-router'
-//import './styles.less'
+
+import './styles.less'
 
 export default class Root extends Component {
     

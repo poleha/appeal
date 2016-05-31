@@ -63,9 +63,8 @@ app.use((req, res) => {
         //res.send(ReactDOM.renderToString(component)
         //res.end()
         global.navigator = {userAgent: req.headers['user-agent']};
-
         res.send('<!doctype html>\n' +
-            ReactDOM.renderToStaticMarkup(<Html component={component} store={store}/>));
+            ReactDOM.renderToStaticMarkup(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
       });
 
     } else {

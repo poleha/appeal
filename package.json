@@ -2,8 +2,7 @@
   "name": "Appeal",
   "version": "1.0.0",
   "description": "Appeal",
-  "main": "index.js",
-  "scripts": {
+    "scripts": {
     "start": "node bin/server.js"
   },
   "author": "Alex Poleha",

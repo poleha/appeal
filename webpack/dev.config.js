@@ -12,7 +12,7 @@ module.exports = {
   entry: [
     //'bootstrap-loader',
     //'webpack-hot-middleware/client',
-    './src/client',
+    './src/index',
   ],
   output: {
     publicPath: '/dist/',

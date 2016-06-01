@@ -1,4 +1,5 @@
 const http = require('http');
+const path = require('path')
 const express = require('express');
 var cookieParser = require('cookie-parser')
 //var RedisStore = require('connect-redis')(session);
@@ -30,7 +31,7 @@ const app = express();
     log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000,
   }));
 
-  app.use(express.static(__dirname + '/'));
+  app.use(express.static(path.join(__dirname, '..' , '/')));
 })();
 
 

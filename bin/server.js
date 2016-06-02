@@ -14,7 +14,10 @@ try {
 }
 
 if (TARGET == 'start-dev') global.__DEVELOPMENT__ = true;
-if (TARGET == 'start-prod') global.__DEVELOPMENT__ = false;
+if (TARGET == 'start-prod') {
+  global.__DEVELOPMENT__ = false;
+  process.env.NODE_ENV = 'production'
+}
 
 require('babel-core/register')(config);
 require('../src/server');

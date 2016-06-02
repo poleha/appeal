@@ -1,5 +1,10 @@
+const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin');
+
+var projectRootPath = path.resolve(__dirname, '../');
+var assetsPath = path.resolve(projectRootPath, './dist');
 
 module.exports = {
   devtool: 'source-map',
@@ -26,9 +31,10 @@ module.exports = {
   },
 
   plugins: [
+    new CleanPlugin([assetsPath], { root: projectRootPath }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"build"',
+        NODE_ENV: '"production"',
       },
       __DEVELOPMENT__: false,
     }),

@@ -2,11 +2,10 @@
   "name": "Appeal",
   "version": "1.0.0",
   "description": "Appeal",
-    "scripts": {
+  "scripts": {
     "start-dev": "node bin/server.js",
     "start-prod": "node bin/server.js",
     "build": "node bin/build.js"
-
   },
   "author": "Alex Poleha",
   "license": "MIT",
@@ -14,6 +13,7 @@
     "babel-eslint": "6.0.4",
     "babel-loader": "6.2.4",
     "babel-preset-react-hmre": "1.1.1",
+    "clean-webpack-plugin": "0.1.9",
     "css-loader": "0.23.1",
     "eslint": "2.11.0",
     "eslint-loader": "1.3.0",
@@ -50,6 +50,6 @@
     "redux": "3.5.2",
     "redux-async-connect": "1.0.0-rc4",
     "redux-thunk": "2.1.0",
-    "serialize-javascript": "1.2.0",
+    "serialize-javascript": "1.2.0"
   }
 }

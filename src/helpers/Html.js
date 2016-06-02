@@ -21,14 +21,15 @@ export default class Html extends Component {
     };
 
     render() {
-        const {component, store, assets} = this.props;
+        const {component, store} = this.props;
         const content = component ? ReactDOM.renderToString(component) : '';
         const head = Helmet.rewind();
-
+        const style = __DEVELOPMENT__ == false ? <link rel="stylesheet" type="text/css" href="/dist/bundle.css" /> : null;
         return (
             <html lang="en-us">
             <head>
                 <link rel="shortcut icon" href="/favicon.ico" />
+
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 {head.base.toComponent()}
                 {head.title.toComponent()}
@@ -36,9 +37,10 @@ export default class Html extends Component {
                 {head.link.toComponent()}
                 {head.script.toComponent()}
 
-                { Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{__html: require('../containers/Root/styles.less')._style}}/> : null }
+
             </head>
             <body>
+            {style}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
             <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -49,7 +51,7 @@ export default class Html extends Component {
 
             <div><div id="root" dangerouslySetInnerHTML={{__html: content}}/></div>
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
-            <script src={assets.javascript.main} charSet="UTF-8"/>
+            <script src="/dist/bundle.js" charSet="UTF-8"></script>
             </body>
             </html>
         );

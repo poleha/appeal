@@ -3,24 +3,32 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
-
-  entry: ['bootstrap-loader/extractStyles'],
-
+  entry: [
+    //'bootstrap-loader',
+    //'webpack-hot-middleware/client',
+    './src/index',
+  ],
   output: {
-    publicPath: 'dist/',
+    publicPath: '/dist/',
   },
 
   module: {
-    loaders: [{
-      test: /\.scss$/,
-      loader: 'style!css!postcss-loader!sass',
-    }],
+    loaders: [
+      {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract(
+            // activate source maps via loader query
+            'css?sourceMap!' +
+            'less?sourceMap'
+        )
+      }
+    ]
   },
 
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"',
+        NODE_ENV: '"build"',
       },
       __DEVELOPMENT__: false,
     }),
@@ -32,5 +40,13 @@ module.exports = {
         warnings: false,
       },
     }),
+
   ],
 };
+
+
+
+
+
+
+

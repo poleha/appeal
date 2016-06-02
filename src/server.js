@@ -17,7 +17,7 @@ import routes from './routes'
 
 const app = express();
 
-
+if (__DEVELOPMENT__) {
 (function initWebpack() {
   const webpack = require('webpack');
   const webpackConfig = require('../webpack/common.config');
@@ -31,9 +31,12 @@ const app = express();
     log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000,
   }));
 
-  app.use(express.static(path.join(__dirname, '..' , '/')));
-})();
 
+})();
+}
+
+
+app.use(express.static(path.join(__dirname, '..' , '/')));
 
 app.use(cookieParser())
 
@@ -65,7 +68,7 @@ app.use((req, res) => {
         //res.end()
         global.navigator = {userAgent: req.headers['user-agent']};
         res.send('<!doctype html>\n' +
-            ReactDOM.renderToStaticMarkup(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>));
+            ReactDOM.renderToStaticMarkup(<Html component={component} store={store}/>));
       });
 
     } else {

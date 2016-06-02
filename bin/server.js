@@ -4,7 +4,7 @@ var babelrc = fs.readFileSync('.babelrc');
 var config;
 var path = require('path');
 
-var rootDir = path.resolve(__dirname, '..')
+const TARGET = process.env.npm_lifecycle_event;
 
 try {
   config = JSON.parse(babelrc);
@@ -13,16 +13,8 @@ try {
   console.error(err);
 }
 
-
-global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
+if (TARGET == 'start-dev') global.__DEVELOPMENT__ = true;
+if (TARGET == 'start-prod') global.__DEVELOPMENT__ = false;
 
 require('babel-core/register')(config);
-//require('../server');
-
-// https://github.com/halt-hammerzeit/webpack-isomorphic-tools
-var WebpackIsomorphicTools = require('webpack-isomorphic-tools');
-global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/webpack-isomorphic-tools-configuration'))
-    .development(__DEVELOPMENT__)
-    .server(rootDir, function() {
-      require('../src/server');
-    });
+require('../src/server');

@@ -4,7 +4,7 @@ const path = require('path');
 const merge = require('webpack-merge');
 
 const development = require('./dev.config.js');
-const production = require('./prod.config.js');
+const build = require('./build.config.js');
 
 require('babel-polyfill');
 
@@ -53,10 +53,12 @@ const common = {
   },
 };
 
-if (TARGET === 'start' || !TARGET) {
+if (TARGET === 'start-dev') {
   module.exports = merge(development, common);
 }
 
-if (TARGET === 'build' || !TARGET) {
-  module.exports = merge(production, common);
+if (TARGET === 'build') {
+  module.exports = merge(build, common);
 }
+
+

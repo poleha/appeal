@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes } from 'react'
+import BaseComponent from '../../components/BaseComponent'
 import ReactDOM from 'react-dom'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
@@ -37,7 +38,7 @@ function mapDispatchToProps(dispatch) {
   }
 }])
 @connect(mapStateToProps, mapDispatchToProps)
-export default class PostList extends Component {
+export default class PostList extends BaseComponent {
 
     setDefaultTags() {
         for (let key = 0; key < this.props.tags.ids.length; key++) {
@@ -95,24 +96,7 @@ export default class PostList extends Component {
 
   }
 
-  getFieldErrors(fieldName){
-    let fieldErrors = this.props.post.errors[fieldName];
-    if (fieldErrors) {
-    let errorsBlock;
-    errorsBlock = fieldErrors.map(function (error, index) {
-    return (
-      <li className="error" key={index}>
-        {error}
-      </li>
-    )
-    });
-    return (
-    <ul className="errors">
-      {errorsBlock}
-      </ul>
-    )
-    }
-  }
+
 
   getAddedBlock() {
     if (this.props.post.added) {

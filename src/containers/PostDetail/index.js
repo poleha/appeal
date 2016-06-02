@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes } from 'react'
+import BaseComponent from '../../components/BaseComponent'
 import ReactDOM from 'react-dom'
 import Post from '../../components/Post'
 import Comment from '../../components/Comment'
@@ -41,26 +42,7 @@ function mapDispatchToProps(dispatch) {
     }
 }])
 @connect(mapStateToProps, mapDispatchToProps)
-export default class PostDetail extends Component {
-
-    getFieldErrors(fieldName){
-        let fieldErrors = this.props.comment.errors[fieldName];
-        if (fieldErrors) {
-            let errorsBlock;
-            errorsBlock = fieldErrors.map(function (error, index) {
-                return (
-                    <li className="error" key={index}>
-                        {error}
-                    </li>
-                )
-            });
-            return (
-                <ul className="errors">
-                    {errorsBlock}
-                </ul>
-            )
-        }
-    }
+export default class PostDetail extends BaseComponent {
 
     getPost() {
         return this.props.post.posts[this.props.params.id];

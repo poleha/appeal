@@ -39,19 +39,23 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PostList extends Component {
 
-  componentDidUpdate(){
+    setDefaultTags() {
+        for (let key = 0; key < this.props.tags.ids.length; key++) {
+            let alias = this.props.tags.entities[this.props.tags.ids[key]].alias;
+            let checked = this.props.params.tag == alias;
+            let elem = ReactDOM.findDOMNode(this[`_tag_to_add__${alias}`]);
+            if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
+        }
+    }
 
-    if (this.props.post.added){
+
+  componentDidUpdate(prevProps){
+
+    if (this.props.post.added || this.props.params.tag != prevProps.params.tag){
       ReactDOM.findDOMNode(this._add_post_username).value = '';
       ReactDOM.findDOMNode(this._add_post_email).value = '';
       ReactDOM.findDOMNode(this._add_post_body).value = '';
-      //let tagsElem = $(ReactDOM.findDOMNode(this.refs.tags)).find('input').removeAttr('checked');
-    }
-    for (let key = 0; key < this.props.tags.ids.length; key++) {
-      let alias = this.props.tags.entities[this.props.tags.ids[key]].alias;
-      let checked = this.props.params.tag == alias;
-      let elem = ReactDOM.findDOMNode(this[`_tag_to_add__${alias}`]);
-      if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
+        this.setDefaultTags();
     }
 
   }

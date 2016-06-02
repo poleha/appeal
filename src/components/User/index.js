@@ -73,7 +73,7 @@ export default class User extends Component {
 
 
             socialLoginTemplate = (
-                <div className={classNames({hidden: this.props.data.userId})}>
+                <div className={classNames('social_login_block', {hidden: this.props.data.userId})}>
                     <VKLogin
                         actions={this.props.actions}
                     />

@@ -12,8 +12,8 @@ export default class VKLogin extends Component {
     return (
         <input
             type="button"
+            className="vk_login_button"
             onClick={this.props.actions.VKLogin}
-            defaultValue="VK"
         />
 
     )

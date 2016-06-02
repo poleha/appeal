@@ -27,9 +27,12 @@ export default class GoogleLogin extends Component {
     }
 
     render() {
-        return (<div>
-                <input type="button" value="google" onClick={this.props.actions.GoogleLogin.bind(this)} />
-            </div>
+        return (
+                <input
+                    className="google_login_button"
+                    type="button"
+                    onClick={this.props.actions.GoogleLogin.bind(this)}
+                />
         )
     }
 

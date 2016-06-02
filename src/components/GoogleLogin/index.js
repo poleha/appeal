@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 
-var startApp = function() {
-    if (gapi) {
+export default class GoogleLogin extends Component {
+    componentDidMount() {
         gapi.load('auth2', function(){
             // Retrieve the singleton for the GoogleAuth library and set up the client.
             window.auth2 = gapi.auth2.init({
@@ -12,18 +12,6 @@ var startApp = function() {
             });
 
         });
-    }
-};
-
-export default class GoogleLogin extends Component {
-    componentDidMount() {
-        startApp();
-    }
-
-    componentDidUpdate() {
-      if (!window.auth2) {
-          startApp()
-      }
     }
 
     render() {

@@ -1,0 +1,10 @@
+.nav-pills {
+  li {
+    a {
+    &:hover, &:focus {
+      color: inherit ;
+      background-color: inherit;
+  }
+    }
+  }
+}

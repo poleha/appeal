@@ -44,7 +44,7 @@ extractStyles: false
 # Import your custom styles here
 # Usually this endpoint-file contains list of @imports of your application styles
 #
-appStyles: ./src/theme/bootstrap_customizations.scss
+appStyles: ./src/theme/app_styles.scss
 
 
 ### Bootstrap styles

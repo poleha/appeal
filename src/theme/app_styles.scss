@@ -2,8 +2,18 @@
   color: #0000cc;
 }
 
+.nav-pills {
+  li {
+    a {
+      &:hover, &:focus {
+        color: inherit ;
+        background-color: inherit;
+      }
+    }
+  }
+}
 
-.form-mixin {
+@mixin form-mixin {
   input, select {
     display: block;
     &[type="checkbox"] {
@@ -20,7 +30,7 @@
 
 
 .add_post_form, .add_comment_form {
-  .form-mixin;
+  @include form-mixin;
 }
 
 
@@ -85,12 +95,12 @@
   box-shadow: 0 0 0 1px rgba(0,0,0,0.1),0 3px 4px -3px rgba(0,0,0,0.3);
   background-color: white;
 
-    .google_login_button {
-        background: url(/images/google.jpg) no-repeat;
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-      }
+  .google_login_button {
+    background: url(/images/google.jpg) no-repeat;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+  }
   .vk_login_button {
     background: url(/images/vk.jpg) no-repeat;
     display: inline-block;
@@ -105,15 +115,15 @@
   }
 
   .login_form, .registration_form {
-  input {
-    display: block;
-    width: 100%;
+    input {
+      display: block;
+      width: 100%;
+    }
   }
+  .logged_user {
+    display: inline;
+    margin-right: 10px;
   }
-.logged_user {
-  display: inline;
-  margin-right: 10px;
-}
 
 }
 
@@ -160,60 +170,60 @@
 
   float: right;
 
-.button_like {
-  background: url(  /images/button_like.png) no-repeat;
-  width: 70px;
-  height: 70px;
-  border: 0;
-  margin-right: 20px;
-  text-align: left;
-  padding-left: 20px;
-  padding-top: 18px;
+  .button_like {
+    background: url(/images/button_like.png) no-repeat;
+    width: 70px;
+    height: 70px;
+    border: 0;
+    margin-right: 20px;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 18px;
 
-  &.active {
-    background: url(  /images/button_like.png) no-repeat;
-
-
-
-  }
-
-  &.inactive {
-    background: url(  /images/button_like_inactive.png) no-repeat;
-  }
-
-  &.rated {
-    background: url(  /images/button_like_rated.png) no-repeat;
-  }
+    &.active {
+      background: url(/images/button_like.png) no-repeat;
 
 
 
-}
+    }
 
-.button_dislike {
-  background: url(  /images/button_dislike.png) no-repeat;
-  width: 70px;
-  height: 70px;
-  border: 0;
-  text-align: left;
-  padding-bottom: 18px;
-  padding-left: 20px;
+    &.inactive {
+      background: url(/images/button_like_inactive.png) no-repeat;
+    }
 
+    &.rated {
+      background: url(/images/button_like_rated.png) no-repeat;
+    }
 
-  &.active {
-    background: url(  /images/button_dislike.png) no-repeat;
 
 
   }
 
-  &.inactive {
-    background: url(  /images/button_dislike_inactive.png) no-repeat;
-  }
+  .button_dislike {
+    background: url(/images/button_dislike.png) no-repeat;
+    width: 70px;
+    height: 70px;
+    border: 0;
+    text-align: left;
+    padding-bottom: 18px;
+    padding-left: 20px;
 
-  &.rated {
-    background: url(  /images/button_dislike_rated.png) no-repeat;
-  }
 
-}
+    &.active {
+      background: url(/images/button_dislike.png) no-repeat;
+
+
+    }
+
+    &.inactive {
+      background: url(/images/button_dislike_inactive.png) no-repeat;
+    }
+
+    &.rated {
+      background: url(/images/button_dislike_rated.png) no-repeat;
+    }
+
+  }
 
 }
 

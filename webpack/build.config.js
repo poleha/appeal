@@ -19,22 +19,22 @@ module.exports = {
 
   module: {
     loaders: [
-      {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract(
+     // {
+      //  test: /\.less$/,
+      //  loader: ExtractTextPlugin.extract(
             // activate source maps via loader query
-            'css?sourceMap!' +
-            'less?sourceMap'
-        )
-      },
-      {
-        test: /\.sass$/,
-        loader: ExtractTextPlugin.extract(
-            // activate source maps via loader query
-            'css?sourceMap!' +
-            'less?sourceMap'
-        )
-      }
+       //     'css?sourceMap!' +
+       //     'less?sourceMap'
+       // )
+     // },
+     // {
+     //   test: /\.sass$/,
+     //   loader: ExtractTextPlugin.extract(
+     //       // activate source maps via loader query
+     //       'css?sourceMap!' +
+     //       'less?sourceMap'
+     //   )
+     // }
     ]
   },
 

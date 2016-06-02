@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    //'bootstrap-loader',
+    'bootstrap-loader',
     //'webpack-hot-middleware/client',
     './src/index',
   ],

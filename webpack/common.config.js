@@ -1,3 +1,4 @@
+require('babel-polyfill').default;
 const path = require('path');
 //const autoprefixer = require('autoprefixer');
 //const postcssImport = require('postcss-import');
@@ -45,12 +46,34 @@ const common = {
         ],
       }
     ],
-    loaders: [ {
+    loaders: [
+      
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file',
+      },
+      {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/font-woff',
+      }, {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/font-woff2',
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/octet-stream',
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=image/svg+xml',
+      },
+      {
       test: /\.js$/,
       loaders: ['babel-loader'],
       exclude: /node_modules/,
     }],
-  },
+  }
+
 };
 
 if (TARGET === 'start-dev') {

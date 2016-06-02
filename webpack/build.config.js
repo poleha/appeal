@@ -9,7 +9,7 @@ var assetsPath = path.resolve(projectRootPath, './dist');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    //'bootstrap-loader',
+    'bootstrap-loader/extractStyles',
     //'webpack-hot-middleware/client',
     './src/index',
   ],
@@ -21,6 +21,14 @@ module.exports = {
     loaders: [
       {
         test: /\.less$/,
+        loader: ExtractTextPlugin.extract(
+            // activate source maps via loader query
+            'css?sourceMap!' +
+            'less?sourceMap'
+        )
+      },
+      {
+        test: /\.sass$/,
         loader: ExtractTextPlugin.extract(
             // activate source maps via loader query
             'css?sourceMap!' +

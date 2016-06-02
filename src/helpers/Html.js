@@ -40,7 +40,10 @@ export default class Html extends Component {
 
             </head>
             <body>
+            
+
             {style}
+
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
             <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -52,6 +55,7 @@ export default class Html extends Component {
             <div><div id="root" dangerouslySetInnerHTML={{__html: content}}/></div>
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
             <script src="/dist/bundle.js" charSet="UTF-8"></script>
+
             </body>
             </html>
         );

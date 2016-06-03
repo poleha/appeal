@@ -81,42 +81,45 @@ export default class PostDetail extends BaseComponent {
     }
 
     getAddCommentForm() {
-        let usernameInputClass = classNames('add_comment_username',
+        let usernameInputClass = classNames('form_field',
         {
             hidden: this.props.userId
         });
         
-        let emailImputClass = classNames('add_comment_email',
+        let emailImputClass = classNames('form_field',
             {
                 hidden: this.props.userId
             });
-        if (this.props.post.posts && this.props.comment.comments){
         return (
             <div>
             <form
                 onSubmit={this.addCommentFormSubmit.bind(this)}
                 className="add_comment_form"
             >
+                <div className={usernameInputClass}>
                 {this.getFieldErrors.call(this, 'username', 'comment')}
                 <input
                     ref={(c) => this._add_comment_username = c}
-                    className={usernameInputClass}
                     placeholder="Автор"
                     type="text"
                 />
+                </div>
+                <div className={emailImputClass}>
                 {this.getFieldErrors.call(this, 'email', 'comment')}
                 <input
                     ref={(c) => this._add_comment_email = c}
-                    className={emailImputClass}
                     placeholder="E-mail"
                     type="text"
                 />
+                    </div>
+                <div className="form_field">
                 {this.getFieldErrors.call(this, 'body', 'comment')}
             <textarea cols="70" rows="10"
                       ref={(c) => this._add_comment_body = c}
                       className='add_comment_body'
                       placeholder="Комментарий"
             />
+                    </div>
 
                 <input
                     type="submit"
@@ -127,8 +130,6 @@ export default class PostDetail extends BaseComponent {
         {this.getAddedBlock.call(this)}
         </div>
         )
-        }
-        else return null;
     }
 
     getAddedBlock() {

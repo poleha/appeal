@@ -16,7 +16,7 @@ export function addComment(data) {
                 actions: [ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL]
             }
         }
-        return dispatch(action);
+        return dispatch(action).catch(e => {});
     }
 }
 

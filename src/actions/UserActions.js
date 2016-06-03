@@ -118,7 +118,8 @@ export function registerUser(data) {
 
         dispatch(action).then(response => {
             dispatch(loginUser(loginData));
-        }).then(() => push(''));
+        }).then(() => push('')).catch((error) => {
+        });
 
     }
 }

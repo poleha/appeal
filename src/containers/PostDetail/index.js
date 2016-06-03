@@ -97,21 +97,21 @@ export default class PostDetail extends BaseComponent {
                 onSubmit={this.addCommentFormSubmit.bind(this)}
                 className="add_comment_form"
             >
-                {this.getFieldErrors.call(this, 'username')}
+                {this.getFieldErrors.call(this, 'username', 'post')}
                 <input
                     ref={(c) => this._add_comment_username = c}
                     className={usernameInputClass}
                     placeholder="Автор"
                     type="text"
                 />
-                {this.getFieldErrors.call(this, 'email')}
+                {this.getFieldErrors.call(this, 'email', 'post')}
                 <input
                     ref={(c) => this._add_comment_email = c}
                     className={emailImputClass}
                     placeholder="E-mail"
                     type="text"
                 />
-                {this.getFieldErrors.call(this, 'body')}
+                {this.getFieldErrors.call(this, 'body', 'post')}
             <textarea cols="70" rows="10"
                       ref={(c) => this._add_comment_body = c}
                       className='add_comment_body'

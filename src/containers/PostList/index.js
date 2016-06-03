@@ -182,9 +182,9 @@ export default class PostList extends BaseComponent {
               className="add_post_form"
               ref={(c) => this._add_post_form = c}
           >
-            <div hidden={this.props.userId}>
+            <div className="form_field" hidden={this.props.userId}>
 
-              {this.getFieldErrors.call(this, 'username')}
+
 
               <input
                   disabled={this.getAddPostButtonDisabled.call(this)}
@@ -195,11 +195,11 @@ export default class PostList extends BaseComponent {
                   placeholder="Автор"
                   type="text"
               />
+
+                {this.getFieldErrors.call(this, 'username', 'post')}
             </div>
 
-            <div hidden={this.props.userId}>
-
-              {this.getFieldErrors.call(this, 'email')}
+            <div className="form_field" hidden={this.props.userId}>
 
               <input
                   disabled={this.getAddPostButtonDisabled.call(this)}
@@ -210,11 +210,12 @@ export default class PostList extends BaseComponent {
                   placeholder="E-mail"
                   type="text"
               />
+                {this.getFieldErrors.call(this, 'email', 'post')}
             </div>
 
 
-            {this.getFieldErrors.call(this, 'body')}
 
+              <div className="form_field">
       <textarea cols="70" rows="10"
                 disabled={this.getAddPostButtonDisabled.bind(this)()}
                 ref={(c) => this._add_post_body = c}
@@ -224,19 +225,19 @@ export default class PostList extends BaseComponent {
                 placeholder="Сообщение"
                 type="text"
       />
-
-
+              {this.getFieldErrors.call(this, 'body', 'post')}
+        </div>
             <label htmlFor="tags_add_ul">Разделы:</label>
 
-            {this.getFieldErrors.call(this, 'tags')}
-
-            <ul
+              <div className="form_field">
+              <ul
                 className='tags_add'
                 //ref="tags"
                 id="tags_add_ul">
               {tagsAddBlock}
             </ul>
-
+              {this.getFieldErrors.call(this, 'tags', 'post')}
+               </div>
             <input
                 disabled={this.getAddPostButtonDisabled.call(this)}
                 type="submit"

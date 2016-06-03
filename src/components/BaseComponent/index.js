@@ -2,8 +2,8 @@ import React, { PropTypes, Component } from 'react'
 
 export default class BaseComponent extends Component {
     
-    getFieldErrors(fieldName){
-        let fieldErrors = this.props.post.errors[fieldName];
+    getFieldErrors(fieldName, dataName, propName = 'errors', ){
+        let fieldErrors = this.props[dataName][propName][fieldName];
         if (fieldErrors) {
             let errorsBlock;
             errorsBlock = fieldErrors.map(function (error, index) {

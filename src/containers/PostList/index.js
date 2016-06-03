@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import ReactDOM from 'react-dom'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'

@@ -10,6 +10,7 @@ const initialState = {
     path: null,
     count: 0,
     loading: false,
+    adding: false,
     errors: {},
     added: false
 };
@@ -17,7 +18,8 @@ const initialState = {
 function cloneState(state) {
     let newState = update(state, {
         errors: {$set: {}},
-        added: {$set: false}
+        added: {$set: false},
+        adding: {$set: false}
     });
 
     return newState;

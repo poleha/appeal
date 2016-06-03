@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import ReactDOM from 'react-dom'
 import Post from '../../components/Post'
 import Comment from '../../components/Comment'
@@ -81,6 +82,7 @@ export default class PostDetail extends BaseComponent {
     }
 
     getAddCommentForm() {
+        if (this.props.comment.adding) return null;
         let usernameInputClass = classNames('form_field',
         {
             hidden: this.props.userId
@@ -91,7 +93,7 @@ export default class PostDetail extends BaseComponent {
                 hidden: this.props.userId
             });
         return (
-            <div>
+            <div key="add_comment_form_key">
             <form
                 onSubmit={this.addCommentFormSubmit.bind(this)}
                 className="add_comment_form"
@@ -128,7 +130,8 @@ export default class PostDetail extends BaseComponent {
                 />
             </form>
         {this.getAddedBlock.call(this)}
-        </div>
+         </div>
+
         )
     }
 
@@ -158,6 +161,7 @@ export default class PostDetail extends BaseComponent {
 
 
       return (
+
         <div className="full_post">
             <Helmet title={post.body.slice(0, 20)}/>
             <div className="full_post_detail">
@@ -177,7 +181,14 @@ export default class PostDetail extends BaseComponent {
             <h3>Комментарии</h3>
             <div className="add_comment_form_block">
             <label>Добавить комментарий</label>
+        <ReactCSSTransitionGroup
+        transitionName="add_comment"
+        transitionEnterTimeout={1000}
+        transitionLeaveTimeout={1}
+        className='add_comment_form_transition'
+        >
             {this.getAddCommentForm.call(this)}
+        </ReactCSSTransitionGroup>
              </div>   
             <input
                 onClick={this.refreshCommentsClick.bind(this)}
@@ -196,6 +207,7 @@ export default class PostDetail extends BaseComponent {
             />
 
         </div>
+
       )
 
       }

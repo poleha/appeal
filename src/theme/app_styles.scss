@@ -238,3 +238,27 @@
   pointer-events: none;
   opacity: 0.4;
 }
+
+
+
+.add_comment-enter {
+  opacity: 0.01;
+
+  &.add_comment-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms ease-in;
+  }
+
+}
+
+
+
+.add_post-enter {
+  opacity: 0.01;
+
+  &.add_post-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms ease-in;
+  }
+
+}

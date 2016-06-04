@@ -4,6 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   devtool: 'source-map',
+  debug: true,
   entry: [
     'bootstrap-loader',
     //'webpack-hot-middleware/client',

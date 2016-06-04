@@ -1,4 +1,5 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
+import { CLEAN_POSTS } from '../constants/Post'
 import update from 'react-addons-update'
 var posts, post, key, newState;
 
@@ -99,6 +100,15 @@ export default function app(state = initialState, action) {
             posts = state.posts;
             newState = update(state, {
                 posts: {entities: {[key]: {rating: {$set: false}}}}
+            });
+
+
+            return newState;
+
+        case CLEAN_POSTS:
+            state = cloneState(state);
+            newState = update(state, {
+                posts: {$set: null}
             });
 
 

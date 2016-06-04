@@ -1,4 +1,5 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
+import { CLEAN_POSTS } from '../constants/Post'
 import { API_KEY } from '../middleware/api'
 import { post } from '../schemas'
 import { serializeParams} from '../helper'
@@ -66,7 +67,12 @@ export function ratePost(data) {
     }
 }
 
-
+export function cleanPosts() {
+    return {
+        type: CLEAN_POSTS
+    }
+    
+}
 
 
 //***********************************************

@@ -92,7 +92,7 @@ export default class PostList extends BaseComponent {
   }
 
   refreshPostsClick(e) {
-
+    this.props.postActions.cleanPosts();
     this.props.postActions.loadPosts({tags__alias: this.props.params.tag} , this.props.params.tag)
 
   }
@@ -145,7 +145,6 @@ export default class PostList extends BaseComponent {
 
 
                     <input
-                        disabled={this.getAddPostButtonDisabled.call(this)}
                         ref={(c) => this._add_post_username = c}
                         className="add_post_username"
                         id="add_post_username"
@@ -160,7 +159,6 @@ export default class PostList extends BaseComponent {
                 <div className="form_field" hidden={this.props.userId}>
 
                     <input
-                        disabled={this.getAddPostButtonDisabled.call(this)}
                         ref={(c) => this._add_post_email = c}
                         className="add_post_email"
                         id="add_post_email"
@@ -176,7 +174,6 @@ export default class PostList extends BaseComponent {
                 <div className="form_field">
                     {this.getFieldErrors.call(this, 'body', 'post')}
       <textarea cols="70" rows="10"
-                disabled={this.getAddPostButtonDisabled.bind(this)()}
                 ref={(c) => this._add_post_body = c}
                 className="add_post_body"
                 id="add_post_body"
@@ -208,52 +205,57 @@ export default class PostList extends BaseComponent {
         )
     }
 
+
+    getShowMoreInput() {
+        if (this.props.post.loading) return null;
+        let posts = this.props.post.posts;
+        let showMoreInput;
+        if (this.props.post.count > posts.ids.length) {
+            showMoreInput = (
+                <input
+                    onClick={this.loadMorePostsClick.bind(this)}
+                    className="btn btn-default"
+                    type="button"
+                    value="Показать еще">
+                </input>
+            )
+        }
+        return showMoreInput;
+    }
+
+    getPostsBlock() {
+            if (this.props.post.loading && this.props.post.posts === null) return null;
+            let posts = this.props.post.posts;
+        let tags = this.props.tags;
+            let postsBlock = mapNodes(posts, function(elem, index){
+                let added = this.props.post.added && index == 0;
+
+                return <Post
+                    key={elem.id}
+                    post={elem}
+                    tags={tags}
+                    logged={this.props.logged}
+                    token={this.props.token}
+                    ratePost={this.props.postActions.ratePost}
+                    added={added}
+                    userId={this.props.userId}
+                />
+
+            }.bind(this));
+
+        return postsBlock;
+    }
+
   render() {
-      let posts = this.props.post.posts;
+
       let tags = this.props.tags;
+      let posts = this.props.post.posts;
       //let addPost = this.props.actions.addPost;
       let currentTagTitle;
       Object.getOwnPropertyNames.call(this, tags.entities).forEach(function(key) {
           let tag = tags.entities[key]
           if (tag.alias == this.props.params.tag) currentTagTitle = tag.title;
       }.bind(this))
-  
-      let showMoreInput;
-      if (this.props.post.count > posts.ids.length) {
-        showMoreInput = (
-            <input
-                onClick={this.loadMorePostsClick.bind(this)}
-                className="btn btn-default"
-                type="button"
-                value="Показать еще">
-            </input>
-        )
-      }
-
-      let postsBlock;
-      if (posts.ids.length > 0) {
-        postsBlock = mapNodes(posts, function(elem, index){
-          let added = this.props.post.added && index == 0;
-
-          return <Post
-              key={elem.id}
-              post={elem}
-              tags={tags}
-              logged={this.props.logged}
-              token={this.props.token}
-              ratePost={this.props.postActions.ratePost}
-              added={added}
-              userId={this.props.userId}
-          />
-
-        }.bind(this));
-      }
-      else {
-        postsBlock = ''
-      }
-
-
-
 
       return <div className="post_list">
           <Helmet title={currentTagTitle} />
@@ -271,16 +273,23 @@ export default class PostList extends BaseComponent {
         {this.getAddedBlock.call(this)}
         <input
             onClick={this.refreshPostsClick.bind(this)}
+            disabled={this.getAddPostButtonDisabled.call(this)}
             type="button"
             className="btn btn-default"
             value="Обновить">
         </input>
 
-        <div className="posts">
-          {postsBlock}
-        </div>
+          <ReactCSSTransitionGroup
+              transitionName="posts"
+              transitionEnterTimeout={1000}
+              transitionLeaveTimeout={1}
+              className='posts'
+          >
+            {this.getPostsBlock.call(this)}
+              {this.getShowMoreInput.call(this)}
+          </ReactCSSTransitionGroup>
 
-        {showMoreInput}
+
       </div>
   }
 }

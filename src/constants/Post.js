@@ -15,3 +15,5 @@ export const RATE_POST_FAIL = 'RATE_POST_FAIL';
 
 export const RATE_POST_TYPE_LIKE = 1;
 export const RATE_POST_TYPE_DISLIKE = 2;
+
+export const CLEAN_POSTS = 'CLEAN_POSTS'

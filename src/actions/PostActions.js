@@ -41,7 +41,7 @@ export function addPost(post) {
                 actions: [ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL]
             }
         }
-        return dispatch(action);
+        return dispatch(action).catch(e => {});
            }
 
 }

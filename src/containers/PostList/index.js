@@ -107,6 +107,107 @@ export default class PostList extends BaseComponent {
     }
   }
 
+    getAddPostForm() {
+        if (this.props.post.adding) return null;
+        let tags = this.props.tags;
+        let tagsAddBlock;
+        if (tags.ids.length > 0) {
+            tagsAddBlock = mapNodes(tags, function(elem){
+                let key = elem.id;
+                return <li key={key}>
+                    <input
+                        key={key}
+                        defaultChecked={this.props.params.tag == elem.alias}
+                        data-id={key}
+                        id={`tags_input-${key}`}
+                        type="checkbox"
+                        ref={(c) => this[`_tag_to_add__${elem.alias}`] = c}
+                        name={`tags__${key}`}
+                        disabled={this.getAddPostButtonDisabled.call(this)}
+                    />
+                    <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
+                </li>
+            }.bind(this));
+        }
+        else {
+            tagsAddBlock = ''
+        }
+
+        return (
+            <form
+                key="add_post_form"
+                onSubmit={this.addPostSubmit.bind(this)}
+                className="add_post_form"
+                ref={(c) => this._add_post_form = c}
+            >
+                <div className="form_field" hidden={this.props.userId}>
+                    {this.getFieldErrors.call(this, 'username', 'post')}
+
+
+                    <input
+                        disabled={this.getAddPostButtonDisabled.call(this)}
+                        ref={(c) => this._add_post_username = c}
+                        className="add_post_username"
+                        id="add_post_username"
+                        name="username"
+                        placeholder="Автор"
+                        type="text"
+                    />
+
+
+                </div>
+
+                <div className="form_field" hidden={this.props.userId}>
+
+                    <input
+                        disabled={this.getAddPostButtonDisabled.call(this)}
+                        ref={(c) => this._add_post_email = c}
+                        className="add_post_email"
+                        id="add_post_email"
+                        name="email"
+                        placeholder="E-mail"
+                        type="text"
+                    />
+                    {this.getFieldErrors.call(this, 'email', 'post')}
+                </div>
+
+
+
+                <div className="form_field">
+                    {this.getFieldErrors.call(this, 'body', 'post')}
+      <textarea cols="70" rows="10"
+                disabled={this.getAddPostButtonDisabled.bind(this)()}
+                ref={(c) => this._add_post_body = c}
+                className="add_post_body"
+                id="add_post_body"
+                name="body"
+                placeholder="Сообщение"
+                type="text"
+      />
+
+                </div>
+                <label htmlFor="tags_add_ul">Разделы:</label>
+
+                <div className="form_field">
+                    {this.getFieldErrors.call(this, 'tags', 'post')}
+                    <ul
+                        className='tags_add'
+                        //ref="tags"
+                        id="tags_add_ul">
+                        {tagsAddBlock}
+                    </ul>
+
+                </div>
+                <input
+                    disabled={this.getAddPostButtonDisabled.call(this)}
+                    type="submit"
+                    className="btn btn-default"
+                    value="Добавить">
+                </input>
+            </form>
+        )
+    }
+
   render() {
       let posts = this.props.post.posts;
       let tags = this.props.tags;
@@ -151,101 +252,21 @@ export default class PostList extends BaseComponent {
         postsBlock = ''
       }
 
-      let tagsAddBlock;
-      if (tags.ids.length > 0) {
-        tagsAddBlock = mapNodes(tags, function(elem){
-          let key = elem.id;
-          return <li key={key}>
-            <input
-                key={key}
-                defaultChecked={this.props.params.tag == elem.alias}
-                data-id={key}
-                id={`tags_input-${key}`}
-                type="checkbox"
-                ref={(c) => this[`_tag_to_add__${elem.alias}`] = c}
-                name={`tags__${key}`}
-                disabled={this.getAddPostButtonDisabled.call(this)}
-            />
-            <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
-          </li>
-        }.bind(this));
-      }
-      else {
-        tagsAddBlock = ''
-      }
+
+
 
       return <div className="post_list">
           <Helmet title={currentTagTitle} />
         <div className="add_post_form_block">
           <h3>Опубликовать призыв</h3>
-          <form
-              onSubmit={this.addPostSubmit.bind(this)}
-              className="add_post_form"
-              ref={(c) => this._add_post_form = c}
-          >
-            <div className="form_field" hidden={this.props.userId}>
-
-
-
-              <input
-                  disabled={this.getAddPostButtonDisabled.call(this)}
-                  ref={(c) => this._add_post_username = c}
-                  className="add_post_username"
-                  id="add_post_username"
-                  name="username"
-                  placeholder="Автор"
-                  type="text"
-              />
-
-                {this.getFieldErrors.call(this, 'username', 'post')}
-            </div>
-
-            <div className="form_field" hidden={this.props.userId}>
-
-              <input
-                  disabled={this.getAddPostButtonDisabled.call(this)}
-                  ref={(c) => this._add_post_email = c}
-                  className="add_post_email"
-                  id="add_post_email"
-                  name="email"
-                  placeholder="E-mail"
-                  type="text"
-              />
-                {this.getFieldErrors.call(this, 'email', 'post')}
-            </div>
-
-
-
-              <div className="form_field">
-      <textarea cols="70" rows="10"
-                disabled={this.getAddPostButtonDisabled.bind(this)()}
-                ref={(c) => this._add_post_body = c}
-                className="add_post_body"
-                id="add_post_body"
-                name="body"
-                placeholder="Сообщение"
-                type="text"
-      />
-              {this.getFieldErrors.call(this, 'body', 'post')}
-        </div>
-            <label htmlFor="tags_add_ul">Разделы:</label>
-
-              <div className="form_field">
-              <ul
-                className='tags_add'
-                //ref="tags"
-                id="tags_add_ul">
-              {tagsAddBlock}
-            </ul>
-              {this.getFieldErrors.call(this, 'tags', 'post')}
-               </div>
-            <input
-                disabled={this.getAddPostButtonDisabled.call(this)}
-                type="submit"
-                className="btn btn-default"
-                value="Добавить">
-            </input>
-          </form>
+            <ReactCSSTransitionGroup
+                transitionName="add_post"
+                transitionEnterTimeout={1000}
+                transitionLeaveTimeout={1}
+                className='add_comment_form_transition'
+            >
+            {this.getAddPostForm.call(this)}
+                </ReactCSSTransitionGroup>
         </div>
         {this.getAddedBlock.call(this)}
         <input

@@ -7,7 +7,6 @@ var projectRootPath = path.resolve(__dirname, '../');
 var assetsPath = path.resolve(projectRootPath, './dist');
 
 module.exports = {
-  devtool: 'source-map',
   entry: [
     'bootstrap-loader/extractStyles',
     //'webpack-hot-middleware/client',

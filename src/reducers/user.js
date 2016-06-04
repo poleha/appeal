@@ -5,9 +5,7 @@ import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '
 import update from 'react-addons-update'
 import { ACTIVATE_USER_FORM, USER_FORM_LOGIN } from '../constants/User'
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
-import { USER_FACEBOOK_LOGIN_START, USER_FACEBOOK_LOGIN_SUCCESS, USER_FACEBOOK_LOGIN_FAIL } from '../constants/User'
-import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '../constants/User'
-import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/User'
+
 
 var newState;
 
@@ -28,8 +26,11 @@ const initialState = {
 
 function cloneState(state) {
     newState = update(state, {
-        logging: {$set: false}
-    })
+        logging: {$set: false},
+        loginErrors: {$set: {}},
+        registerErrors: {$set: {}}
+
+    });
     return newState;
 }
 
@@ -39,14 +40,22 @@ export default function user(state = initialState, action) {
     switch (action.type) {
         case USER_LOGIN_START:
             state = cloneState(state);
-            return state;
+            newState = update(state, {
+                logging: {$set: true}
+            });
+
+            return newState;
         case USER_LOGIN_SUCCESS:
             state = cloneState(state);
-            return state;
+            newState = update(state, {
+                logging: {$set: false}
+            });
+            return newState;
         case USER_LOGIN_FAIL:
             state = cloneState(state);
             newState = update(state, {
-                loginErrors: {$set: action.payload}
+                loginErrors: {$set: action.payload},
+                logging: {$set: false}
             });
             return newState;
 
@@ -82,39 +91,48 @@ export default function user(state = initialState, action) {
 
         case LOGOUT_USER_START:
             state = cloneState(state);
-            return state;
+            newState = update(state, {
+                logging: {$set: true}
+            });
+            return newState;
         case LOGOUT_USER_SUCCESS:
             state = cloneState(state);
 
             newState = update(state, {
                 userName: {$set: null},
                 userId: {$set: null},
-                activeForm: {$set: USER_FORM_LOGIN}
+                activeForm: {$set: USER_FORM_LOGIN},
+                logging: {$set: false}
             });
             return newState;
         case LOGOUT_USER_FAIL:
-            state = cloneState(state);
-            return state;
+            newState = update(state, {
+                logging: {$set: false}
+            });
+            return newState;
 
 
         case REGISTER_USER_START:
             state = cloneState(state);
             newState = update(state, {
-                registerErrors: {$set: {}}
+                registerErrors: {$set: {}},
+                logging: {$set: true}
             });
 
             return newState;
         case REGISTER_USER_SUCCESS:
             state = cloneState(state);
             newState = update(state, {
-                registerErrors: {$set: {}}
+                registerErrors: {$set: {}},
+                logging: {$set: false}
             });
 
             return newState;
         case REGISTER_USER_FAIL:
             state = cloneState(state);
             newState = update(state, {
-                registerErrors: {$set: action.payload}
+                registerErrors: {$set: action.payload},
+                logging: {$set: false}
             });
 
             return newState;

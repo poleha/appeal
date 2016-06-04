@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../BaseComponent'
 import ReactDOM from 'react-dom'
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/User'
 import { formArrayToJson } from '../../helper'
 import VKLogin from '../VKLogin'
@@ -44,13 +45,127 @@ export default class User extends BaseComponent {
         return loginBlockButtons
     }
 
+getLoginBlockTemplate () {
 
 
+    let loginBlockTemplate;
+    if (!this.props.data.userId) {
 
-    render() {
-        let socialLoginTemplate;
+        if(this.props.data.activeForm == USER_FORM_LOGIN){
+            loginBlockTemplate =
+                <div className="login_block">
+                    <div className="errors">
+                        {this.getFieldErrors.call(this, 'non_field_errors','data', 'loginErrors')}
+                    </div>
+                    <form
+                        onSubmit={this.loginFormSubmit.bind(this)}
+                        className="login_form"
+                        ref={(c) => this._login_form = c}
+                    >
+                        {this.getFieldErrors.call(this, 'username', 'data','loginErrors')}
+                        <input
+                            type="text"
+                            ref={(c) => this._username = c}
+                            placeholder="Имя пользователя"
+                            className="user_username"
+                            name="username"
+                        />
+                        {this.getFieldErrors.call(this, 'password', 'data','loginErrors')}
+                        <input
+                            type="text"
+                            ref={(c) => this._password = c}
+                            placeholder="Пароль"
+                            name="password"
+                            type="password"
+                            className="user_password"
+                        />
+                        <input
+                            type="submit"
+                            value="Войти"
+                            className="user_login btn btn-default"
+                        />
+                    </form>
+                </div>
+        }
+        else if(this.props.data.activeForm == USER_FORM_REGISTRATION) {
+            loginBlockTemplate =
+                <div className="registration_block">
+                    <form
+                        className="registration_form"
+                        onSubmit={this.registrationFormSubmit.bind(this)}
+                        ref={(c) => this._register_form = c}
+                    >
+                        {this.getFieldErrors.call(this, 'non_field_errors', 'data','registerErrors')}
+                        {this.getFieldErrors.call(this, 'email', 'data','registerErrors')}
+                        <input
+                            type="text"
+                            ref={(c) => this._email = c}
+                            className="user_email"
+                            id="user_email"
+                            name="email"
+                            placeholder="E-mail"
+                        />
+                        {this.getFieldErrors.call(this, 'username', 'data','registerErrors')}
+                        <input
+                            type="text"
+                            ref={(c) => this._username = c}
+                            className="user_username"
+                            id="user_username"
+                            name="username"
+                            placeholder="Имя пользователя"
+                        />
+                        {this.getFieldErrors.call(this,'password', 'data','registerErrors')}
+                        <input
+                            type="text"
+                            ref={(c) => this._password = c}
+                            className="user_password"
+                            id="user_password"
+                            name="password"
+                            type="password"
+                            placeholder="Пароль"
+                        />
+                        {this.getFieldErrors.call(this, 'password2', 'data','registerErrors')}
+                        <input
+                            type="text"
+                            ref={(c) => this._password2 = c}
+                            className="user_password2"
+                            id="user_password2"
+                            name="password2"
+                            type="password"
+                            placeholder="Пароль еще раз"
+                        />
+                        <input
+                            type="submit"
+                            className="user_submit btn btn-default"
+                            value="Зарегистрироваться"
+                        />
+                    </form>
+                </div>
+        }
 
-        let loginBlockTemplate;
+
+    }
+
+    else {
+        loginBlockTemplate =
+            <div>
+                <div className="logged_user"><label>Вы вошли как: </label>{this.props.data.userName}</div>
+                <input
+                    type="button"
+                    value="Выйти"
+                    className="user__logout btn btn-default"
+                    onClick={this.props.actions.logoutUser.bind(this)}
+                />
+            </div>
+    }
+    return loginBlockTemplate;
+}
+
+
+    getSocialLoginTemplate () {
+
+        let socialLoginTemplate = null;
+
         if (!this.props.data.userId) {
 
 
@@ -67,124 +182,36 @@ export default class User extends BaseComponent {
                     />
                 </div>
             )
-
-
-         if(this.props.data.activeForm == USER_FORM_LOGIN){
-         loginBlockTemplate =
-             <div className="login_block">
-                 <div className="errors">
-                     {this.getFieldErrors.call(this, 'non_field_errors','data', 'loginErrors')}
-                 </div>
-                 <form
-                     onSubmit={this.loginFormSubmit.bind(this)}
-                     className="login_form"
-                     ref={(c) => this._login_form = c}
-                 >
-                     {this.getFieldErrors.call(this, 'username', 'data','loginErrors')}
-                     <input
-                     type="text"
-                     ref={(c) => this._username = c}
-                     placeholder="Имя пользователя"
-                     className="user_username"
-                     name="username"
-                 />
-                     {this.getFieldErrors.call(this, 'password', 'data','loginErrors')}
-                 <input
-                     type="text"
-                     ref={(c) => this._password = c}
-                     placeholder="Пароль"
-                     name="password"
-                     type="password"
-                     className="user_password"
-                 />
-                 <input
-                     type="submit"
-                     value="Войти"
-                     className="user_login btn btn-default"
-                 />
-                </form>
-                </div>
-         }
-            else if(this.props.data.activeForm == USER_FORM_REGISTRATION) {
-             loginBlockTemplate =
-                 <div className="registration_block">
-                 <form
-                     className="registration_form"
-                     onSubmit={this.registrationFormSubmit.bind(this)}
-                     ref={(c) => this._register_form = c}
-                 >
-                     {this.getFieldErrors.call(this, 'non_field_errors', 'data','registerErrors')}
-                     {this.getFieldErrors.call(this, 'email', 'data','registerErrors')}
-                         <input
-                             type="text"
-                             ref={(c) => this._email = c}
-                             className="user_email"
-                             id="user_email"
-                             name="email"
-                             placeholder="E-mail"
-                         />
-                         {this.getFieldErrors.call(this, 'username', 'data','registerErrors')}
-                         <input
-                             type="text"
-                             ref={(c) => this._username = c}
-                             className="user_username"
-                             id="user_username"
-                             name="username"
-                             placeholder="Имя пользователя"
-                         />
-                         {this.getFieldErrors.call(this,'password', 'data','registerErrors')}
-                         <input
-                             type="text"
-                             ref={(c) => this._password = c}
-                             className="user_password"
-                             id="user_password"
-                             name="password"
-                             type="password"
-                             placeholder="Пароль"
-                         />
-                         {this.getFieldErrors.call(this, 'password2', 'data','registerErrors')}
-                         <input
-                             type="text"
-                             ref={(c) => this._password2 = c}
-                             className="user_password2"
-                             id="user_password2"
-                             name="password2"
-                             type="password"
-                             placeholder="Пароль еще раз"
-                         />
-                         <input
-                             type="submit"
-                             className="user_submit btn btn-default"
-                             value="Зарегистрироваться"
-                         />
-                     </form>
-                     </div>
-         }
-
-
         }
 
-        else {
-            loginBlockTemplate =
-                <div>
-                <div className="logged_user"><label>Вы вошли как: </label>{this.props.data.userName}</div>
-                    <input
-                        type="button"
-                        value="Выйти"
-                        className="user__logout btn btn-default"
-                        onClick={this.props.actions.logoutUser.bind(this)}
-                    />
-                </div>
-        }
+        return socialLoginTemplate;
+    }
 
-
-
-        return <div className={classNames('user_block', {disabled: this.props.data.logging})} >
-            {socialLoginTemplate}
-            {this.getLoginBlockButtons.call(this)}
-            {loginBlockTemplate}
+    getUserBlock() {
+        if (this.props.data.logging) return null;
+        return ( <div
+                key="user_block"
+            >
+                {this.getSocialLoginTemplate.call(this)}
+                {this.getLoginBlockButtons.call(this)}
+                {this.getLoginBlockTemplate.call(this)}
 
             </div>
+        )
+    }
+
+    render() {
+        return (
+            <ReactCSSTransitionGroup
+                transitionName="user_block"
+                transitionEnterTimeout={1000}
+                transitionLeaveTimeout={1}
+                className='user_block'
+            >
+        {this.getUserBlock.call(this)}
+                </ReactCSSTransitionGroup>
+        )
+
     }
 }
 

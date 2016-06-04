@@ -2,6 +2,11 @@
   color: #0000cc;
 }
 
+
+html {
+  overflow-y: scroll;
+}
+
 .nav-pills {
   li {
     a {
@@ -45,12 +50,6 @@
         border: 4px solid #008800;
       }
     }
-  }
-}
-
-.post_list {
-  .posts {
-
   }
 }
 
@@ -133,6 +132,15 @@
   }
 
 }
+
+
+
+
+
+
+
+
+
 
 .errors {
   .error {

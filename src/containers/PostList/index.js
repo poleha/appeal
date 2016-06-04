@@ -265,7 +265,7 @@ export default class PostList extends BaseComponent {
                 transitionName="add_post"
                 transitionEnterTimeout={1000}
                 transitionLeaveTimeout={1}
-                className='add_comment_form_transition'
+                className='add_post_form_transition'
             >
             {this.getAddPostForm.call(this)}
                 </ReactCSSTransitionGroup>

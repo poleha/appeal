@@ -10,7 +10,8 @@ const initialState = {
     loading: false,
     adding: false,
     added: false,
-    errors: {}
+    errors: {},
+    query: null
 };
 
 function cloneState(state) {
@@ -40,7 +41,8 @@ export default function app(state = initialState, action) {
                 posts: {$set: {entities: action.payload.entities.posts || {}, ids: action.payload.result || []}},
                 count: {$set: action.payload.count},
                 loading: {$set: false},
-                path: {$set: action.path}
+                path: {$set: action.path},
+                query: {$set: action.query}
             });
             return newState;
         case LOAD_POSTS_FAIL:

@@ -33,7 +33,7 @@ function mapDispatchToProps(dispatch) {
     let store = params.store
     let tag = params.params.tag
     let promises = []
-    promises.push(store.dispatch(postActions.loadPosts({tags__alias: tag}, tag)))
+    promises.push(store.dispatch(postActions.loadPosts({tags__alias: tag})))
 
     return Promise.all(promises);
   }
@@ -53,11 +53,14 @@ export default class PostList extends BaseComponent {
 
   componentDidUpdate(prevProps){
 
+
     if (this.props.post.added || this.props.params.tag != prevProps.params.tag){
       ReactDOM.findDOMNode(this._add_post_username).value = '';
       ReactDOM.findDOMNode(this._add_post_email).value = '';
       ReactDOM.findDOMNode(this._add_post_body).value = '';
         this.setDefaultTags();
+
+        this._query.value = null;
     }
 
   }
@@ -87,13 +90,13 @@ export default class PostList extends BaseComponent {
 
   loadMorePostsClick(e) {
 
-    this.props.postActions.loadPosts({tags__alias: this.props.params.tag, limit: this.props.post.posts.ids.length + 10}, this.props.params.tag )
+    this.props.postActions.loadPosts({tags__alias: this.props.params.tag, limit: this.props.post.posts.ids.length + 10})
 
   }
 
   refreshPostsClick(e) {
     this.props.postActions.cleanPosts();
-    this.props.postActions.loadPosts({tags__alias: this.props.params.tag} , this.props.params.tag)
+    this.props.postActions.loadPosts({tags__alias: this.props.params.tag})
 
   }
 
@@ -246,6 +249,34 @@ export default class PostList extends BaseComponent {
         return postsBlock;
     }
 
+
+searchFormSubmit(e) {
+    e.preventDefault();
+    let body = this._query.value;
+    this.props.postActions.cleanPosts();
+    this.props.postActions.loadPosts({tags__alias: this.props.params.tag, body})
+    
+}
+
+getSearchForm() {
+    return (
+        <form onSubmit={this.searchFormSubmit.bind(this)}>
+         <input
+         type="text"
+        defaultValue=""
+         name="query"
+         ref={(c) => this._query = c}
+         />
+        <input
+        type="submit"
+        value="Поиск"
+        />
+
+        </form>
+    )
+}
+
+
   render() {
 
       let tags = this.props.tags;
@@ -259,6 +290,7 @@ export default class PostList extends BaseComponent {
 
       return <div className="post_list">
           <Helmet title={currentTagTitle} />
+          {this.getSearchForm.call(this)}
         <div className="add_post_form_block">
           <h3>Опубликовать призыв</h3>
             <ReactCSSTransitionGroup

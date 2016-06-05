@@ -5,12 +5,15 @@ import { post } from '../schemas'
 import { serializeParams} from '../helper'
 
 
-export function loadPosts(params, path) {
+export function loadPosts(params) {
     return function (dispatch, getState) {
         let loading = getState().post.loading;
         if (!loading) {
         let urlParams = '';
         if (params) {
+            if (params.body == null) {
+                delete params.body;
+            }
             urlParams = serializeParams(params);
         }
 
@@ -21,7 +24,8 @@ export function loadPosts(params, path) {
                 schema: post,
                 actions: [LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL]
             },
-            path: path
+            path: params.path,
+            query: params.body
         }
         return dispatch(action);
     }

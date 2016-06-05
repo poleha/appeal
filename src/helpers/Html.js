@@ -28,7 +28,7 @@ export default class Html extends Component {
         return (
             <html lang="en-us">
             <head>
-                <link rel="shortcut icon" href="/favicon.ico" />
+                
 
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 {head.base.toComponent()}

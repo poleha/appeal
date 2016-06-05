@@ -8,7 +8,6 @@ import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_F
 import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/User'
 import { ACTIVATE_USER_FORM } from '../constants/User'
 import { API_KEY } from '../middleware/api'
-import { push } from 'react-router-redux';
 
 
 import { createCookie, eraseCookie} from '../helper'
@@ -79,8 +78,6 @@ export function logoutUser() {
                 var auth2 = gapi.auth2.getAuthInstance();
                 return auth2.signOut()
             }
-        }).then(() => {
-            push('');
         })
 
 
@@ -118,7 +115,7 @@ export function registerUser(data) {
 
         dispatch(action).then(response => {
             dispatch(loginUser(loginData));
-        }).then(() => push('')).catch((error) => {
+        }).catch((error) => {
         });
 
     }
@@ -246,7 +243,7 @@ export function FacebookLogin() {
                             type: USER_FACEBOOK_LOGIN_SUCCESS
                         })
 
-                    }).then(() => push(''));
+                    });
 
 
                 });

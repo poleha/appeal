@@ -36,7 +36,7 @@ function mapDispatchToProps(dispatch) {
         let store = params.store
         let id = params.params.id
         let promises = []
-        promises.push(store.dispatch(postActions.loadPosts({id}, id)))
+        promises.push(store.dispatch(postActions.loadPosts({id})))
         promises.push(store.dispatch(commentActions.loadComments({post: id})))
 
         return Promise.all(promises);
@@ -77,7 +77,7 @@ export default class PostDetail extends BaseComponent {
 
     refreshCommentsClick(e) {
         this.props.commentActions.cleanComments();
-        this.props.postActions.loadPosts({id: this.props.params.id}, this.props.params.id);
+        this.props.postActions.loadPosts({id: this.props.params.id});
         this.props.commentActions.loadComments({post: this.props.params.id} )
 
     }

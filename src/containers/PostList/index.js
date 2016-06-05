@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-import ReactDOM from 'react-dom'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
@@ -45,7 +44,7 @@ export default class PostList extends BaseComponent {
         for (let key = 0; key < this.props.tags.ids.length; key++) {
             let alias = this.props.tags.entities[this.props.tags.ids[key]].alias;
             let checked = this.props.params.tag == alias;
-            let elem = ReactDOM.findDOMNode(this[`_tag_to_add__${alias}`]);
+            let elem = this[`_tag_to_add__${alias}`];
             if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
         }
     }
@@ -55,9 +54,9 @@ export default class PostList extends BaseComponent {
 
 
     if (this.props.post.added || this.props.params.tag != prevProps.params.tag){
-      ReactDOM.findDOMNode(this._add_post_username).value = '';
-      ReactDOM.findDOMNode(this._add_post_email).value = '';
-      ReactDOM.findDOMNode(this._add_post_body).value = '';
+      this._add_post_username.value = '';
+      this._add_post_email.value = '';
+      this._add_post_body.value = '';
         this.setDefaultTags();
 
         this._query.value = null;
@@ -66,7 +65,7 @@ export default class PostList extends BaseComponent {
   }
 
   getPost() {
-      let postForm = $(ReactDOM.findDOMNode(this._add_post_form));
+      let postForm = $(this._add_post_form);
     
       return formArrayToJson(postForm.serializeArray());
   }

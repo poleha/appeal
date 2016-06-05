@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-import ReactDOM from 'react-dom'
 import Post from '../../components/Post'
 import Comment from '../../components/Comment'
 import classNames from 'classnames'
@@ -53,17 +52,17 @@ export default class PostDetail extends BaseComponent {
     componentDidUpdate() {
         if (this.props.comment.added) {
 
-            ReactDOM.findDOMNode(this._add_comment_username).value = '';
-            ReactDOM.findDOMNode(this._add_comment_email).value = '';
-            ReactDOM.findDOMNode(this._add_comment_body).value = '';
+            this._add_comment_username.value = '';
+            this._add_comment_email.value = '';
+            this._add_comment_body.value = '';
         }
     }
 
     addCommentFormSubmit(e) {
         e.preventDefault();
-        let username = ReactDOM.findDOMNode(this._add_comment_username).value;
-        let email = ReactDOM.findDOMNode(this._add_comment_email).value;
-        let body = ReactDOM.findDOMNode(this._add_comment_body).value;
+        let username = this._add_comment_username.value;
+        let email = this._add_comment_email.value;
+        let body = this._add_comment_body.value;
 
         let comment = { username, body, email, post: this.props.params.id };
         this.props.commentActions.addComment(comment);

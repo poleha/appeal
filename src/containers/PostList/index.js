@@ -250,29 +250,24 @@ export default class PostList extends BaseComponent {
     }
 
 
-searchFormSubmit(e) {
+searchInputChange(e) {
     e.preventDefault();
     let body = this._query.value;
-    this.props.postActions.cleanPosts();
     this.props.postActions.loadPosts({tags__alias: this.props.params.tag, body})
     
 }
 
-getSearchForm() {
+getSearchInput() {
     return (
-        <form onSubmit={this.searchFormSubmit.bind(this)}>
-         <input
+        <div className="post_search">
+        <input onChange={this.searchInputChange.bind(this)}
          type="text"
         defaultValue=""
          name="query"
+         placeholder="Поиск"      
          ref={(c) => this._query = c}
-         />
-        <input
-        type="submit"
-        value="Поиск"
         />
-
-        </form>
+        </div>    
     )
 }
 
@@ -290,7 +285,7 @@ getSearchForm() {
 
       return <div className="post_list">
           <Helmet title={currentTagTitle} />
-          {this.getSearchForm.call(this)}
+
         <div className="add_post_form_block">
           <h3>Опубликовать призыв</h3>
             <ReactCSSTransitionGroup
@@ -303,7 +298,8 @@ getSearchForm() {
                 </ReactCSSTransitionGroup>
         </div>
         {this.getAddedBlock.call(this)}
-        <input
+          {this.getSearchInput.call(this)}
+          <input
             onClick={this.refreshPostsClick.bind(this)}
             disabled={this.getAddPostButtonDisabled.call(this)}
             type="button"

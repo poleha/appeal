@@ -1,4 +1,4 @@
-require('babel-polyfill').default;
+//require('babel-polyfill').default;
 const path = require('path');
 //const autoprefixer = require('autoprefixer');
 //const postcssImport = require('postcss-import');
@@ -7,7 +7,7 @@ const merge = require('webpack-merge');
 const development = require('./dev.config.js');
 const build = require('./build.config.js');
 
-require('babel-polyfill');
+//require('babel-polyfill');
 
 const TARGET = process.env.npm_lifecycle_event;
 //'start' for npm start

@@ -1,5 +1,6 @@
 import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../constants/Comment'
 import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Comment'
+import { CLEAN_COMMENTS } from '../constants/Comment'
 import { API_KEY } from '../middleware/api'
 import { comment } from '../schemas'
 import { serializeParams } from '../helper'
@@ -43,5 +44,12 @@ export function loadComments(params) {
 }
 
 
+
+export function cleanComments() {
+    return {
+        type: CLEAN_COMMENTS
+    }
+
+}
 
 

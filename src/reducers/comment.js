@@ -1,5 +1,6 @@
 import { ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL } from '../constants/Comment'
 import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '../constants/Comment'
+import { CLEAN_COMMENTS } from '../constants/Comment'
 import update from 'react-addons-update'
 
 var newState;
@@ -76,6 +77,15 @@ export default function app(state = initialState, action) {
         case LOAD_COMMENTS_FAIL:
             state = cloneState(state);
             return state;
+
+        case CLEAN_COMMENTS:
+            state = cloneState(state);
+            newState = update(state, {
+                comments: {$set: null}
+            });
+
+
+            return newState;
 
         default:
             return state;

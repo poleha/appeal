@@ -87,7 +87,7 @@ export default class PostList extends BaseComponent {
 
   loadMorePostsClick(e) {
 
-    this.props.postActions.loadPosts({tags__alias: this.props.params.tag, limit: this.props.post.posts.ids.length + 10}, this.props.params.tag ).then( () => window.scrollBy(0, 300))
+    this.props.postActions.loadPosts({tags__alias: this.props.params.tag, limit: this.props.post.posts.ids.length + 10}, this.props.params.tag )
 
   }
 

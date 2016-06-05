@@ -76,6 +76,7 @@ export default class PostDetail extends BaseComponent {
     }
 
     refreshCommentsClick(e) {
+        this.props.commentActions.cleanComments();
         this.props.postActions.loadPosts({id: this.props.params.id}, this.props.params.id);
         this.props.commentActions.loadComments({post: this.props.params.id} )
 
@@ -143,23 +144,41 @@ export default class PostDetail extends BaseComponent {
         }
     }
 
-    render() {
-       let post = this.props.post.posts.entities[this.props.params.id];
-      let comments = this.props.comment.comments;
-        let commentsBlock;
-        if (comments.ids.length > 0) {
-            commentsBlock = mapNodes(comments, function(comment, index){
+
+    getCommentsBlock() {
+        if (this.props.comment.loading && this.props.comment.comments === null) return null;
+
+        let comments = this.props.comment.comments;
+        let commentsBlock = mapNodes(comments, function(comment, index){
                 let added = this.props.comment.added && index == 0;
-               return <Comment
-                   key={comment.id} 
-                   comment={comment}
-                   added={added}
-               />
+                return <Comment
+                    key={comment.id}
+                    comment={comment}
+                    added={added}
+                />
 
             }.bind(this));
+        return commentsBlock
         }
 
 
+    getShowMoreButton() {
+        if (this.props.comment.loading) return null;
+        let post = this.props.post.posts.entities[this.props.params.id];
+        return (
+        <input
+            key="comment_show_more_button"
+            onClick={this.loadMoreCommentsClick.bind(this)}
+            type="button"
+            className={classNames('btn', 'btn-default', {hidden: post.comments.length <= this.props.comment.comments.ids.length})}
+            value="Показать еще"
+        />
+        )
+
+    }
+
+    render() {
+       let post = this.props.post.posts.entities[this.props.params.id];
       return (
 
         <div className="full_post">
@@ -196,15 +215,16 @@ export default class PostDetail extends BaseComponent {
                 className="btn btn-default"
                 value="Обновить"
             />
-            <div className="comments">
-            {commentsBlock}
-            </div>    
-            <input
-                onClick={this.loadMoreCommentsClick.bind(this)}
-                type="button"
-                className={classNames('btn', 'btn-default', {hidden: post.comments.length <= this.props.comment.comments.ids.length})}
-                value="Показать еще"
-            />
+            <ReactCSSTransitionGroup
+                transitionName="comments"
+                transitionEnterTimeout={1000}
+                transitionLeaveTimeout={1}
+                className='comments'
+            >
+            {this.getCommentsBlock.call(this)}
+                {this.getShowMoreButton.call(this)}
+            </ReactCSSTransitionGroup>
+
 
         </div>
 

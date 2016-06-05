@@ -291,3 +291,14 @@ html {
   }
 
 }
+
+
+.comments-enter {
+  opacity: 0.01;
+
+  &.comments-enter-active {
+    opacity: 1;
+    transition: opacity 1000ms ease-in;
+  }
+
+}

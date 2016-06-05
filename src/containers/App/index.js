@@ -9,7 +9,8 @@ import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
 import * as tagActions from '../../actions/TagActions'
 import User from '../../components/User'
-import { Link } from 'react-router'
+//import { Link } from 'react-router'
+import NavLink from '../../components/NavLink'
 import { mapNodes } from '../../helper'
 import { getUserInfo } from '../../actions/UserActions'
 import { loadTags } from '../../actions/TagActions'
@@ -60,7 +61,7 @@ export default class App extends Component {
 
     let path = this.props.params.tag;
         let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
-      return <li key={tag.id}><Link activeClassName='active' to={`/${tag.alias}`}>{tag.title}</Link></li>
+      return <NavLink key={tag.id} activeClassName='active' to={`/${tag.alias}`}>{tag.title}</NavLink>
     });
 
 
@@ -71,8 +72,8 @@ export default class App extends Component {
               data={this.props.user}
               actions={this.props.userActions}
           />
-          <ul className={classNames('nav', 'nav-pills')}>
-              <li><Link activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</Link></li>
+          <ul className={classNames('nav', 'nav-pills', 'top_menu')}>
+              <NavLink activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
             {linksBlock}
           </ul>
           {this.props.children}

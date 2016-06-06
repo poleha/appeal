@@ -108,8 +108,8 @@ export default class PostList extends BaseComponent {
 
 
   loadMorePostsClick(e) {
-
-    this.props.postActions.loadPosts({tags__alias: this.props.params.tag, limit: this.props.post.posts.ids.length + 10})
+    let body = this._query.value;
+    this.props.postActions.loadPosts({tags__alias: this.props.params.tag, limit: this.props.post.posts.ids.length + 10, body})
 
   }
 
@@ -229,7 +229,7 @@ export default class PostList extends BaseComponent {
                     disabled={this.getAddPostButtonDisabled.call(this)}
                     type="submit"
                     className="btn btn-default"
-                    value="Добавить">
+                    value="Отправить">
                 </input>
             </form>
         )

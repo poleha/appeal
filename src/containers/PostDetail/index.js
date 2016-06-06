@@ -197,7 +197,7 @@ export default class PostDetail extends BaseComponent {
 
             <h3>Комментарии</h3>
             <div className="add_comment_form_block">
-            <label>Добавить комментарий</label>
+            <label>Отправить комментарий</label>
         
             {this.getAddCommentForm.call(this)}
         

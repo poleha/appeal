@@ -44,6 +44,19 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PostDetail extends BaseComponent {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            bodyFocus: false
+        }
+    }
+
+    addCommentBodyOnFocus(e) {
+        if (e.type == 'focus') this.setState({bodyFocus:true});
+
+    }
+
+
     getPost() {
         return this.props.post.posts[this.props.params.id];
     }
@@ -117,7 +130,8 @@ export default class PostDetail extends BaseComponent {
                 {this.getFieldErrors.call(this, 'body', 'comment')}
             <textarea cols="70" rows="10"
                       ref={(c) => this._add_comment_body = c}
-                      className='add_comment_body'
+                      className={classNames('add_comment_body', {expanded: this.state.bodyFocus || (this._add_comment_body && this._add_comment_body.value.length > 0)})}
+                      onFocus={this.addCommentBodyOnFocus.bind(this)}
                       placeholder="Комментарий"
             />
                     </div>

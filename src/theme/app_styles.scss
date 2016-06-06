@@ -182,6 +182,14 @@ html {
   border: 2px solid #e0ebea;
   margin: 5px 0 20px 0;
   padding: 10px;
+
+
+  .add_comment_body {
+    height: 30px;
+    &.expanded {
+      height: 200px;
+    }
+  }
 }
 
 

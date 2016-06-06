@@ -61,15 +61,21 @@ export default class PostList extends BaseComponent {
 
   componentDidUpdate(prevProps){
 
-    if (this.props.post.added || this.props.params.tag != prevProps.params.tag){
+      let pathChanged = this.props.params.tag != prevProps.params.tag;
+      if ( pathChanged ) {
+          this._query.value = null;
+
+          if (this.state.bodyFocus) this.setState({bodyFocus:false});
+      }
+
+
+    if (this.props.post.added || pathChanged){
       this._add_post_username.value = '';
       this._add_post_email.value = '';
       this._add_post_body.value = '';
         this.setDefaultTags();
 
-        this._query.value = null;
 
-        if (this.state.bodyFocus) this.setState({bodyFocus:false});
     }
 
   }
@@ -206,7 +212,6 @@ export default class PostList extends BaseComponent {
                 className={classNames('add_post_body', {expanded: this.state.bodyFocus || (this._add_post_body && this._add_post_body.value.length > 0)})}
                 id="add_post_body"
                 onFocus={this.addPostBodyOnFocus.bind(this)}
-                onBlur={this.addPostBodyOnFocus.bind(this)}
                 name="body"
                 placeholder="Сообщение"
                 type="text"

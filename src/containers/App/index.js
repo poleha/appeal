@@ -59,8 +59,7 @@ function mapDispatchToProps(dispatch) {
 export default class App extends Component {
     render() {
 
-    let path = this.props.params.tag;
-        let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
+      let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
       return <NavLink key={tag.id} activeClassName='active' to={`/${tag.alias}`}>{tag.title}</NavLink>
     });
 
@@ -72,12 +71,14 @@ export default class App extends Component {
               data={this.props.user}
               actions={this.props.userActions}
           />
-          <ul className={classNames('nav', 'nav-pills', 'top_menu')}>
+          <div className="top_block">
+            <ul className={classNames('nav', 'nav-pills', 'top_menu')}>
               <NavLink activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
             {linksBlock}
           </ul>
+          </div>
           {this.props.children}
-        </div>
+         </div>
     )
   }
 }

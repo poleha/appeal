@@ -239,6 +239,16 @@ html {
 
 }
 
+
+.top_block {
+  text-align: center;
+  .top_menu {
+    display: inline-block;
+  }
+}
+
+
+
 .disabled {
   pointer-events: none;
   opacity: 0.4;

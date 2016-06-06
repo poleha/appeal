@@ -32,10 +32,11 @@ export default function app(state = initialState, action) {
 
     switch (action.type) {
         case ADD_COMMENT_START:
+            let errors = state.errors;
             state = cloneState(state);
             newState = update(state, {
                 adding: {$set: true},
-                errors: {$set: {}}
+                errors: {$set: errors}
             });
 
             return newState;

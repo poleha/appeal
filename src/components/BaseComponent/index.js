@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class BaseComponent extends Component {
     
@@ -14,11 +15,19 @@ export default class BaseComponent extends Component {
                 )
             });
             return (
-                <div className="errors">
+            <ReactCSSTransitionGroup
+            transitionName="errors"
+            transitionAppear={true}
+            transitionAppearTimeout={1000}
+            transitionEnterTimeout = {1000}
+            transitionLeaveTimeout={1}
+            className='errors'
+            component="div"
+            >
                     <ul>
                         {errorsBlock}
                     </ul>
-                </div>
+                </ReactCSSTransitionGroup>
             )
         }
     }

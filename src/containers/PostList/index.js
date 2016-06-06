@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
@@ -110,7 +110,6 @@ export default class PostList extends BaseComponent {
   }
 
     getAddPostForm() {
-        if (this.props.post.adding) return null;
         let tags = this.props.tags;
         let tagsAddBlock;
         if (tags.ids.length > 0) {
@@ -287,14 +286,9 @@ getSearchInput() {
 
         <div className="add_post_form_block">
           <h3>Опубликовать призыв</h3>
-            <ReactCSSTransitionGroup
-                transitionName="add_post"
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1}
-                className='add_post_form_transition'
-            >
+
             {this.getAddPostForm.call(this)}
-                </ReactCSSTransitionGroup>
+             
         </div>
         {this.getAddedBlock.call(this)}
           {this.getSearchInput.call(this)}

@@ -241,32 +241,11 @@ html {
 }
 
 
-.add_comment-enter {
+
+.errors-appear {
   opacity: 0.01;
 
-  &.add_comment-enter-active {
-    opacity: 1;
-    transition: opacity 1000ms ease-in;
-  }
-
-}
-
-
-
-.add_post-enter {
-  opacity: 0.01;
-
-  &.add_post-enter-active {
-    opacity: 1;
-    transition: opacity 1000ms ease-in;
-  }
-
-}
-
-.user_block-enter {
-  opacity: 0.01;
-
-  &.user_block-enter-active {
+  &.errors-appear-active {
     opacity: 1;
     transition: opacity 1000ms ease-in;
   }

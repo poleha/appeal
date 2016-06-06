@@ -50,10 +50,11 @@ export default function app(state = initialState, action) {
             return state;
 
         case ADD_POST_START:
+            let errors = state.errors;
             state = cloneState(state);
             newState = update(state, {
                 adding: {$set: true},
-                errors: {$set: {}}
+                errors: {$set: errors}
             });
             return newState;
         case ADD_POST_SUCCESS:

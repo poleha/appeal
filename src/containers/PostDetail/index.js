@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Post from '../../components/Post'
 import Comment from '../../components/Comment'
 import classNames from 'classnames'
@@ -82,7 +82,6 @@ export default class PostDetail extends BaseComponent {
     }
 
     getAddCommentForm() {
-        if (this.props.comment.adding) return null;
         let usernameInputClass = classNames('form_field',
         {
             hidden: this.props.userId
@@ -199,14 +198,9 @@ export default class PostDetail extends BaseComponent {
             <h3>Комментарии</h3>
             <div className="add_comment_form_block">
             <label>Добавить комментарий</label>
-        <ReactCSSTransitionGroup
-        transitionName="add_comment"
-        transitionEnterTimeout={1000}
-        transitionLeaveTimeout={1}
-        className='add_comment_form_transition'
-        >
+        
             {this.getAddCommentForm.call(this)}
-        </ReactCSSTransitionGroup>
+        
              </div>   
             <input
                 onClick={this.refreshCommentsClick.bind(this)}

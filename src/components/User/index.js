@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../BaseComponent'
 import ReactDOM from 'react-dom'
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/User'
 import { formArrayToJson } from '../../helper'
 import VKLogin from '../VKLogin'
@@ -188,7 +187,6 @@ getLoginBlockTemplate () {
     }
 
     getUserBlock() {
-        if (this.props.data.logging) return null;
         return ( <div
                 key="user_block"
             >
@@ -202,14 +200,9 @@ getLoginBlockTemplate () {
 
     render() {
         return (
-            <ReactCSSTransitionGroup
-                transitionName="user_block"
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1}
-                className='user_block'
-            >
+            <div className="user_block">
         {this.getUserBlock.call(this)}
-                </ReactCSSTransitionGroup>
+                </div>
         )
 
     }

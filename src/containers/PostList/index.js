@@ -68,6 +68,8 @@ export default class PostList extends BaseComponent {
         this.setDefaultTags();
 
         this._query.value = null;
+
+        if (this.state.bodyFocus) this.setState({bodyFocus:false});
     }
 
   }
@@ -130,7 +132,7 @@ export default class PostList extends BaseComponent {
 
     addPostBodyOnFocus(e) {
         if (e.type == 'focus') this.setState({bodyFocus:true});
-        else this.setState({bodyFocus:false});
+        //else this.setState({bodyFocus:false});
 
     }
 
@@ -149,7 +151,7 @@ export default class PostList extends BaseComponent {
                         type="checkbox"
                         ref={(c) => this[`_tag_to_add__${elem.alias}`] = c}
                         name={`tags__${key}`}
-                        disabled={this.getAddPostButtonDisabled.call(this)}
+                        //disabled={this.getAddPostButtonDisabled.call(this)}
                     />
                     <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
                 </li>

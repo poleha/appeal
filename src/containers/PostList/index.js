@@ -29,10 +29,11 @@ function mapDispatchToProps(dispatch) {
 
 @asyncConnect([{
   promise: (params, helpers) => {
-    let store = params.store
-    let tag = params.params.tag
-    let promises = []
-    promises.push(store.dispatch(postActions.loadPosts({tags__alias: tag})))
+    let store = params.store;
+    let tag = params.params.tag;
+    let promises = [];
+    store.dispatch(postActions.cleanPosts());
+    promises.push(store.dispatch(postActions.loadPosts({tags__alias: tag})));
 
     return Promise.all(promises);
   }

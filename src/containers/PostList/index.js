@@ -50,9 +50,7 @@ export default class PostList extends BaseComponent {
         }
     }
 
-
   componentDidUpdate(prevProps){
-
 
     if (this.props.post.added || this.props.params.tag != prevProps.params.tag){
       this._add_post_username.value = '';
@@ -64,6 +62,16 @@ export default class PostList extends BaseComponent {
     }
 
   }
+
+
+    getCurrentTagTitle() {
+        let currentTag;
+        let self = this;
+        this.props.tags.ids.forEach((tagId) => {
+            if (self.props.tags.entities[tagId].alias == self.props.params.tag) currentTag = self.props.tags.entities[tagId];
+        });
+        return currentTag ? currentTag.title : 'Все'
+    }
 
   getPost() {
       let postForm = $(this._add_post_form);
@@ -263,7 +271,7 @@ getSearchInput() {
          type="text"
         defaultValue=""
          name="query"
-         placeholder="Поиск"      
+         placeholder={`Поиск по разделу ${this.getCurrentTagTitle()}`}
          ref={(c) => this._query = c}
         />
         </div>    

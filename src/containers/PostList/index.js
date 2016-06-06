@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import classNames from 'classnames'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
@@ -40,6 +41,14 @@ function mapDispatchToProps(dispatch) {
 }])
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PostList extends BaseComponent {
+
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            bodyFocus: false
+        }
+    }
 
     setDefaultTags() {
         for (let key = 0; key < this.props.tags.ids.length; key++) {
@@ -118,6 +127,13 @@ export default class PostList extends BaseComponent {
     }
   }
 
+
+    addPostBodyOnFocus(e) {
+        if (e.type == 'focus') this.setState({bodyFocus:true});
+        else this.setState({bodyFocus:false});
+
+    }
+
     getAddPostForm() {
         let tags = this.props.tags;
         let tagsAddBlock;
@@ -185,8 +201,10 @@ export default class PostList extends BaseComponent {
                     {this.getFieldErrors.call(this, 'body', 'post')}
       <textarea cols="70" rows="10"
                 ref={(c) => this._add_post_body = c}
-                className="add_post_body"
+                className={classNames('add_post_body', {expanded: this.state.bodyFocus || (this._add_post_body && this._add_post_body.value.length > 0)})}
                 id="add_post_body"
+                onFocus={this.addPostBodyOnFocus.bind(this)}
+                onBlur={this.addPostBodyOnFocus.bind(this)}
                 name="body"
                 placeholder="Сообщение"
                 type="text"

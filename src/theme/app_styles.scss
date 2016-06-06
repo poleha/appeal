@@ -162,6 +162,13 @@ html {
   margin: 5px 0 20px 0;
   padding: 10px;
 
+  .add_post_body {
+    height: 30px;
+    &.expanded {
+      height: 200px;
+    }
+  }
+
   .tags_add {
     li {
       list-style-type: none;

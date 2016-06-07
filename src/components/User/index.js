@@ -21,8 +21,16 @@ export default class User extends BaseComponent {
     }
 
 
+
+    //componentDidMount() {
+       // $(this._modal).modal();
+
+            //$(this._body).modal('show');
+
+    //}
+
     getLoginBlockButtons() {
-        let loginBlockButtons;
+        let loginBlockButtons = null;
         if (!this.props.data.userId) {
             loginBlockButtons = <div className="login_block_buttons">
                 <input
@@ -47,11 +55,11 @@ export default class User extends BaseComponent {
 getLoginBlockTemplate () {
 
 
-    let loginBlockTemplate;
+    let loginBlockTemplate = null;
     if (!this.props.data.userId) {
 
         if(this.props.data.activeForm == USER_FORM_LOGIN){
-            loginBlockTemplate =
+            loginBlockTemplate = (
                 <div className="login_block">
                     <div className="errors">
                         {this.getFieldErrors.call(this, 'non_field_errors','data', 'loginErrors')}
@@ -85,9 +93,10 @@ getLoginBlockTemplate () {
                         />
                     </form>
                 </div>
+            )
         }
         else if(this.props.data.activeForm == USER_FORM_REGISTRATION) {
-            loginBlockTemplate =
+            loginBlockTemplate = (
                 <div className="registration_block">
                     <form
                         className="registration_form"
@@ -140,14 +149,21 @@ getLoginBlockTemplate () {
                         />
                     </form>
                 </div>
+            )
         }
 
 
     }
 
-    else {
-        loginBlockTemplate =
-            <div>
+
+    return loginBlockTemplate;
+}
+
+
+    getLoggedBlockTemplate() {
+        if (!this.props.data.userId) return null;
+        return (
+            <div key="logged_block" className="logged_block">
                 <div className="logged_user"><label>Вы вошли как: </label>{this.props.data.userName}</div>
                 <input
                     type="button"
@@ -156,9 +172,8 @@ getLoginBlockTemplate () {
                     onClick={this.props.actions.logoutUser.bind(this)}
                 />
             </div>
+        )
     }
-    return loginBlockTemplate;
-}
 
 
     getSocialLoginTemplate () {
@@ -198,10 +213,34 @@ getLoginBlockTemplate () {
         )
     }
 
+    showLoginBlock() {
+        $(this._body).modal('show');
+    }
+
     render() {
+        if (this.props.data.userId) {
+            if (this._body) $(this._body).modal('hide');
+            return this.getLoggedBlockTemplate.call(this);
+        }
         return (
-            <div className="user_block">
-        {this.getUserBlock.call(this)}
+            <div>
+            <div key="modal_box" id="modal_box" className="modal fade" ref={(e) => this._body = e}>
+                    <div className="modal-dialog">
+                        <div className="modal-content user_block">
+                            <div className="modal-header">
+                                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 className="modal-title">Войти на сайт</h4>
+                            </div>
+                            <div className="modal-body">
+                                {this.getUserBlock.call(this)}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div key="logged_block" className="logged_block">
+                <input type="button" value="Войти" onClick={this.showLoginBlock.bind(this)}/>
+                 </div>
                 </div>
         )
 

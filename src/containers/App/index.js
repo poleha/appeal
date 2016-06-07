@@ -57,24 +57,57 @@ function mapDispatchToProps(dispatch) {
 }])
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
+
+    /*
+    constructor(props) {
+        super(props);
+        this.state = {
+            loginFormActive: false
+        }
+    }
+*/
+
+    /*
+    loginClick(e) {
+        e.preventDefault();
+        this.setState({
+            loginFormActive: !this.state.loginFormActive
+        });
+    }
+    
+    */
+
+    getLoginBlock() {
+        //if (this.state.loginFormActive) {
+            //return (
+            //    <User
+            //        data={this.props.user}
+             //       actions={this.props.userActions}
+              //  />
+            //)
+        //}
+         // else return null
+
+    }
+
     render() {
 
       let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
       return <NavLink key={tag.id} activeClassName='active' to={`/${tag.alias}`}>{tag.title}</NavLink>
     });
 
-
     return (
         <div className='container'>
             <Helmet {...config.app.head} title={config.app.title}/>
-          <User
-              data={this.props.user}
-              actions={this.props.userActions}
-          />
+            {this.getLoginBlock()}
           <div className="top_block">
             <ul className={classNames('nav', 'nav-pills', 'top_menu')}>
               <NavLink activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
             {linksBlock}
+                <User
+                    data={this.props.user}
+                    actions={this.props.userActions}
+                />
           </ul>
           </div>
           {this.props.children}

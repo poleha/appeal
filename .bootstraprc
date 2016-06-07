@@ -56,7 +56,7 @@ styles:
   # Reset and dependencies
   normalize: true
   print: true
-  glyphicons: true
+  glyphicons: false
 
   # Core CSS
   scaffolding: true
@@ -91,7 +91,7 @@ styles:
   close: true
 
   # Components w/ JavaScript
-  modals: false
+  modals: true
   tooltip: false
   popovers: false
   carousel: false
@@ -108,7 +108,7 @@ scripts:
   carousel: false
   collapse: false
   dropdown: false
-  modal: false
+  modal: true
   tooltip: false
   popover: false
   scrollspy: false

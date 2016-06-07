@@ -71,11 +71,7 @@ html {
 }
 
 .user_block {
-  position: absolute;
-  right: 10px;
-  top: 10px;
   width: 300px;
-  z-index: 10;
   padding: 20px;
   box-shadow: 0 0 0 1px rgba(0,0,0,0.1),0 3px 4px -3px rgba(0,0,0,0.3);
   background-color: white;
@@ -119,6 +115,12 @@ html {
 
 }
 
+
+.logged_block {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
 
 
 

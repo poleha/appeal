@@ -59,15 +59,22 @@ export default class PostList extends BaseComponent {
         }
     }
 
+    getPathChanged(otherProps) {
+        return this.props.params.tag != otherProps.params.tag;
+    }
+
+    componentWillReceiveProps(nextProps) {
+       let pathChanged = this.getPathChanged(nextProps)
+       if ( pathChanged ) {
+           this._query.value = null;
+
+           if (this.state.bodyFocus) this.setState({bodyFocus:false});
+       }
+   }
+
+
   componentDidUpdate(prevProps){
-
-      let pathChanged = this.props.params.tag != prevProps.params.tag;
-      if ( pathChanged ) {
-          this._query.value = null;
-
-          if (this.state.bodyFocus) this.setState({bodyFocus:false});
-      }
-
+      let pathChanged = this.getPathChanged(prevProps)
 
     if (this.props.post.added || pathChanged){
       this._add_post_username.value = '';

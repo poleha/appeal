@@ -87,15 +87,6 @@ export function logoutUser() {
 
 //***************************************
 
-export function activateForm(formType) {
-
-    return {
-        type: ACTIVATE_USER_FORM,
-        payload: formType
-    }
-
-}
-
 //*************************************
 export function registerUser(data) {
     let loginData = {

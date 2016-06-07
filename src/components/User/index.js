@@ -9,6 +9,15 @@ import FacebookLogin from '../FacebookLogin'
 import classNames from 'classnames'
 
 export default class User extends BaseComponent {
+    
+    constructor(props) {
+        super(props)
+        this.state = {
+            activeForm: USER_FORM_LOGIN
+        }
+    }
+    
+    
     loginFormSubmit(e) {
         e.preventDefault();
         let loginForm = $(ReactDOM.findDOMNode(this._login_form));
@@ -29,6 +38,13 @@ export default class User extends BaseComponent {
 
     //}
 
+
+    handdleFormChangeClick(formType, e) {
+        this.setState({
+            activeForm: formType
+        })
+    }
+
     getLoginBlockButtons() {
         let loginBlockButtons = null;
         if (!this.props.data.userId) {
@@ -36,15 +52,15 @@ export default class User extends BaseComponent {
                 <input
                     type="button"
                     value='Войти'
-                    onClick={this.props.actions.activateForm.bind(this, USER_FORM_LOGIN)}
-                    disabled={this.props.data.activeForm == USER_FORM_LOGIN }
+                    onClick={this.handdleFormChangeClick.bind(this, USER_FORM_LOGIN)}
+                    disabled={this.state.activeForm == USER_FORM_LOGIN }
                     className="btn btn-default"
                 />
                 <input
                     type="button"
                     value='Зарегистрироваться'
-                    onClick={this.props.actions.activateForm.bind(this, USER_FORM_REGISTRATION)}
-                    disabled={this.props.data.activeForm == USER_FORM_REGISTRATION }
+                    onClick={this.handdleFormChangeClick.bind(this, USER_FORM_REGISTRATION)}
+                    disabled={this.state.activeForm == USER_FORM_REGISTRATION }
                     className="btn btn-default"
                 />
             </div>
@@ -58,7 +74,7 @@ getLoginBlockTemplate () {
     let loginBlockTemplate = null;
     if (!this.props.data.userId) {
 
-        if(this.props.data.activeForm == USER_FORM_LOGIN){
+        if(this.state.activeForm == USER_FORM_LOGIN){
             loginBlockTemplate = (
                 <div className="login_block">
                     <div className="errors">
@@ -95,7 +111,7 @@ getLoginBlockTemplate () {
                 </div>
             )
         }
-        else if(this.props.data.activeForm == USER_FORM_REGISTRATION) {
+        else if(this.state.activeForm == USER_FORM_REGISTRATION) {
             loginBlockTemplate = (
                 <div className="registration_block">
                     <form

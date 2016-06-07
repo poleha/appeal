@@ -16,7 +16,7 @@ const initialState = {
     userName: null,
     userId: null,
     //token: null,
-    activeForm: USER_FORM_LOGIN,
+    //activeForm: USER_FORM_LOGIN,
     loginErrors: {},
     registerErrors: {},
     network: null,

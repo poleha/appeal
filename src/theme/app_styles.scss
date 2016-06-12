@@ -1,3 +1,5 @@
+//@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables";
+
 html {
   overflow-y: scroll;
 }
@@ -71,7 +73,6 @@ html {
 }
 
 .user_block {
-  width: 300px;
   padding: 20px;
   box-shadow: 0 0 0 1px rgba(0,0,0,0.1),0 3px 4px -3px rgba(0,0,0,0.3);
   background-color: white;
@@ -306,4 +307,11 @@ html {
 }
 
 
+
+#modal_box {
+  .modal-dialog, .modal-sm, .modal-lg {
+    max-width: 300px;
+
+  }
+}
 

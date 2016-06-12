@@ -248,8 +248,8 @@ export default class PostList extends BaseComponent {
 
 
     getShowMoreInput() {
-        if (this.props.post.loading) return null;
         let posts = this.props.post.posts;
+        if (posts.ids == null) return null;
         let showMoreInput;
         if (this.props.post.count > posts.ids.length) {
             showMoreInput = (

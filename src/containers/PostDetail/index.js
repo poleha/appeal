@@ -175,7 +175,7 @@ export default class PostDetail extends BaseComponent {
 
 
     getShowMoreButton() {
-        if (this.props.comment.loading) return null;
+        if (this.props.comment.comments == null || this.props.post.posts == null) return null;
         let post = this.props.post.posts.entities[this.props.params.id];
         return (
         <input

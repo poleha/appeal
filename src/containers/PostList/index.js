@@ -33,7 +33,6 @@ function mapDispatchToProps(dispatch) {
     let store = params.store;
     let tag = params.params.tag;
     let promises = [];
-    store.dispatch(postActions.cleanPosts());
     promises.push(store.dispatch(postActions.loadPosts({tags__alias: tag})));
 
     return Promise.all(promises);
@@ -312,10 +311,7 @@ getSearchInput() {
 
 
   render() {
-
       let tags = this.props.tags;
-      let posts = this.props.post.posts;
-      //let addPost = this.props.actions.addPost;
       let currentTagTitle;
       Object.getOwnPropertyNames.call(this, tags.entities).forEach(function(key) {
           let tag = tags.entities[key]

@@ -53,26 +53,16 @@ export function formArrayToJson(formArray) {
 }
 
 export function mapNodes(nodes, func) {
+    if (nodes !=null) {
     let ids = nodes.ids;
     let entities = nodes.entities;
-    /*
-    let iterator = {
-        [Symbol.iterator]: function() {
-        let currentIndex = 0;
-        return {
-            next() {
-                if (currentIndex < ids.length) return {value: entities[ids[currentIndex++]], done:false}
-                else return {done: true}
-            }
-        }
-    }
-    }
-    return iterator;
-    */
     return ids.map(function (id, index) {
     return func(entities[id], index);
     })
-
+    }
+    else {
+        return null
+    }
 }
 
 

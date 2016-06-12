@@ -51,14 +51,14 @@ export default class User extends BaseComponent {
             loginBlockButtons = <div className="login_block_buttons">
                 <input
                     type="button"
-                    value='Войти'
+                    value='Вход'
                     onClick={this.handdleFormChangeClick.bind(this, USER_FORM_LOGIN)}
                     disabled={this.state.activeForm == USER_FORM_LOGIN }
                     className="btn btn-default"
                 />
                 <input
                     type="button"
-                    value='Зарегистрироваться'
+                    value='Регистрация'
                     onClick={this.handdleFormChangeClick.bind(this, USER_FORM_REGISTRATION)}
                     disabled={this.state.activeForm == USER_FORM_REGISTRATION }
                     className="btn btn-default"

@@ -147,7 +147,7 @@ export function VKLogin() {
                         type: USER_VK_LOGIN_SUCCESS
                 })
 
-                }).then(() => push(''));
+                });
 
 
             } else {
@@ -189,7 +189,6 @@ export function GoogleLogin(data) {
             return dispatch(getUserInfo());
         }).then(() => {
             dispatch({type: USER_GOOGLE_LOGIN_SUCCESS})
-            push('')
         })
             }
 

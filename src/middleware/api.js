@@ -49,12 +49,18 @@ export function createApiMiddelware(req) {
             actionSuccess = createAction(action, actionSuccess);
             actionFail = createAction(action, actionFail);
 
-            dispatch(actionStart);
-            return fetchApi(endpoint, method, headers, body, schema).then(response => {
+            let promise = new Promise((resolve, reject) => {
+             setTimeout(() => {
+                resolve(dispatch(actionStart));
+             }, 0)
+            });
+            return promise.then(() => {
+                return fetchApi(endpoint, method, headers, body, schema)
+            }).then(response => {
                     actionSuccess.payload = response;
                     dispatch(actionSuccess);
                     return Promise.resolve(response);
-                },
+                }
             ).catch(error => {
                 actionFail.payload = error;
                 dispatch(actionFail);

@@ -5,11 +5,10 @@ import classNames from 'classnames'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
-import { formArrayToJson } from '../../helper'
+import { formArrayToJson, mapNodes } from '../../helpers/helper'
 import Post from '../../components/Post'
 import { bindActionCreators } from 'redux'
 import * as postActions from '../../actions/PostActions'
-import { mapNodes } from '../../helper'
 
 function mapStateToProps(state) {
   return {

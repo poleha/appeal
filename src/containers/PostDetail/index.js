@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
-import { mapNodes } from '../../helper'
+import { mapNodes } from '../../helpers/helper'
 
 function mapStateToProps(state) {
     return {

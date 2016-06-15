@@ -10,7 +10,7 @@ import { ACTIVATE_USER_FORM } from '../constants/User'
 import { API_KEY } from '../middleware/api'
 
 
-import { createCookie, eraseCookie} from '../helper'
+import { createCookie, eraseCookie} from '../helpers/helper'
 
 export function loginUser(userData) {
     return function (dispatch, getState, req) {

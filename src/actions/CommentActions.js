@@ -3,7 +3,7 @@ import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '
 import { CLEAN_COMMENTS } from '../constants/Comment'
 import { API_KEY } from '../middleware/api'
 import { comment } from '../schemas'
-import { serializeParams } from '../helper'
+import { serializeParams } from '../helpers/helper'
 
 
 

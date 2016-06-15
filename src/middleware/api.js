@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
 import { normalize, arrayOf } from 'normalizr'
-import {readCookie} from '../helper'
+import {readCookie} from '../helpers/helper'
 
 
 export const API_KEY = Symbol('Api');

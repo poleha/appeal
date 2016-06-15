@@ -2,7 +2,7 @@ import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, 
 import { CLEAN_POSTS } from '../constants/Post'
 import { API_KEY } from '../middleware/api'
 import { post } from '../schemas'
-import { serializeParams} from '../helper'
+import { serializeParams} from '../helpers/helper'
 
 
 export function loadPosts(params) {

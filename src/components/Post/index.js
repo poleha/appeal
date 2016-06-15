@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
 import classNames from 'classnames'
 import { Link } from 'react-router'
-import { mapNodes } from '../../helper'
+import { mapNodes } from '../../helpers/helper'
 
 export default class Post extends Component {
 

@@ -3,16 +3,16 @@ import { LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL } from '
 import { CLEAN_COMMENTS } from '../constants/Comment'
 import { API_KEY } from '../middleware/api'
 import { comment } from '../schemas'
-import { serializeParams } from '../helpers/helper'
+import { serializeParams, apiHost } from '../helpers/helper'
 
-
+const endpoint = apiHost + '/comments/';
 
 export function addComment(data) {
     return function (dispatch, getState) {
         let action = {
             [API_KEY]: {
                 method: 'post',
-                endpoint: 'http://127.0.0.1:8000/comments/',
+                endpoint: endpoint,
                 body: data,
                 actions: [ADD_COMMENT_START, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAIL]
             }
@@ -31,7 +31,7 @@ export function loadComments(params) {
         let action = {
             [API_KEY]: {
                 method: 'get',
-                endpoint: 'http://127.0.0.1:8000/comments/?' + urlParams,
+                endpoint: endpoint + '?' + urlParams,
                 schema: comment,
                 actions: [LOAD_COMMENTS_START, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAIL]
             }

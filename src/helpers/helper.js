@@ -1,3 +1,5 @@
+import config from '../config'
+
 var expires, date, nameEQ, ca, c;
 
 export function createCookie(name, value, days, req) {
@@ -74,3 +76,5 @@ export function serializeParams(obj) {
         }
     return str.join('&');
 }
+
+export const apiHost = config.api.host + ':' + config.api.port;

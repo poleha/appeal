@@ -6,11 +6,12 @@ import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '
 import { USER_FACEBOOK_LOGIN_START, USER_FACEBOOK_LOGIN_SUCCESS, USER_FACEBOOK_LOGIN_FAIL } from '../constants/User'
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
 import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/User'
-import { ACTIVATE_USER_FORM } from '../constants/User'
 import { API_KEY } from '../middleware/api'
+import { createCookie, eraseCookie, apiHost} from '../helpers/helper'
+
+const endpoint = apiHost + '/auth/';
 
 
-import { createCookie, eraseCookie} from '../helpers/helper'
 
 export function loginUser(userData) {
     return function (dispatch, getState, req) {
@@ -18,7 +19,7 @@ export function loginUser(userData) {
         let action = {
             [API_KEY]: {
                 method: 'post',
-                endpoint: 'http://127.0.0.1:8000/auth/login/',
+                endpoint: `${endpoint}login/`,
                 actions: [USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL],
                 body: userData
             }
@@ -43,7 +44,7 @@ export function getUserInfo() {
         let action = {
             [API_KEY]: {
                 method: 'get',
-                endpoint: 'http://127.0.0.1:8000/auth/me/',
+                endpoint: `${endpoint}me/`,
                 actions: [GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL]
             }
         }
@@ -66,7 +67,7 @@ export function logoutUser() {
         let action = {
             [API_KEY]: {
                 method: 'post',
-                endpoint: 'http://127.0.0.1:8000/auth/logout/',
+                endpoint: `${endpoint}logout/`,
                 actions: [LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL]
             }
         }

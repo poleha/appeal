@@ -19,5 +19,9 @@ export default {
                 {property: 'og:image:height', content: '200'}
             ]
         }
+    },
+    api: {
+      host: 'http://127.0.0.1',
+      port: 8000  
     }
 }

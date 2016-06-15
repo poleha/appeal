@@ -1,8 +1,10 @@
 import { LOAD_TAGS_START, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAIL } from '../constants/Tag'
 import { API_KEY } from '../middleware/api'
 import { tag } from '../schemas'
+import { apiHost } from '../helpers/helper'
 
-//*********************************
+
+const endpoint = apiHost + '/tags/';
 
 export function loadTags() {
     return function (dispatch, getState) {
@@ -10,7 +12,7 @@ export function loadTags() {
         let action = {
             [API_KEY]: {
                 method: 'get',
-                endpoint: 'http://127.0.0.1:8000/tags/',
+                endpoint: endpoint,
                 schema: tag,
                 actions: [LOAD_TAGS_START, LOAD_TAGS_SUCCESS, LOAD_TAGS_FAIL]
             }

@@ -2,8 +2,9 @@ import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, 
 import { CLEAN_POSTS } from '../constants/Post'
 import { API_KEY } from '../middleware/api'
 import { post } from '../schemas'
-import { serializeParams} from '../helpers/helper'
+import { serializeParams, apiHost} from '../helpers/helper'
 
+const endpoint = apiHost + '/posts/';
 
 export function loadPosts(params) {
     return function (dispatch, getState) {
@@ -20,7 +21,7 @@ export function loadPosts(params) {
         let action = {
             [API_KEY]: {
                 method: 'get',
-                endpoint: 'http://127.0.0.1:8000/posts/?' + urlParams,
+                endpoint: endpoint + '?' + urlParams,
                 schema: post,
                 actions: [LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL]
             },
@@ -41,7 +42,7 @@ export function addPost(post) {
         let action = {
             [API_KEY]: {
                 method: 'post',
-                endpoint: 'http://127.0.0.1:8000/posts/',
+                endpoint: endpoint,
                 body: post,
                 actions: [ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL]
             }
@@ -61,7 +62,7 @@ export function ratePost(data) {
         let action = {
             [API_KEY]: {
                 method: 'put',
-                endpoint: `http://127.0.0.1:8000/posts/${data.id}/rate/`,
+                endpoint: `${endpoint}${data.id}/rate/`,
                 body: data,
                 actions: [RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL]
             },

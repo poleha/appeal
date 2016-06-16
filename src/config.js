@@ -22,6 +22,6 @@ export default {
     },
     api: {
       host: 'http://localhost',
-      port: __DEVELOPMENT__ ? 8000: 80
+      port: 8000  
     }
 }

@@ -30,14 +30,14 @@ if (__DEVELOPMENT__) {
   app.use(require('webpack-hot-middleware')(compiler, {
     log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000,
   }));
-
+  app.use(express.static(path.join(__dirname, '..' , '/')));
+  app.use(express.static(path.join(__dirname, '..' , 'static/')));
 
 })();
 }
 
 
-app.use(express.static(path.join(__dirname, '..' , '/')));
-app.use(express.static(path.join(__dirname, '..' , 'static/')));
+
 
 app.use(cookieParser())
 

@@ -111,7 +111,7 @@ export default function app(state = initialState, action) {
         case CLEAN_POSTS:
             state = cloneState(state);
             newState = update(state, {
-                posts: {$set: null}
+                posts: {$set: {}}
             });
 
 

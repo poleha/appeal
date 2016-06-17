@@ -55,7 +55,7 @@ export function formArrayToJson(formArray) {
 }
 
 export function mapNodes(nodes, func) {
-    if (nodes !=null) {
+    if (nodes !=null && nodes.ids != null) {
     let ids = nodes.ids;
     let entities = nodes.entities;
     return ids.map(function (id, index) {

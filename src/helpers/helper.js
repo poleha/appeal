@@ -78,4 +78,3 @@ export function serializeParams(obj) {
 }
 
 export const apiHost = 'http://' + config.api.host + ':' + config.api.port;
-console.log('111111111111111111111', apiHost)

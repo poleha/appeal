@@ -21,7 +21,7 @@ export default {
         }
     },
     api: {
-      host: 'http://localhost',
+      host: process.env.HOST || 'localhost',
       port: 8000  
     }
 }

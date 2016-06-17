@@ -77,4 +77,5 @@ export function serializeParams(obj) {
     return str.join('&');
 }
 
-export const apiHost = config.api.host + ':' + config.api.port;
+export const apiHost = 'http://' + config.api.host + ':' + config.api.port;
+console.log('111111111111111111111', apiHost)

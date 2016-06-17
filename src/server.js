@@ -36,7 +36,7 @@ if (__DEVELOPMENT__) {
 }
 
 
-app.use(express.static(path.join(__dirname, '..' , 'static/')));
+app.use(express.static(path.join(__dirname, '..' , '/')));
 
 app.use(cookieParser())
 

@@ -7,7 +7,7 @@ import { USER_FACEBOOK_LOGIN_START, USER_FACEBOOK_LOGIN_SUCCESS, USER_FACEBOOK_L
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
 import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/User'
 import { API_KEY } from '../middleware/api'
-import { createCookie, eraseCookie, apiHost} from '../helpers/helper'
+import { createCookie, eraseCookie, readCookie, apiHost} from '../helpers/helper'
 
 const endpoint = apiHost + '/auth/';
 
@@ -45,7 +45,8 @@ export function getUserInfo() {
             [API_KEY]: {
                 method: 'get',
                 endpoint: `${endpoint}me/`,
-                actions: [GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL]
+                actions: [GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL],
+                token: readCookie('appeal_site_token', req)
             }
         }
 

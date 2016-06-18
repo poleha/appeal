@@ -98,7 +98,7 @@ export function registerUser(data) {
         let action = {
             [API_KEY]: {
                 method: 'post',
-                endpoint: `${endpoint}auth/register/`,
+                endpoint: `${endpoint}register/`,
                 actions: [REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL],
                 body: data
             }

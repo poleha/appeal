@@ -98,7 +98,7 @@ export function registerUser(data) {
         let action = {
             [API_KEY]: {
                 method: 'post',
-                endpoint: 'http://127.0.0.1:8000/auth/register/',
+                endpoint: `${endpoint}auth/register/`,
                 actions: [REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL],
                 body: data
             }
@@ -132,7 +132,7 @@ export function VKLogin() {
                 let action = {
                     [API_KEY]: {
                         method: 'post',
-                        endpoint: 'http://127.0.0.1:8000/social_login/',
+                        endpoint: `${endpoint}social_login/`,
                         body: body,
                         actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
                     },
@@ -176,7 +176,7 @@ export function GoogleLogin(data) {
             let action = {
                 [API_KEY]: {
                     method: 'post',
-                    endpoint: 'http://127.0.0.1:8000/social_login/',
+                    endpoint: `${endpoint}social_login/`,
                     body: data,
                     actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
                 },
@@ -218,7 +218,7 @@ export function FacebookLogin() {
                     let action = {
                         [API_KEY]: {
                             method: 'post',
-                            endpoint: 'http://127.0.0.1:8000/social_login/',
+                            endpoint: `${endpoint}social_login/`,
                             body: body,
                             actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
                         },

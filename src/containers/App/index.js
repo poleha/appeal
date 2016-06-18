@@ -77,18 +77,6 @@ export default class App extends Component {
     
     */
 
-    getLoginBlock() {
-        //if (this.state.loginFormActive) {
-            //return (
-            //    <User
-            //        data={this.props.user}
-             //       actions={this.props.userActions}
-              //  />
-            //)
-        //}
-         // else return null
-
-    }
 
     render() {
 
@@ -99,16 +87,28 @@ export default class App extends Component {
     return (
         <div className='container'>
             <Helmet {...config.app.head} title={config.app.title}/>
-            {this.getLoginBlock()}
-          <div className="top_block">
-            <ul className={classNames('nav', 'nav-pills', 'top_menu')}>
+          <div className="row top_block">
+              <nav className="navbar navbar-default">
+                      <div className="navbar-header">
+                          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-menu-navbar-collapse" aria-expanded="false">
+                              <span className="sr-only">Показать меню</span>
+                              <span className="icon-bar"></span>
+                              <span className="icon-bar"></span>
+                              <span className="icon-bar"></span>
+                          </button>
+                      </div>
+                      <div className="collapse navbar-collapse" id="top-menu-navbar-collapse">
+                      <ul className={classNames('nav', 'navbar-nav', 'top_menu')}>
               <NavLink activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
             {linksBlock}
-                <User
-                    data={this.props.user}
-                    actions={this.props.userActions}
-                />
+
           </ul>
+                          </div>
+                  </nav>
+              <User
+                  data={this.props.user}
+                  actions={this.props.userActions}
+              />
           </div>
           {this.props.children}
          </div>

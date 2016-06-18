@@ -106,7 +106,7 @@ scripts:
   alert: false
   button: false
   carousel: false
-  collapse: false
+  collapse: true
   dropdown: false
   modal: true
   tooltip: false

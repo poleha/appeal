@@ -28,7 +28,12 @@ export function readCookie(name, req) {
 }
 
 export function eraseCookie(name) {
+    try {
     createCookie(name,'',-1);
+    }
+    catch (e) {
+
+    }
 }
 
 

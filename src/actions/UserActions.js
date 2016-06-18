@@ -53,6 +53,7 @@ export function getUserInfo() {
         let loginPromise  = dispatch(action).then((response) => {
         }).catch((error) => {
             eraseCookie('appeal_site_token', req);
+            return error
         });
         global.loginPromise = loginPromise;
     }

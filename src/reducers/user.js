@@ -15,7 +15,7 @@ const initialState = {
     socialLogging: false,
     userName: null,
     userId: null,
-    //token: null,
+    token: null,
     //activeForm: USER_FORM_LOGIN,
     loginErrors: {},
     registerErrors: {},
@@ -48,14 +48,16 @@ export default function user(state = initialState, action) {
         case USER_LOGIN_SUCCESS:
             state = cloneState(state);
             newState = update(state, {
-                logging: {$set: false}
+                logging: {$set: false},
+                token: {$set: action.payload.auth_token}
             });
             return newState;
         case USER_LOGIN_FAIL:
             state = cloneState(state);
             newState = update(state, {
                 loginErrors: {$set: action.payload},
-                logging: {$set: false}
+                logging: {$set: false},
+                token: {$set: null}
             });
             return newState;
 
@@ -72,7 +74,8 @@ export default function user(state = initialState, action) {
                 userName: {$set: action.payload.username},
                 userId: {$set: action.payload.id},
                 logged: {$set: true},
-                logging: {$set: false}
+                logging: {$set: false},
+                token: {$set: action.payload.auth_token}
             });
 
             return newState;
@@ -102,7 +105,8 @@ export default function user(state = initialState, action) {
                 userName: {$set: null},
                 userId: {$set: null},
                 activeForm: {$set: USER_FORM_LOGIN},
-                logging: {$set: false}
+                logging: {$set: false},
+                token: {$set: null}
             });
             return newState;
         case LOGOUT_USER_FAIL:

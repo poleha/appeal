@@ -50,8 +50,6 @@ export function getUserInfo() {
         }
 
         dispatch(action).then((response) => {
-            //let token = readCookie('appeal_site_token');
-            //dispatch(loginUserSuccess(token));
         }).catch((error) => {
             eraseCookie('appeal_site_token', req);
         });

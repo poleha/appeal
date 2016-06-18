@@ -32,13 +32,14 @@ export function createApiMiddelware(req) {
     
     return  store => dispatch => action => {
         if (action[API_KEY]) {
+            const state = store.getState();
             let apiAction = action[API_KEY];
             let [actionStart, actionSuccess, actionFail] = apiAction.actions;
             let endpoint = apiAction.endpoint;
             let method = apiAction.method;
             let schema = apiAction.schema || null;
             let body = apiAction.body;
-            let token = readCookie('appeal_site_token', req);
+            let token = state.user.token;
             let headers = {};
             if (token) {
                 headers.Authorization = `Token ${token}`;

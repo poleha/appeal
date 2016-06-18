@@ -3,7 +3,9 @@ var fs = require('fs');
 var babelrc = fs.readFileSync('.babelrc');
 var config;
 var path = require('path');
-
+if (process.env.npm_lifecycle_event == null) {
+  process.env.npm_lifecycle_event = 'start-dev';
+}
 const TARGET = process.env.npm_lifecycle_event;
 
 try {

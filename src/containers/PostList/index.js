@@ -31,8 +31,16 @@ function mapDispatchToProps(dispatch) {
   promise: (params, helpers) => {
     let store = params.store;
     let tag = params.params.tag;
-    let promises = [];
-    promises.push(store.dispatch(postActions.loadPosts({tags__alias: tag})));
+      let loginPromise;
+      if (global.loginPromise) {
+      loginPromise = global.loginPromise;
+      }
+      else {
+          loginPromise = Promise.resolve();
+      }
+      let currentPromise = loginPromise.then(() => store.dispatch(postActions.loadPosts({tags__alias: tag})));
+      let promises = [];
+    promises.push(currentPromise);
 
     return Promise.all(promises);
   }

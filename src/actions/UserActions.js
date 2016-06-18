@@ -50,12 +50,11 @@ export function getUserInfo() {
             }
         }
 
-        dispatch(action).then((response) => {
+        let loginPromise  = dispatch(action).then((response) => {
         }).catch((error) => {
             eraseCookie('appeal_site_token', req);
         });
-
-
+        global.loginPromise = loginPromise;
     }
 }
 

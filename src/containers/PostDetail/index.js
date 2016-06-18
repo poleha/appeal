@@ -32,11 +32,23 @@ function mapDispatchToProps(dispatch) {
 
 @asyncConnect([{
     promise: (params, helpers) => {
-        let store = params.store
-        let id = params.params.id
-        let promises = []
-        promises.push(store.dispatch(postActions.loadPosts({id})))
-        promises.push(store.dispatch(commentActions.loadComments({post: id})))
+        let store = params.store;
+        let id = params.params.id;
+
+        let loginPromise;
+        if (global.loginPromise) {
+            loginPromise = global.loginPromise;
+        }
+        else {
+            loginPromise = Promise.resolve();
+        }
+        let promises = [];
+        let currentPromise = loginPromise.then(() => {
+            return store.dispatch(postActions.loadPosts({id}));
+        }).then(() => {
+            return store.dispatch(commentActions.loadComments({post: id}))
+        });
+        promises.push(currentPromise);
 
         return Promise.all(promises);
     }

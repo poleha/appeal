@@ -42,8 +42,8 @@ function mapDispatchToProps(dispatch) {
         }
         let currentPromise = loginPromise.then(function() {
             let promises = [];
-            let prom1 = store.dispatch(postActions.loadPosts({id: userId}));
-            let prom2 = store.dispatch(anotherUserActions.loadUsers({user: userId}));
+            let prom1 = store.dispatch(postActions.loadPosts({user: userId}));
+            let prom2 = store.dispatch(anotherUserActions.loadUsers({id: userId}));
             promises.push(prom1);
             promises.push(prom2);
             return Promise.all(promises);
@@ -111,6 +111,7 @@ export default class UserDetail extends BaseComponent {
             let user = this.props.anotherUser.users.entities[userId];
             return (
                 <div>
+                    <label>Пользователь:</label>
                     {user.username}
                 </div>
             )

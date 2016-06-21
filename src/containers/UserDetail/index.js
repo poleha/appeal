@@ -71,37 +71,37 @@ export default class UserDetail extends BaseComponent {
     getPosts() {
         let posts = this.props.post.posts;
         let postsList = mapNodes(posts, (elem) => {
-            return (<li key={elem.id}>
-                    <div>{elem.created}</div>
-                <div><Link key={elem.id} activeClassName='active' to={`/post/${elem.id}`}>{elem.body}</Link></div>
-                <div>{elem.disliked_count}</div>
-                <div>{elem.disliked_count}</div>
-                    <div>{elem.comment_count}</div>
-                </li>
+            return (
+                <div className="row" key={elem.id}>
+                    <div className="col col-xs-2">{elem.created}</div>
+                    <div className="col col-xs-7"><Link key={elem.id} activeClassName='active' to={`/post/${elem.id}`}>{elem.body}</Link></div>
+                    <div className="col col-xs-1">{elem.disliked_count}</div>
+                    <div className="col col-xs-1">{elem.disliked_count}</div>
+                    <div className="col col-xs-1">{elem.comment_count}</div>
+                   </div>
             )
         });
      return (
-         <ul>
+         <div>
              {postsList}
-         </ul>
+        </div>
      )
     }
 
     getComments() {
         let comments = this.props.comment.comments;
         let commentsList = mapNodes(comments, (elem) => {
-            return (<li key={elem.id}>
-                    <div>{elem.created}</div>
-                    <div><Link key={elem.id} activeClassName='active' to={`/post/${elem.post}`}>{elem.body}</Link></div>
-                    <div>{elem.disliked_count}</div>
-                    <div>{elem.disliked_count}</div>
-                </li>
+            return (
+                <div className="row" key={elem.id}>
+                    <div className="col col-xs-2">{elem.created}</div>
+                    <div className="col col-xs-7"><Link key={elem.id} activeClassName='active' to={`/post/${elem.post}`}>{elem.body}</Link></div>
+                    </div>
             )
         });
         return (
-            <ul>
+            <div>
                 {commentsList}
-            </ul>
+            </div>
         )
     }
 

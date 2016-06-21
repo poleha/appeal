@@ -4,6 +4,7 @@ import user from './user'
 import post from './post'
 import comment from './comment'
 import tag from './tag'
+import anotherUser from './anotherUser'
 import { reducer as reduxAsyncConnect } from 'redux-async-connect'
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   tag,
   user,
   post,
-  comment
+  comment,
+  anotherUser
 })

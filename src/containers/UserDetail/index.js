@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
+import * as anotherUserActions from '../../actions/AnotherUserActions'
 import { mapNodes } from '../../helpers/helper'
 import { Link } from 'react-router'
 
@@ -16,7 +17,8 @@ function mapStateToProps(state) {
         tags: state.tag.tags,
         logged: state.user.logged,
         token: state.user.token,
-        user: state.user
+        user: state.user,
+        anotherUser: state.anotherUser
     };
 }
 
@@ -38,9 +40,18 @@ function mapDispatchToProps(dispatch) {
         else {
             loginPromise = Promise.resolve();
         }
-        let currentPromise = loginPromise.then(() =>  store.dispatch(postActions.loadPosts({user: userId})));
+        let currentPromise = loginPromise.then(function() {
+            let promises = [];
+            let prom1 = store.dispatch(postActions.loadPosts({id: userId}));
+            let prom2 = store.dispatch(anotherUserActions.loadUsers({user: userId}));
+            promises.push(prom1);
+            promises.push(prom2);
+            return Promise.all(promises);
+        });
+
         let promises = [];
         promises.push(currentPromise);
+
 
         return Promise.all(promises);
     }
@@ -94,6 +105,18 @@ export default class UserDetail extends BaseComponent {
         )
     }
 
+    getUserInfo() {
+        if (this.props.anotherUser.users) {
+            let userId = this.props.params.id;
+            let user = this.props.anotherUser.users.entities[userId];
+            return (
+                <div>
+                    {user.username}
+                </div>
+            )
+        }
+    }
+    
     render() {
         let userId = this.props.params.id;
 
@@ -102,7 +125,7 @@ export default class UserDetail extends BaseComponent {
           <div className="user_page">
             <Helmet title='User page'/>
 
-
+              {this.getUserInfo.call(this)}
               <div>
 
                   <ul className="nav nav-tabs" role="tablist">

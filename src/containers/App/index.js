@@ -9,7 +9,6 @@ import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
 import * as tagActions from '../../actions/TagActions'
 import User from '../../components/User'
-//import { Link } from 'react-router'
 import NavLink from '../../components/NavLink'
 import { mapNodes } from '../../helpers/helper'
 import { getUserInfo } from '../../actions/UserActions'
@@ -57,26 +56,6 @@ function mapDispatchToProps(dispatch) {
 }])
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
-
-    /*
-    constructor(props) {
-        super(props);
-        this.state = {
-            loginFormActive: false
-        }
-    }
-*/
-
-    /*
-    loginClick(e) {
-        e.preventDefault();
-        this.setState({
-            loginFormActive: !this.state.loginFormActive
-        });
-    }
-    
-    */
-
 
     render() {
 

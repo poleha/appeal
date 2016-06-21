@@ -64,8 +64,8 @@ export function createApiMiddelware(req) {
             ).catch(error => {
                 actionFail.payload = error;
                 dispatch(actionFail);
+                console.log(error);
                 return Promise.reject(error);
-
             })
         }
         else return dispatch(action);

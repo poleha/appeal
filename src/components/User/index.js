@@ -7,6 +7,7 @@ import VKLogin from '../VKLogin'
 import GoogleLogin from '../GoogleLogin'
 import FacebookLogin from '../FacebookLogin'
 import classNames from 'classnames'
+import { Link } from 'react-router'
 
 export default class User extends BaseComponent {
     
@@ -180,7 +181,10 @@ getLoginBlockTemplate () {
         if (!this.props.data.userId) return null;
         return (
             <div key="logged_block" className="logged_block">
-                <div className="logged_user"><label>Вы вошли как: </label>{this.props.data.userName}</div>
+                <div className="logged_user">
+                    <label>Вы вошли как: </label>
+                    <Link activeClassName='active' to={`/user/${this.props.data.userId}`}>{this.props.data.userName}</Link>
+                </div>
                 <input
                     type="button"
                     value="Выйти"

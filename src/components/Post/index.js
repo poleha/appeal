@@ -36,6 +36,21 @@ export default class Post extends Component {
         this.props.ratePost({...this.props.post, rated: actionType})
     }
 
+    getUserBlock(component) {
+        let userBlock;
+        if (component.user) {
+            userBlock = (
+                <div className="inline"><Link to={'/user/' + component.user}>{component.username}</Link></div>
+            )
+        }
+        else {
+            userBlock = (
+                <div className="inline">{component.username}</div>
+            )
+        }
+        return userBlock
+    }
+
     render() {
         let post = this.props.post;
         let key =  post.id;
@@ -45,7 +60,7 @@ export default class Post extends Component {
                 <div className="post_created">{post.created}</div>
                 <div className="post_author inline">
                 <label>Автор:</label>
-                <div className="inline">{post.username}</div>
+                    {this.getUserBlock.call(this, post)}
                 </div>
 
                 <div className="post_body">

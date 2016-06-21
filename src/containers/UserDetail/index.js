@@ -1,17 +1,12 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import Post from '../../components/Post'
-import Comment from '../../components/Comment'
-import classNames from 'classnames'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as postActions from '../../actions/PostActions'
-import * as commentActions from '../../actions/CommentActions'
 import { mapNodes } from '../../helpers/helper'
-import NavLink from '../../components/NavLink'
+import { Link } from 'react-router'
 
 function mapStateToProps(state) {
     return {
@@ -59,8 +54,13 @@ export default class UserDetail extends BaseComponent {
     getPosts() {
         let posts = this.props.post.posts;
         let postsList = mapNodes(posts, (elem) => {
-            return (
-                <NavLink key={elem.id} activeClassName='active' to={`/post/${elem.id}`}>{elem.body}</NavLink>
+            return (<li key={elem.id}>
+                    <div>{elem.created}</div>
+                <div><Link key={elem.id} activeClassName='active' to={`/post/${elem.id}`}>{elem.body}</Link></div>
+                <div>{elem.disliked_count}</div>
+                <div>{elem.disliked_count}</div>
+                    <div>{elem.comment_count}</div>
+                </li>
             )
         });
      return (

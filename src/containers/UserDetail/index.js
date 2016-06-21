@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as postActions from '../../actions/PostActions'
+import * as commentActions from '../../actions/CommentActions'
 import { mapNodes } from '../../helpers/helper'
 import { Link } from 'react-router'
 
@@ -21,7 +22,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
    return {
-       postActions: bindActionCreators(postActions, dispatch)
+       postActions: bindActionCreators(postActions, dispatch),
+       commentActions: bindActionCreators(commentActions, dispatch)
    };
 }
 
@@ -51,6 +53,10 @@ export default class UserDetail extends BaseComponent {
     }
 
 
+    componentDidMount() {
+      this.props.commentActions.loadComments({user: this.props.params.id})
+    }
+
     getPosts() {
         let posts = this.props.post.posts;
         let postsList = mapNodes(posts, (elem) => {
@@ -70,6 +76,24 @@ export default class UserDetail extends BaseComponent {
      )
     }
 
+    getComments() {
+        let comments = this.props.comment.comments;
+        let commentsList = mapNodes(comments, (elem) => {
+            return (<li key={elem.id}>
+                    <div>{elem.created}</div>
+                    <div><Link key={elem.id} activeClassName='active' to={`/post/${elem.post}`}>{elem.body}</Link></div>
+                    <div>{elem.disliked_count}</div>
+                    <div>{elem.disliked_count}</div>
+                </li>
+            )
+        });
+        return (
+            <ul>
+                {commentsList}
+            </ul>
+        )
+    }
+
     render() {
         let userId = this.props.params.id;
 
@@ -78,7 +102,27 @@ export default class UserDetail extends BaseComponent {
           <div className="user_page">
             <Helmet title='User page'/>
 
-              {this.getPosts.call(this)}
+
+              <div>
+
+                  <ul className="nav nav-tabs" role="tablist">
+                      <li role="presentation" className="active"><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Призывы</a></li>
+                      <li role="presentation"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Комментарии</a></li>
+                  </ul>
+
+                  <div className="tab-content">
+                      <div role="tabpanel" className="tab-pane active" id="posts">
+                          {this.getPosts.call(this)}
+                      </div>
+                      <div role="tabpanel" className="tab-pane" id="comments">
+                          {this.getComments.call(this)}
+                      </div>
+                  </div>
+
+              </div>
+
+
+
             
 
         </div>

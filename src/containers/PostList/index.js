@@ -95,16 +95,23 @@ export default class PostList extends BaseComponent {
 
     }
 
+      this.setPlaceHolder();
   }
 
-    componentDidMount() {
-        if (canUseDOM && window.innerWidth > 500) {
+    setPlaceHolder() {
+
+        if (canUseDOM && window.innerWidth > 800) {
             let searchPlaceholder = `Поиск по разделу ${this.getCurrentTagTitle()}`;
-            this.setState({searchPlaceholder})
+            if (this.state.searchPlaceholder != searchPlaceholder) {
+                this.setState({searchPlaceholder});
+            }
         }
 
     }
 
+    componentDidMount() {
+        this.setPlaceHolder();
+    }
 
     getCurrentTagTitle() {
         let currentTag;
@@ -222,7 +229,7 @@ export default class PostList extends BaseComponent {
                         className="add_post_email"
                         id="add_post_email"
                         name="email"
-                        placeholder="E-mail"
+                        placeholder="E-mail(не обязательно)"
                         type="text"
                     />
                     {this.getFieldErrors.call(this, 'email', 'post')}

@@ -128,7 +128,7 @@ getLoginBlockTemplate () {
                             className="user_email"
                             id="user_email"
                             name="email"
-                            placeholder="E-mail"
+                            placeholder="E-mail(не обязательно)"
                         />
                         {this.getFieldErrors.call(this, 'username', 'data','registerErrors')}
                         <input

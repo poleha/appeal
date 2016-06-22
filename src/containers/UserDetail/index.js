@@ -9,6 +9,8 @@ import * as commentActions from '../../actions/CommentActions'
 import * as anotherUserActions from '../../actions/AnotherUserActions'
 import { mapNodes } from '../../helpers/helper'
 import { Link } from 'react-router'
+import classNames from 'classnames'
+
 
 function mapStateToProps(state) {
     return {
@@ -123,9 +125,54 @@ export default class UserDetail extends BaseComponent {
             )
         }
     }
-    
-    render() {
+
+    getShowMorePostsInput() {
+        let posts = this.props.post.posts;
+
+        if (posts.ids == null) return null;
+        let showMoreInput;
+        if (this.props.post.count > posts.ids.length) {
+            showMoreInput = (
+                <input
+                    onClick={this.loadMorePostsClick.bind(this)}
+                    className="btn btn-default"
+                    type="button"
+                    value="Показать еще">
+                </input>
+            )
+        }
+        return showMoreInput;
+    }
+
+    loadMorePostsClick(e) {
         let userId = this.props.params.id;
+        this.props.postActions.loadPosts({limit: this.props.post.posts.ids.length + 10, user: userId })
+
+    }
+
+    getShowMoreCommentsButton() {
+        if (this.props.comment.comments == null) return null;
+        let user = this.getUser();
+        return (
+            <input
+                key="comment_show_more_button"
+                onClick={this.loadMoreCommentsClick.bind(this)}
+                type="button"
+                className={classNames('btn', 'btn-default', {hidden: user.comments.length <= this.props.comment.comments.ids.length})}
+                value="Показать еще"
+            />
+        )
+
+    }
+
+    loadMoreCommentsClick(e) {
+
+        this.props.commentActions.loadComments({user: this.props.params.id, limit: this.props.comment.comments.ids.length + 10} )
+
+    }
+
+
+    render() {
         let user = this.getUser();
         let username = user ? user.username : '';
 
@@ -145,9 +192,11 @@ export default class UserDetail extends BaseComponent {
                   <div className="tab-content">
                       <div role="tabpanel" className="tab-pane active" id="posts">
                           {this.getPosts.call(this)}
+                          { this.getShowMorePostsInput.call(this) }
                       </div>
                       <div role="tabpanel" className="tab-pane" id="comments">
                           {this.getComments.call(this)}
+                          { this.getShowMoreCommentsButton.call(this) }
                       </div>
                   </div>
 

@@ -56,7 +56,7 @@ export default class PostList extends BaseComponent {
         super(props)
         this.state = {
             bodyFocus: false,
-            searchPlaceholder: ''
+            searchPlaceholder: 'Поиск'
         }
     }
 

@@ -105,10 +105,16 @@ export default class UserDetail extends BaseComponent {
         )
     }
 
-    getUserInfo() {
+    getUser() {
         if (this.props.anotherUser.users) {
             let userId = this.props.params.id;
-            let user = this.props.anotherUser.users.entities[userId];
+            return this.props.anotherUser.users.entities[userId];
+        }
+    }
+
+    getUserInfoBlock() {
+        if (this.props.anotherUser.users) {
+            let user = this.getUser();
             return (
                 <div>
                     <label>Пользователь:</label>
@@ -120,13 +126,15 @@ export default class UserDetail extends BaseComponent {
     
     render() {
         let userId = this.props.params.id;
+        let user = this.getUser();
+        let username = user ? user.username : '';
 
       return (
 
           <div className="user_page">
-            <Helmet title='User page'/>
+            <Helmet title={username}/>
 
-              {this.getUserInfo.call(this)}
+              {this.getUserInfoBlock.call(this)}
               <div>
 
                   <ul className="nav nav-tabs" role="tablist">

@@ -9,6 +9,9 @@ import { formArrayToJson, mapNodes } from '../../helpers/helper'
 import Post from '../../components/Post'
 import { bindActionCreators } from 'redux'
 import * as postActions from '../../actions/PostActions'
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
+
+const canUseDOM = ExecutionEnvironment.canUseDOM;
 
 function mapStateToProps(state) {
   return {
@@ -52,7 +55,8 @@ export default class PostList extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
-            bodyFocus: false
+            bodyFocus: false,
+            searchPlaceholder: ''
         }
     }
 
@@ -92,6 +96,14 @@ export default class PostList extends BaseComponent {
     }
 
   }
+
+    componentDidMount() {
+        if (canUseDOM && window.innerWidth > 500) {
+            let searchPlaceholder = `Поиск по разделу ${this.getCurrentTagTitle()}`;
+            this.setState({searchPlaceholder})
+        }
+
+    }
 
 
     getCurrentTagTitle() {
@@ -143,7 +155,7 @@ export default class PostList extends BaseComponent {
   getAddedBlock() {
     if (this.props.post.added) {
       return <div className="added_message">
-        Ваш призыв добавлен
+        Ваше предложение добавлено
       </div>
     }
   }
@@ -303,13 +315,15 @@ searchInputChange(e) {
 }
 
 getSearchInput() {
+    let searchPlaceholder = this.state.searchPlaceholder;
+
     return (
         <div className="post_search">
         <input onChange={this.searchInputChange.bind(this)}
          type="text"
         defaultValue=""
          name="query"
-         placeholder={`Поиск по разделу ${this.getCurrentTagTitle()}`}
+         placeholder={searchPlaceholder}
          ref={(c) => this._query = c}
         />
         </div>    
@@ -329,7 +343,7 @@ getSearchInput() {
           <Helmet title={currentTagTitle} />
 
         <div className="add_post_form_block">
-          <h3>Опубликовать призыв</h3>
+          <h3>Добавить предложение</h3>
 
             {this.getAddPostForm.call(this)}
              

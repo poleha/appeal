@@ -1,18 +1,18 @@
 export default {
     app: {
-        title: 'Appeal site',
-        description: 'Place your appeals here',
+        title: 'Сделаем жизнь лучше',
+        description: 'На этом сайте люди публикуют их предложения о том, как улучшить жизнь',
         head: {
-            titleTemplate: 'Appeal site: %s',
+            titleTemplate: 'Qblik.ru: %s',
             meta: [
-                {name: 'description', content: 'Place your appeals here.'},
+                {name: 'description', content: 'На этом сайте люди публикуют их предложения о том, как улучшить жизнь'},
                 {charset: 'utf-8'},
-                {property: 'og:site_name', content: 'Appeal site'},
+                {property: 'og:site_name', content: 'Qblik.ru | Сделаем жизнь лучше'},
                 {property: 'og:image', content: '/images/button_like.png'},
                 {property: 'og:locale', content: 'ru_RU'},
-                {property: 'og:title', content: 'Appeal site'},
-                {property: 'og:description', content: 'Place your appeals here.'},
-                {property: 'og:card', content: 'summary'},
+                {property: 'og:title', content: 'Qblik.ru | Сделаем жизнь лучше'},
+                {property: 'og:description', content: 'На этом сайте люди публикуют их предложения о том, как улучшить жизнь'},
+                {property: 'og:card', content: 'На этом сайте люди публикуют их предложения о том, как улучшить жизнь'},
                 {property: 'og:site', content: '@poleha'},
                 {property: 'og:creator', content: '@poleha'},
                 {property: 'og:image:width', content: '200'},

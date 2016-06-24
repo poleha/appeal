@@ -70,6 +70,7 @@ export default function app(state = initialState, action) {
 
             newState = update(state, {
                 loading: {$set: false},
+                count: {$set: action.payload.count},
                 comments: {$set: {entities: action.payload.entities.comments || {}, ids :action.payload.result}}
 
             });

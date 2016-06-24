@@ -185,8 +185,8 @@ export default class UserDetail extends BaseComponent {
               <div>
 
                   <ul className="nav nav-tabs" role="tablist">
-                      <li role="presentation" className="active"><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Призывы</a></li>
-                      <li role="presentation"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Комментарии</a></li>
+                      <li role="presentation" className="active"><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Предложения({user.posts.length})</a></li>
+                      <li role="presentation"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Комментарии({user.comments.length})</a></li>
                   </ul>
 
                   <div className="tab-content">

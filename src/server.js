@@ -2,7 +2,7 @@ const http = require('http');
 const path = require('path')
 const express = require('express');
 var cookieParser = require('cookie-parser')
-//var RedisStore = require('connect-redis')(session);
+var compression = require('compression');
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Html from './helpers/Html';
@@ -39,7 +39,7 @@ if (__DEVELOPMENT__) {
 
 
 app.use(cookieParser())
-
+app.use(compression());
 app.use((req, res) => {
 
   const memoryHistory = createHistory(req.originalUrl);

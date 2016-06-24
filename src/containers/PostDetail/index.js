@@ -134,7 +134,7 @@ export default class PostDetail extends BaseComponent {
                 {this.getFieldErrors.call(this, 'email', 'comment')}
                 <input
                     ref={(c) => this._add_comment_email = c}
-                    placeholder="E-mail"
+                    placeholder="E-mail(не обязательно)"
                     type="text"
                 />
                     </div>

@@ -84,7 +84,7 @@ export default class UserDetail extends BaseComponent {
             )
         });
      return (
-         <div>
+         <div className="tab_inner">
              {postsList}
         </div>
      )
@@ -101,7 +101,7 @@ export default class UserDetail extends BaseComponent {
             )
         });
         return (
-            <div>
+            <div className="tab_inner">
                 {commentsList}
             </div>
         )

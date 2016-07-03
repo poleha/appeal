@@ -27,7 +27,7 @@ export function loginUser(userData) {
         
         dispatch(action).then((response) => {
             createCookie('appeal_site_token', response.auth_token, req);
-            dispatch(getUserInfo());
+            dispatch(getUserInfo()).then(() => location.reload());
         }).catch((error) => {
         });
 
@@ -51,11 +51,14 @@ export function getUserInfo() {
         }
 
         let loginPromise  = dispatch(action).then((response) => {
+
+
         }).catch((error) => {
             eraseCookie('appeal_site_token', req);
             return error
         });
         global.loginPromise = loginPromise;
+        return Promise.resolve();
     }
 }
 
@@ -78,7 +81,7 @@ export function logoutUser() {
                 var auth2 = gapi.auth2.getAuthInstance();
                 return auth2.signOut()
             }
-        })
+        }).then(() => location.reload())
 
 
     }

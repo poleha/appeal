@@ -8,6 +8,8 @@ import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_F
 import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/User'
 import { API_KEY } from '../middleware/api'
 import { createCookie, eraseCookie, readCookie, apiHost} from '../helpers/helper'
+import { browserHistory } from 'react-router'
+
 
 
 const endpoint = apiHost + '/auth/';
@@ -28,7 +30,7 @@ export function loginUser(userData) {
         
         dispatch(action).then((response) => {
             createCookie('appeal_site_token', response.auth_token, req);
-            dispatch(getUserInfo()).then(() => location.reload() );
+            dispatch(getUserInfo()).then(() => browserHistory.replace(location.pathname) );
         }).catch((error) => {
         });
 
@@ -82,7 +84,7 @@ export function logoutUser() {
                 var auth2 = gapi.auth2.getAuthInstance();
                 return auth2.signOut()
             }
-        }).then(() => location.reload())
+        }).then(() => browserHistory.replace(location.pathname) )
 
 
     }

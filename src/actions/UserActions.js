@@ -9,6 +9,7 @@ import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_F
 import { API_KEY } from '../middleware/api'
 import { createCookie, eraseCookie, readCookie, apiHost} from '../helpers/helper'
 
+
 const endpoint = apiHost + '/auth/';
 
 
@@ -27,7 +28,7 @@ export function loginUser(userData) {
         
         dispatch(action).then((response) => {
             createCookie('appeal_site_token', response.auth_token, req);
-            dispatch(getUserInfo()).then(() => location.reload());
+            dispatch(getUserInfo()).then(() => location.reload() );
         }).catch((error) => {
         });
 
@@ -58,7 +59,7 @@ export function getUserInfo() {
             return error
         });
         global.loginPromise = loginPromise;
-        return Promise.resolve();
+        return loginPromise;
     }
 }
 

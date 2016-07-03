@@ -36,8 +36,6 @@ if (__DEVELOPMENT__) {
 }
 
 
-
-
 app.use(cookieParser())
 app.use(compression());
 app.use((req, res) => {
@@ -45,9 +43,8 @@ app.use((req, res) => {
   const memoryHistory = createHistory(req.originalUrl);
   const store = configureStore({}, req);
   const history = syncHistoryWithStore(memoryHistory, store);
-  let token = req.cookies.appeal_site_token;
-
-
+  
+    
   match({ history, routes: routes, location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
@@ -63,9 +60,7 @@ app.use((req, res) => {
             </Provider>
         );
         res.status(200);
-        //console.log(history)
-        //res.send(ReactDOM.renderToString(component)
-        //res.end()
+        
         global.navigator = {userAgent: req.headers['user-agent']};
         res.send('<!doctype html>\n' +
             ReactDOM.renderToStaticMarkup(<Html component={component} store={store}/>));
@@ -77,8 +72,6 @@ app.use((req, res) => {
 
   });
 
-
-  //res.sendFile(__dirname + '/index.html');
 });
 
 
@@ -88,42 +81,3 @@ server.listen(process.env.PORT || 3000, function onListen() {
   console.log('Listening on: %j', address);
   console.log(' -> that probably means: http://localhost:%d', address.port);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

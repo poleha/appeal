@@ -77,7 +77,7 @@ export default class UserDetail extends BaseComponent {
                 <div className="row" key={elem.id}>
                     <div className="col col-xs-4 col-sm-3 col-lg-2">{elem.created}</div>
                     <div className="col col-xs-5 col-sm-6 col-lg-7"><Link key={elem.id} activeClassName='active' to={`/post/${elem.id}`}>{elem.body}</Link></div>
-                    <div className="col col-xs-1">{elem.disliked_count}</div>
+                    <div className="col col-xs-1">{elem.liked_count}</div>
                     <div className="col col-xs-1">{elem.disliked_count}</div>
                     <div className="col col-xs-1">{elem.comment_count}</div>
                    </div>

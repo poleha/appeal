@@ -1,11 +1,11 @@
-import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../constants/User'
-import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/User'
-import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/User'
-import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
-import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '../constants/User'
-import { USER_FACEBOOK_LOGIN_START, USER_FACEBOOK_LOGIN_SUCCESS, USER_FACEBOOK_LOGIN_FAIL } from '../constants/User'
-import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
-import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/User'
+import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../constants/Auth'
+import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/Auth'
+import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/Auth'
+import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/Auth'
+import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '../constants/Auth'
+import { USER_FACEBOOK_LOGIN_START, USER_FACEBOOK_LOGIN_SUCCESS, USER_FACEBOOK_LOGIN_FAIL } from '../constants/Auth'
+import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/Auth'
+import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/Auth'
 import { API_KEY } from '../middleware/api'
 import { createCookie, eraseCookie, readCookie, apiHost} from '../helpers/helper'
 import { browserHistory } from 'react-router'
@@ -80,7 +80,7 @@ export function logoutUser() {
         dispatch(action).then((response) => {
             eraseCookie('appeal_site_token');
         }).then(() => {
-            if (getState().user.network == 'google') {
+            if (getState().auth.network == 'google') {
                 var auth2 = gapi.auth2.getAuthInstance();
                 return auth2.signOut()
             }

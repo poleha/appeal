@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { routerReducer as routing} from 'react-router-redux'
-import user from './user'
+import auth from './auth'
 import post from './post'
 import comment from './comment'
 import tag from './tag'
@@ -11,7 +11,7 @@ export default combineReducers({
   reduxAsyncConnect,
   routing,
   tag,
-  user,
+  auth,
   post,
   comment,
   anotherUser

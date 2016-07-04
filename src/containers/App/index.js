@@ -4,14 +4,14 @@ import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
 import Helmet from 'react-helmet';
 import classNames from 'classnames'
-import * as userActions from '../../actions/UserActions'
+import * as authActions from '../../actions/AuthActions'
 import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
 import * as tagActions from '../../actions/TagActions'
-import User from '../../components/User'
+import User from '../../components/Auth'
 import NavLink from '../../components/NavLink'
 import { mapNodes } from '../../helpers/helper'
-import { getUserInfo } from '../../actions/UserActions'
+import { getUserInfo } from '../../actions/AuthActions'
 import { loadTags } from '../../actions/TagActions'
 import config from '../../config'
 
@@ -19,7 +19,7 @@ import config from '../../config'
 //Устанавливаем соответствие глобального state props каждого компонента
 function mapStateToProps(state) {
     return {
-        user: state.user,
+        auth: state.auth,
         post: state.post,
         comment: state.comment,
         tag: state.tag
@@ -28,7 +28,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        userActions: bindActionCreators(userActions, dispatch),
+        authActions: bindActionCreators(authActions, dispatch),
         postActions: bindActionCreators(postActions, dispatch),
         commentActions: bindActionCreators(commentActions, dispatch),
         tagActions: bindActionCreators(tagActions, dispatch)
@@ -45,7 +45,7 @@ function mapDispatchToProps(dispatch) {
         let store = params.store
         let state = store.getState();
         let promises = []
-        if (!state.user.logged) {
+        if (!state.auth.logged) {
         promises.push(store.dispatch(getUserInfo()))
         }
         if (!state.tag.loaded) {
@@ -85,8 +85,8 @@ export default class App extends Component {
                           </div>
                   </nav>
               <User
-                  data={this.props.user}
-                  actions={this.props.userActions}
+                  data={this.props.auth}
+                  actions={this.props.authActions}
               />
           </div>
           {this.props.children}

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../BaseComponent'
 import ReactDOM from 'react-dom'
-import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/User'
+import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/Auth'
 import { formArrayToJson } from '../../helpers/helper'
 import VKLogin from '../VKLogin'
 import GoogleLogin from '../GoogleLogin'
@@ -9,7 +9,7 @@ import FacebookLogin from '../FacebookLogin'
 import classNames from 'classnames'
 import { Link } from 'react-router'
 
-export default class User extends BaseComponent {
+export default class Auth extends BaseComponent {
     
     constructor(props) {
         super(props)
@@ -267,7 +267,7 @@ getLoginBlockTemplate () {
     }
 }
 
-User.propTypes = {
+Auth.propTypes = {
     //year: PropTypes.number.isRequired,
     //photos: PropTypes.array.isRequired,
     //setYear: PropTypes.func.isRequired

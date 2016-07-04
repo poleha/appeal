@@ -1,10 +1,10 @@
-import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../constants/User'
-import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/User'
-import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/User'
-import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/User'
+import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../constants/Auth'
+import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/Auth'
+import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/Auth'
+import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/Auth'
 import update from 'react-addons-update'
-import { ACTIVATE_USER_FORM, USER_FORM_LOGIN } from '../constants/User'
-import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/User'
+import { ACTIVATE_USER_FORM, USER_FORM_LOGIN } from '../constants/Auth'
+import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/Auth'
 
 
 var newState;
@@ -16,7 +16,6 @@ const initialState = {
     userName: null,
     userId: null,
     token: null,
-    //activeForm: USER_FORM_LOGIN,
     loginErrors: {},
     registerErrors: {},
     network: null,

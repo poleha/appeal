@@ -39,7 +39,7 @@ export function createApiMiddelware(req) {
             let method = apiAction.method;
             let schema = apiAction.schema || null;
             let body = apiAction.body;
-            let token = apiAction.token || state.user.token;
+            let token = apiAction.token || state.auth.token;
             let headers = {};
             if (token) {
                 headers.Authorization = `Token ${token}`;

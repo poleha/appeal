@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router'
 import App from './containers/App'
 import PostList from './containers/PostList'
 import PostDetail from './containers/PostDetail'
+import PostUpdate from './containers/PostUpdate'
 import UserDetail from './containers/UserDetail'
 
 export default (
@@ -10,6 +11,7 @@ export default (
      <IndexRoute component={PostList} />
     <Route path=":tag" component={PostList} />
     <Route path="/post/:id" component={PostDetail} />
+      <Route path="/post/:id/update" component={PostUpdate} />
      <Route path="/user/:id" component={UserDetail} />
   </Route>
 )

@@ -22,7 +22,7 @@ html {
 }
 
 
-.add_post_form, .add_comment_form {
+.add_post_form, .add_comment_form, .post_update_form {
   @include form-mixin;
 }
 

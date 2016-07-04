@@ -7,7 +7,7 @@ import { mapNodes } from '../../helpers/helper'
 export default class Post extends Component {
 
     getRateBlock(post) {
-        let key = post.id;
+        //let key = post.id;
         let likeButtonInactive = !this.props.userId || post.user==this.props.userId || post.rating;
         let dislikeButtonInactive = !this.props.userId  || post.user==this.props.userId || post.rating;
         let rateBlock;
@@ -30,6 +30,18 @@ export default class Post extends Component {
                 </div>
             );
         return rateBlock;
+    }
+
+
+    getUpdateBlock(post) {
+        if (post.user==this.props.userId) {
+         return (
+             <div className="inline"><Link to={'/post/' + post.id + '/update'}>Редактировать</Link></div>
+         )
+        }
+        else {
+            return null;
+        }
     }
 
     ratePostClick(actionType){
@@ -57,6 +69,7 @@ export default class Post extends Component {
         return (
             <div className={classNames('post', {added: this.props.added})}>
                 {this.getRateBlock.call(this, post)}
+                {this.getUpdateBlock.call(this, post)}
                 <div className="post_created">{post.created}</div>
                 <div className="post_author inline">
                 <label>Автор:</label>

@@ -70,7 +70,7 @@ export default class PostDetail extends BaseComponent {
 
 
     getPost() {
-        return this.props.post.posts[this.props.params.id];
+        return this.props.post.posts.entities[this.props.params.id];
     }
 
   
@@ -202,7 +202,7 @@ export default class PostDetail extends BaseComponent {
     }
 
     render() {
-       let post = this.props.post.posts.entities[this.props.params.id];
+       let post = this.getPost();
       return (
 
         <div className="full_post">

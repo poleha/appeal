@@ -4,7 +4,7 @@ import auth from './auth'
 import post from './post'
 import comment from './comment'
 import tag from './tag'
-import anotherUser from './anotherUser'
+import user from './user'
 import { reducer as reduxAsyncConnect } from 'redux-async-connect'
 
 export default combineReducers({
@@ -14,5 +14,5 @@ export default combineReducers({
   auth,
   post,
   comment,
-  anotherUser
+  user
 })

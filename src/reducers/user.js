@@ -1,4 +1,4 @@
-import { LOAD_ANOTHER_USERS_START, LOAD_ANOTHER_USERS_SUCCESS, LOAD_ANOTHER_USERS_FAIL } from '../constants/AnotherUser'
+import { LOAD_ANOTHER_USERS_START, LOAD_ANOTHER_USERS_SUCCESS, LOAD_ANOTHER_USERS_FAIL } from '../constants/User'
 import update from 'react-addons-update'
 var newState;
 

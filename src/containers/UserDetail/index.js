@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
-import * as anotherUserActions from '../../actions/AnotherUserActions'
+import * as userActions from '../../actions/UserActions'
 import { mapNodes } from '../../helpers/helper'
 import { Link } from 'react-router'
 import classNames from 'classnames'
@@ -20,7 +20,7 @@ function mapStateToProps(state) {
         logged: state.auth.logged,
         token: state.auth.token,
         auth: state.auth,
-        anotherUser: state.anotherUser
+        user: state.user
     };
 }
 
@@ -45,7 +45,7 @@ function mapDispatchToProps(dispatch) {
         let currentPromise = loginPromise.then(function() {
             let promises = [];
             let prom1 = store.dispatch(postActions.loadPosts({user: userId}));
-            let prom2 = store.dispatch(anotherUserActions.loadUsers({id: userId}));
+            let prom2 = store.dispatch(userActions.loadUsers({id: userId}));
             promises.push(prom1);
             promises.push(prom2);
             return Promise.all(promises);
@@ -108,14 +108,14 @@ export default class UserDetail extends BaseComponent {
     }
 
     getUser() {
-        if (this.props.anotherUser.users) {
+        if (this.props.user.users) {
             let userId = this.props.params.id;
-            return this.props.anotherUser.users.entities[userId];
+            return this.props.user.users.entities[userId];
         }
     }
 
     getUserInfoBlock() {
-        if (this.props.anotherUser.users) {
+        if (this.props.user.users) {
             let user = this.getUser();
             return (
                 <div>

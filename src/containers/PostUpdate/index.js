@@ -25,7 +25,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         postActions: bindActionCreators(postActions, dispatch),
-        commentActions: bindActionCreators(commentActions, dispatch)
     };
 }
 
@@ -59,18 +58,28 @@ export default class PostUpdate extends BaseComponent {
         return this.props.post.posts.entities[this.props.params.id];
     }
 
+    updatePostFormSubmit(e) {
+        e.preventDefault();
+      let id = this.props.params.id;  
+      let body = this._updatePostBody.value;
+        this.props.postActions.updatePost({body, id});
+    }
 
 
     render() {
         let post = this.props.post.posts.entities[this.props.params.id];
         return (
             <div>
-             <form className="post_update_form">
+             <form
+                 className="post_update_form"
+                 onSubmit={this.updatePostFormSubmit.bind(this)}
+             >
                  <div className="form_field">
                  <textarea
                      cols="70"
                      rows="10"
                   defaultValue={post.body}
+                     ref={(c) => this._updatePostBody = c}
                   />
                   </div>
               <input

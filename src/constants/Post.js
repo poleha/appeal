@@ -13,6 +13,11 @@ export const RATE_POST_SUCCESS = 'RATE_POST_SUCCESS';
 export const RATE_POST_FAIL = 'RATE_POST_FAIL';
 
 
+export const UPDATE_POST_START = 'UPDATE_POST_START';
+export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
+export const UPDATE_POST_FAIL = 'UPDATE_POST_FAIL';
+
+
 export const RATE_POST_TYPE_LIKE = 1;
 export const RATE_POST_TYPE_DISLIKE = 2;
 

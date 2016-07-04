@@ -34,7 +34,7 @@ export default class Post extends Component {
 
 
     getUpdateBlock(post) {
-        if (post.user==this.props.userId) {
+        if (post.user && post.user==this.props.userId) {
          return (
              <div className="inline"><Link to={'/post/' + post.id + '/update'}>Редактировать</Link></div>
          )

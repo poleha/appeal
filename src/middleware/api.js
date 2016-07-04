@@ -10,7 +10,9 @@ function fetchApi(endpoint, method, headers, body, schema) {
         options.body = JSON.stringify(body);
         headers['Accept'] = 'application/json';
         headers['Content-Type'] = 'application/json';
+
     }
+    //headers['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, OPTIONS, PUT';
 
     return fetch(endpoint, options).then(response => response.json().then((json) => {
         if (response.ok) {

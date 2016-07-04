@@ -1,4 +1,5 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
+import { UPDATE_POST_START, UPDATE_POST_SUCCESS, UPDATE_POST_FAIL } from '../constants/Post'
 import { CLEAN_POSTS } from '../constants/Post'
 import { API_KEY } from '../middleware/api'
 import { post } from '../schemas'
@@ -56,6 +57,26 @@ export function addPost(post) {
 
 //**********************
 
+
+export function updatePost(post) {
+    return function (dispatch, getState) {
+
+        let action = {
+            [API_KEY]: {
+                method: 'PATCH',
+                endpoint: `${endpoint}${post.id}/`,
+                body: {body: post.body},
+                actions: [UPDATE_POST_START, UPDATE_POST_SUCCESS, UPDATE_POST_FAIL]
+            }
+        }
+        return dispatch(action).catch(e => {});
+    }
+
+}
+
+
+
+//********************
 
 export function ratePost(data) {
     return function (dispatch, getState) {

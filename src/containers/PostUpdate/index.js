@@ -1,16 +1,12 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import Post from '../../components/Post'
-import Comment from '../../components/Comment'
-import classNames from 'classnames'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as postActions from '../../actions/PostActions'
-import * as commentActions from '../../actions/CommentActions'
-import { mapNodes } from '../../helpers/helper'
+import { PostUpdateForm } from '../../components/PostForm'
+
 
 function mapStateToProps(state) {
     return {
@@ -55,40 +51,17 @@ export default class PostUpdate extends BaseComponent {
 
 
     getPost() {
-        return this.props.post.posts.entities[this.props.params.id];
+        if (this._post == null) this._post = this.props.post.posts.entities[this.props.params.id];
+        return this._post;
     }
 
-    updatePostFormSubmit(e) {
-        e.preventDefault();
-      let id = this.props.params.id;  
-      let body = this._updatePostBody.value;
-        this.props.postActions.updatePost({body, id});
-    }
+   
 
 
     render() {
-        let post = this.props.post.posts.entities[this.props.params.id];
+        
         return (
-            <div>
-             <form
-                 className="post_update_form"
-                 onSubmit={this.updatePostFormSubmit.bind(this)}
-             >
-                 <div className="form_field">
-                 <textarea
-                     cols="70"
-                     rows="10"
-                  defaultValue={post.body}
-                     ref={(c) => this._updatePostBody = c}
-                  />
-                  </div>
-              <input
-                  type="submit"
-                  value="Сохранить"
-                  className="btn btn-default"
-              />
-             </form>
-            </div>
+            <PostUpdateForm tags={this.props.tags} post={this.props.post} postActions={this.props.postActions} params={this.props.params}/>
         )
 
     }

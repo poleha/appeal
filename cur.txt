@@ -1,1 +1,4 @@
-    
+this._add_comment_username to camelCase
+postUpdate не работает с метками
+commentUpdate
+История поста и коммента

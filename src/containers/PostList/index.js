@@ -5,8 +5,9 @@ import classNames from 'classnames'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
-import { formArrayToJson, mapNodes } from '../../helpers/helper'
+import { mapNodes } from '../../helpers/helper'
 import Post from '../../components/Post'
+import { PostCreateForm } from '../../components/PostForm'
 import { bindActionCreators } from 'redux'
 import * as postActions from '../../actions/PostActions'
 import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
@@ -55,19 +56,11 @@ export default class PostList extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
-            bodyFocus: false,
             searchPlaceholder: 'Поиск'
         }
     }
 
-    setDefaultTags() {
-        for (let key = 0; key < this.props.tags.ids.length; key++) {
-            let alias = this.props.tags.entities[this.props.tags.ids[key]].alias;
-            let checked = this.props.params.tag == alias;
-            let elem = this[`_tag_to_add__${alias}`];
-            if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
-        }
-    }
+
 
     getPathChanged(otherProps) {
         return this.props.params.tag != otherProps.params.tag;
@@ -84,16 +77,7 @@ export default class PostList extends BaseComponent {
 
 
   componentDidUpdate(prevProps){
-      let pathChanged = this.getPathChanged(prevProps)
 
-    if (this.props.post.added || pathChanged){
-      this._add_post_username.value = '';
-      this._add_post_email.value = '';
-      this._add_post_body.value = '';
-        this.setDefaultTags();
-
-
-    }
 
       this.setPlaceHolder();
   }
@@ -122,17 +106,7 @@ export default class PostList extends BaseComponent {
         return currentTag ? currentTag.title : 'Все'
     }
 
-  getPost() {
-      let postForm = $(this._add_post_form);
-    
-      return formArrayToJson(postForm.serializeArray());
-  }
 
-  addPostSubmit(e) {
-    e.preventDefault();
-  let post = this.getPost();
-   this.props.postActions.addPost(post);
-  }
 
   getAddPostButtonDisabled() {
   if (!this.props.post.posts || this.props.post.adding || this.props.post.loading){
@@ -158,119 +132,6 @@ export default class PostList extends BaseComponent {
   }
 
 
-
-  getAddedBlock() {
-    if (this.props.post.added) {
-      return <div className="added_message">
-        Ваше предложение добавлено
-      </div>
-    }
-  }
-
-
-    addPostBodyOnFocus(e) {
-        if (e.type == 'focus') this.setState({bodyFocus:true});
-        //else this.setState({bodyFocus:false});
-
-    }
-
-    getAddPostForm() {
-        let tags = this.props.tags;
-        let tagsAddBlock;
-        if (tags.ids.length > 0) {
-            tagsAddBlock = mapNodes(tags, function(elem){
-                let key = elem.id;
-                return <li key={key}>
-                    <input
-                        key={key}
-                        defaultChecked={this.props.params.tag == elem.alias}
-                        data-id={key}
-                        id={`tags_input-${key}`}
-                        type="checkbox"
-                        ref={(c) => this[`_tag_to_add__${elem.alias}`] = c}
-                        name={`tags__${key}`}
-                        //disabled={this.getAddPostButtonDisabled.call(this)}
-                    />
-                    <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
-                </li>
-            }.bind(this));
-        }
-        else {
-            tagsAddBlock = ''
-        }
-
-        return (
-            <form
-                key="add_post_form"
-                onSubmit={this.addPostSubmit.bind(this)}
-                className="add_post_form"
-                ref={(c) => this._add_post_form = c}
-            >
-                <div className="form_field" hidden={this.props.userId}>
-                    {this.getFieldErrors.call(this, 'username', 'post')}
-
-
-                    <input
-                        ref={(c) => this._add_post_username = c}
-                        className="add_post_username"
-                        id="add_post_username"
-                        name="username"
-                        placeholder="Автор"
-                        type="text"
-                    />
-
-
-                </div>
-
-                <div className="form_field" hidden={this.props.userId}>
-
-                    <input
-                        ref={(c) => this._add_post_email = c}
-                        className="add_post_email"
-                        id="add_post_email"
-                        name="email"
-                        placeholder="E-mail(не обязательно)"
-                        type="text"
-                    />
-                    {this.getFieldErrors.call(this, 'email', 'post')}
-                </div>
-
-
-
-                <div className="form_field">
-                    {this.getFieldErrors.call(this, 'body', 'post')}
-      <textarea cols="70" rows="10"
-                ref={(c) => this._add_post_body = c}
-                className={classNames('add_post_body', {expanded: this.state.bodyFocus || (this._add_post_body && this._add_post_body.value.length > 0)})}
-                id="add_post_body"
-                onFocus={this.addPostBodyOnFocus.bind(this)}
-                name="body"
-                placeholder="Сообщение"
-                type="text"
-      />
-
-                </div>
-                <label htmlFor="tags_add_ul">Разделы:</label>
-
-                <div className="form_field">
-                    {this.getFieldErrors.call(this, 'tags', 'post')}
-                    <ul
-                        className='tags_add'
-                        //ref="tags"
-                        id="tags_add_ul">
-                        {tagsAddBlock}
-                    </ul>
-
-                </div>
-                <input
-                    disabled={this.getAddPostButtonDisabled.call(this)}
-                    type="submit"
-                    className="btn btn-default"
-                    value="Отправить">
-                </input>
-            </form>
-        )
-    }
 
 
     getShowMoreInput() {
@@ -314,6 +175,14 @@ export default class PostList extends BaseComponent {
     }
 
 
+    getAddedBlock() {
+        if (this.props.post.added) {
+            return <div className="added_message">
+                Ваше предложение добавлено
+            </div>
+        }
+    }
+
 searchInputChange(e) {
     e.preventDefault();
     let body = this._query.value;
@@ -352,10 +221,10 @@ getSearchInput() {
         <div className="add_post_form_block">
           <h3>Добавить предложение</h3>
 
-            {this.getAddPostForm.call(this)}
+            <PostCreateForm tags={this.props.tags} tag={this.props.params.tag} post={this.props.post} postActions={this.props.postActions}/>
              
         </div>
-        {this.getAddedBlock.call(this)}
+          {this.getAddedBlock.call(this)}
           {this.getSearchInput.call(this)}
           <input
             onClick={this.refreshPostsClick.bind(this)}

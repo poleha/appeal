@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { browserHistory } from 'react-router'
+
 import BaseComponent from '../../components/BaseComponent'
 import classNames from 'classnames'
 import { formArrayToJson, mapNodes } from '../../helpers/helper'
@@ -11,12 +11,17 @@ class BasePostForm extends BaseComponent {
     getAdditionalFields() {
         return null;
     }
-    
+
+
+    getTagChecked(tag) {
+        return false;
+    }
+
     render() {
 
 
         let tags = this.props.tags;
-        let tag = this.props.tag;
+        //let tag = this.props.tag;
         let tagsAddBlock;
         if (tags.ids.length > 0) {
             tagsAddBlock = mapNodes(tags, function(elem){
@@ -24,7 +29,7 @@ class BasePostForm extends BaseComponent {
                 return <li key={key}>
                     <input
                         key={key}
-                        defaultChecked={tag == elem.alias}
+                        defaultChecked={this.getTagChecked.call(this, elem)}
                         data-id={key}
                         id={`tags_input-${key}`}
                         type="checkbox"
@@ -99,6 +104,12 @@ export class PostUpdateForm extends BasePostForm {
         return false;
     }
 
+
+    getTagChecked(tag) {
+        let post = this.props.post.posts.entities[this.props.params.id];
+        return post.tags.indexOf(tag.id) >= 0;
+    }
+
     showAllFields() {
         return false;
     }
@@ -121,16 +132,23 @@ export class PostUpdateForm extends BasePostForm {
 
     addPostSubmit(e) {
         e.preventDefault();
-        let post = this.props.post.posts.entities[this.props.params.id];
+        let post = this.getPost();
         let id = this.props.params.id;
-        let body = this._postBody.value;
-        this.props.postActions.updatePost({body, id}).then(() => browserHistory.push(`/post/${post.id}`));
+        post.id = id;
+
+        this.props.postActions.updatePost(post)
     }
 
 }
 
 
 export class PostCreateForm extends BasePostForm {
+
+
+
+    getTagChecked(tag) {
+        return tag.alias == this.props.tag;
+    }
 
     constructor(props) {
         super(props)

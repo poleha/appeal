@@ -1,5 +1,6 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
 import { UPDATE_POST_START, UPDATE_POST_SUCCESS, UPDATE_POST_FAIL } from '../constants/Post'
+import { browserHistory } from 'react-router'
 import { CLEAN_POSTS } from '../constants/Post'
 import { API_KEY } from '../middleware/api'
 import { post } from '../schemas'
@@ -65,11 +66,11 @@ export function updatePost(post) {
             [API_KEY]: {
                 method: 'PATCH',
                 endpoint: `${endpoint}${post.id}/`,
-                body: {body: post.body},
+                body: post,
                 actions: [UPDATE_POST_START, UPDATE_POST_SUCCESS, UPDATE_POST_FAIL]
             }
         }
-        return dispatch(action).catch(e => {});
+        return dispatch(action).then(() => browserHistory.push(`/post/${post.id}`)).catch(e => {});
     }
 
 }

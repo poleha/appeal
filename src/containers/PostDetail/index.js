@@ -103,6 +103,7 @@ export default class PostDetail extends BaseComponent {
                 return <Comment
                     key={comment.id}
                     comment={comment}
+                    userId={this.props.userId}
                     added={added}
                 />
 

@@ -20,10 +20,25 @@ export default class Comment extends Component {
         }
         return userBlock
     }
-    
+
+
+    getUpdateBlock(comment) {
+        if (comment.user && comment.user==this.props.userId) {
+            return (
+                <div className="inline"><Link to={'/comment/' + comment.id + '/update'}>Редактировать</Link></div>
+            )
+        }
+        else {
+            return null;
+        }
+    }
+
     render() {
         let comment = this.props.comment;
         return <div className={classNames('comment', {added:this.props.added})}>
+            <div>
+            {this.getUpdateBlock.call(this, comment)}
+            </div>
             <label>Опубликован:</label><div>{comment.created}</div>
             <label>Автор:</label><div>
             {this.getUserBlock.call(this, comment)}

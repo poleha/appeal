@@ -2,21 +2,11 @@ import React, { PropTypes, Component } from 'react'
 
 import BaseComponent from '../../components/BaseComponent'
 import classNames from 'classnames'
-import { formArrayToJson, mapNodes } from '../../helpers/helper'
 
 
 class BaseCommentForm extends BaseComponent {
 
 
-    addCommentFormSubmit(e) {
-        e.preventDefault();
-        let username = this._add_comment_username.value;
-        let email = this._add_comment_email.value;
-        let body = this._add_comment_body.value;
-
-        let comment = { username, body, email, post: this.props.params.id };
-        this.props.commentActions.addComment(comment);
-    }
 
 
     render() {
@@ -51,15 +41,7 @@ class BaseCommentForm extends BaseComponent {
                             type="text"
                         />
                     </div>
-                    <div className="form_field">
-                        {this.getFieldErrors.call(this, 'body', 'comment')}
-            <textarea cols="70" rows="10"
-                      ref={(c) => this._add_comment_body = c}
-                      className={classNames('add_comment_body', {expanded: this.state.bodyFocus || (this._add_comment_body && this._add_comment_body.value.length > 0)})}
-                      onFocus={this.addCommentBodyOnFocus.bind(this)}
-                      placeholder="Комментарий"
-            />
-                    </div>
+                    {this.getBodyField.call(this)}
 
                     <input
                         type="submit"
@@ -84,6 +66,30 @@ export class CommentCreateForm extends BaseCommentForm {
             bodyFocus: false
         }
     }
+    
+    addCommentFormSubmit(e) {
+        e.preventDefault();
+        let username = this._add_comment_username.value;
+        let email = this._add_comment_email.value;
+        let body = this._add_comment_body.value;
+
+        let comment = { username, body, email, post: this.props.params.id };
+        this.props.commentActions.addComment(comment);
+    }
+
+    getBodyField() {
+        return (
+            <div className="form_field">
+                {this.getFieldErrors.call(this, 'body', 'comment')}
+            <textarea cols="70" rows="10"
+                      ref={(c) => this._add_comment_body = c}
+                      className={classNames('add_comment_body', {expanded: this.state.bodyFocus || (this._add_comment_body && this._add_comment_body.value.length > 0)})}
+                      onFocus={this.addCommentBodyOnFocus.bind(this)}
+                      placeholder="Комментарий"
+            />
+            </div>
+        )
+    }
 
 
     componentDidUpdate() {
@@ -104,6 +110,40 @@ export class CommentCreateForm extends BaseCommentForm {
 }
 
 
+
+export class CommentUpdateForm extends BaseCommentForm {
+
+
+    getBodyField() {
+        let comment = this.props.comment.comments.entities[this.props.params.id];
+        return (
+            <div className="form_field">
+                {this.getFieldErrors.call(this, 'body', 'comment')}
+            <textarea cols="70" rows="10"
+                      ref={(c) => this._add_comment_body = c}
+                      className={classNames('add_comment_body')}
+                      placeholder="Комментарий"
+                      defaultValue={comment.body}
+            />
+            </div>
+        )
+    }
+
+    addCommentFormSubmit(e) {
+        e.preventDefault();
+        //let username = this._add_comment_username.value;
+        //let email = this._add_comment_email.value;
+        let existingComment = this.props.comment.comments.entities[this.props.params.id];
+        let post = existingComment.post;
+        let body = this._add_comment_body.value;
+
+        let comment = { body, post, id: this.props.params.id };
+        this.props.commentActions.updateComment(comment);
+    }
+
+
+
+}
 
 
 

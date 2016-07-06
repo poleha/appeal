@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Post from '../../components/Post'
+import { CommentCreateForm } from '../../components/CommentForm'
 import Comment from '../../components/Comment'
 import classNames from 'classnames'
 import Helmet from 'react-helmet';
@@ -56,17 +57,8 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PostDetail extends BaseComponent {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            bodyFocus: false
-        }
-    }
 
-    addCommentBodyOnFocus(e) {
-        if (e.type == 'focus') this.setState({bodyFocus:true});
-
-    }
+ 
 
 
     getPost() {
@@ -74,24 +66,9 @@ export default class PostDetail extends BaseComponent {
     }
 
   
-    componentDidUpdate() {
-        if (this.props.comment.added) {
+ 
 
-            this._add_comment_username.value = '';
-            this._add_comment_email.value = '';
-            this._add_comment_body.value = '';
-        }
-    }
 
-    addCommentFormSubmit(e) {
-        e.preventDefault();
-        let username = this._add_comment_username.value;
-        let email = this._add_comment_email.value;
-        let body = this._add_comment_body.value;
-
-        let comment = { username, body, email, post: this.props.params.id };
-        this.props.commentActions.addComment(comment);
-    }
 
     loadMoreCommentsClick(e) {
 
@@ -106,59 +83,7 @@ export default class PostDetail extends BaseComponent {
 
     }
 
-    getAddCommentForm() {
-        let usernameInputClass = classNames('form_field',
-        {
-            hidden: this.props.userId
-        });
-        
-        let emailImputClass = classNames('form_field',
-            {
-                hidden: this.props.userId
-            });
-        return (
-            <div key="add_comment_form_key">
-            <form
-                onSubmit={this.addCommentFormSubmit.bind(this)}
-                className="add_comment_form"
-            >
-                <div className={usernameInputClass}>
-                {this.getFieldErrors.call(this, 'username', 'comment')}
-                <input
-                    ref={(c) => this._add_comment_username = c}
-                    placeholder="Автор"
-                    type="text"
-                />
-                </div>
-                <div className={emailImputClass}>
-                {this.getFieldErrors.call(this, 'email', 'comment')}
-                <input
-                    ref={(c) => this._add_comment_email = c}
-                    placeholder="E-mail(не обязательно)"
-                    type="text"
-                />
-                    </div>
-                <div className="form_field">
-                {this.getFieldErrors.call(this, 'body', 'comment')}
-            <textarea cols="70" rows="10"
-                      ref={(c) => this._add_comment_body = c}
-                      className={classNames('add_comment_body', {expanded: this.state.bodyFocus || (this._add_comment_body && this._add_comment_body.value.length > 0)})}
-                      onFocus={this.addCommentBodyOnFocus.bind(this)}
-                      placeholder="Комментарий"
-            />
-                    </div>
 
-                <input
-                    type="submit"
-                    className="btn btn-default"
-                    value="Добавить"
-                />
-            </form>
-        {this.getAddedBlock.call(this)}
-         </div>
-
-        )
-    }
 
     getAddedBlock() {
         if (this.props.comment.added) {
@@ -225,7 +150,8 @@ export default class PostDetail extends BaseComponent {
             <div className="add_comment_form_block">
             <label>Отправить комментарий</label>
         
-            {this.getAddCommentForm.call(this)}
+            <CommentCreateForm {...this.props}/>
+                {this.getAddedBlock.call(this)}
         
              </div>   
             <input

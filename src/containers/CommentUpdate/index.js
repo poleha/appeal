@@ -59,9 +59,12 @@ export default class CommentUpdate extends BaseComponent {
 
 
     render() {
-        
+        let comment = this.getComment();
         return (
+            <div>
+                <Helmet title={comment.body.slice(0, 20) + '... | изменение'}/>
             <CommentUpdateForm {...this.props} />
+            </div>    
         )
 
     }

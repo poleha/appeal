@@ -218,7 +218,11 @@ getSearchInput() {
       return <div className="post_list">
           <Helmet title={currentTagTitle} />
 
-        <div className="add_post_form_block">
+        <div>
+        <h2>{this.getCurrentTagTitle()}</h2>
+        </div>
+
+          <div className="add_post_form_block">
           <h3>Добавить предложение</h3>
 
             <PostCreateForm tags={this.props.tags} tag={this.props.params.tag} post={this.props.post} postActions={this.props.postActions}/>

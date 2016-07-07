@@ -51,7 +51,7 @@ class BasePostForm extends BaseComponent {
                     key="add_post_form"
                     onSubmit={this.addPostSubmit.bind(this)}
                     className="add_post_form"
-                    ref={(c) => this._add_post_form = c}
+                    ref={(c) => this._addPostForm = c}
                 >
                    
                     {this.getAdditionalFields.call(this)}
@@ -89,7 +89,7 @@ class BasePostForm extends BaseComponent {
 
 
     getPost() {
-        let postForm = $(this._add_post_form);
+        let postForm = $(this._addPostForm);
 
         return formArrayToJson(postForm.serializeArray());
     }
@@ -170,7 +170,7 @@ export class PostCreateForm extends BasePostForm {
 
 
             <input
-                ref={(c) => this._add_post_username = c}
+                ref={(c) => this._addPostUserName = c}
                 className="add_post_username"
                 id="add_post_username"
                 name="username"
@@ -184,7 +184,7 @@ export class PostCreateForm extends BasePostForm {
         <div className="form_field" hidden={this.props.userId}>
 
     <input
-        ref={(c) => this._add_post_email = c}
+        ref={(c) => this._addPostEmail = c}
         className="add_post_email"
         id="add_post_email"
         name="email"
@@ -219,8 +219,8 @@ export class PostCreateForm extends BasePostForm {
         let pathChanged = this.getPathChanged(prevProps)
 
         if (this.props.post.added || pathChanged){
-            this._add_post_username.value = '';
-            this._add_post_email.value = '';
+            this._addPostUserName.value = '';
+            this._addPostEmail.value = '';
             this._postBody.value = '';
             this.setDefaultTags();
 

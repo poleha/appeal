@@ -28,7 +28,7 @@ class BaseCommentForm extends BaseComponent {
                     <div className={usernameInputClass}>
                         {this.getFieldErrors.call(this, 'username', 'comment')}
                         <input
-                            ref={(c) => this._add_comment_username = c}
+                            ref={(c) => this._addCommentUserName = c}
                             placeholder="Автор"
                             type="text"
                         />
@@ -36,7 +36,7 @@ class BaseCommentForm extends BaseComponent {
                     <div className={emailImputClass}>
                         {this.getFieldErrors.call(this, 'email', 'comment')}
                         <input
-                            ref={(c) => this._add_comment_email = c}
+                            ref={(c) => this._addCommentEmail = c}
                             placeholder="E-mail(не обязательно)"
                             type="text"
                         />
@@ -69,9 +69,9 @@ export class CommentCreateForm extends BaseCommentForm {
     
     addCommentFormSubmit(e) {
         e.preventDefault();
-        let username = this._add_comment_username.value;
-        let email = this._add_comment_email.value;
-        let body = this._add_comment_body.value;
+        let username = this._addCommentUserName.value;
+        let email = this._addCommentEmail.value;
+        let body = this._addCommentBody.value;
 
         let comment = { username, body, email, post: this.props.params.id };
         this.props.commentActions.addComment(comment);
@@ -82,8 +82,8 @@ export class CommentCreateForm extends BaseCommentForm {
             <div className="form_field">
                 {this.getFieldErrors.call(this, 'body', 'comment')}
             <textarea cols="70" rows="10"
-                      ref={(c) => this._add_comment_body = c}
-                      className={classNames('add_comment_body', {expanded: this.state.bodyFocus || (this._add_comment_body && this._add_comment_body.value.length > 0)})}
+                      ref={(c) => this._addCommentBody = c}
+                      className={classNames('add_comment_body', {expanded: this.state.bodyFocus || (this._addCommentBody && this._addCommentBody.value.length > 0)})}
                       onFocus={this.addCommentBodyOnFocus.bind(this)}
                       placeholder="Комментарий"
             />
@@ -95,9 +95,9 @@ export class CommentCreateForm extends BaseCommentForm {
     componentDidUpdate() {
         if (this.props.comment.added) {
 
-            this._add_comment_username.value = '';
-            this._add_comment_email.value = '';
-            this._add_comment_body.value = '';
+            this._addCommentUserName.value = '';
+            this._addCommentEmail.value = '';
+            this._addCommentBody.value = '';
         }
     }
 
@@ -120,7 +120,7 @@ export class CommentUpdateForm extends BaseCommentForm {
             <div className="form_field">
                 {this.getFieldErrors.call(this, 'body', 'comment')}
             <textarea cols="70" rows="10"
-                      ref={(c) => this._add_comment_body = c}
+                      ref={(c) => this._addCommentBody = c}
                       className={classNames('add_comment_body')}
                       placeholder="Комментарий"
                       defaultValue={comment.body}
@@ -131,11 +131,11 @@ export class CommentUpdateForm extends BaseCommentForm {
 
     addCommentFormSubmit(e) {
         e.preventDefault();
-        //let username = this._add_comment_username.value;
-        //let email = this._add_comment_email.value;
+        //let username = this._addCommentUserName.value;
+        //let email = this._addCommentEmail.value;
         let existingComment = this.props.comment.comments.entities[this.props.params.id];
         let post = existingComment.post;
-        let body = this._add_comment_body.value;
+        let body = this._addCommentBody.value;
 
         let comment = { body, post, id: this.props.params.id };
         this.props.commentActions.updateComment(comment);

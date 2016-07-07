@@ -7,11 +7,12 @@ export default class BreadCrumbs extends Component {
 
 
     getBreadCrumbs() {
-        let component = this.props.routes[this.props.routes.length - 1].component.WrappedComponent
         let params = this.props.params
+        let location = this.props.location
+        let id = params.id;
 
-        if (component.name == 'PostDetail') {
-            let id = params.id;
+        if (location.pathname == `/post/${id}` ) {
+
             let post = this.props.post.posts.entities[id];
             let firstTag = this.props.tag.tags.entities[post.tags[0]];
             return (
@@ -31,7 +32,7 @@ export default class BreadCrumbs extends Component {
 
         }
 
-        else if (component.name == 'PostUpdate') {
+        if (location.pathname == `/post/${id}/update` ) {
 
             let id = params.id;
             let post = this.props.post.posts.entities[id];
@@ -55,7 +56,7 @@ export default class BreadCrumbs extends Component {
         }
 
 
-        if (component.name == 'CommentUpdate') {
+        if (location.pathname == `/comment/${id}/update` ) {
             let id = params.id;
             let comment = this.props.comment.comments.entities[id];
             let post = this.props.post.posts.entities[comment.post];

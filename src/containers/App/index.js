@@ -14,6 +14,7 @@ import { mapNodes } from '../../helpers/helper'
 import { getUserInfo } from '../../actions/AuthActions'
 import { loadTags } from '../../actions/TagActions'
 import config from '../../config'
+import BreadCrumbs  from '../../components/BreadCrumbs'
 
 
 //Устанавливаем соответствие глобального state props каждого компонента
@@ -89,7 +90,8 @@ export default class App extends Component {
                   actions={this.props.authActions}
               />
           </div>
-          {this.props.children}
+            <BreadCrumbs {...this.props}/>
+            {this.props.children}
          </div>
     )
   }

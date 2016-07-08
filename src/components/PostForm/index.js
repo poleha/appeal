@@ -21,7 +21,7 @@ class BasePostForm extends BaseComponent {
 
 
         let tags = this.props.tags;
-        //let tag = this.props.tag;
+        //let tag = this.props.params.tag;
         let tagsAddBlock;
         if (tags.ids.length > 0) {
             tagsAddBlock = mapNodes(tags, function(elem){
@@ -147,7 +147,7 @@ export class PostCreateForm extends BasePostForm {
 
 
     getTagChecked(tag) {
-        return tag.alias == this.props.tag;
+        return tag.alias == this.props.params.tag;
     }
 
     constructor(props) {
@@ -212,7 +212,7 @@ export class PostCreateForm extends BasePostForm {
     }
 
     getPathChanged(otherProps) {
-        return this.props.tag != otherProps.tag;
+        return this.props.params.tag != otherProps.tag;
     }
 
     componentDidUpdate(prevProps){
@@ -233,7 +233,7 @@ export class PostCreateForm extends BasePostForm {
     setDefaultTags() {
         for (let key = 0; key < this.props.tags.ids.length; key++) {
             let alias = this.props.tags.entities[this.props.tags.ids[key]].alias;
-            let checked = this.props.tag == alias;
+            let checked = this.props.params.tag == alias;
             let elem = this[`_tag_to_add__${alias}`];
             if (elem) elem.checked = checked; //При первом рендере могут быть недоступны, поскольку мы ничего не рендерим
         }

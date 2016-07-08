@@ -225,7 +225,7 @@ getSearchInput() {
           <div className="add_post_form_block">
           <h3>Добавить предложение</h3>
 
-            <PostCreateForm tags={this.props.tags} tag={this.props.params.tag} post={this.props.post} postActions={this.props.postActions}/>
+            <PostCreateForm {...this.props}/>
              
         </div>
           {this.getAddedBlock()}

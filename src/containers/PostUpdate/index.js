@@ -63,7 +63,7 @@ export default class PostUpdate extends BaseComponent {
         return (
             <div>
                 <Helmet title={post.body.slice(0, 20) + '... | изменение'}/>
-            <PostUpdateForm tags={this.props.tags} post={this.props.post} postActions={this.props.postActions} params={this.props.params}/>
+            <PostUpdateForm {...this.props} />
             </div>
                 )
 

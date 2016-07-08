@@ -143,7 +143,7 @@ getLoginBlockTemplate () {
                             className="user_email"
                             id="user_email"
                             name="email"
-                            placeholder="E-mail(не обязательно)"
+                            placeholder="E-mail"
                         />
                             </div>
                         <div className="form_field">

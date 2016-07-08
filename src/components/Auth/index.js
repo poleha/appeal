@@ -86,6 +86,7 @@ getLoginBlockTemplate () {
                         className="login_form"
                         ref={(c) => this._login_form = c}
                     >
+                        <div className="form_field">
                         {this.getFieldErrors('username', 'data','loginErrors')}
                         <input
                             type="text"
@@ -94,15 +95,28 @@ getLoginBlockTemplate () {
                             className="user_username"
                             name="username"
                         />
+                         </div>
+                        <div className="form_field">
                         {this.getFieldErrors('password', 'data','loginErrors')}
                         <input
-                            type="text"
                             ref={(c) => this._password = c}
                             placeholder="Пароль"
                             name="password"
                             type="password"
                             className="user_password"
                         />
+                        </div>
+                        <div className="form_field">
+                        <label htmlFor="save_me">Запомнить меня</label>
+                        <input
+                            id="save_me"
+                            type="checkbox"
+                            defaultChecked={true}
+                            ref={(c) => this._saveMe = c}
+                            name="save_me"
+                            className="save_me"
+                        />
+                        </div>
                         <input
                             type="submit"
                             value="Войти"
@@ -121,6 +135,7 @@ getLoginBlockTemplate () {
                         ref={(c) => this._register_form = c}
                     >
                         {this.getFieldErrors('non_field_errors', 'data','registerErrors')}
+                        <div className="form_field">
                         {this.getFieldErrors('email', 'data','registerErrors')}
                         <input
                             type="text"
@@ -130,6 +145,8 @@ getLoginBlockTemplate () {
                             name="email"
                             placeholder="E-mail(не обязательно)"
                         />
+                            </div>
+                        <div className="form_field">
                         {this.getFieldErrors('username', 'data','registerErrors')}
                         <input
                             type="text"
@@ -139,6 +156,8 @@ getLoginBlockTemplate () {
                             name="username"
                             placeholder="Имя пользователя"
                         />
+                            </div>
+                        <div className="form_field">
                         {this.getFieldErrors('password', 'data','registerErrors')}
                         <input
                             type="text"
@@ -149,6 +168,8 @@ getLoginBlockTemplate () {
                             type="password"
                             placeholder="Пароль"
                         />
+                            </div>
+                        <div className="form_field">
                         {this.getFieldErrors('password2', 'data','registerErrors')}
                         <input
                             type="text"
@@ -159,6 +180,7 @@ getLoginBlockTemplate () {
                             type="password"
                             placeholder="Пароль еще раз"
                         />
+                            </div>
                         <input
                             type="submit"
                             className="user_submit btn btn-default"

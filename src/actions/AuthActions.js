@@ -9,7 +9,7 @@ import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_F
 import { API_KEY } from '../middleware/api'
 import { createCookie, eraseCookie, readCookie, apiHost} from '../helpers/helper'
 import { browserHistory } from 'react-router'
-
+import config from '../config'
 
 
 const endpoint = apiHost + '/auth/';
@@ -17,7 +17,7 @@ const endpoint = apiHost + '/auth/';
 
 
 export function loginUser(userData) {
-    return function (dispatch, getState, req) {
+    return function (dispatch, getState) {
 
         let action = {
             [API_KEY]: {
@@ -29,7 +29,11 @@ export function loginUser(userData) {
         }
         
         dispatch(action).then((response) => {
-            createCookie('appeal_site_token', response.auth_token, req);
+            let days;
+            if (userData.save_me) days = config.cookie.expireDays;
+            else days = '';
+
+            createCookie('appeal_site_token', response.auth_token, days);
             dispatch(getUserInfo()).then(() => browserHistory.replace(location.pathname) );
         }).catch((error) => {
         });

@@ -79,14 +79,14 @@ getLoginBlockTemplate () {
             loginBlockTemplate = (
                 <div className="login_block">
                     <div className="errors">
-                        {this.getFieldErrors.call(this, 'non_field_errors','data', 'loginErrors')}
+                        {this.getFieldErrors('non_field_errors','data', 'loginErrors')}
                     </div>
                     <form
                         onSubmit={this.loginFormSubmit.bind(this)}
                         className="login_form"
                         ref={(c) => this._login_form = c}
                     >
-                        {this.getFieldErrors.call(this, 'username', 'data','loginErrors')}
+                        {this.getFieldErrors('username', 'data','loginErrors')}
                         <input
                             type="text"
                             ref={(c) => this._username = c}
@@ -94,7 +94,7 @@ getLoginBlockTemplate () {
                             className="user_username"
                             name="username"
                         />
-                        {this.getFieldErrors.call(this, 'password', 'data','loginErrors')}
+                        {this.getFieldErrors('password', 'data','loginErrors')}
                         <input
                             type="text"
                             ref={(c) => this._password = c}
@@ -120,8 +120,8 @@ getLoginBlockTemplate () {
                         onSubmit={this.registrationFormSubmit.bind(this)}
                         ref={(c) => this._register_form = c}
                     >
-                        {this.getFieldErrors.call(this, 'non_field_errors', 'data','registerErrors')}
-                        {this.getFieldErrors.call(this, 'email', 'data','registerErrors')}
+                        {this.getFieldErrors('non_field_errors', 'data','registerErrors')}
+                        {this.getFieldErrors('email', 'data','registerErrors')}
                         <input
                             type="text"
                             ref={(c) => this._email = c}
@@ -130,7 +130,7 @@ getLoginBlockTemplate () {
                             name="email"
                             placeholder="E-mail(не обязательно)"
                         />
-                        {this.getFieldErrors.call(this, 'username', 'data','registerErrors')}
+                        {this.getFieldErrors('username', 'data','registerErrors')}
                         <input
                             type="text"
                             ref={(c) => this._username = c}
@@ -139,7 +139,7 @@ getLoginBlockTemplate () {
                             name="username"
                             placeholder="Имя пользователя"
                         />
-                        {this.getFieldErrors.call(this,'password', 'data','registerErrors')}
+                        {this.getFieldErrors('password', 'data','registerErrors')}
                         <input
                             type="text"
                             ref={(c) => this._password = c}
@@ -149,7 +149,7 @@ getLoginBlockTemplate () {
                             type="password"
                             placeholder="Пароль"
                         />
-                        {this.getFieldErrors.call(this, 'password2', 'data','registerErrors')}
+                        {this.getFieldErrors('password2', 'data','registerErrors')}
                         <input
                             type="text"
                             ref={(c) => this._password2 = c}
@@ -222,12 +222,12 @@ getLoginBlockTemplate () {
     }
 
     getUserBlock() {
-        return ( <div
+        return (<div
                 key="user_block"
             >
-                {this.getSocialLoginTemplate.call(this)}
-                {this.getLoginBlockButtons.call(this)}
-                {this.getLoginBlockTemplate.call(this)}
+                {this.getSocialLoginTemplate()}
+                {this.getLoginBlockButtons()}
+                {this.getLoginBlockTemplate()}
 
             </div>
         )
@@ -240,7 +240,7 @@ getLoginBlockTemplate () {
     render() {
         if (this.props.data.userId) {
             if (this._body) $(this._body).modal('hide');
-            return this.getLoggedBlockTemplate.call(this);
+            return this.getLoggedBlockTemplate();
         }
         return (
             <div>
@@ -252,7 +252,7 @@ getLoginBlockTemplate () {
                                 <h4 className="modal-title">Войти на сайт</h4>
                             </div>
                             <div className="modal-body">
-                                {this.getUserBlock.call(this)}
+                                {this.getUserBlock()}
                             </div>
                         </div>
                     </div>

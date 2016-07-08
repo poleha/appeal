@@ -181,7 +181,7 @@ export default class UserDetail extends BaseComponent {
           <div className="user_page">
             <Helmet title={username}/>
 
-              {this.getUserInfoBlock.call(this)}
+              {this.getUserInfoBlock()}
               <div>
 
                   <ul className="nav nav-tabs" role="tablist">
@@ -191,12 +191,12 @@ export default class UserDetail extends BaseComponent {
 
                   <div className="tab-content">
                       <div role="tabpanel" className="tab-pane active" id="posts">
-                          {this.getPosts.call(this)}
-                          { this.getShowMorePostsInput.call(this) }
+                          {this.getPosts()}
+                          { this.getShowMorePostsInput() }
                       </div>
                       <div role="tabpanel" className="tab-pane" id="comments">
-                          {this.getComments.call(this)}
-                          { this.getShowMoreCommentsButton.call(this) }
+                          {this.getComments()}
+                          { this.getShowMoreCommentsButton() }
                       </div>
                   </div>
 

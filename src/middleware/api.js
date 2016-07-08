@@ -21,7 +21,7 @@ function fetchApi(endpoint, method, headers, body, schema) {
         }
         else return Promise.reject(json);
     })).catch(error => {
-        if( error.__proto__.constructor === SyntaxError ) return null;
+        if(error.__proto__.constructor === SyntaxError ) return null;
         else return Promise.reject(error)
     })
 }

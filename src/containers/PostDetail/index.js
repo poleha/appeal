@@ -152,7 +152,7 @@ export default class PostDetail extends BaseComponent {
             <label>Отправить комментарий</label>
         
             <CommentCreateForm {...this.props}/>
-                {this.getAddedBlock.call(this)}
+                {this.getAddedBlock()}
         
              </div>   
             <input
@@ -167,8 +167,8 @@ export default class PostDetail extends BaseComponent {
                 transitionLeaveTimeout={1}
                 className='comments'
             >
-            {this.getCommentsBlock.call(this)}
-                {this.getShowMoreButton.call(this)}
+            {this.getCommentsBlock()}
+                {this.getShowMoreButton()}
             </ReactCSSTransitionGroup>
 
 

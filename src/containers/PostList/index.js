@@ -68,7 +68,7 @@ export default class PostList extends BaseComponent {
 
     componentWillReceiveProps(nextProps) {
        let pathChanged = this.getPathChanged(nextProps)
-       if ( pathChanged ) {
+       if (pathChanged ) {
            this._query.value = null;
 
            if (this.state.bodyFocus) this.setState({bodyFocus:false});
@@ -210,7 +210,7 @@ getSearchInput() {
   render() {
       let tags = this.props.tags;
       let currentTagTitle;
-      Object.getOwnPropertyNames.call(this, tags.entities).forEach(function(key) {
+      Object.getOwnPropertyNames(tags.entities).forEach(function(key) {
           let tag = tags.entities[key]
           if (tag.alias == this.props.params.tag) currentTagTitle = tag.title;
       }.bind(this))
@@ -228,11 +228,11 @@ getSearchInput() {
             <PostCreateForm tags={this.props.tags} tag={this.props.params.tag} post={this.props.post} postActions={this.props.postActions}/>
              
         </div>
-          {this.getAddedBlock.call(this)}
-          {this.getSearchInput.call(this)}
+          {this.getAddedBlock()}
+          {this.getSearchInput()}
           <input
             onClick={this.refreshPostsClick.bind(this)}
-            disabled={this.getAddPostButtonDisabled.call(this)}
+            disabled={this.getAddPostButtonDisabled()}
             type="button"
             className="btn btn-default"
             value="Обновить">
@@ -244,8 +244,8 @@ getSearchInput() {
               transitionLeaveTimeout={1}
               className='posts'
           >
-            {this.getPostsBlock.call(this)}
-              {this.getShowMoreInput.call(this)}
+            {this.getPostsBlock()}
+              {this.getShowMoreInput()}
           </ReactCSSTransitionGroup>
 
 

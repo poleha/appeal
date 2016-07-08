@@ -29,7 +29,7 @@ export function addComment(data) {
 export function loadComments(params) {
 
     return function (dispatch, getState) {
-        let urlParams = serializeParams( params );
+        let urlParams = serializeParams(params );
         let action = {
             [API_KEY]: {
                 method: 'get',

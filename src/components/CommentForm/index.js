@@ -26,7 +26,7 @@ class BaseCommentForm extends BaseComponent {
                     className="add_comment_form"
                 >
                     <div className={usernameInputClass}>
-                        {this.getFieldErrors.call(this, 'username', 'comment')}
+                        {this.getFieldErrors('username', 'comment')}
                         <input
                             ref={(c) => this._addCommentUserName = c}
                             placeholder="Автор"
@@ -34,14 +34,14 @@ class BaseCommentForm extends BaseComponent {
                         />
                     </div>
                     <div className={emailImputClass}>
-                        {this.getFieldErrors.call(this, 'email', 'comment')}
+                        {this.getFieldErrors('email', 'comment')}
                         <input
                             ref={(c) => this._addCommentEmail = c}
                             placeholder="E-mail(не обязательно)"
                             type="text"
                         />
                     </div>
-                    {this.getBodyField.call(this)}
+                    {this.getBodyField()}
 
                     <input
                         type="submit"
@@ -80,7 +80,7 @@ export class CommentCreateForm extends BaseCommentForm {
     getBodyField() {
         return (
             <div className="form_field">
-                {this.getFieldErrors.call(this, 'body', 'comment')}
+                {this.getFieldErrors('body', 'comment')}
             <textarea cols="70" rows="10"
                       ref={(c) => this._addCommentBody = c}
                       className={classNames('add_comment_body', {expanded: this.state.bodyFocus || (this._addCommentBody && this._addCommentBody.value.length > 0)})}
@@ -118,7 +118,7 @@ export class CommentUpdateForm extends BaseCommentForm {
         let comment = this.props.comment.comments.entities[this.props.params.id];
         return (
             <div className="form_field">
-                {this.getFieldErrors.call(this, 'body', 'comment')}
+                {this.getFieldErrors('body', 'comment')}
             <textarea cols="70" rows="10"
                       ref={(c) => this._addCommentBody = c}
                       className={classNames('add_comment_body')}

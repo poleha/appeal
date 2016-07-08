@@ -37,11 +37,11 @@ export default class Comment extends Component {
         let comment = this.props.comment;
         return <div className={classNames('comment', {added:this.props.added})}>
             <div>
-            {this.getUpdateBlock.call(this, comment)}
+            {this.getUpdateBlock(comment)}
             </div>
             <label>Опубликован:</label><div>{comment.created}</div>
             <label>Автор:</label><div>
-            {this.getUserBlock.call(this, comment)}
+            {this.getUserBlock(comment)}
         </div>
             <label>Комментарий:</label><div>{comment.body}</div>
 

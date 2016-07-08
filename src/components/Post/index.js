@@ -68,12 +68,12 @@ export default class Post extends Component {
         let key =  post.id;
         return (
             <div className={classNames('post', {added: this.props.added})}>
-                {this.getRateBlock.call(this, post)}
-                {this.getUpdateBlock.call(this, post)}
+                {this.getRateBlock(post)}
+                {this.getUpdateBlock(post)}
                 <div className="post_created">{post.created}</div>
                 <div className="post_author inline">
                 <label>Автор:</label>
-                    {this.getUserBlock.call(this, post)}
+                    {this.getUserBlock(post)}
                 </div>
 
                 <div className="post_body">

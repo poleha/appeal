@@ -29,13 +29,13 @@ class BasePostForm extends BaseComponent {
                 return <li key={key}>
                     <input
                         key={key}
-                        defaultChecked={this.getTagChecked.call(this, elem)}
+                        defaultChecked={this.getTagChecked(elem)}
                         data-id={key}
                         id={`tags_input-${key}`}
                         type="checkbox"
                         ref={(c) => this[`_tag_to_add__${elem.alias}`] = c}
                         name={`tags__${key}`}
-                        //disabled={this.getAddPostButtonDisabled.call(this)}
+                        //disabled={this.getAddPostButtonDisabled()}
                     />
                     <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
                 </li>
@@ -54,18 +54,18 @@ class BasePostForm extends BaseComponent {
                     ref={(c) => this._addPostForm = c}
                 >
                    
-                    {this.getAdditionalFields.call(this)}
+                    {this.getAdditionalFields()}
 
 
                     <div className="form_field">
-                        {this.getFieldErrors.call(this, 'body', 'post')}
-                        {this.getBodyField.call(this)}
+                        {this.getFieldErrors('body', 'post')}
+                        {this.getBodyField()}
 
                     </div>
                     <label htmlFor="tags_add_ul">Разделы:</label>
 
                     <div className="form_field">
-                        {this.getFieldErrors.call(this, 'tags', 'post')}
+                        {this.getFieldErrors('tags', 'post')}
                         <ul
                             className='tags_add'
                             //ref="tags"
@@ -75,7 +75,7 @@ class BasePostForm extends BaseComponent {
 
                     </div>
                     <input
-                        disabled={this.getAddPostButtonDisabled.call(this)}
+                        disabled={this.getAddPostButtonDisabled()}
                         type="submit"
                         className="btn btn-default"
                         value="Отправить">
@@ -166,7 +166,7 @@ export class PostCreateForm extends BasePostForm {
         return (
             <div>
         <div className="form_field" hidden={this.props.userId}>
-            {this.getFieldErrors.call(this, 'username', 'post')}
+            {this.getFieldErrors('username', 'post')}
 
 
             <input
@@ -191,7 +191,7 @@ export class PostCreateForm extends BasePostForm {
         placeholder="E-mail(не обязательно)"
         type="text"
             />
-            {this.getFieldErrors.call(this, 'email', 'post')}
+            {this.getFieldErrors('email', 'post')}
     </div>
                 </div>
         )

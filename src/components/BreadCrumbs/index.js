@@ -10,7 +10,6 @@ export default class BreadCrumbs extends Component {
         let params = this.props.params
         let location = this.props.location
         let id = params.id;
-        console.log('111111111111111111', location)
 
         if (location.pathname == `/post/${id}` ) {
 
@@ -37,6 +36,7 @@ export default class BreadCrumbs extends Component {
 
             let id = params.id;
             let post = this.props.post.posts.entities[id];
+            if (post == null) return null;
             let firstTag = this.props.tag.tags.entities[post.tags[0]];
             return (
                 <ol className="breadcrumb">

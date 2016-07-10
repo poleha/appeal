@@ -62,6 +62,11 @@ export default class PostUpdate extends BaseComponent {
 
     render() {
         let post = this.getPost()
+        if (post == null) return (
+           <div>
+           Страница не найдена или у вас нет к ней доступа.
+           </div>
+        );
         return (
             <div>
                 <Helmet title={post.body.slice(0, 20) + '... | изменение'}/>

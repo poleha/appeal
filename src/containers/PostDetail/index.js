@@ -65,8 +65,6 @@ export default class PostDetail extends BaseComponent {
         return this.props.post.posts.entities[this.props.params.id];
     }
 
-  
- 
 
 
 

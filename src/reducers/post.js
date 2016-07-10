@@ -1,5 +1,6 @@
 import { LOAD_POSTS_START, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAIL, ADD_POST_START, ADD_POST_SUCCESS, ADD_POST_FAIL, RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL } from '../constants/Post'
 import {UPDATE_POST_START, UPDATE_POST_SUCCESS, UPDATE_POST_FAIL} from '../constants/Post'
+import { LOAD_POSTS_PERM_START, LOAD_POSTS_PERM_SUCCESS, LOAD_POSTS_PERM_FAIL } from '../constants/Post'
 import { CLEAN_POSTS } from '../constants/Post'
 import update from 'react-addons-update'
 var posts, post, key, newState, errors;
@@ -49,6 +50,37 @@ export default function app(state = initialState, action) {
         case LOAD_POSTS_FAIL:
             state = cloneState(state);
             return state;
+
+
+        case LOAD_POSTS_PERM_START:
+            state = cloneState(state);
+            newState = update(state, {
+                //posts: {$set: {entities: {}, ids: []}},
+                loading: {$set: true}
+                //count: {$set: 0}
+            });
+            return newState;
+        case LOAD_POSTS_PERM_SUCCESS:
+            state = cloneState(state);
+
+            newState = update(state, {
+                posts: {$set: {entities: action.payload.entities.posts || {}, ids: action.payload.result || []}},
+                count: {$set: action.payload.count},
+                loading: {$set: false},
+                path: {$set: action.path},
+                query: {$set: action.query}
+            });
+            return newState;
+        case LOAD_POSTS_PERM_FAIL:
+            state = cloneState(state);
+            newState = update(state, {
+                posts: {$set: {entities: {}, ids: []}},
+                loading: {$set: true},
+                count: {$set: 0}
+            });
+            return newState;
+        
+        
 
         case ADD_POST_START:
             errors = state.errors;

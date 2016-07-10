@@ -38,8 +38,10 @@ function mapDispatchToProps(dispatch) {
         }
         let promises = [];
         let currentPromise = loginPromise.then(() => {
-            return store.dispatch(postActions.loadPosts({id}));
-        });
+            return store.dispatch(postActions.loadPostPerm(id))
+        }).catch(() => {});
+
+
         promises.push(currentPromise);
 
         return Promise.all(promises);
@@ -55,7 +57,7 @@ export default class PostUpdate extends BaseComponent {
         return this._post;
     }
 
-   
+
 
 
     render() {
@@ -63,9 +65,9 @@ export default class PostUpdate extends BaseComponent {
         return (
             <div>
                 <Helmet title={post.body.slice(0, 20) + '... | изменение'}/>
-            <PostUpdateForm {...this.props} />
+                <PostUpdateForm {...this.props} />
             </div>
-                )
+        )
 
     }
 

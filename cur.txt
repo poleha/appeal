@@ -1,3 +1,58 @@
+Permissions. Начал делать для поста. При неавториз входе со стороны сервера виснет.
 Авторизация соцсетей на стороне сервера? Зачем мне их 100 куки?! Или как-то просто упростить.
 История поста и коммента
 Alias?
+
+
+
+
+npm install extract-text-webpack-plugin --save-dev
+npm install file-loader --save-dev
+npm install node-sass --save-dev
+npm install react-addons-css-transition-group --save-dev
+npm install redux-logger --save-dev
+npm install resolve-url --save-dev
+npm install resolve-url-loader --save-dev
+npm install sass-loader --save-dev
+npm install style-loader --save-dev
+npm install url-loader --save-dev
+npm install webpack --save-dev
+npm install webpack-dev-middleware --save-dev
+npm install webpack-hot-middleware --save-dev
+npm install webpack-merge --save-dev
+npm install babel-eslint --save-dev
+npm install babel-loader --save-dev
+npm install babel-preset-react-hmre --save-dev
+npm install bootstrap-loader --save-dev
+npm install bootstrap-sass --save-dev
+npm install clean-webpack-plugin --save-dev
+npm install css-loader --save-dev
+npm install eslint --save-dev
+npm install eslint-loader --save-dev
+npm install eslint-plugin-react --save-dev
+
+
+npm install babel-core --save
+npm install babel-plugin-transform-decorators-legacy --save
+npm install babel-polyfill --save
+npm install babel-preset-es2015 --save
+npm install babel-preset-react --save
+npm install babel-preset-stage-0 --save
+npm install classnames --save
+npm install compression --save
+npm install cookie-parser --save
+npm install express --save
+npm install isomorphic-fetch --save
+npm install normalizr --save
+npm install react --save
+npm install react-addons-update --save
+npm install react-dom --save
+npm install react-helmet --save
+npm install react-redux --save
+npm install react-router --save
+npm install react-router-redux --save
+npm install redux --save
+npm install redux-async-connect --save
+npm install redux-thunk --save
+npm install serialize-javascript --save
+

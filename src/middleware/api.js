@@ -13,13 +13,22 @@ function fetchApi(endpoint, method, headers, body, schema) {
 
     }
     //headers['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, OPTIONS, PUT';
-
     return fetch(endpoint, options).then(response => response.json().then((json) => {
         if (response.ok) {
-            if (schema) return Object.assign(json, normalize(json.results, arrayOf(schema)));
+            if (schema) {
+                if (json.results) {
+                return Object.assign(json, normalize(json.results, arrayOf(schema)));
+                }
+                else {
+                    return normalize(json, schema);
+                }
+            }
             else return json;
         }
-        else return Promise.reject(json);
+
+        else {
+            return Promise.reject(json);
+        }
     })).catch(error => {
         if(error.__proto__.constructor === SyntaxError ) return null;
         else return Promise.reject(error)

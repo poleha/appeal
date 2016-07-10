@@ -10,6 +10,7 @@ export default class BreadCrumbs extends Component {
         let params = this.props.params
         let location = this.props.location
         let id = params.id;
+        console.log('111111111111111111', location)
 
         if (location.pathname == `/post/${id}` ) {
 

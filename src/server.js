@@ -64,10 +64,12 @@ app.use((req, res) => {
         global.navigator = {userAgent: req.headers['user-agent']};
         res.send('<!doctype html>\n' +
             ReactDOM.renderToStaticMarkup(<Html component={component} store={store}/>));
+      }).catch(error => {
+        res.status(401).send('Страница не найдена или у вас нет прав на ее просмотр');
       });
 
     } else {
-      res.status(404).send('Not found');
+      res.status(404).send('Страница не найдена');
     }
 
   });

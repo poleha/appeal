@@ -88,7 +88,11 @@ export default class Post extends Component {
                     {
                         mapNodes(this.props.tags, function(tag) {
                             if (post.tags.indexOf(tag.id) >= 0) {
-                                return <li className="tag_elem inline" key={tag.id}>{tag.title}</li>
+                                return (
+                                    <li className="tag_elem inline" key={tag.id}>
+                                        <Link to={`/${tag.alias}`}>{tag.title}</Link>
+                                    </li>
+                                )
                             }
                         })
                     }

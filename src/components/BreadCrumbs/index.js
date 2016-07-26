@@ -60,6 +60,7 @@ export default class BreadCrumbs extends Component {
         if (location.pathname == `/comment/${id}/update` ) {
             let id = params.id;
             let comment = this.props.comment.comments.entities[id];
+            if (comment == null) return null;
             let post = this.props.post.posts.entities[comment.post];
             let firstTag = this.props.tag.tags.entities[post.tags[0]];
             return (

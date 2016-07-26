@@ -1,6 +1,7 @@
 import 'isomorphic-fetch'
 import { normalize, arrayOf } from 'normalizr'
-import {readCookie} from '../helpers/helper'
+import { readCookie, eraseCookie } from '../helpers/helper'
+import { LOGOUT_USER_SUCCESS } from '../constants/Auth'
 
 export const API_KEY = Symbol('Api');
 
@@ -27,7 +28,10 @@ function fetchApi(endpoint, method, headers, body, schema) {
         }
 
         else {
+            json.status = response.status;
             return Promise.reject(json);
+
+
         }
     })).catch(error => {
         if(error.__proto__.constructor === SyntaxError ) return null;
@@ -74,8 +78,11 @@ export function createApiMiddelware(req) {
                 }
             ).catch(error => {
                 actionFail.payload = error;
+                if (error.status == 401) {
+                    eraseCookie('appeal_site_token');
+                    dispatch({type: LOGOUT_USER_SUCCESS})
+                }
                 dispatch(actionFail);
-                console.log(error);
                 return Promise.reject(error);
             })
         }

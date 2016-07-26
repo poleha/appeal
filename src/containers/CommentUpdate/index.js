@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as commentActions from '../../actions/CommentActions'
 import { CommentUpdateForm } from '../../components/CommentForm'
+import NotAllowed from '../../components/NotAllowed'
 
 
 function mapStateToProps(state) {
@@ -38,7 +39,7 @@ function mapDispatchToProps(dispatch) {
         }
         let promises = [];
         let currentPromise = loginPromise.then(() => {
-            return store.dispatch(commentActions.loadComments({id}));
+            return store.dispatch(commentActions.loadCommentPerm(id));
         });
         promises.push(currentPromise);
 
@@ -60,6 +61,7 @@ export default class CommentUpdate extends BaseComponent {
 
     render() {
         let comment = this.getComment();
+        if (comment == null) return <NotAllowed />;
         return (
             <div>
                 <Helmet title={comment.body.slice(0, 20) + '... | изменение'}/>

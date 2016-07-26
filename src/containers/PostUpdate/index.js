@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as postActions from '../../actions/PostActions'
 import { PostUpdateForm } from '../../components/PostForm'
-
+import NotAllowed from '../../components/NotAllowed'
 
 function mapStateToProps(state) {
     return {
@@ -62,11 +62,8 @@ export default class PostUpdate extends BaseComponent {
 
     render() {
         let post = this.getPost()
-        if (post == null) return (
-           <div>
-           Страница не найдена или у вас нет к ней доступа.
-           </div>
-        );
+        if (post == null) return <NotAllowed />;
+
         return (
             <div>
                 <Helmet title={post.body.slice(0, 20) + '... | изменение'}/>

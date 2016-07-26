@@ -134,7 +134,6 @@ export default class PostDetail extends BaseComponent {
             <div className="full_post_detail">
             <Post
                 key={post.id}
-                userId={this.props.userId}
                 post={post}
                 tags={this.props.tags}
                 logged={this.props.logged}

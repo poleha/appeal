@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as commentActions from '../../actions/CommentActions'
+import * as postActions from '../../actions/PostActions'
 import { CommentUpdateForm } from '../../components/CommentForm'
 import NotAllowed from '../../components/NotAllowed'
 
@@ -22,6 +23,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         commentActions: bindActionCreators(commentActions, dispatch),
+        postActions: bindActionCreators(postActions, dispatch)
     };
 }
 
@@ -40,6 +42,9 @@ function mapDispatchToProps(dispatch) {
         let promises = [];
         let currentPromise = loginPromise.then(() => {
             return store.dispatch(commentActions.loadCommentPerm(id));
+        }).then((res) => {
+            let postId = res.entities.comments[res.result].post;
+            return store.dispatch(postActions.loadPosts({id: postId}));
         });
         promises.push(currentPromise);
 

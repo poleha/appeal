@@ -75,7 +75,7 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
             newState = update(state, {
                 posts: {$set: {entities: {}, ids: []}},
-                loading: {$set: true},
+                loading: {$set: false},
                 count: {$set: 0}
             });
             return newState;
@@ -167,7 +167,7 @@ export default function app(state = initialState, action) {
             post = action.payload;
 
             newState = update(state, {
-                posts: {entities: {[post.id]: {$set: post}}, ids: {$unshift: [post.id]}},
+                posts: {entities: {[post.id]: {$set: post}}, ids: {$set: post.id}},
                 //adding: {$set: false},
                 //added: {$set: true},
                 //count: {$set: state.count + 1}

@@ -34,7 +34,7 @@ export function loginUser(userData) {
             else days = '';
 
             createCookie('appeal_site_token', response.auth_token, days);
-            dispatch(getUserInfo()).then(() => browserHistory.replace(location.pathname) );
+            dispatch(getUserInfo()).then(() => browserHistory.push(location.pathname) );
         }).catch((error) => {
         });
 
@@ -88,7 +88,7 @@ export function logoutUser() {
                 var auth2 = gapi.auth2.getAuthInstance();
                 return auth2.signOut()
             }
-        }).then(() => browserHistory.replace(location.pathname) )
+        }).then(() => browserHistory.replace('/') )
 
 
     }

@@ -105,7 +105,7 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
             newState = update(state, {
                 //added: {$set: true},
-                comments: {entities: {[action.payload.id]: {$set: action.payload}}, ids: {$unshift: [action.payload.id]}},
+                comments: {entities: {[action.payload.id]: {$set: action.payload}}, ids: {$set: action.payload.id}},
                 errors: {$set: {}}
             });
 

@@ -61,7 +61,7 @@ export function updateComment(comment) {
                 actions: [UPDATE_COMMENT_START, UPDATE_COMMENT_SUCCESS, UPDATE_COMMENT_FAIL]
             }
         }
-        return dispatch(action);
+        return dispatch(action).then(() => browserHistory.push(`/post/${comment.post}`)).catch(e => {});
     }
 
 }

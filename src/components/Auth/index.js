@@ -203,14 +203,14 @@ getLoginBlockTemplate () {
         if (!this.props.data.userId) return null;
         return (
             <div key="logged_block" className="logged_block">
-                <div className="logged_user">
-                    <label>Вы вошли как: </label>
-                    <Link activeClassName='active' to={`/user/${this.props.data.userId}`}>{this.props.data.userName}</Link>
-                </div>
+
+
+                <p className="name">Вы вошли как: <strong><Link activeClassName='active' to={`/user/${this.props.data.userId}`}>{this.props.data.userName}</Link></strong></p>
+
                 <input
                     type="button"
                     value="Выйти"
-                    className="user__logout btn btn-default"
+                    className="button button_small"
                     onClick={this.props.actions.logoutUser.bind(this)}
                 />
             </div>
@@ -281,7 +281,7 @@ getLoginBlockTemplate () {
 
                 </div>
                 <div key="logged_block" className="logged_block">
-                <input type="button" value="Войти" onClick={this.showLoginBlock.bind(this)}/>
+                <input className="button button_small" type="button" value="Войти" onClick={this.showLoginBlock.bind(this)}/>
                  </div>
                 </div>
         )

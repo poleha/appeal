@@ -20,7 +20,8 @@ class BaseCommentForm extends BaseComponent {
                 hidden: this.props.userId
             });
         return (
-            <div key="add_comment_form_key">
+            <section className="add bg_grey">
+            <div key="add_comment_form_key" className="in">
                 <form
                     onSubmit={this.addCommentFormSubmit.bind(this)}
                     className="add_comment_form"
@@ -51,6 +52,7 @@ class BaseCommentForm extends BaseComponent {
                 </form>
                 
             </div>
+                </section>
 
         )
     }

@@ -1,0 +1,184 @@
+@charset "UTF-8"
+
+$rem: 20
+$to_mobile: 479px
+
+
+//$html-font-size: rem(18)
+$html-font-family: 'Open Sans', sans-serif, Arial, Helvetica
+$html-font-family2: Arial, sans-serif, Helvetica
+
+$body-bg: #fff
+$body-color: #212121
+$body-font-size: rem(13)
+$body-line-height: 1.2
+
+$max-width: 1190px
+$max-width-padding: 0 15px
+
+$footer-min-height: 43
+
+$font-weight-normal: 400 // normal
+$font-weight-bold: 700 // bold
+
+
+// цвета
+$main-color: #52a3f2
+$main-color-hover: #0855a7
+$main-color-active: #0855a7
+
+$main-color2: #0000E0
+$main-color2-hover: #0505FF
+$main-color2-active: #3838FE
+
+$border-color: #cdcdcd
+$margin-bottom: 18
+$padding-x: 20
+$padding-y: 20 
+$padding-y2: $padding-y - $margin-bottom
+$wrap-top: 50
+$wrap-bottom: $wrap-top - $margin-bottom
+
+$bg-grey: #f8f7f7
+
+
+$color-red: #FF0000
+$color-green: #00FF00
+$color-blue: #0000FF
+$color-grey: #686868
+$color-black: #2D2D2D
+
+
+// Ссылки
+$a-color: $main-color
+$a-color-hover: $main-color-hover
+$a-color-active: $main-color-active
+
+$a-text-decoration: none
+$a-text-decoration-hover: underline
+$a-text-decoration-active: underline
+
+// ссылки контент
+$content-a-color: $a-color
+$content-a-color-hover: $a-color-hover
+$content-a-color-active: $a-color-active
+
+$content-a-text-decoration: $a-text-decoration
+$content-a-text-decoration-hover: $a-text-decoration-hover
+$content-a-text-decoration-active: $a-text-decoration-active
+
+// контент
+$content-font-size: $body-font-size
+$content-line-height: 1.6
+$content-tags-margin-bottom: $margin-bottom +px
+$content-table-border-color: $border-color
+$content-table-tdth-padding: rem(7)
+
+// form
+$var_h: 50 // Высота
+$var_b: 1 // толщина бордера. 0 - если NONE
+$var_padding: 12
+$var_radius: 4
+
+
+
+$form-color: $body-color
+$form-bg-color: #fff
+
+$form-font-family: $html-font-family
+$form-font-size: $body-font-size
+
+$form-border: solid $var_b+px $border-color
+$form-border-radius: $var_radius+px
+$form-height: rem($var_h)
+$form-line-height: rem($var_h - $var_b - $var_b)
+$form-padding: 0 rem($var_padding)
+$form-margin-bottom: $margin-bottom +px
+
+$form-radio-margin: -2px rem($var_padding / 2) 0 0
+$form-label-margin: 0 rem($var_padding) $margin-bottom +px 0
+
+
+$form-textarea-height: rem(120)
+$form-textarea-line-height: 1.2
+$form-textarea-padding: rem($var_padding)
+
+$form-select-line-height: rem($var_h - $var_b - $var_b)
+$form-select-height: rem($var_h)
+
+// button
+$var_h: 34 // Высота
+$var_b: 1 // толщина бордера. 0 - если NONE
+$var_padding: 10
+$var_radius: 2
+
+$button-color: $body-bg
+$button-color-hover: $body-bg
+$button-color-active: $body-bg
+
+$button-bg-color: $main-color
+$button-bg-color-hover: $main-color-hover
+$button-bg-color-active: $main-color-hover
+
+$button-border: solid $var_b+px $main-color-hover
+$button-border-hover: solid $var_b+px $main-color-hover
+$button-border-active: solid $var_b+px $main-color-active
+
+//$button-height: rem($var_h)
+$button-line-height: rem($var_h - $var_b - $var_b)
+$button-padding: 0 rem($var_padding)
+$button-margin-bottom: $margin-bottom +px
+$button-text-align: center
+$button-border-radius: $var_radius+px
+
+
+
+
+
+//	$button-bg-color: $main-color
+	$button-bg-color-hover: $main-color-hover
+	$button-bg-color-active: $main-color-active
+
+
+
+
+
+
+
+
+
+$transition: 0.4s 0.05s ease
+$transition2: 0.6s 0.05s ease
+$transition3: max-height 0.15s ease-out
+=transition ($transition)
+	-moz-transition: $transition
+	-o-transition: $transition
+	-webkit-transition: $transition
+	transition: $transition
+
+=transform ($param)
+	transform: $param
+	-ms-transform: $param
+	-moz-transform: $param
+	-webkit-transform: $param
+	-o-transform: $param
+	-moz-transform-origin: center center
+
+
+=rotate ($param)
+	-webkit-transform: rotateZ($param)
+	-ms-transform: rotateZ($param)
+	transform: rotateZ($param)
+
+@function rem($size) 
+	$remSize: $size / $rem
+	@return $remSize * 1rem
+
+	
+	
+=clear
+	content: ''
+	display: block
+	clear: both
+	
+	

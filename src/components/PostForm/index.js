@@ -27,6 +27,7 @@ class BasePostForm extends BaseComponent {
             tagsAddBlock = mapNodes(tags, function(elem){
                 let key = elem.id;
                 return <li key={key}>
+                    <label>
                     <input
                         key={key}
                         defaultChecked={this.getTagChecked(elem)}
@@ -37,7 +38,9 @@ class BasePostForm extends BaseComponent {
                         name={`tags__${key}`}
                         //disabled={this.getAddPostButtonDisabled()}
                     />
-                    <label htmlFor={`tags_input-${key}`}>{elem.title}</label>
+                        {elem.title}
+                     </label>
+
                 </li>
             }.bind(this));
         }
@@ -46,7 +49,9 @@ class BasePostForm extends BaseComponent {
         }
 
         return (
-            <div>
+            <section className="add bg_grey">
+                <h1 className="section_name">Добавить предложение</h1>
+                <div className="in">
                 <form
                     key="add_post_form"
                     onSubmit={this.addPostSubmit.bind(this)}
@@ -62,27 +67,28 @@ class BasePostForm extends BaseComponent {
                         {this.getBodyField()}
 
                     </div>
-                    <label htmlFor="tags_add_ul">Разделы:</label>
 
                     <div className="form_field">
                         {this.getFieldErrors('tags', 'post')}
+                        <div className="add_params">
                         <ul
                             className='tags_add'
                             //ref="tags"
                             id="tags_add_ul">
                             {tagsAddBlock}
                         </ul>
+                            </div>
 
                     </div>
                     <input
                         disabled={this.getAddPostButtonDisabled()}
                         type="submit"
-                        className="btn btn-default"
+                        className="button button_left"
                         value="Отправить">
                     </input>
                 </form>
-                
             </div>
+            </section>
         )
     }
 

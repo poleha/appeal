@@ -1,0 +1,139 @@
+/* ----- all plugins ----- */
+.pop, .pop .close, .pop .close::before, .pop .close::after, .ul li ul, .button, .pop_login, .tabs li
+	+transition ($transition2)
+
+.owl-dot, .menu ul
+	+transition ($transition)
+
+/* ----- end all plugins ----- */
+
+
+/*----------- menu ------------- */
+
+$w: 300
+$menu-close-color: $body-color
+$menu-close-color-hover: $main-color
+
+.menu
+	background-color: $main-color-hover
+	border: 1px solid #c4c4c4
+	border-radius: 6px
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 -2px 0 rgba(0, 0, 0, 0.06)
+	height: 43px
+	line-height: 41px
+	padding: 0
+	display: block
+	width: 100%
+	ul
+		height: 41px
+		line-height: 41px
+		padding: 0
+		display: block
+		width: 100%
+		background-color: $main-color-hover
+		li
+			display: inline-block
+			height: 100%
+			vertical-align: middle
+			border-right: solid 1px #fff
+		a, a:hover, a:active
+			display: inline-block
+			height: 100%
+			color: $body-bg
+			text-decoration: none
+			text-align: center
+			padding: 0 10px
+		a:hover, a:active, a.active, .active a
+			background-color: $main-color
+
+
+.menu_collapse
+	display: none
+	cursor: pointer
+	width: 75px
+	height: 41px
+	background: no-repeat center
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAaCAMAAAD2Zz7EAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAWlBMVEX///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9jZLFEAAAAHXRSTlMANNszzMn6+cfIL9Xu0AcRBEPx8Pi8I77duS77zSicoi8AAAABYktHRACIBR1IAAAACXBIWXMAAAsSAAALEgHS3X78AAAAYUlEQVQ4y9WUtwGAMBADhcmYZDLG3n9NVjgq4OqrJP0rMRFhUmXMjDFXQdVSFVVrNbZFdI1+RT8gRslNLKvZydJcLW9r0UrVVdt+IM7t7fw/gKfT9k8OBhd7KVA1CL+M5AZQiUE/B/x1JwAAAABJRU5ErkJggg==')
+	border: none
+	&:hover
+		background-color: $main-color-hover
+	&:active
+		background-color: $main-color-active
+
+// кнопка .close
+.menu .close
+	display: none
+	cursor: pointer
+	position: absolute
+	right: $padding-x / 2 +px
+	top: $padding-y / 2 +px
+	width: 30px
+	height: 30px
+	//background-color: #ccc
+	&::before, &::after
+		content: ''
+		display: block
+		position: absolute
+		left: 2px
+		top: 14px
+		height: 3px
+		width: 26px
+		background-color: $menu-close-color
+		border-radius: 3px
+		opacity: 0.7
+		//transform: translate(-50%, -50%)
+	&::before
+		+rotate(-45deg)
+	&::after
+		+rotate(+45deg)
+	&:hover
+		&::before, &::after
+			opacity: 1
+			background-color: $menu-close-color-hover		
+		
+		
+@media only screen and (max-width : 999px) 	
+	.menu_collapse
+		display: inline-block
+	.menu 
+		ul
+			height: auto
+			display: block
+			padding-top: 0
+			padding-bottom: 0
+			max-height: 0
+			overflow: hidden
+			position: absolute
+			width: auto
+			z-index: 150
+			
+			text-transform: uppercase	
+			li
+				display: block
+				height: auto
+				font-size: rem(18)
+				border: 0
+				a, a:hover, a:active
+					display: block	
+					text-align: left
+					padding: 2px 35px
+
+		
+	.menu.active ul
+		opacity: 1		
+		overflow: auto
+		max-height: 1000px
+		padding: 10px 0 18px
+		//display: block
+		//padding: $padding-y +px $padding-x +px $padding-y +px
+/*----------- end menu ------------- */
+
+
+
+
+
+
+
+
+
+

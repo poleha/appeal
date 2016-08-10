@@ -8,26 +8,28 @@ export default class Post extends Component {
 
     getRateBlock(post) {
         //let key = post.id;
-        let likeButtonInactive = !this.props.userId || post.user==this.props.userId || post.rating;
-        let dislikeButtonInactive = !this.props.userId  || post.user==this.props.userId || post.rating;
+        let rateBlockDisabled = !this.props.userId || post.user==this.props.userId || post.rating;
+        //let dislikeButtonInactive = !this.props.userId  || post.user==this.props.userId || post.rating;
         let rateBlock;
             rateBlock = (
-                <div className='rate_block'>
-                    <input
-                        disabled={likeButtonInactive}
+                <li className={classNames('rate', {disable: rateBlockDisabled})}>
+                    <div
                         onClick={this.ratePostClick.bind(this, RATE_POST_TYPE_LIKE)}
                         type="button"
-                        className={classNames('button_like', {active: !likeButtonInactive}, {inactive: likeButtonInactive}, {rated:post.rated == RATE_POST_TYPE_LIKE})}
-                        value={post.liked_count}
-                    />
-                    <input
-                        disabled={dislikeButtonInactive}
+                        className={classNames('up', {active:post.rated == RATE_POST_TYPE_LIKE})}
+
+                    >
+                        {post.liked_count}
+                    </div>
+                    <div
                         onClick={this.ratePostClick.bind(this, RATE_POST_TYPE_DISLIKE)}
                         type="button"
-                        className={classNames('button_dislike', {active: !dislikeButtonInactive}, {inactive: dislikeButtonInactive}, {rated:post.rated == RATE_POST_TYPE_DISLIKE})}
-                        value={post.disliked_count}
-                    />
-                </div>
+                        className={classNames('down', {active:post.rated == RATE_POST_TYPE_DISLIKE})}
+
+                    >
+                        {post.disliked_count}
+                    </div>
+                </li>
             );
         return rateBlock;
     }
@@ -36,7 +38,7 @@ export default class Post extends Component {
     getUpdateBlock(post) {
         if (post.user && post.user==this.props.userId) {
          return (
-             <div className="inline"><Link to={'/post/' + post.id + '/update'}>Редактировать</Link></div>
+             <Link to={'/post/' + post.id + '/update'}>Редактировать</Link>
          )
         }
         else {
@@ -52,12 +54,12 @@ export default class Post extends Component {
         let userBlock;
         if (component.user) {
             userBlock = (
-                <div className="inline"><Link to={'/user/' + component.user}>{component.username}</Link></div>
+                <Link to={'/user/' + component.user}>{component.username}</Link>
             )
         }
         else {
             userBlock = (
-                <div className="inline">{component.username}</div>
+                <span>{component.username}</span>
             )
         }
         return userBlock
@@ -67,23 +69,35 @@ export default class Post extends Component {
         let post = this.props.post;
         let key =  post.id;
         return (
-            <div className={classNames('post', {added: this.props.added})}>
-                {this.getRateBlock(post)}
-                {this.getUpdateBlock(post)}
-                <div className="post_created">{post.created}</div>
-                <div className="post_author inline">
-                <label>Автор:</label>
-                    {this.getUserBlock(post)}
+            <div className={classNames('card', {added: this.props.added})}>
+
+
+
+                <div className="card_info">
+                    <div className="info_left">
+                        <div className="name"> {this.getUserBlock(post)}</div>
+                        <span>{post.created}</span>
+                    </div>
+                    <div className="info_right">
+                        <span>{this.getUpdateBlock(post)}</span>
+                        <span><Link to={'/post/' + key}>Комментариев: {post.comment_count}</Link></span>
+                    </div>
                 </div>
 
-                <div className="post_body">
-                <label>Призыв:</label>
-                <div><Link to={'/post/' + key}>{post.body}</Link></div>
-                </div>
+
+
+                <ul className="card_table">
+                <li>
+                    <div className="content">
+                        {post.body}
+                    </div>
+                </li>
+                    {this.getRateBlock(post)}
+                </ul>
                
                 
                 <div className="post_tags">
-                <label>Метки:</label>
+                <p>Метки:</p>
                 <ul className="tags">
                     {
                         mapNodes(this.props.tags, function(tag) {
@@ -98,7 +112,7 @@ export default class Post extends Component {
                     }
                 </ul>
                 </div>
-                <div className="post_comment_count"><Link to={'/post/' + key}>Комментариев: {post.comment_count}</Link></div>
+
             </div>
 
 

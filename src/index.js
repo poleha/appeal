@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import Root from './containers/Root'
 import configureStore from './store/configureStore'
-const dest = document.getElementById('root');
+const dest = document.getElementById('app_root');
 
 
 const store = configureStore(window.__data);

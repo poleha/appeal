@@ -75,6 +75,7 @@ export default class PostDetail extends BaseComponent {
     }
 
     refreshCommentsClick(e) {
+        e.preventDefault();
         this.props.commentActions.cleanComments();
         this.props.postActions.loadPosts({id: this.props.params.id});
         this.props.commentActions.loadComments({post: this.props.params.id} )
@@ -113,15 +114,19 @@ export default class PostDetail extends BaseComponent {
     getShowMoreButton() {
         if (this.props.comment.comments == null || this.props.post.posts == null) return null;
         let post = this.props.post.posts.entities[this.props.params.id];
-        return (
-        <input
-            key="comment_show_more_button"
-            onClick={this.loadMoreCommentsClick.bind(this)}
-            type="button"
-            className={classNames('btn', 'btn-default', {hidden: post.comments.length <= this.props.comment.comments.ids.length})}
-            value="Показать еще"
-        />
-        )
+        let showMoreInput;
+        if (post.comments.length > this.props.comment.comments.ids.length) {
+            showMoreInput = (
+                <input
+                    key="comment_show_more_button"
+                    onClick={this.loadMoreCommentsClick.bind(this)}
+                    type="button"
+                    className="button button_middle button_height"
+                    value="Показать еще"
+                />
+            )
+        }
+        return showMoreInput;
 
     }
 
@@ -131,6 +136,7 @@ export default class PostDetail extends BaseComponent {
 
         <div className="full_post">
             <Helmet title={post.body.slice(0, 20)}/>
+            <section className="cards">
             <div className="full_post_detail">
             <Post
                 key={post.id}
@@ -143,21 +149,23 @@ export default class PostDetail extends BaseComponent {
                 ratePost={this.props.postActions.ratePost}
             />
             </div>
+            </section>
 
-            <h3>Комментарии</h3>
-            <div className="add_comment_form_block">
-            <label>Отправить комментарий</label>
+            
+             <h1 className="section_name">Отправить комментарий</h1>
         
-            <CommentCreateForm {...this.props}/>
+            
+                <CommentCreateForm {...this.props}/>
                 {this.getAddedBlock()}
-        
-             </div>   
-            <input
+            <div className="section_name_small">Комментарии</div>
+            <a
                 onClick={this.refreshCommentsClick.bind(this)}
                 type="button"
-                className="btn btn-default"
-                value="Обновить"
-            />
+                className="button button_left button_height button_reload"
+            >
+                Обновить
+            </a>
+            <section className="cards">
             <ReactCSSTransitionGroup
                 transitionName="comments"
                 transitionEnterTimeout={1000}
@@ -165,9 +173,11 @@ export default class PostDetail extends BaseComponent {
                 className='comments'
             >
             {this.getCommentsBlock()}
+                <p className="text-center">
                 {this.getShowMoreButton()}
+                  </p>
             </ReactCSSTransitionGroup>
-
+            </section>
 
         </div>
 

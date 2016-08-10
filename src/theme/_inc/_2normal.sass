@@ -1,0 +1,395 @@
+@charset "UTF-8"
+@import "_1vars"
+
+
+
+
+
+/* ----- body ----- */
+*, *::before, *::after
+	box-sizing: inherit
+
+body, html
+	margin: 0
+	padding: 0
+html
+	font-size: $rem + px
+	box-sizing: border-box
+	font-family: $html-font-family
+	height: 100%
+body
+	font-size: $body-font-size
+	color: $body-color
+	font-weight: normal
+	//background: url("/design/img/bg_root.jpg") no-repeat center top
+	background-color: $body-bg
+	line-height: $body-line-height
+	height: 100%
+.root
+	min-height: 100%
+	overflow: hidden
+	&::after
+		content: ''
+		height: $footer-min-height +px
+		display: block
+		//background-color: #f00
+.max_width
+	margin: 0 auto
+	max-width: $max-width
+	padding: $max-width-padding
+	position: relative
+
+.clearfix, .cb, .clear, .cb_full, .clear_full
+	clear: both
+	//height: 0
+		line-height: 0
+		overflow: hidden
+		max-height: 0
+		font-size: 0
+		padding: 0
+		margin: 0
+		display: block
+/* ----- end body ----- */
+
+
+
+
+
+
+
+
+
+
+/* ----- normalize ----- */
+a, button, input
+	+transition ($transition)
+a
+	outline: none
+img
+	border-color: transparent
+strong, b
+	font-weight: $font-weight-bold
+p, ul, ol, li, h1,h2,h3,h4,h5,h6, table, tr, td, th, tbody
+	margin: 0
+	font-weight: $font-weight-normal
+	padding: 0
+ul, ol
+	display: block
+	list-style-type: none
+	font-size: 0
+li
+	display: inline-block
+	font-size: $body-font-size
+
+table
+	border-collapse: collapse
+	border-spacing: 0
+	border: none
+td,th
+	vertical-align: top
+h1
+	font-size: rem(34)
+h2
+	font-size: rem(30)
+h3
+	font-size: rem(24)
+h4
+	font-size: rem(22)
+h5
+	font-size: rem(20)
+h6
+	font-size: rem(18)
+
+a
+	color: $a-color
+	text-decoration: $a-text-decoration
+a:hover
+	color: $a-color-hover
+	text-decoration: $a-text-decoration-hover
+a:active
+	color: $a-color-active
+	text-decoration: $a-text-decoration-active
+/* ----- end normalize ----- */
+
+
+
+
+
+
+
+
+/* ----- normalize addon ----- */
+body .root
+	a.uu, a.uu:hover, a.uu:active
+		text-decoration: underline
+	a.nn, a.nn:hover, a.nn:active
+		text-decoration: none
+	a.nu, a.nu:hover, a.nu:active
+		text-decoration: none
+	a.nu:hover, a.nu:active
+		text-decoration: underline
+	a.un, a.un:hover, a.un:active
+		text-decoration: underline
+	a.un:hover, a.un:active
+		text-decoration: none
+
+// ссылка ЦВЕТОМ
+//body .root
+	a.main, a.main:hover, a.main:active
+		color: $main-color
+	a.main:hover, a.main:active
+		color: $main-color-hover
+	a.main:active
+		color: $main-color-active
+
+//body .root
+	a.green, a.green:hover, a.green:active
+		color: $main-color
+	a.green:hover, a.green:active
+		color: $main-color-hover
+	a.green:active
+		color: $main-color-active
+
+//body .root
+.text-left
+	text-align: left
+.text-right
+	text-align: right
+.text-center
+	text-align: center
+.text-justify
+	text-align: justify
+
+.ttu
+	text-transform: uppercase
+.nowrap
+	white-space: nowrap
+.vertical_middle
+	position: relative
+	top: 50%
+	transform: translateY(-50%)
+	display: block
+
+.wrap_top
+	padding-top: $wrap-top +px
+.wrap_bottom
+	padding-bottom: $wrap-bottom +px
+
+body .root
+	.c_red
+		color: $color-red
+	.c_green
+		color: $color-green
+	.c_blue
+		color: $color-blue
+	.c_grey
+		color: $color-grey
+	.c_black
+		color: $color-black
+	.c_main
+		color: $main-color
+
+/* ----- end normalize addon ----- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ----- content ---- */
+.content
+	font-size: $content-font-size
+	line-height: $content-line-height
+
+	img
+		border-color: $border-color
+		max-width: 100%
+
+	p, ul, ol, h1,h2,h3,h4,h5,h6, table
+		//line-height: $content-line-height
+		margin-bottom: $content-tags-margin-bottom
+	//h1,h2,h3,h4,h5,h6
+		font-weight: $font-weight-bold
+
+	ul, ol
+		font-size: inherit
+		padding-left: 40px
+	ul li
+		list-style-type: disc
+	ol li
+		list-style-type: decimal
+	li
+		font-size: inherit
+		display: list-item
+
+
+	//table
+		border-collapse: collapse
+		border-spacing: 0
+		border: none
+	td, th, table
+		border-color: $border-color
+
+	td, th
+		vertical-align: top
+		padding: $content-table-tdth-padding
+		text-align: left
+
+	a
+		color: $content-a-color
+		text-decoration: $content-a-text-decoration
+	a:hover
+		color: $content-a-color-hover
+		text-decoration: $content-a-text-decoration-hover
+	a:active
+		color: $content-a-color-active
+		text-decoration: $content-a-text-decoration-active
+
+	.f_left img, img.f_left
+		float: left
+		margin: 0 10px 5px 0
+	.f_right img, img.f_right
+		float: right
+		margin: 0 0 5px 10px
+/* ----- end content ---- */
+
+
+
+
+
+
+
+
+
+
+
+/* ----- form ----- */
+
+
+input, textarea, select, button, .add .smiles
+	font-family: $form-font-family
+	font-size: $form-font-size
+	color: $form-color
+
+	display: block
+	width: 100%
+
+	background-color: $form-bg-color
+	border: $form-border
+	height: $form-height
+	line-height: $form-line-height
+	padding: $form-padding
+	margin-bottom: $form-margin-bottom
+	border-radius: $form-border-radius
+
+	box-shadow: 0 0 5px rgba(176, 175, 175, 0.6)
+
+	&:focus
+		box-shadow: 0 0 rem(7) rgba(0, 0, 0, 0.1)
+
+textarea
+	max-width: 100%
+	height: $form-textarea-height
+	line-height: $form-textarea-line-height
+	padding: $form-textarea-padding
+	overflow: auto
+
+select
+	-webkit-appearance: none
+	-moz-appearance: none
+	text-indent: 0.01px
+	text-overflow: ''
+	-ms-appearance: none
+	appearance: none!important
+select::-ms-expand
+	display: none
+
+select
+	background: $form-bg-color url("/design/img/system/icon_select.png") no-repeat center right
+	padding-right: 25px
+	cursor: pointer
+	line-height: $form-select-line-height
+	height: $form-select-height
+
+.ie9
+	select
+		padding-right: 0px
+		background-image: none
+
+/* ----- radio checkbox ----- */
+label
+	margin-bottom: $form-margin-bottom
+	line-height: $form-line-height
+	display: inline-block
+	margin: $form-label-margin
+input[type="radio"], input[type="checkbox"]
+	cursor: pointer
+	display: inline-block
+	width: auto
+	height: auto
+	line-height: inherit
+	//border-radius: rem(38)
+	padding: 0
+	vertical-align: middle
+	margin: $form-radio-margin
+	line-height: $form-line-height
+	border: none
+	border-radius: 0
+
+
+
+
+/* ----- buttons ----- */
+//.button, .button:hover, button:active
+.button, input[type=submit], input[type=reset], button, .button:hover, input[type=submit]:hover, input[type=reset]:hover, button:hover, button:hover, .button:active, input[type=submit]:active, input[type=reset]:active, button:active
+	display: block
+	width: 100%
+	color: $button-color
+	background-color: $button-bg-color
+	border: $button-border
+	//border-bottom-width: 3px
+	//height: $button-height
+	line-height: $button-line-height
+	padding: $button-padding
+	margin-bottom: $button-margin-bottom
+	text-decoration: none
+	cursor: pointer
+	text-align: $button-text-align
+	border-radius: $button-border-radius
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 -2px 0 rgba(0, 0, 0, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.2)
+
+	&:hover
+		color: $button-color-hover
+		background-color: $button-bg-color-hover
+		border: $button-border-hover
+		//border-bottom-width: 3px
+	&:active
+		color: $button-color-active
+		background-color: $button-bg-color-active
+		border: $button-border-active
+		//border-bottom-width: 3px
+
+.button_small, .button_small:hover, .button_small:active
+	width: 100px
+	display: inline-block
+
+/* ----- end form ----- */
+
+
+
+/* ------ adaptive ----- */
+@media only screen and (max-width : $to_mobile)
+	.to_mobile
+		table, tbody, tr, td, th
+			display: block
+			width: 100%
+
+

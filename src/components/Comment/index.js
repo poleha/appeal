@@ -35,15 +35,17 @@ export default class Comment extends Component {
 
     render() {
         let comment = this.props.comment;
-        return <div className={classNames('comment', {added:this.props.added})}>
-            <div>
-            {this.getUpdateBlock(comment)}
-            </div>
-            <label>Опубликован:</label><div>{comment.created}</div>
-            <label>Автор:</label><div>
-            {this.getUserBlock(comment)}
+        return <div className={classNames('comment', 'card', {added:this.props.added})}>
+            <div className="card_info">
+                <div className="info_left">
+                    <div className="name"> {this.getUserBlock(comment)}</div>
+                    <span>{comment.created}</span>
         </div>
-            <label>Комментарий:</label><div>{comment.body}</div>
+                <div className="info_right">
+                    <span>{this.getUpdateBlock(comment)}</span>
+                </div>
+                </div>
+            <div>{comment.body}</div>
 
         </div>
     }

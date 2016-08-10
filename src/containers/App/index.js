@@ -3,13 +3,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
 import Helmet from 'react-helmet';
-import classNames from 'classnames'
 import * as authActions from '../../actions/AuthActions'
 import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
 import * as tagActions from '../../actions/TagActions'
-import User from '../../components/Auth'
 import NavLink from '../../components/NavLink'
+import Header from '../../components/Header'
 import { mapNodes } from '../../helpers/helper'
 import { getUserInfo } from '../../actions/AuthActions'
 import { loadTags } from '../../actions/TagActions'
@@ -65,34 +64,32 @@ export default class App extends Component {
     });
 
     return (
-        <div className='container'>
+    <div>
+    <div className="root to_mobile">
+            <div className="max_width">
             <Helmet {...config.app.head} title={config.app.title}/>
+             <Header {...this.props} />
           <div className="row top_block">
-              <nav className="navbar navbar-default">
-                      <div className="navbar-header">
-                          <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-menu-navbar-collapse" aria-expanded="false">
-                              <span className="sr-only">Показать меню</span>
-                              <span className="icon-bar"></span>
-                              <span className="icon-bar"></span>
-                              <span className="icon-bar"></span>
-                          </button>
-                      </div>
-                      <div className="collapse navbar-collapse" id="top-menu-navbar-collapse">
-                      <ul className={classNames('nav', 'navbar-nav', 'top_menu')}>
+                  <nav className="menu hide_active">
+                      <div className="menu_collapse"></div>
+                      <ul>
               <NavLink activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
             {linksBlock}
 
           </ul>
-                          </div>
-                  </nav>
-              <User
-                  data={this.props.auth}
-                  actions={this.props.authActions}
-              />
+                          </nav>
+           
           </div>
             <BreadCrumbs {...this.props}/>
             {this.props.children}
          </div>
+         </div>
+        <div className="max_width">
+            <footer className="footer to_mobile">
+            <p className="text-center">Qblik.ru 2016</p>
+        </footer>
+        </div>
+        </div>
     )
   }
 }

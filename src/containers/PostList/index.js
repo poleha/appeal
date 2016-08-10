@@ -142,7 +142,7 @@ export default class PostList extends BaseComponent {
             showMoreInput = (
                 <input
                     onClick={this.loadMorePostsClick.bind(this)}
-                    className="btn btn-default"
+                    className="button button_middle button_height"
                     type="button"
                     value="Показать еще">
                 </input>
@@ -218,26 +218,30 @@ getSearchInput() {
       return <div className="post_list">
           <Helmet title={currentTagTitle} />
 
-        <div>
-        <h2>{this.getCurrentTagTitle()}</h2>
-        </div>
+
 
           <div className="add_post_form_block">
-          <h3>Добавить предложение</h3>
+             
 
             <PostCreateForm {...this.props}/>
              
         </div>
           {this.getAddedBlock()}
-          {this.getSearchInput()}
-          <input
+          <div className="box_search">
+              <div className="in">
+              {this.getSearchInput()}
+              </div>
+              </div>
+          <a
             onClick={this.refreshPostsClick.bind(this)}
             disabled={this.getAddPostButtonDisabled()}
             type="button"
-            className="btn btn-default"
-            value="Обновить">
-        </input>
+            className="button button_left button_height button_reload button_reload_search"
+         >
+              Обновить
+        </a>
 
+          <section className="cards">
           <ReactCSSTransitionGroup
               transitionName="posts"
               transitionEnterTimeout={1000}
@@ -245,9 +249,11 @@ getSearchInput() {
               className='posts'
           >
             {this.getPostsBlock()}
+              <p className="text-center">
               {this.getShowMoreInput()}
+              </p>
           </ReactCSSTransitionGroup>
-
+</section>
 
       </div>
   }

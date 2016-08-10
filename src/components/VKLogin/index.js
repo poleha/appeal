@@ -10,8 +10,7 @@ export default class VKLogin extends Component {
 
     render() {
     return (
-        <input
-            type="button"
+        <a
             className="vk_login_button"
             onClick={this.props.actions.VKLogin}
         />

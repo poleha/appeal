@@ -94,6 +94,7 @@ getLoginBlockTemplate () {
                             placeholder="Имя пользователя"
                             className="user_username"
                             name="username"
+                            required
                         />
                          </div>
                         <div className="form_field">
@@ -104,19 +105,37 @@ getLoginBlockTemplate () {
                             name="password"
                             type="password"
                             className="user_password"
+                            required
                         />
                         </div>
-                        <div className="form_field">
-                        <label htmlFor="save_me">Запомнить меня</label>
-                        <input
-                            id="save_me"
-                            type="checkbox"
-                            defaultChecked={true}
-                            ref={(c) => this._saveMe = c}
-                            name="save_me"
-                            className="save_me"
-                        />
+
+
+
+
+
+
+                        <div className="notice">
+                            <div className="form_field">
+                            <p>
+
+                                <label>
+                                <input id="save_me"
+                                       type="checkbox"
+                                       defaultChecked={true}
+                                       ref={(c) => this._saveMe = c}
+                                       name="save_me"
+                                       className="save_me"
+                                />
+                                Запомнить меня
+                                </label>
+
+                            </p>
+                            </div>
                         </div>
+
+
+
+
                         <input
                             type="submit"
                             value="Войти"
@@ -144,6 +163,7 @@ getLoginBlockTemplate () {
                             id="user_email"
                             name="email"
                             placeholder="E-mail"
+                            required
                         />
                             </div>
                         <div className="form_field">
@@ -155,6 +175,7 @@ getLoginBlockTemplate () {
                             id="user_username"
                             name="username"
                             placeholder="Имя пользователя"
+                            required
                         />
                             </div>
                         <div className="form_field">
@@ -167,6 +188,7 @@ getLoginBlockTemplate () {
                             name="password"
                             type="password"
                             placeholder="Пароль"
+                            required
                         />
                             </div>
                         <div className="form_field">
@@ -179,6 +201,7 @@ getLoginBlockTemplate () {
                             name="password2"
                             type="password"
                             placeholder="Пароль еще раз"
+                            required
                         />
                             </div>
                         <input
@@ -226,7 +249,7 @@ getLoginBlockTemplate () {
 
 
             socialLoginTemplate = (
-                <div className={classNames('social_login_block', {hidden: this.props.data.userId})}>
+                <div className={classNames('social', {hidden: this.props.data.userId})}>
                     <VKLogin
                         actions={this.props.actions}
                     />
@@ -247,9 +270,12 @@ getLoginBlockTemplate () {
         return (<div
                 key="user_block"
             >
-                {this.getSocialLoginTemplate()}
+
                 {this.getLoginBlockButtons()}
                 {this.getLoginBlockTemplate()}
+            <div className="bottom">
+                {this.getSocialLoginTemplate()}
+            </div>
 
             </div>
         )
@@ -269,12 +295,12 @@ getLoginBlockTemplate () {
             <div key="modal_box" id="modal_box" className="modal fade" ref={(e) => this._body = e}>
                     <div className="modal-dialog">
                         <div className="modal-content user_block">
-                            <div className="modal-header">
-                                <button type="button" className="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 className="modal-title">Войти на сайт</h4>
-                            </div>
+                            <div type="button" className="close" data-dismiss="modal" aria-hidden="true"></div>
+                            <div className="in">
+
                             <div className="modal-body">
                                 {this.getUserBlock()}
+                            </div>
                             </div>
                         </div>
                     </div>

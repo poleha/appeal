@@ -25,8 +25,7 @@ export default class FacebookLogin extends Component {
     
     render() {
         return (
-                <input
-                    type="button"
+                <a
                     className="facebook_login_button"
                     onClick={this.props.actions.FacebookLogin.bind(this)}
                 />

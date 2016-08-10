@@ -128,7 +128,7 @@ $var_w_logo: 201
 
 
 /* ------ pop_login ----- */
-.pop_login
+.user_block
 	position: absolute
 	right: 18px
 	width: 357px
@@ -137,14 +137,17 @@ $var_w_logo: 201
 	border-radius: 15px 0 15px 15px
 	overflow: hidden
 	max-width: 90%
-	max-height: 0
-	opacity: 0
+	max-height: 900px
 	z-index: 200
 	&::after
 		+clear
 	.in
 		padding: 0 50px
 		margin-top: 45px
+
+	.modal-body
+		padding: 0
+
 	.close
 		margin: 3px
 		float: right
@@ -152,11 +155,11 @@ $var_w_logo: 201
 		height: 31px
 		background-image: url('data:image/png;base64,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')		
 		cursor: pointer
-	.login_form
+	.login_form, .registration_form
 		p
 			font-size: rem(14)
 			padding: 0 0 5px 0
-		input
+		input:not([type='checkbox'])
 			height: 43px
 			line-height: 41px
 			background-color: #e5e5e5
@@ -164,29 +167,52 @@ $var_w_logo: 201
 			border-radius: 5px
 			box-shadow: -0.6px 0.8px 0.6px 0.4px #fff, inset -0.6px 0.8px 2px rgba(0, 0, 1, 0.5)			
 			margin-bottom: 21px
-	.notice
-		margin-top: -10px
-		font-size: rem(12)
-		padding-bottom: 15px
-		input, label
-			margin-bottom: 0
-		label
-			line-height: 32px
-		.reg
-			padding-left: 25px
-		a, a:hover, a:active
-			color: $main-color-hover
+		.notice
+			margin-top: -10px
+			font-size: rem(12)
+			padding-bottom: 15px
+			input, label
+				margin-bottom: 0
+			label
+				line-height: 32px
+			.reg
+				padding-left: 25px
+			a, a:hover, a:active
+				color: $main-color-hover
 		
 	.bottom
 		background-color: #52a3f2
 		padding: 10px 24px 14px 24px
+		min-height: 61px
 		input
 			float: right
 			margin-top: 15px
 		.social
 			font-size: 0
-			img
+			text-align: center
+			a
 				margin: 4px
+				cursor: pointer
+
+			.google_login_button
+					background: url(/static/images/google.png) no-repeat
+					display: inline-block
+					width: 53px
+					height: 53px
+
+			.vk_login_button
+				background: url(/static/images/vk.png) no-repeat
+				display: inline-block
+				width: 53px
+				height: 53px
+
+			.facebook_login_button
+				background: url(/static/images/facebook.png) no-repeat
+				display: inline-block
+				width: 53px
+				height: 53px
+
+
 	.lost
 		float: right
 		padding: 5px 12px 0 0
@@ -199,9 +225,6 @@ $var_w_logo: 201
 		a:hover, a:active
 			text-decoration: none
 
-.pop_login.active
-	max-height: 500px
-	opacity: 1
 /* ------ end pop_login ----- */
 
 

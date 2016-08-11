@@ -1,13 +1,18 @@
 import React, { PropTypes, Component } from 'react'
 
 import BaseComponent from '../../components/BaseComponent'
-import Smikeys from '../../components/Smileys'
+import SmileysTextArea from '../../components/SmileysTextArea'
 import classNames from 'classnames'
+import { formArrayToJson, mapNodes } from '../../helpers/helper'
 
 
 class BaseCommentForm extends BaseComponent {
 
+    getComment() {
+        let commentForm = $(this._addCommentForm);
 
+        return formArrayToJson(commentForm.serializeArray());
+    }
 
 
     render() {
@@ -26,6 +31,7 @@ class BaseCommentForm extends BaseComponent {
                 <form
                     onSubmit={this.addCommentFormSubmit.bind(this)}
                     className="add_comment_form"
+                    ref={(c) => this._addCommentForm = c}
                 >
                     <div className={usernameInputClass}>
                         {this.getFieldErrors('username', 'comment')}
@@ -44,7 +50,6 @@ class BaseCommentForm extends BaseComponent {
                         />
                     </div>
                     {this.getBodyField()}
-                    <Smikeys />
                     <input
                         type="submit"
                         className="btn btn-default"
@@ -63,20 +68,14 @@ class BaseCommentForm extends BaseComponent {
 
 export class CommentCreateForm extends BaseCommentForm {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            bodyFocus: false
-        }
-    }
     
     addCommentFormSubmit(e) {
-        e.preventDefault();
-        let username = this._addCommentUserName.value;
-        let email = this._addCommentEmail.value;
-        let body = this._addCommentBody.value;
+        e.preventDefault()
+        let postId = this.props.params.id;
+        let comment = this.getComment();
+        comment.post = postId;
 
-        let comment = { username, body, email, post: this.props.params.id };
+
         this.props.commentActions.addComment(comment);
     }
 
@@ -84,12 +83,7 @@ export class CommentCreateForm extends BaseCommentForm {
         return (
             <div className="form_field">
                 {this.getFieldErrors('body', 'comment')}
-            <textarea cols="70" rows="10"
-                      ref={(c) => this._addCommentBody = c}
-                      className={classNames('add_comment_body', {expanded: this.state.bodyFocus || (this._addCommentBody && this._addCommentBody.value.length > 0)})}
-                      onFocus={this.addCommentBodyOnFocus.bind(this)}
-                      placeholder="Комментарий"
-            />
+            <SmileysTextArea ref={(c) => this._smileysTextArea = c} />
             </div>
         )
     }
@@ -100,7 +94,7 @@ export class CommentCreateForm extends BaseCommentForm {
 
             this._addCommentUserName.value = '';
             this._addCommentEmail.value = '';
-            this._addCommentBody.value = '';
+            this._smileysTextArea._body.value = '';
         }
     }
 
@@ -122,12 +116,7 @@ export class CommentUpdateForm extends BaseCommentForm {
         return (
             <div className="form_field">
                 {this.getFieldErrors('body', 'comment')}
-            <textarea cols="70" rows="10"
-                      ref={(c) => this._addCommentBody = c}
-                      className={classNames('add_comment_body')}
-                      placeholder="Комментарий"
-                      defaultValue={comment.body}
-            />
+            <SmileysTextArea defaultValue={comment.body} ref={(c) => this._smileysTextArea = c}/>
             </div>
         )
     }
@@ -138,9 +127,10 @@ export class CommentUpdateForm extends BaseCommentForm {
         //let email = this._addCommentEmail.value;
         let existingComment = this.props.comment.comments.entities[this.props.params.id];
         let post = existingComment.post;
-        let body = this._addCommentBody.value;
+        let comment = this.getComment();
+        comment.id = this.props.params.id
+        comment.post = post
 
-        let comment = { body, post, id: this.props.params.id };
         this.props.commentActions.updateComment(comment);
     }
 

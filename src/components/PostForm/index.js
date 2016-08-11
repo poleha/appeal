@@ -1,8 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 
 import BaseComponent from '../../components/BaseComponent'
-import Smikeys from '../../components/Smileys'
-import classNames from 'classnames'
+import SmileysTextArea from '../../components/SmileysTextArea'
 import { formArrayToJson, mapNodes } from '../../helpers/helper'
 
 
@@ -72,8 +71,6 @@ class BasePostForm extends BaseComponent {
 
                     </div>
 
-                    <Smikeys />
-
                     <div className="form_field">
                         {this.getFieldErrors('tags', 'post')}
                         <div className="add_params">
@@ -129,15 +126,7 @@ export class PostUpdateForm extends BasePostForm {
     getBodyField() {
         let post = this.props.post.posts.entities[this.props.params.id];
         return (
-            <textarea cols="70" rows="10"
-                      ref={(c) => this._postBody = c}
-                      className={classNames('add_post_body')}
-                      id="add_post_body"
-                      defaultValue={post.body}
-                      name="body"
-                      placeholder="Сообщение"
-                      type="text"
-            />
+            <SmileysTextArea defaultValue={post.body} ref={(c) => this._smileysTextArea = c} />
         )
     }
  
@@ -162,12 +151,7 @@ export class PostCreateForm extends BasePostForm {
         return tag.alias == this.props.params.tag;
     }
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            bodyFocus: false
-        }
-    }
+
 
     showAllFields() {
         return true;
@@ -211,15 +195,7 @@ export class PostCreateForm extends BasePostForm {
 
     getBodyField() {
       return (
-          <textarea cols="70" rows="10"
-                    ref={(c) => this._postBody = c}
-                    className={classNames('add_post_body', {expanded: this.state.bodyFocus || (this._postBody && this._postBody.value.length > 0)})}
-                    id="add_post_body"
-                    onFocus={this.addPostBodyOnFocus.bind(this)}
-                    name="body"
-                    placeholder="Сообщение"
-                    type="text"
-          />
+          <SmileysTextArea ref={(c) => this._smileysTextArea = c} />
       )
     }
 
@@ -233,7 +209,7 @@ export class PostCreateForm extends BasePostForm {
         if (this.props.post.added || pathChanged){
             this._addPostUserName.value = '';
             this._addPostEmail.value = '';
-            this._postBody.value = '';
+            this._smileysTextArea._body.value = '';
             this.setDefaultTags();
 
 
@@ -259,11 +235,7 @@ export class PostCreateForm extends BasePostForm {
         this.props.postActions.addPost(post);
     }
 
-    addPostBodyOnFocus(e) {
-        if (e.type == 'focus') this.setState({bodyFocus:true});
-        //else this.setState({bodyFocus:false});
 
-    }
 
 
     getAddPostButtonDisabled() {

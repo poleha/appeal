@@ -49,22 +49,38 @@ export default class Auth extends BaseComponent {
     getLoginBlockButtons() {
         let loginBlockButtons = null;
         if (!this.props.data.userId) {
-            loginBlockButtons = <div className="login_block_buttons">
-                <input
+            if( this.state.activeForm == USER_FORM_REGISTRATION ) {
+            loginBlockButtons = (
+                <div className="login_block_buttons">
+                 <p className="reg">
+                    Уже есть учетная запись?
+                <a
                     type="button"
-                    value='Вход'
                     onClick={this.handdleFormChangeClick.bind(this, USER_FORM_LOGIN)}
-                    disabled={this.state.activeForm == USER_FORM_LOGIN }
-                    className="btn btn-default"
-                />
-                <input
+                    className="un"
+                >
+                Войти
+                </a>
+                </p>
+                </div>
+                )
+            }
+            else if( this.state.activeForm == USER_FORM_LOGIN ) {
+                loginBlockButtons = (
+                    <div className="login_block_buttons">
+                        <p className="reg">
+                 Нет учетной записи?
+                <a
                     type="button"
-                    value='Регистрация'
                     onClick={this.handdleFormChangeClick.bind(this, USER_FORM_REGISTRATION)}
-                    disabled={this.state.activeForm == USER_FORM_REGISTRATION }
-                    className="btn btn-default"
-                />
+                    className="un"
+                >
+                 Зарегистрироваться
+                    </a>
+             </p>
             </div>
+                )
+            }
         }
         return loginBlockButtons
     }
@@ -267,15 +283,17 @@ getLoginBlockTemplate () {
     }
 
     getUserBlock() {
-        return (<div
+        return (
+            <div
                 key="user_block"
             >
 
-                {this.getLoginBlockButtons()}
+
                 {this.getLoginBlockTemplate()}
             <div className="bottom">
                 {this.getSocialLoginTemplate()}
             </div>
+                {this.getLoginBlockButtons()}
 
             </div>
         )

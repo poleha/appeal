@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import Auth from '../../components/Auth'
+import { Link } from 'react-router'
 
 export default class Header extends Component {
 
@@ -7,7 +8,7 @@ export default class Header extends Component {
         return (
 
             <header className="head">
-                <div className="logo"><p><a href="/"><img src="/static/images/logo.png" width="201" height="62" alt=""/></a></p></div>
+                <div className="logo"><p><Link to="/"><img src="/static/images/logo.png" width="201" height="62" alt=""/></Link></p></div>
                 <div className="head_right">
                     {/*
                     <div className="head_search">

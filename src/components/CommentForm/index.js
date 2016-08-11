@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 
 import BaseComponent from '../../components/BaseComponent'
+import Smikeys from '../../components/Smileys'
 import classNames from 'classnames'
 
 
@@ -43,7 +44,7 @@ class BaseCommentForm extends BaseComponent {
                         />
                     </div>
                     {this.getBodyField()}
-
+                    <Smikeys />
                     <input
                         type="submit"
                         className="btn btn-default"

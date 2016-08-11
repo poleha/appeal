@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 
 import BaseComponent from '../../components/BaseComponent'
+import Smikeys from '../../components/Smileys'
 import classNames from 'classnames'
 import { formArrayToJson, mapNodes } from '../../helpers/helper'
 
@@ -26,7 +27,10 @@ class BasePostForm extends BaseComponent {
         if (tags.ids.length > 0) {
             tagsAddBlock = mapNodes(tags, function(elem){
                 let key = elem.id;
-                return <li key={key}>
+                return <li
+                    key={key}
+                    className="col-xs-6"
+                >
                     <label>
                     <input
                         key={key}
@@ -68,11 +72,13 @@ class BasePostForm extends BaseComponent {
 
                     </div>
 
+                    <Smikeys />
+
                     <div className="form_field">
                         {this.getFieldErrors('tags', 'post')}
                         <div className="add_params">
                         <ul
-                            className='tags_add'
+                            className='tags_add row'
                             //ref="tags"
                             id="tags_add_ul">
                             {tagsAddBlock}

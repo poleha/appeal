@@ -1,12 +1,11 @@
 import React, { PropTypes, Component } from 'react'
 
-import BaseComponent from '../../components/BaseComponent'
-import SmileysTextArea from '../../components/SmileysTextArea'
+import BaseSmileyForm from '../../components/BaseSmileyForm'
 import classNames from 'classnames'
 import { formArrayToJson, mapNodes } from '../../helpers/helper'
 
 
-class BaseCommentForm extends BaseComponent {
+class BaseCommentForm extends BaseSmileyForm {
 
     getComment() {
         let commentForm = $(this._addCommentForm);
@@ -80,10 +79,11 @@ export class CommentCreateForm extends BaseCommentForm {
     }
 
     getBodyField() {
+        let bodyField = this.getSmileyForm()
         return (
             <div className="form_field">
                 {this.getFieldErrors('body', 'comment')}
-            <SmileysTextArea ref={(c) => this._smileysTextArea = c} />
+                {bodyField}
             </div>
         )
     }
@@ -94,14 +94,10 @@ export class CommentCreateForm extends BaseCommentForm {
 
             this._addCommentUserName.value = '';
             this._addCommentEmail.value = '';
-            this._smileysTextArea._body.value = '';
+            this._body.value = '';
         }
     }
 
-    addCommentBodyOnFocus(e) {
-        if (e.type == 'focus') this.setState({bodyFocus:true});
-
-    }
 
 
 }
@@ -113,10 +109,11 @@ export class CommentUpdateForm extends BaseCommentForm {
 
     getBodyField() {
         let comment = this.props.comment.comments.entities[this.props.params.id];
+        let bodyField = this.getSmileyForm(comment.body)
         return (
             <div className="form_field">
                 {this.getFieldErrors('body', 'comment')}
-            <SmileysTextArea defaultValue={comment.body} ref={(c) => this._smileysTextArea = c}/>
+                {bodyField}
             </div>
         )
     }

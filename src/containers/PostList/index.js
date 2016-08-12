@@ -71,7 +71,6 @@ export default class PostList extends BaseComponent {
        if (pathChanged ) {
            this._query.value = null;
 
-           if (this.state.bodyFocus) this.setState({bodyFocus:false});
        }
    }
 

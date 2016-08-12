@@ -1,11 +1,10 @@
 import React, { PropTypes, Component } from 'react'
 
-import BaseComponent from '../../components/BaseComponent'
-import SmileysTextArea from '../../components/SmileysTextArea'
+import BaseSmileyForm from '../../components/BaseSmileyForm'
 import { formArrayToJson, mapNodes } from '../../helpers/helper'
 
 
-class BasePostForm extends BaseComponent {
+class BasePostForm extends BaseSmileyForm {
 
 
     getAdditionalFields() {
@@ -17,13 +16,12 @@ class BasePostForm extends BaseComponent {
         return false;
     }
 
-    render() {
 
-
+    getTagField() {
         let tags = this.props.tags;
         //let tag = this.props.params.tag;
         let tagsAddBlock;
-        if (tags.ids.length > 0) {
+        if (tags.ids.length > 0 && this.state.bodyFocus) {
             tagsAddBlock = mapNodes(tags, function(elem){
                 let key = elem.id;
                 return <li
@@ -31,25 +29,46 @@ class BasePostForm extends BaseComponent {
                     className="col-xs-6"
                 >
                     <label>
-                    <input
-                        key={key}
-                        defaultChecked={this.getTagChecked(elem)}
-                        data-id={key}
-                        id={`tags_input-${key}`}
-                        type="checkbox"
-                        ref={(c) => this[`_tag_to_add__${elem.alias}`] = c}
-                        name={`tags__${key}`}
-                        //disabled={this.getAddPostButtonDisabled()}
-                    />
+                        <input
+                            key={key}
+                            defaultChecked={this.getTagChecked(elem)}
+                            data-id={key}
+                            id={`tags_input-${key}`}
+                            type="checkbox"
+                            ref={(c) => this[`_tag_to_add__${elem.alias}`] = c}
+                            name={`tags__${key}`}
+                            //disabled={this.getAddPostButtonDisabled()}
+                        />
                         {elem.title}
-                     </label>
+                    </label>
 
                 </li>
             }.bind(this));
         }
+    return tagsAddBlock
+    }
+
+
+    getSubmitButton() {
+        if (!this.state.bodyFocus) return null;
         else {
-            tagsAddBlock = ''
+            return (
+        <input
+            disabled={this.getAddPostButtonDisabled()}
+            type="submit"
+            className="button button_left"
+            value="Отправить"
+        />
+            )
         }
+    }
+
+
+    render() {
+
+
+
+
 
         return (
             <section className="add bg_grey">
@@ -78,17 +97,13 @@ class BasePostForm extends BaseComponent {
                             className='tags_add row'
                             //ref="tags"
                             id="tags_add_ul">
-                            {tagsAddBlock}
+                            {this.getTagField()}
                         </ul>
                             </div>
 
                     </div>
-                    <input
-                        disabled={this.getAddPostButtonDisabled()}
-                        type="submit"
-                        className="button button_left"
-                        value="Отправить">
-                    </input>
+                    {this.getSubmitButton()}
+
                 </form>
             </div>
             </section>
@@ -108,6 +123,13 @@ class BasePostForm extends BaseComponent {
 
 export class PostUpdateForm extends BasePostForm {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            bodyFocus: true
+        }
+    }
+
 
     getAddPostButtonDisabled() {
         return false;
@@ -119,14 +141,12 @@ export class PostUpdateForm extends BasePostForm {
         return post.tags.indexOf(tag.id) >= 0;
     }
 
-    showAllFields() {
-        return false;
-    }
+
 
     getBodyField() {
         let post = this.props.post.posts.entities[this.props.params.id];
         return (
-            <SmileysTextArea defaultValue={post.body} ref={(c) => this._smileysTextArea = c} />
+            this.getSmileyForm(post.body)
         )
     }
  
@@ -153,12 +173,10 @@ export class PostCreateForm extends BasePostForm {
 
 
 
-    showAllFields() {
-        return true;
-    }
 
-    
+
     getAdditionalFields() {
+        if (!this.state.bodyFocus) return null;
         return (
             <div>
         <div className="form_field" hidden={this.props.userId}>
@@ -195,12 +213,12 @@ export class PostCreateForm extends BasePostForm {
 
     getBodyField() {
       return (
-          <SmileysTextArea ref={(c) => this._smileysTextArea = c} />
+          this.getSmileyForm('', true)
       )
     }
 
     getPathChanged(otherProps) {
-        return this.props.params.tag != otherProps.tag;
+        return this.props.params.tag != otherProps.params.tag;
     }
 
     componentDidUpdate(prevProps){
@@ -209,7 +227,7 @@ export class PostCreateForm extends BasePostForm {
         if (this.props.post.added || pathChanged){
             this._addPostUserName.value = '';
             this._addPostEmail.value = '';
-            this._smileysTextArea._body.value = '';
+            this._body.value = '';
             this.setDefaultTags();
 
 

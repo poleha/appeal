@@ -14,7 +14,7 @@ import { getUserInfo } from '../../actions/AuthActions'
 import { loadTags } from '../../actions/TagActions'
 import config from '../../config'
 import BreadCrumbs  from '../../components/BreadCrumbs'
-
+import classNames from 'classnames'
 
 //Устанавливаем соответствие глобального state props каждого компонента
 function mapStateToProps(state) {
@@ -57,6 +57,17 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            menuCollaped: false
+        }
+    }
+
+    menuCollapseClick() {
+        this.setState({menuCollaped: !this.state.menuCollaped})
+    }
+
     render() {
 
       let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
@@ -70,8 +81,8 @@ export default class App extends Component {
             <Helmet {...config.app.head} title={config.app.title}/>
              <Header {...this.props} />
           <div className="row top_block">
-                  <nav className="menu hide_active">
-                      <div className="menu_collapse"></div>
+                  <nav className={classNames("menu", {active: this.state.menuCollaped})}>
+                      <div className="menu_collapse" onClick={this.menuCollapseClick.bind(this)}></div>
                       <ul>
               <NavLink activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
             {linksBlock}

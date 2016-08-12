@@ -9,6 +9,7 @@ import * as commentActions from '../../actions/CommentActions'
 import * as userActions from '../../actions/UserActions'
 import { mapNodes } from '../../helpers/helper'
 import { Link } from 'react-router'
+import classNames from 'classnames'
 
 
 function mapStateToProps(state) {
@@ -62,6 +63,9 @@ export default class UserDetail extends BaseComponent {
 
     constructor(props) {
         super(props)
+        this.state = {
+            activeTab: 'appeals'
+        }
     }
 
 
@@ -185,6 +189,20 @@ export default class UserDetail extends BaseComponent {
     }
 
 
+    tabOnClick(tabId, e) {
+        let target = e.target;
+        let i = $(target).attr("data-tab");
+        //$(this).addClass("active");
+        $(".tab_group").slideUp();
+        $("[data-tab-group=" + i + "]").slideDown();
+
+        if (tabId == 'comments') this.props.commentActions.loadComments({user: this.props.params.id});
+
+        this.setState({
+         activeTab: tabId
+     })
+    }
+
     render() {
         let user = this.getUser();
         let username = user ? user.username : '';
@@ -197,16 +215,16 @@ export default class UserDetail extends BaseComponent {
               {this.getUserInfoBlock()}
                 <div className="tabs">
                   <ul>
-                      <li className="active" data-tab="1">Предложения({user.posts.length})</li>
-                      <li data-tab="2">Комментарии({user.comments.length})</li>
+                      <li className={classNames({active: this.state.activeTab=='appeals'})} data-tab="1" onClick={this.tabOnClick.bind(this, 'appeals')}>Предложения({user.posts.length})</li>
+                      <li className={classNames({active: this.state.activeTab=='comments'})} data-tab="2" onClick={this.tabOnClick.bind(this, 'comments')}>Комментарии({user.comments.length})</li>
                   </ul>
                   </div>
               <div className="clear"></div>
-                      <div className="tab_group active" data-tab-group="1">
+                      <div className={classNames('tab_group', {active: this.state.activeTab=='appeals'})} data-tab-group="1">
                           {this.getPosts()}
                           { this.getShowMorePostsInput() }
                       </div>
-                      <div className="tab_group" data-tab-group="2">
+                      <div className={classNames('tab_group', {active: this.state.activeTab=='comments'})} data-tab-group="2">
                           {this.getComments()}
                           { this.getShowMoreCommentsButton() }
                       </div>

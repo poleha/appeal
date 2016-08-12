@@ -22,14 +22,7 @@ $(function() {
         return false;
     });
 
-    $(document).on('click', ".tabs li", (function() {
-        $(".tabs li").removeClass("active");
-        var i = $(this).attr("data-tab");
-        $(this).addClass("active");
-        $(".tab_group").slideUp();
-        $("[data-tab-group=" + i + "]").slideDown();
-        return false;
-    }));
+
 
 
 });

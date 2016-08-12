@@ -37,6 +37,9 @@ export default class Html extends Component {
                 {head.link.toComponent()}
                 {head.script.toComponent()}
 
+            <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic&subset=cyrillic,latin' rel='stylesheet' type='text/css'/>
+
+                <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
 
             </head>
             <body>
@@ -47,7 +50,7 @@ export default class Html extends Component {
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.min.js"></script>
             <script src="https://apis.google.com/js/platform.js"></script>
-            <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic&subset=cyrillic,latin' rel='stylesheet' type='text/css'/>
+
             <meta name="google-signin-client_id" content="652386564088-g829fhjk5jqdpuerod7qi2srp3tn42l4.apps.googleusercontent.com"/>
 
                 <script src="//vk.com/js/api/openapi.js" type="text/javascript"></script>

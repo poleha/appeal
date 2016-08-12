@@ -225,8 +225,8 @@ export class PostCreateForm extends BasePostForm {
         let pathChanged = this.getPathChanged(prevProps)
 
         if (this.props.post.added || pathChanged){
-            this._addPostUserName.value = '';
-            this._addPostEmail.value = '';
+            if (this._addPostUserName) this._addPostUserName.value = '';
+            if (this._addPostEmail) this._addPostEmail.value = '';
             this._body.value = '';
             this.setDefaultTags();
 

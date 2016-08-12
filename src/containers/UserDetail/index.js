@@ -167,7 +167,7 @@ export default class UserDetail extends BaseComponent {
 
     getShowMoreCommentsButton() {
         let comments = this.props.comment.comments
-        if (!comments || comments.ids == null) return null;
+        if (!comments || comments.ids == null || comments.ids.length == 0) return null;
         let user = this.getUser();
         return (
             <p className="text-center">

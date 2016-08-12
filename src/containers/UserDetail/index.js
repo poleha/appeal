@@ -9,7 +9,6 @@ import * as commentActions from '../../actions/CommentActions'
 import * as userActions from '../../actions/UserActions'
 import { mapNodes } from '../../helpers/helper'
 import { Link } from 'react-router'
-import classNames from 'classnames'
 
 
 function mapStateToProps(state) {
@@ -163,7 +162,8 @@ export default class UserDetail extends BaseComponent {
     }
 
     getShowMoreCommentsButton() {
-        if (this.props.comment.comments == null) return null;
+        let comments = this.props.comment.comments
+        if (!comments || comments.ids == null) return null;
         let user = this.getUser();
         return (
             <p className="text-center">
@@ -181,9 +181,7 @@ export default class UserDetail extends BaseComponent {
     }
 
     loadMoreCommentsClick(e) {
-
         this.props.commentActions.loadComments({user: this.props.params.id, limit: this.props.comment.comments.ids.length + 10} )
-
     }
 
 

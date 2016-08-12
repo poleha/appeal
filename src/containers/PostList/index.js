@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import classNames from 'classnames'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
@@ -62,15 +61,16 @@ export default class PostList extends BaseComponent {
 
 
 
-    getPathChanged(otherProps) {
-        return this.props.params.tag != otherProps.params.tag;
-    }
+
 
     componentWillReceiveProps(nextProps) {
        let pathChanged = this.getPathChanged(nextProps)
        if (pathChanged ) {
            this._query.value = null;
 
+           let root = $(this._post_list)
+           root.fadeOut();
+           root.fadeIn();
        }
    }
 
@@ -214,7 +214,7 @@ getSearchInput() {
           if (tag.alias == this.props.params.tag) currentTagTitle = tag.title;
       }.bind(this))
 
-      return <div className="post_list">
+      return <div className="post_list" ref={(c) => this._post_list = c}>
           <Helmet title={currentTagTitle} />
 
 

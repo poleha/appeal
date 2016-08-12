@@ -172,7 +172,16 @@ export class PostCreateForm extends BasePostForm {
     }
 
 
+    componentWillReceiveProps(nextProps) {
+        let pathChanged = this.getPathChanged(nextProps)
+        if (pathChanged ) {
 
+            if (this.state.bodyFocus) {
+                this.setState({bodyFocus: false})
+            }
+
+        }
+    }
 
 
     getAdditionalFields() {
@@ -217,9 +226,6 @@ export class PostCreateForm extends BasePostForm {
       )
     }
 
-    getPathChanged(otherProps) {
-        return this.props.params.tag != otherProps.params.tag;
-    }
 
     componentDidUpdate(prevProps){
         let pathChanged = this.getPathChanged(prevProps)

@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
+import BaseComponent from '../../components/BaseComponent'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
@@ -55,7 +56,7 @@ function mapDispatchToProps(dispatch) {
     }
 }])
 @connect(mapStateToProps, mapDispatchToProps)
-export default class App extends Component {
+export default class App extends BaseComponent {
 
     constructor(props) {
         super(props)
@@ -63,6 +64,9 @@ export default class App extends Component {
             menuCollaped: false
         }
     }
+
+
+
 
     menuCollapseClick() {
         this.setState({menuCollaped: !this.state.menuCollaped})
@@ -76,7 +80,7 @@ export default class App extends Component {
 
     return (
     <div>
-    <div className="root to_mobile">
+    <div className="root to_mobile" ref={(c) => this._root = c}>
             <div className="max_width">
             <Helmet {...config.app.head} title={config.app.title}/>
              <Header {...this.props} />

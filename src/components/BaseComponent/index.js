@@ -2,6 +2,12 @@ import React, { PropTypes, Component } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class BaseComponent extends Component {
+
+
+    getPathChanged(otherProps) {
+        return this.props.params.tag != otherProps.params.tag;
+    }
+    
     
     getFieldErrors(fieldName, dataName, propName = 'errors', ){
         let fieldErrors = this.props[dataName][propName][fieldName];

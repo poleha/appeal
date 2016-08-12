@@ -74,17 +74,22 @@ export default class UserDetail extends BaseComponent {
         let posts = this.props.post.posts;
         let postsList = mapNodes(posts, (elem) => {
             return (
-                <div className="row" key={elem.id}>
-                    <div className="col col-xs-4 col-sm-3 col-lg-2">{elem.created}</div>
-                    <div className="col col-xs-5 col-sm-6 col-lg-7"><Link key={elem.id} activeClassName='active' to={`/post/${elem.id}`}>{elem.body}</Link></div>
-                    <div className="col col-xs-1">{elem.liked_count}</div>
-                    <div className="col col-xs-1">{elem.disliked_count}</div>
-                    <div className="col col-xs-1">{elem.comment_count}</div>
-                   </div>
+                <div className="item" key={elem.id}>
+                    <ul>
+                    <li className="date">{elem.created}</li>
+                    <li className="item_name"><Link key={elem.id} activeClassName='active' to={`/post/${elem.id}`}>{elem.body}</Link></li>
+                        <li className="icons">
+                            <div className="icon icon_up">{elem.liked_count}</div>
+                            <div className="icon icon_down">{elem.disliked_count}</div>
+                            <div className="icon icon_comment">{elem.comment_count}</div>
+                        </li>
+
+                </ul>
+                </div>
             )
         });
      return (
-         <div className="tab_inner">
+         <div className="list">
              {postsList}
         </div>
      )
@@ -94,14 +99,18 @@ export default class UserDetail extends BaseComponent {
         let comments = this.props.comment.comments;
         let commentsList = mapNodes(comments, (elem) => {
             return (
-                <div className="row" key={elem.id}>
-                    <div className="col col-xs-4 col-sm-3 col-lg-2">{elem.created}</div>
-                    <div className="col col-xs-7"><Link key={elem.id} activeClassName='active' to={`/post/${elem.post}`}>{elem.body}</Link></div>
+                <div className="item" key={elem.id}>
+                    <p className="date2">{elem.created}</p>
+                    <div className="notice content">
+                        <p>
+                            <Link key={elem.id} activeClassName='active' to={`/post/${elem.post}`}>{elem.body}</Link>
+                        </p>
+                    </div>
                     </div>
             )
         });
         return (
-            <div className="tab_inner">
+            <div className="list">
                 {commentsList}
             </div>
         )
@@ -118,10 +127,10 @@ export default class UserDetail extends BaseComponent {
         if (this.props.user.users) {
             let user = this.getUser();
             return (
-                <div>
-                    <label>Пользователь:</label>
-                    {user.username}
-                </div>
+                <h1 className="lists_name">
+                    Пользователь:
+                    <strong>{user.username}</strong>
+                </h1>
             )
         }
     }
@@ -133,12 +142,15 @@ export default class UserDetail extends BaseComponent {
         let showMoreInput;
         if (this.props.post.count > posts.ids.length) {
             showMoreInput = (
-                <input
+                <p className="text-center">
+                <a
                     onClick={this.loadMorePostsClick.bind(this)}
-                    className="btn btn-default"
-                    type="button"
-                    value="Показать еще">
-                </input>
+                    className='button button_middle button_height'
+
+                >
+                    Показать еще
+                </a>
+                 </p>
             )
         }
         return showMoreInput;
@@ -154,13 +166,16 @@ export default class UserDetail extends BaseComponent {
         if (this.props.comment.comments == null) return null;
         let user = this.getUser();
         return (
-            <input
+            <p className="text-center">
+            <a
                 key="comment_show_more_button"
                 onClick={this.loadMoreCommentsClick.bind(this)}
-                type="button"
-                className={classNames('btn', 'btn-default', {hidden: user.comments.length <= this.props.comment.comments.ids.length})}
-                value="Показать еще"
-            />
+                className='button button_middle button_height'
+
+            >
+                Показать еще
+                </a>
+                </p>
         )
 
     }
@@ -178,35 +193,32 @@ export default class UserDetail extends BaseComponent {
 
       return (
 
-          <div className="user_page">
+          <section className="lists bg_grey">
             <Helmet title={username}/>
 
               {this.getUserInfoBlock()}
-              <div>
-
-                  <ul className="nav nav-tabs" role="tablist">
-                      <li role="presentation" className="active"><a href="#posts" aria-controls="posts" role="tab" data-toggle="tab">Предложения({user.posts.length})</a></li>
-                      <li role="presentation"><a href="#comments" aria-controls="comments" role="tab" data-toggle="tab">Комментарии({user.comments.length})</a></li>
+                <div className="tabs">
+                  <ul>
+                      <li className="active" data-tab="1">Предложения({user.posts.length})</li>
+                      <li data-tab="2">Комментарии({user.comments.length})</li>
                   </ul>
-
-                  <div className="tab-content">
-                      <div role="tabpanel" className="tab-pane active" id="posts">
+                  </div>
+              <div className="clear"></div>
+                      <div className="tab_group active" data-tab-group="1">
                           {this.getPosts()}
                           { this.getShowMorePostsInput() }
                       </div>
-                      <div role="tabpanel" className="tab-pane" id="comments">
+                      <div className="tab_group" data-tab-group="2">
                           {this.getComments()}
                           { this.getShowMoreCommentsButton() }
                       </div>
-                  </div>
 
-              </div>
 
 
 
             
 
-        </div>
+        </section>
 
       )
 

@@ -22,14 +22,14 @@ $(function() {
         return false;
     });
 
-    $(".tabs li").click(function() {
+    $(document).on('click', ".tabs li", (function() {
         $(".tabs li").removeClass("active");
         var i = $(this).attr("data-tab");
         $(this).addClass("active");
         $(".tab_group").slideUp();
         $("[data-tab-group=" + i + "]").slideDown();
         return false;
-    });
+    }));
 
 
 });

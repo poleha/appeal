@@ -65,7 +65,8 @@ app.use((req, res) => {
         res.send('<!doctype html>\n' +
             ReactDOM.renderToStaticMarkup(<Html component={component} store={store}/>));
       }).catch(error => {
-        res.status(401).send('Страница не найдена или у вас нет прав на ее просмотр');
+        if (__DEVELOPMENT__) res.status(401).send(error.stack);
+        else res.status(401).send('Страница не найдена или у вас нет прав на ее просмотр');
       });
 
     } else {

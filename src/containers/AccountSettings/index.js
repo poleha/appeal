@@ -61,6 +61,8 @@ export default class AccountSettings extends BaseComponent {
         this.state = {
             username,
             password: "",
+            newPassword1: "",
+            newPassword2: "",
             activeDialog: null
 
         }
@@ -134,9 +136,73 @@ export default class AccountSettings extends BaseComponent {
         else return null
     }
 
+
+    changePasswordOnSubmit(e) {
+        e.preventDefault();
+        let body = {
+            new_password: this.state.newPassword1,
+            re_new_password: this.state.newPassword2,
+            current_password: this.state.password
+
+        }
+        this.props.accountActions.changePassword(body);
+    }
+
+
+    changePasswordOnClick(e) {
+        e.preventDefault();
+        this.setState({activeDialog: 'change_password'})
+    }
+
+
+    onChangePasswordFormFieldChange(e) {
+        let target = e.target;
+        let name = target.getAttribute('name')
+        if (name == 'new_password') {
+            this.setState({newPassword1: target.value})
+        }
+        else if (name == 're_new_password') {
+            this.setState({newPassword2: target.value})
+        }
+        else if (name == 'current_password') {
+            this.setState({password: target.value})
+        }
+
+
+    }
+
+    getChangePasswordForm() {
+        if (this.state.activeDialog == 'change_password') {
+            return (
+                <div>
+                    <div className="errors">
+                        {this.getFieldErrors('non_field_errors','account')}
+                    </div>
+                    <form onSubmit={this.changePasswordOnSubmit.bind(this)}>
+                        <div className="form_field">
+                            {this.getFieldErrors('new_password', 'account')}
+                            <input name="new_password" onChange={this.onChangePasswordFormFieldChange.bind(this)} type="password" value={this.state.newPassword1}/>
+                        </div>
+                        <div className="form_field">
+                            {this.getFieldErrors('re_new_password', 'account')}
+                            <input name="re_new_password" onChange={this.onChangePasswordFormFieldChange.bind(this)} type="password" value={this.state.newPassword2}/>
+                        </div>
+                        <div className="form_field">
+                            {this.getFieldErrors('current_password', 'account')}
+                            <input name="current_password" onChange={this.onChangePasswordFormFieldChange.bind(this)} type="password" value={this.state.password}/>
+                        </div>
+                        <input type="submit" value="Сохранить"/>
+                    </form>
+
+                </div>
+            )
+        }
+        else return null
+    }
+
+
     render() {
-        let user = this.getUser();
-        let username = user.username;
+        let username = this.props.auth.userName
 
       return (
 
@@ -145,6 +211,10 @@ export default class AccountSettings extends BaseComponent {
         <div>{username}</div>
         <a onClick={this.changeUsernameOnClick.bind(this)}>Изменить</a>
               {this.getChangeUsernameForm()}
+
+
+              <a onClick={this.changePasswordOnClick.bind(this)}>Изменить пароль</a>
+              {this.getChangePasswordForm()}
         </section>
 
       )

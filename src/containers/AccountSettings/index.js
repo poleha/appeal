@@ -12,10 +12,7 @@ import classNames from 'classnames'
 
 function mapStateToProps(state) {
     return {
-        logged: state.auth.logged,
-        token: state.auth.token,
         auth: state.auth,
-        user: state.user,
         account: state.account
     };
 }
@@ -28,8 +25,6 @@ function mapDispatchToProps(dispatch) {
 
 @asyncConnect([{
     promise: (params, helpers) => {
-        let store = params.store;
-        let userId = params.params.id;
         let loginPromise;
         if (global.loginPromise) {
             loginPromise = global.loginPromise;
@@ -37,18 +32,8 @@ function mapDispatchToProps(dispatch) {
         else {
             loginPromise = Promise.resolve();
         }
-        let currentPromise = loginPromise.then(function() {
-            let promises = [];
-            let prom1 = store.dispatch(userActions.loadUsers({id: userId}));
-            promises.push(prom1);
-            return Promise.all(promises);
-        });
 
-        let promises = [];
-        promises.push(currentPromise);
-
-
-        return Promise.all(promises);
+        return loginPromise;
     }
 }])
 
@@ -76,12 +61,6 @@ export default class AccountSettings extends BaseComponent {
 
     }
 
-    getUser() {
-        if (this.props.user.users) {
-            let userId = this.props.params.id;
-            return this.props.user.users.entities[userId];
-        }
-    }
 
     changeUsernameOnSubmit(e) {
      e.preventDefault();

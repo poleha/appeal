@@ -6,6 +6,7 @@ import PostDetail from './containers/PostDetail'
 import PostUpdate from './containers/PostUpdate'
 import CommentUpdate from './containers/CommentUpdate'
 import UserDetail from './containers/UserDetail'
+import AccountSettings from './containers/AccountSettings'
 
 export default (
   <Route path="/" component={App}>
@@ -15,5 +16,6 @@ export default (
     <Route path="/post/:id/update" component={PostUpdate} />
       <Route path="/comment/:id/update" component={CommentUpdate} />
      <Route path="/user/:id" component={UserDetail} />
+      <Route path="/user/:id/settings" component={AccountSettings} />
   </Route>
 )

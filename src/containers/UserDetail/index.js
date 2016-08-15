@@ -203,6 +203,21 @@ export default class UserDetail extends BaseComponent {
      })
     }
 
+
+    getShowAccountSettingsButton() {
+        let hasPerms = (this.props.auth.userId && this.getUser().id == this.props.auth.userId);
+        let accountSettingsBlock;
+        if (hasPerms) {
+            accountSettingsBlock = (
+          <div>
+           <Link to={`/user/${this.props.auth.userId}/settings`}>Управление учетной записью</Link>
+          </div>
+            );
+        }
+
+    return accountSettingsBlock;
+            }
+
     render() {
         let user = this.getUser();
         let username = user ? user.username : '';
@@ -232,8 +247,8 @@ export default class UserDetail extends BaseComponent {
 
 
 
-            
 
+              <div>{this.getShowAccountSettingsButton()}</div>
         </section>
 
       )

@@ -5,9 +5,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as AccountActions from '../../actions/AccountActions'
-import * as userActions from '../../actions/UserActions'
-import { Link } from 'react-router'
-import classNames from 'classnames'
 
 
 function mapStateToProps(state) {
@@ -57,6 +54,8 @@ export default class AccountSettings extends BaseComponent {
     componentWillReceiveProps(nextProps) {
       if (!this.props.account.updated && nextProps.account.updated) {
           this.setState({activeDialog: null})
+          $(this._changeUsernameModal).modal('hide');
+          $(this._changePasswordModal).modal('hide');
       }
 
     }
@@ -89,6 +88,7 @@ export default class AccountSettings extends BaseComponent {
     changeUsernameOnClick(e) {
         e.preventDefault();
         this.setState({activeDialog: 'change_username'})
+        $(this._changeUsernameModal).modal('show');
     }
 
 
@@ -134,6 +134,7 @@ export default class AccountSettings extends BaseComponent {
     changePasswordOnClick(e) {
         e.preventDefault();
         this.setState({activeDialog: 'change_password'})
+        $(this._changePasswordModal).modal('show');
     }
 
 
@@ -192,11 +193,39 @@ export default class AccountSettings extends BaseComponent {
             <Helmet title={username}/>
         <div>{username}</div>
         <a onClick={this.changeUsernameOnClick.bind(this)}>Изменить</a>
+              <div className="modal fade" ref={(e) => this._changeUsernameModal = e}>
+                  <div className="modal-content">
+                  <div className="modal-dialog">
+                      <div type="button" className="close" data-dismiss="modal" aria-hidden="true"></div>
+                      <div className="in">
+
+                          <div className="modal-body">
               {this.getChangeUsernameForm()}
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+              </div>
 
 
               <a onClick={this.changePasswordOnClick.bind(this)}>Изменить пароль</a>
-              {this.getChangePasswordForm()}
+
+
+              <div className="modal fade" ref={(e) => this._changePasswordModal = e}>
+                  <div className="modal-content">
+                      <div className="modal-dialog">
+                          <div type="button" className="close" data-dismiss="modal" aria-hidden="true"></div>
+                          <div className="in">
+
+                              <div className="modal-body">
+                                  {this.getChangePasswordForm()}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+
         </section>
 
       )

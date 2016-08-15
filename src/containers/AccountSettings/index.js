@@ -69,7 +69,10 @@ export default class AccountSettings extends BaseComponent {
     }
 
 
-    componentDidMount() {
+    componentWillReceiveProps(nextProps) {
+      if (!this.props.account.updated && nextProps.account.updated) {
+          this.setState({activeDialog: null})
+      }
 
     }
 

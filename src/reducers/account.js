@@ -5,7 +5,8 @@ var newState;
 
 const initialState = {
     errors: {},
-    updating: false
+    updating: false,
+    updated: false
 };
 
 
@@ -16,34 +17,39 @@ export default function app(state = initialState, action) {
 
         case CHANGE_USERNAME_START:
             newState = update(state, {
-                updating: {$set: true}
+                updating: {$set: true},
+                updated: {$set: false}
             });
             return newState;
 
             case CHANGE_USERNAME_SUCCESS:
             newState = update(state, {
                 updating: {$set: false},
-                errors: {$set: {}}
+                errors: {$set: {}},
+                updated: {$set: true}
 
             });
             return newState;
         case CHANGE_USERNAME_FAIL:
             newState = update(state, {
                 updating: {$set: false},
-                errors: {$set: action.payload}
+                errors: {$set: action.payload},
+                updated: {$set: false}
             });
             return newState;
 
 
             case CHANGE_PASSWORD_START:
                 newState = update(state, {
-                    updating: {$set: true}
+                    updating: {$set: true},
+                    updated: {$set: false}
                 });
                 return newState;
 
             case CHANGE_PASSWORD_SUCCESS:
                 newState = update(state, {
                     updating: {$set: false},
+                    updated: {$set: true},
                     errors: {$set: {}}
 
                 });
@@ -51,10 +57,10 @@ export default function app(state = initialState, action) {
             case CHANGE_PASSWORD_FAIL:
                 newState = update(state, {
                     updating: {$set: false},
+                    updated: {$set: false},
                     errors: {$set: action.payload}
                 });
                 return newState;
-
 
 
             default:

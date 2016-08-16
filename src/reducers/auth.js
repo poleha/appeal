@@ -19,7 +19,8 @@ const initialState = {
     loginErrors: {},
     registerErrors: {},
     network: null,
-    externalId: null
+    externalId: null,
+    receiveCommentsEmail: null
 
 };
 
@@ -74,7 +75,8 @@ export default function user(state = initialState, action) {
                 userId: {$set: action.payload.id},
                 logged: {$set: true},
                 logging: {$set: false},
-                token: {$set: action.payload.auth_token}
+                token: {$set: action.payload.auth_token},
+                receiveCommentsEmail: {$set: action.payload.receive_comments_email}
             });
 
             return newState;
@@ -105,7 +107,9 @@ export default function user(state = initialState, action) {
                 userId: {$set: null},
                 activeForm: {$set: USER_FORM_LOGIN},
                 logging: {$set: false},
-                token: {$set: null}
+                token: {$set: null},
+                receiveCommentsEmail: {$set: null}
+
             });
             return newState;
         case LOGOUT_USER_FAIL:

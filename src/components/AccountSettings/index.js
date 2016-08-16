@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
-import Helmet from 'react-helmet';
+
 
 export default class AccountSettings extends BaseComponent {
 
@@ -156,6 +156,17 @@ export default class AccountSettings extends BaseComponent {
     }
 
 
+    receiveCommentsEmail() {
+        let data = {
+            receive_comments_email: !this.props.auth.receiveCommentsEmail,
+            userId: this.props.auth.userId
+        }
+
+        this.props.accountActions.saveProfile(data)
+
+    }
+
+
     render() {
 
       return (
@@ -199,6 +210,10 @@ export default class AccountSettings extends BaseComponent {
                       </div>
                   </div>
               </div>
+
+
+           <label>Получать уведомления и комментариях по электронной почте<input checked={this.props.auth.receiveCommentsEmail} onChange={this.receiveCommentsEmail.bind(this)} type="checkbox"/></label>
+
 
 
         </section>

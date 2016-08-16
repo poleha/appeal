@@ -212,7 +212,7 @@ export default class AccountSettings extends BaseComponent {
               </div>
 
 
-           <label>Получать уведомления и комментариях по электронной почте<input checked={this.props.auth.receiveCommentsEmail} onChange={this.receiveCommentsEmail.bind(this)} type="checkbox"/></label>
+           <label>Получать уведомления о комментариях по электронной почте<input checked={this.props.auth.receiveCommentsEmail} onChange={this.receiveCommentsEmail.bind(this)} type="checkbox"/></label>
 
 
 

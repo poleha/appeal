@@ -1,40 +1,7 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
 import Helmet from 'react-helmet';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import {  asyncConnect } from 'redux-async-connect'
-import * as AccountActions from '../../actions/AccountActions'
 
-
-function mapStateToProps(state) {
-    return {
-        auth: state.auth,
-        account: state.account
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-   return {
-       accountActions: bindActionCreators(AccountActions, dispatch),
-   };
-}
-
-@asyncConnect([{
-    promise: (params, helpers) => {
-        let loginPromise;
-        if (global.loginPromise) {
-            loginPromise = global.loginPromise;
-        }
-        else {
-            loginPromise = Promise.resolve();
-        }
-
-        return loginPromise;
-    }
-}])
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class AccountSettings extends BaseComponent {
 
     constructor(props) {
@@ -103,12 +70,12 @@ export default class AccountSettings extends BaseComponent {
                     <form onSubmit={this.changeUsernameOnSubmit.bind(this)}>
                         <div className="form_field">
                             {this.getFieldErrors('new_username', 'account')}
-                            <label for="username">Новое имя пользователя</label>
+                            <label htmlFor="username">Новое имя пользователя</label>
                             <input id="username" name="username" onChange={this.onChangeUsernameFormFieldChange.bind(this)} type="text" value={this.state.username}/>
                         </div>
                         <div className="form_field">
                             {this.getFieldErrors('current_password', 'account')}
-                            <label for="password">Текущий пароль</label>
+                            <label htmlFor="password">Текущий пароль</label>
                             <input id="password" name="password" onChange={this.onChangeUsernameFormFieldChange.bind(this)} type="password" value={this.state.password}/>
                         </div>
                         <input type="submit" value="Сохранить"/>
@@ -166,17 +133,17 @@ export default class AccountSettings extends BaseComponent {
                     <form onSubmit={this.changePasswordOnSubmit.bind(this)}>
                         <div className="form_field">
                             {this.getFieldErrors('new_password', 'account')}
-                            <label for="new_password">Новый пароль</label>
+                            <label htmlFor="new_password">Новый пароль</label>
                             <input id="new_password" name="new_password" onChange={this.onChangePasswordFormFieldChange.bind(this)} type="password" value={this.state.newPassword1}/>
                         </div>
                         <div className="form_field">
                             {this.getFieldErrors('re_new_password', 'account')}
-                            <label for="re_new_password">Новый пароль еще раз</label>
+                            <label htmlFor="re_new_password">Новый пароль еще раз</label>
                             <input id="re_new_password" name="re_new_password" onChange={this.onChangePasswordFormFieldChange.bind(this)} type="password" value={this.state.newPassword2}/>
                         </div>
                         <div className="form_field">
                             {this.getFieldErrors('current_password', 'account')}
-                            <label for="current_password">Текущий пароль</label>
+                            <label htmlFor="current_password">Текущий пароль</label>
                             <input id="current_password" name="current_password" onChange={this.onChangePasswordFormFieldChange.bind(this)} type="password" value={this.state.password}/>
                         </div>
                         <input type="submit" value="Сохранить"/>
@@ -190,21 +157,18 @@ export default class AccountSettings extends BaseComponent {
 
 
     render() {
-        let username = this.props.auth.userName
 
       return (
 
           <section className="user_settings">
-            <Helmet title={username}/>
-        <div>{username}</div>
-        <a onClick={this.changeUsernameOnClick.bind(this)}>Изменить</a>
+        <a className="change" onClick={this.changeUsernameOnClick.bind(this)}>Изменить имя пользователя</a>
               <div className="modal fade account_settings_modal_form" ref={(e) => this._changeUsernameModal = e}>
 
                   <div className="modal-dialog">
                       <div className="modal-content">
-                          <div class="modal-header">
-                      <div type="button" className="close" data-dismiss="modal" aria-hidden="true"></div>
-                              Изменить имя пользователя
+                          <div className="modal-header">
+                      <div className="close" data-dismiss="modal" aria-hidden="true"></div>
+                              <div className="title"><h1>Изменить имя пользователя</h1></div>
                        </div>
                       <div className="in">
 
@@ -216,16 +180,15 @@ export default class AccountSettings extends BaseComponent {
                   </div>
               </div>
 
-
-              <a onClick={this.changePasswordOnClick.bind(this)}>Изменить пароль</a>
+              <a className="change" onClick={this.changePasswordOnClick.bind(this)}>Изменить пароль</a>
 
 
               <div className="modal fade account_settings_modal_form" ref={(e) => this._changePasswordModal = e}>
                   <div className="modal-dialog">
                   <div className="modal-content">
-                      <div class="modal-header">
-                          <div type="button" className="close" data-dismiss="modal" aria-hidden="true"></div>
-                          Изменить пароль
+                      <div className="modal-header">
+                          <div className="close" data-dismiss="modal" aria-hidden="true"></div>
+                          <div className="title"><h1>Изменить пароль</h1></div>
                          </div>
                           <div className="in">
 

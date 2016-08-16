@@ -6,10 +6,12 @@ import { bindActionCreators } from 'redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as postActions from '../../actions/PostActions'
 import * as commentActions from '../../actions/CommentActions'
+import * as accountActions from '../../actions/AccountActions'
 import * as userActions from '../../actions/UserActions'
 import { mapNodes } from '../../helpers/helper'
 import { Link } from 'react-router'
 import classNames from 'classnames'
+import AccountSettings from '../../components/AccountSettings'
 
 
 function mapStateToProps(state) {
@@ -20,14 +22,16 @@ function mapStateToProps(state) {
         logged: state.auth.logged,
         token: state.auth.token,
         auth: state.auth,
-        user: state.user
+        user: state.user,
+        account: state.account
     };
 }
 
 function mapDispatchToProps(dispatch) {
    return {
        postActions: bindActionCreators(postActions, dispatch),
-       commentActions: bindActionCreators(commentActions, dispatch)
+       commentActions: bindActionCreators(commentActions, dispatch),
+       accountActions: bindActionCreators(accountActions, dispatch)
    };
 }
 
@@ -203,24 +207,40 @@ export default class UserDetail extends BaseComponent {
      })
     }
 
+    
+    hasPerms() {
+       return this.props.auth.userId && this.getUser().id == this.props.auth.userId; 
+    }
 
-    getShowAccountSettingsButton() {
-        let hasPerms = (this.props.auth.userId && this.getUser().id == this.props.auth.userId);
-        let accountSettingsBlock;
+
+
+    getSettingsTab() {
+        let hasPerms = this.hasPerms();
         if (hasPerms) {
-            accountSettingsBlock = (
-          <div>
-           <Link to={`/user/${this.props.auth.userId}/settings`}>Управление учетной записью</Link>
-          </div>
-            );
+            let user = this.getUser();
+            return <li className={classNames({active: this.state.activeTab=='settings'})} data-tab="3" onClick={this.tabOnClick.bind(this, 'settings')}>Управление</li>
         }
+        else return null
+    }
 
-    return accountSettingsBlock;
-            }
+
+    getSettings() {
+        let hasPerms = this.hasPerms();
+        if (hasPerms) {
+            let user = this.getUser();
+            return (
+                <div className={classNames('tab_group', {active: this.state.activeTab=='settings'})} data-tab-group="3">
+                    <AccountSettings auth={this.props.auth} account={this.props.account} accountActions={this.props.accountActions}/>
+                </div>
+            )
+        }
+        else return null
+    }
 
     render() {
         let user = this.getUser();
         let username = user ? user.username : '';
+
 
       return (
 
@@ -232,6 +252,8 @@ export default class UserDetail extends BaseComponent {
                   <ul>
                       <li className={classNames({active: this.state.activeTab=='appeals'})} data-tab="1" onClick={this.tabOnClick.bind(this, 'appeals')}>Предложения({user.posts.length})</li>
                       <li className={classNames({active: this.state.activeTab=='comments'})} data-tab="2" onClick={this.tabOnClick.bind(this, 'comments')}>Комментарии({user.comments.length})</li>
+                      {this.getSettingsTab()}
+                      
                   </ul>
                   </div>
               <div className="clear"></div>
@@ -243,12 +265,10 @@ export default class UserDetail extends BaseComponent {
                           {this.getComments()}
                           { this.getShowMoreCommentsButton() }
                       </div>
+              {this.getSettings()}
 
 
 
-
-
-              <div>{this.getShowAccountSettingsButton()}</div>
         </section>
 
       )

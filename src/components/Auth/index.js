@@ -313,7 +313,7 @@ getLoginBlockTemplate () {
             <div key="modal_box" id="modal_box" className="modal fade" ref={(e) => this._body = e}>
                     <div className="modal-dialog">
                         <div className="modal-content user_block">
-                            <div type="button" className="close" data-dismiss="modal" aria-hidden="true"></div>
+                            <div className="close" data-dismiss="modal" aria-hidden="true"></div>
                             <div className="in">
 
                             <div className="modal-body">

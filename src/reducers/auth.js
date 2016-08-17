@@ -18,6 +18,7 @@ const initialState = {
     token: null,
     loginErrors: {},
     registerErrors: {},
+    passwordResetErrors: {},
     network: null,
     externalId: null,
     receiveCommentsEmail: null

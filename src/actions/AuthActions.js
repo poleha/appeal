@@ -6,6 +6,7 @@ import { USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL } from '
 import { USER_FACEBOOK_LOGIN_START, USER_FACEBOOK_LOGIN_SUCCESS, USER_FACEBOOK_LOGIN_FAIL } from '../constants/Auth'
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/Auth'
 import { USER_GOOGLE_LOGIN_START, USER_GOOGLE_LOGIN_SUCCESS, USER_GOOGLE_LOGIN_FAIL } from '../constants/Auth'
+import { PASSWORD_RESET_START, PASSWORD_RESET_SUCCESS, PASSWORD_RESET_FAIL } from '../constants/Auth'
 import { API_KEY } from '../middleware/api'
 import { createCookie, eraseCookie, readCookie, apiHost} from '../helpers/helper'
 import { browserHistory } from 'react-router'
@@ -253,4 +254,23 @@ export function FacebookLogin() {
         });
 
     }
+}
+
+export function passwordReset(userData) {
+    return function (dispatch, getState) {
+
+        let action = {
+            [API_KEY]: {
+                method: 'post',
+                endpoint: `${endpoint}password/reset/`,
+                actions: [PASSWORD_RESET_START, PASSWORD_RESET_SUCCESS, PASSWORD_RESET_FAIL],
+                body: userData
+            }
+        }
+
+        dispatch(action).catch((error) => {
+        });
+
+    }
+
 }

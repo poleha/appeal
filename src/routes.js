@@ -6,6 +6,7 @@ import PostDetail from './containers/PostDetail'
 import PostUpdate from './containers/PostUpdate'
 import CommentUpdate from './containers/CommentUpdate'
 import UserDetail from './containers/UserDetail'
+import PasswordResetConfirm from './containers/PasswordResetConfirm'
 
 export default (
   <Route path="/" component={App}>
@@ -15,5 +16,6 @@ export default (
     <Route path="/post/:id/update" component={PostUpdate} />
       <Route path="/comment/:id/update" component={CommentUpdate} />
      <Route path="/user/:id" component={UserDetail} />
+      <Route path="/password/reset/confirm/:uid/:token" component={PasswordResetConfirm} />
   </Route>
 )

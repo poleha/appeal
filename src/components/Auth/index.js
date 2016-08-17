@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../BaseComponent'
 import ReactDOM from 'react-dom'
-import { USER_FORM_LOGIN, USER_FORM_REGISTRATION } from '../../constants/Auth'
+import { USER_FORM_LOGIN, USER_FORM_REGISTRATION, USER_FORM_PASSWORD_RESET } from '../../constants/Auth'
 import { formArrayToJson } from '../../helpers/helper'
 import VKLogin from '../VKLogin'
 import GoogleLogin from '../GoogleLogin'
@@ -21,25 +21,24 @@ export default class Auth extends BaseComponent {
     
     loginFormSubmit(e) {
         e.preventDefault();
-        let loginForm = $(ReactDOM.findDOMNode(this._login_form));
+        let loginForm = $(this._login_form);
         this.props.actions.loginUser(formArrayToJson(loginForm.serializeArray()));
     }
     registrationFormSubmit(e) {
         e.preventDefault();
-        let registerForm = $(ReactDOM.findDOMNode(this._register_form));
+        let registerForm = $(this._register_form);
         this.props.actions.registerUser(formArrayToJson(registerForm.serializeArray()));
     }
 
 
-
-    //componentDidMount() {
-       // $(this._modal).modal();
-
-            //$(this._body).modal('show');
-
-    //}
-
-
+    passwordResetFormSubmit(e) {
+        e.preventDefault();
+        let passwordResetForm = $(this._passwordResetForm);
+        this.props.actions.passwordReset(formArrayToJson(passwordResetForm.serializeArray()));
+    }
+    
+    
+    
     handdleFormChangeClick(formType, e) {
         this.setState({
             activeForm: formType
@@ -78,6 +77,15 @@ export default class Auth extends BaseComponent {
                  Зарегистрироваться
                     </a>
              </p>
+                        <p className="reg">
+                            <a
+                                type="button"
+                                onClick={this.handdleFormChangeClick.bind(this, USER_FORM_PASSWORD_RESET)}
+                                className="un"
+                            >
+                                Забыли пароль?
+                            </a>
+                            </p>
             </div>
                 )
             }
@@ -229,6 +237,44 @@ getLoginBlockTemplate () {
                 </div>
             )
         }
+
+
+        else if(this.state.activeForm == USER_FORM_PASSWORD_RESET) {
+            loginBlockTemplate = (
+                <div className="password_reset_block">
+                    <form
+                        className="password_reset_form"
+                        onSubmit={this.passwordResetFormSubmit.bind(this)}
+                        ref={(c) => this._passwordResetForm = c}
+                    >
+                        {this.getFieldErrors('non_field_errors', 'data','passwordResetErrors')}
+                        <div className="form_field">
+                            {this.getFieldErrors('email', 'data','passwordResetErrors')}
+                            <input
+                                type="email"
+                                ref={(c) => this._email = c}
+                                className="user_email"
+                                id="user_email"
+                                name="email"
+                                placeholder="E-mail"
+                                required
+                            />
+                        </div>
+
+                        <input
+                            type="submit"
+                            className="user_submit btn btn-default"
+                            value="Восстановить пароль"
+                        />
+                    </form>
+                </div>
+            )
+        }
+
+
+
+
+
 
 
     }

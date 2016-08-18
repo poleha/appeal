@@ -3,15 +3,7 @@ import BaseComponent from '../../components/BaseComponent'
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {  asyncConnect } from 'redux-async-connect'
-import * as postActions from '../../actions/PostActions'
-import * as commentActions from '../../actions/CommentActions'
 import * as accountActions from '../../actions/AccountActions'
-import * as userActions from '../../actions/UserActions'
-import { mapNodes } from '../../helpers/helper'
-import { Link } from 'react-router'
-import classNames from 'classnames'
-import AccountSettings from '../../components/AccountSettings'
 
 
 function mapStateToProps(state) {
@@ -58,19 +50,33 @@ export default class PasswordResetConfirm extends BaseComponent {
     }
 
 
+    getPasswordResetDoneForm() {
+        if (!this.props.account.updated) {
+            return (
+                <form onSubmit={this.changePasswordFormSubmit.bind(this)}>
+                    {this.getFieldErrors('non_field_errors', 'account')}
+                    <div className="form_field">
+                        {this.getFieldErrors('new_password', 'account')}
+                        <input type="password" value={this.state.password} placeholder="Введите новый пароль"
+                               onChange={this.changePassword.bind(this)}/>
+                    </div>
+                    <input type="submit" value="Отправить" className="button button_left"/>
+                </form>
+            )
+        }
+        else return (
+            <div>
+                Пароль успешно установлен! Теперь Вы можете войти на сайт с помощью нового пароля.
+            </div>
+        )
+    }
+
     render() {
 
       return (
-
-          <section className="lists bg_grey">
+          <section className="password_reset_done">
             <Helmet title="Подтверждение сброса пароля"/>
-            <form onSubmit={this.changePasswordFormSubmit.bind(this)}>
-             <input type="password" value={this.state.password} onChange={this.changePassword.bind(this)}/>
-             <input type="submit" value="Отправить"/>
-            </form>
-
-
-
+              {this.getPasswordResetDoneForm()}
         </section>
 
       )

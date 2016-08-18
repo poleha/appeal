@@ -2,15 +2,16 @@ import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL } from '../consta
 import { GET_USER_INFO_START, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL } from '../constants/Auth'
 import { LOGOUT_USER_START, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAIL } from '../constants/Auth'
 import { REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL } from '../constants/Auth'
-import update from 'react-addons-update'
-import { ACTIVATE_USER_FORM, USER_FORM_LOGIN } from '../constants/Auth'
 import { USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL } from '../constants/Auth'
-
+import { PASSWORD_RESET_START, PASSWORD_RESET_SUCCESS, PASSWORD_RESET_FAIL } from '../constants/Auth'
+import update from 'react-addons-update'
 
 var newState;
 
 const initialState = {
     logged: false,
+    resettingPassword: false,
+    passwordResetDone: true,
     logging: false,
     socialLogging: false,
     userName: null,
@@ -27,9 +28,12 @@ const initialState = {
 
 function cloneState(state) {
     newState = update(state, {
+        resettingPassword: {$set: false},
+        passwordResetDone: {$set: false},
         logging: {$set: false},
         loginErrors: {$set: {}},
-        registerErrors: {$set: {}}
+        registerErrors: {$set: {}},
+        passwordResetErrors: {$set: {}}
 
     });
     return newState;
@@ -106,7 +110,6 @@ export default function user(state = initialState, action) {
             newState = update(state, {
                 userName: {$set: null},
                 userId: {$set: null},
-                activeForm: {$set: USER_FORM_LOGIN},
                 logging: {$set: false},
                 token: {$set: null},
                 receiveCommentsEmail: {$set: null}
@@ -164,15 +167,34 @@ export default function user(state = initialState, action) {
             });
 
             return newState;
-        
-       
-        case ACTIVATE_USER_FORM:
+
+        case PASSWORD_RESET_START:
             state = cloneState(state);
             newState = update(state, {
-                activeForm: {$set: action.payload}
+                passwordResetErrors: {$set: {}},
+                resettingPassword: {$set: true}
             });
+
             return newState;
 
+        case PASSWORD_RESET_SUCCESS:
+            state = cloneState(state);
+            newState = update(state, {
+                passwordResetErrors: {$set: {}},
+                resettingPassword: {$set: false},
+                resettingPasswordDone: {$set: true}
+            });
+
+            return newState;
+
+        case PASSWORD_RESET_FAIL:
+            state = cloneState(state);
+            newState = update(state, {
+                passwordResetErrors: {$set: action.payload},
+                resettingPassword: {$set: false}
+            });
+
+            return newState;
           
         default:
             return state;

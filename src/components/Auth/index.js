@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../BaseComponent'
-import ReactDOM from 'react-dom'
 import { USER_FORM_LOGIN, USER_FORM_REGISTRATION, USER_FORM_PASSWORD_RESET } from '../../constants/Auth'
 import { formArrayToJson } from '../../helpers/helper'
 import VKLogin from '../VKLogin'
@@ -89,9 +88,47 @@ export default class Auth extends BaseComponent {
             </div>
                 )
             }
+            else if (this.state.activeForm == USER_FORM_PASSWORD_RESET) {
+                loginBlockButtons = (
+                    <div className="login_block_buttons">
+                        <p className="reg">
+                            Нет учетной записи?
+                            <a
+                                type="button"
+                                onClick={this.handdleFormChangeClick.bind(this, USER_FORM_REGISTRATION)}
+                                className="un"
+                            >
+                                Зарегистрироваться
+                            </a>
+                        </p>
+                        <p className="reg">
+                            <a
+                                type="button"
+                                onClick={this.handdleFormChangeClick.bind(this, USER_FORM_LOGIN)}
+                                className="un"
+                            >
+                                Вспомнили пароль?
+                            </a>
+                        </p>
+                    </div>
+                )
+            }
         }
         return loginBlockButtons
     }
+
+
+    getPasswordResetDoneMessage() {
+        if (this.props.data.resettingPasswordDone) {
+            return (
+                <div className="password_reset_done_message">
+                  Письмо с инструкциями отправлено на указанный адрес.
+                </div>
+            )
+        }
+        else return null
+    }
+
 
 getLoginBlockTemplate () {
 
@@ -242,6 +279,7 @@ getLoginBlockTemplate () {
         else if(this.state.activeForm == USER_FORM_PASSWORD_RESET) {
             loginBlockTemplate = (
                 <div className="password_reset_block">
+                    {this.getPasswordResetDoneMessage()}
                     <form
                         className="password_reset_form"
                         onSubmit={this.passwordResetFormSubmit.bind(this)}

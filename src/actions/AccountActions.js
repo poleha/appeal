@@ -3,6 +3,7 @@ import { CHANGE_PASSWORD_START, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_FAIL } 
 import { SAVE_PROFILE_START, SAVE_PROFILE_SUCCESS, SAVE_PROFILE_FAIL } from '../constants/Account'
 import { PASSWORD_RESET_CONFIRM_START, PASSWORD_RESET_CONFIRM_SUCCESS, PASSWORD_RESET_CONFIRM_FAIL } from '../constants/Account'
 import { USER_ACTIVATE_START, USER_ACTIVATE_SUCCESS, USER_ACTIVATE_FAIL } from '../constants/Account'
+import { SEND_USER_ACTIVATION_MAIL_START, SEND_USER_ACTIVATION_MAIL_SUCCESS, SEND_USER_ACTIVATION_MAIL_FAIL } from '../constants/Account'
 
 
 import { API_KEY } from '../middleware/api'
@@ -104,6 +105,22 @@ export function userActivate(data) {
                 endpoint: `${endpoint}activate/`,
                 actions: [USER_ACTIVATE_START, USER_ACTIVATE_SUCCESS, USER_ACTIVATE_FAIL],
                 body: data
+            }
+        }
+
+        dispatch(action).catch((error)=>{});
+
+    }
+
+}
+
+export function sendUserActivationMail() {
+    return function (dispatch, getState) {
+        let action = {
+            [API_KEY]: {
+                method: 'post',
+                endpoint: `${apiHost}/send_user_activation_email/`,
+                actions: [SEND_USER_ACTIVATION_MAIL_START, SEND_USER_ACTIVATION_MAIL_SUCCESS, SEND_USER_ACTIVATION_MAIL_FAIL],
             }
         }
 

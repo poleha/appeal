@@ -22,7 +22,8 @@ const initialState = {
     passwordResetErrors: {},
     network: null,
     externalId: null,
-    receiveCommentsEmail: null
+    receiveCommentsEmail: null,
+    emailConfirmed: null
 
 };
 
@@ -81,7 +82,9 @@ export default function user(state = initialState, action) {
                 logged: {$set: true},
                 logging: {$set: false},
                 token: {$set: action.payload.auth_token},
-                receiveCommentsEmail: {$set: action.payload.receive_comments_email}
+                receiveCommentsEmail: {$set: action.payload.receive_comments_email},
+                emailConfirmed: {$set: action.payload.email_confirmed},
+
             });
 
             return newState;

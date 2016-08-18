@@ -167,6 +167,26 @@ export default class AccountSettings extends BaseComponent {
     }
 
 
+    resendActivationMailLinkOnClick(e) {
+        e.preventDefault();
+        this.props.accountActions.sendUserActivationMail()
+    }
+
+    getResendActivationMailLink() {
+        if (!this.props.auth.emailConfirmed) {
+            if(!this.props.account.updated) {
+            return (
+            <a className="change" onClick={this.resendActivationMailLinkOnClick.bind(this)}>Выслать повторно письмо для активации учетной записи</a>
+        )
+            }
+            else {
+              return <div>Письмо отправлено</div>
+            }
+        }
+        else return null
+    }
+    
+
     render() {
 
       return (
@@ -212,6 +232,8 @@ export default class AccountSettings extends BaseComponent {
               </div>
 
 
+              {this.getResendActivationMailLink()}
+              
            <label>Получать уведомления о комментариях по электронной почте<input checked={this.props.auth.receiveCommentsEmail} onChange={this.receiveCommentsEmail.bind(this)} type="checkbox"/></label>
 
 

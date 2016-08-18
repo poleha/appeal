@@ -2,6 +2,8 @@ import { CHANGE_USERNAME_START, CHANGE_USERNAME_SUCCESS, CHANGE_USERNAME_FAIL } 
 import { CHANGE_PASSWORD_START, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_FAIL } from '../constants/Account'
 import { SAVE_PROFILE_START, SAVE_PROFILE_SUCCESS, SAVE_PROFILE_FAIL } from '../constants/Account'
 import { PASSWORD_RESET_CONFIRM_START, PASSWORD_RESET_CONFIRM_SUCCESS, PASSWORD_RESET_CONFIRM_FAIL } from '../constants/Account'
+import { USER_ACTIVATE_START, USER_ACTIVATE_SUCCESS, USER_ACTIVATE_FAIL } from '../constants/Account'
+
 
 import { API_KEY } from '../middleware/api'
 import { apiHost} from '../helpers/helper'
@@ -84,6 +86,23 @@ export function passwordResetConfirm(data) {
                 method: 'post',
                 endpoint: `${endpoint}password/reset/confirm/`,
                 actions: [PASSWORD_RESET_CONFIRM_START, PASSWORD_RESET_CONFIRM_SUCCESS, PASSWORD_RESET_CONFIRM_FAIL],
+                body: data
+            }
+        }
+
+        dispatch(action).catch((error)=>{});
+
+    }
+
+}
+
+export function userActivate(data) {
+    return function (dispatch, getState) {
+        let action = {
+            [API_KEY]: {
+                method: 'post',
+                endpoint: `${endpoint}activate/`,
+                actions: [USER_ACTIVATE_START, USER_ACTIVATE_SUCCESS, USER_ACTIVATE_FAIL],
                 body: data
             }
         }

@@ -13,13 +13,22 @@ export default class BaseComponent extends Component {
         let fieldErrors = this.props[dataName][propName][fieldName];
         if (fieldErrors) {
             let errorsBlock;
-            errorsBlock = fieldErrors.map(function (error, index) {
-                return (
-                    <li className="error" key={index}>
-                        {error}
-                    </li>
+            if (fieldErrors instanceof Array) {
+                errorsBlock = fieldErrors.map(function (error, index) {
+                    return (
+                        <li className="error" key={index}>
+                            {error}
+                        </li>
+                    )
+                });
+            }
+            else {
+                errorsBlock = (
+                        <li className="error" key="0">
+                            {fieldErrors}
+                        </li>
                 )
-            });
+            }
             return (
             <ReactCSSTransitionGroup
             transitionName="errors"

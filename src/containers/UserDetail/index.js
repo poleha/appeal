@@ -250,7 +250,7 @@ export default class UserDetail extends BaseComponent {
               {this.getUserInfoBlock()}
                 <div className="tabs">
                   <ul>
-                      <li className={classNames({active: this.state.activeTab=='appeals'})} data-tab="1" onClick={this.tabOnClick.bind(this, 'appeals')}>Предложения({user.posts.length})</li>
+                      <li className={classNames('col-sm-1', {active: this.state.activeTab=='appeals'})} data-tab="1" onClick={this.tabOnClick.bind(this, 'appeals')}>Предложения({user.posts.length})</li>
                       <li className={classNames({active: this.state.activeTab=='comments'})} data-tab="2" onClick={this.tabOnClick.bind(this, 'comments')}>Комментарии({user.comments.length})</li>
                       {this.getSettingsTab()}
                       

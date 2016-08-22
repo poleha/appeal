@@ -224,7 +224,8 @@ export function FacebookLogin() {
                     let body = {
                         username: response.name,
                         id: response.id,
-                        network: 'facebook'
+                        network: 'facebook',
+                        email: response.email
                     };
 
                     let action = {
@@ -252,7 +253,7 @@ export function FacebookLogin() {
             } else {
                 dispatch({type: USER_FACEBOOK_LOGIN_FAIL});
             }
-        });
+        }, {scope: 'email'});
 
     }
 }

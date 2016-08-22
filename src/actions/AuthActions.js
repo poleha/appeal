@@ -166,7 +166,7 @@ export function VKLogin() {
                     type: USER_VK_LOGIN_FAIL
                 })
             }
-        },4, 4194304); // запрос прав на доступ к photo и email
+        }, 4194304); // запрос прав на доступ к email
 
 
     }
@@ -182,7 +182,8 @@ export function GoogleLogin(data) {
             let data = {
                 id: profile.getId(),
                 username: profile.getName(),
-                network: 'google'
+                network: 'google',
+                email: profile.getEmail()
             };
             let action = {
                 [API_KEY]: {

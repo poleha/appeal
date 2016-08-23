@@ -12,6 +12,7 @@ export default class AccountSettings extends BaseComponent {
             password: "",
             newPassword1: "",
             newPassword2: "",
+            email: "",
             activeDialog: null
 
         }
@@ -23,6 +24,7 @@ export default class AccountSettings extends BaseComponent {
           this.setState({activeDialog: null})
           $(this._changeUsernameModal).modal('hide');
           $(this._changePasswordModal).modal('hide');
+          $(this._setEmailModal).modal('hide');
       }
 
     }
@@ -72,6 +74,60 @@ export default class AccountSettings extends BaseComponent {
                             {this.getFieldErrors('new_username', 'account')}
                             <label htmlFor="username">Новое имя пользователя</label>
                             <input id="username" name="username" onChange={this.onChangeUsernameFormFieldChange.bind(this)} type="text" value={this.state.username}/>
+                        </div>
+                        <div className="form_field">
+                            {this.getFieldErrors('current_password', 'account')}
+                            <label htmlFor="password">Текущий пароль</label>
+                            <input id="password" name="password" onChange={this.onChangeUsernameFormFieldChange.bind(this)} type="password" value={this.state.password}/>
+                        </div>
+                        <input type="submit" value="Сохранить"/>
+                    </form>
+
+                </div>
+            )
+        }
+        else return null
+    }
+
+
+
+    setEmailOnSubmit(e) {
+        e.preventDefault();
+        let body = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        this.props.accountActions.setUserEmail(body);
+
+    }
+
+    onChangeEmailFormFieldChange(e) {
+
+            this.setState({email: e.target.value})
+        }
+
+
+
+
+
+    setEmailOnClick(e) {
+        e.preventDefault();
+        this.setState({activeDialog: 'set_email'})
+        $(this._setEmailModal).modal('show');
+    }
+
+    getSetEmailForm() {
+        if (this.state.activeDialog == 'set_email') {
+            return (
+                <div>
+                    <div className="errors">
+                        {this.getFieldErrors('non_field_errors','account')}
+                    </div>
+                    <form onSubmit={this.setEmailOnSubmit.bind(this)}>
+                        <div className="form_field">
+                            {this.getFieldErrors('email', 'account')}
+                            <label htmlFor="email">E-MAIL</label>
+                            <input id="email" name="email" onChange={this.onChangeEmailFormFieldChange.bind(this)} type="email" value={this.state.email}/>
                         </div>
                         <div className="form_field">
                             {this.getFieldErrors('current_password', 'account')}
@@ -173,7 +229,7 @@ export default class AccountSettings extends BaseComponent {
     }
 
     getResendActivationMailLink() {
-        if (!this.props.auth.emailConfirmed) {
+        if (this.props.auth.email  && this.props.auth.emailConfirmed) {
             if(!this.props.account.updated) {
             return (
             <a className="change" onClick={this.resendActivationMailLinkOnClick.bind(this)}>Выслать повторно письмо для активации учетной записи</a>
@@ -185,7 +241,35 @@ export default class AccountSettings extends BaseComponent {
         }
         else return null
     }
-    
+
+
+    getSetEmailBlock() {
+        if (this.props.auth.email) return null;
+
+        return (
+            <div>
+        <a className="change" onClick={this.setEmailOnClick.bind(this)}>Установить e-mail</a>
+
+
+        <div className="modal fade account_settings_modal_form" ref={(e) => this._setEmailModal = e}>
+    <div className="modal-dialog">
+            <div className="modal-content">
+            <div className="modal-header">
+            <div className="close" data-dismiss="modal" aria-hidden="true"></div>
+            <div className="title"><h1>Установить e-mail</h1></div>
+        </div>
+        <div className="in">
+
+            <div className="modal-body">
+            {this.getSetEmailForm()}
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    )
+    }
 
     render() {
 
@@ -230,6 +314,12 @@ export default class AccountSettings extends BaseComponent {
                       </div>
                   </div>
               </div>
+
+
+
+
+              {this.getSetEmailBlock()}
+
 
 
               {this.getResendActivationMailLink()}

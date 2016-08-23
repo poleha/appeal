@@ -23,7 +23,8 @@ const initialState = {
     network: null,
     externalId: null,
     receiveCommentsEmail: null,
-    emailConfirmed: null
+    emailConfirmed: null,
+    email: null
 
 };
 
@@ -82,6 +83,7 @@ export default function user(state = initialState, action) {
                 logged: {$set: true},
                 logging: {$set: false},
                 token: {$set: action.payload.auth_token},
+                email: {$set: action.payload.email},
                 receiveCommentsEmail: {$set: action.payload.receive_comments_email},
                 emailConfirmed: {$set: action.payload.email_confirmed},
 

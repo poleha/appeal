@@ -4,7 +4,7 @@ import { SAVE_PROFILE_START, SAVE_PROFILE_SUCCESS, SAVE_PROFILE_FAIL } from '../
 import { PASSWORD_RESET_CONFIRM_START, PASSWORD_RESET_CONFIRM_SUCCESS, PASSWORD_RESET_CONFIRM_FAIL } from '../constants/Account'
 import { USER_ACTIVATE_START, USER_ACTIVATE_SUCCESS, USER_ACTIVATE_FAIL } from '../constants/Account'
 import { SEND_USER_ACTIVATION_MAIL_START, SEND_USER_ACTIVATION_MAIL_SUCCESS, SEND_USER_ACTIVATION_MAIL_FAIL } from '../constants/Account'
-
+import { SET_USER_EMAIL_START, SET_USER_EMAIL_SUCCESS, SET_USER_EMAIL_FAIL } from '../constants/Account'
 
 import { API_KEY } from '../middleware/api'
 import { apiHost} from '../helpers/helper'
@@ -125,6 +125,27 @@ export function sendUserActivationMail() {
         }
 
         dispatch(action).catch((error)=>{});
+
+    }
+
+}
+
+
+export function setUserEmail(body) {
+    return function (dispatch, getState) {
+        let action = {
+            [API_KEY]: {
+                method: 'post',
+                endpoint: `${endpoint}set_email/`,
+                body: body,
+                actions: [SET_USER_EMAIL_START, SET_USER_EMAIL_SUCCESS, SET_USER_EMAIL_FAIL],
+            }
+        }
+
+        dispatch(action).then(()=> {
+            dispatch(getUserInfo())
+        }).catch((error)=>{});
+
 
     }
 

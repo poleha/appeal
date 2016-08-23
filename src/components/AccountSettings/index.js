@@ -229,7 +229,7 @@ export default class AccountSettings extends BaseComponent {
     }
 
     getResendActivationMailLink() {
-        if (this.props.auth.email  && this.props.auth.emailConfirmed) {
+        if (this.props.auth.email  && !this.props.auth.emailConfirmed) {
             if(!this.props.account.updated) {
             return (
             <a className="change" onClick={this.resendActivationMailLinkOnClick.bind(this)}>Выслать повторно письмо для активации учетной записи</a>

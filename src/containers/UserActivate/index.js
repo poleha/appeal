@@ -56,7 +56,7 @@ export default class UserActivate extends BaseComponent {
 
       return (
           <section className="user_activat">
-            <Helmet title="Активация учетной запипи"/>
+            <Helmet title="Активация учетной записи"/>
               {this.getPasswordResetDoneForm()}
         </section>
 

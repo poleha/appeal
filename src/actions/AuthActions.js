@@ -124,51 +124,22 @@ export function registerUser(data) {
 }
 
 
-export function VKLogin() {
+export function VKLogin(code) {
     return function (dispatch, getState, req) {
-        dispatch({type: USER_VK_LOGIN_START});
-
-        VK.Auth.login((r) => {
-            if (r.session) {
-                let user = r.session.user;
-                let username = user.nickname || user.first_name;
-                let id = user.id;
-                let body = {
-                    username,
-                    id,
-                    network: 'vk'
-                };
-
-
-                let action = {
-                    [API_KEY]: {
-                        method: 'post',
-                        endpoint: `${endpoint}social_login/`,
-                        body: body,
-                        actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
-                    },
-                    body: body
-                };
-
-                dispatch(action).then(response => {
-                    createCookie('appeal_site_token', response.auth_token, req);
-                    dispatch(getUserInfo());
-                    }).then(response => {
-                    dispatch({
-                        type: USER_VK_LOGIN_SUCCESS
-                })
-
-                });
-
-
-            } else {
-                dispatch({
-                    type: USER_VK_LOGIN_FAIL
-                })
+        let redirect_url = `${config.domen}/vk_login_redirect`;
+        let action = {
+            [API_KEY]: {
+                method: 'post',
+                endpoint: `${endpoint}vk_login/`,
+                body: {code, redirect_url},
+                actions: [USER_VK_LOGIN_START, USER_VK_LOGIN_SUCCESS, USER_VK_LOGIN_FAIL]
             }
-        }, 4194304); // запрос прав на доступ к email
+        }
+        return dispatch(action).then(response => {
+            createCookie('appeal_site_token', response.auth_token, req);
+            return dispatch(getUserInfo())
 
-
+        }).then(() => browserHistory.replace('/'))
     }
 }
 

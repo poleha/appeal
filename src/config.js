@@ -26,5 +26,6 @@ export default {
     },
     cookie : {
         expireDays: 7
-    }
+    },
+    domen: __DEVELOPMENT__ ? 'localhost:3000' : 'qblik.ru'
 }

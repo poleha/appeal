@@ -221,32 +221,40 @@ export function FacebookLogin() {
                 FB.api('/me', function(response) {
 
 
-                    let body = {
-                        username: response.name,
-                        id: response.id,
-                        network: 'facebook',
-                        email: response.email
-                    };
+                    FB.api('/me?fields=email', function(responseFromFB){
 
-                    let action = {
-                        [API_KEY]: {
-                            method: 'post',
-                            endpoint: `${endpoint}social_login/`,
-                            body: body,
-                            actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
-                        },
-                        body: body
-                    };
 
-                    dispatch(action).then(response => {
-                        createCookie('appeal_site_token', response.auth_token, req);
-                        dispatch(getUserInfo());
-                    }).then(response => {
-                        dispatch({
-                            type: USER_FACEBOOK_LOGIN_SUCCESS
-                        })
+                        let body = {
+                            username: response.name,
+                            id: response.id,
+                            network: 'facebook',
+                            email: responseFromFB.email
+                        };
 
-                    });
+                        let action = {
+                            [API_KEY]: {
+                                method: 'post',
+                                endpoint: `${endpoint}social_login/`,
+                                body: body,
+                                actions: [USER_SOCIAL_LOGIN_START, USER_SOCIAL_LOGIN_SUCCESS, USER_SOCIAL_LOGIN_FAIL]
+                            },
+                            body: body
+                        };
+
+                        dispatch(action).then(response => {
+                            createCookie('appeal_site_token', response.auth_token, req);
+                            dispatch(getUserInfo());
+                        }).then(response => {
+                            dispatch({
+                                type: USER_FACEBOOK_LOGIN_SUCCESS
+                            })
+
+                        });
+
+
+
+                    })
+
 
 
                 });

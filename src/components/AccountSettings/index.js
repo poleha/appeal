@@ -94,6 +94,7 @@ export default class AccountSettings extends BaseComponent {
     setEmailOnSubmit(e) {
         e.preventDefault();
         let body = {
+            userId: this.props.auth.userId,
             email: this.state.email,
             password: this.state.password
         }
@@ -130,7 +131,7 @@ export default class AccountSettings extends BaseComponent {
                             <input id="email" name="email" onChange={this.onChangeEmailFormFieldChange.bind(this)} type="email" value={this.state.email}/>
                         </div>
                         <div className="form_field">
-                            {this.getFieldErrors('current_password', 'account')}
+                            {this.getFieldErrors('password', 'account')}
                             <label htmlFor="password">Текущий пароль</label>
                             <input id="password" name="password" onChange={this.onChangeUsernameFormFieldChange.bind(this)} type="password" value={this.state.password}/>
                         </div>

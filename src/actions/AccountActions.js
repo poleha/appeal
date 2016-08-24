@@ -133,10 +133,12 @@ export function sendUserActivationMail() {
 
 export function setUserEmail(body) {
     return function (dispatch, getState) {
+        let userId = body.userId;
+        delete body.userId;
         let action = {
             [API_KEY]: {
-                method: 'post',
-                endpoint: `${endpoint}set_email/`,
+                method: 'PATCH',
+                endpoint: `${endpoint}set_email/${userId}/`,
                 body: body,
                 actions: [SET_USER_EMAIL_START, SET_USER_EMAIL_SUCCESS, SET_USER_EMAIL_FAIL],
             }

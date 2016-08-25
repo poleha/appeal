@@ -23,7 +23,8 @@ function mapStateToProps(state) {
         auth: state.auth,
         post: state.post,
         comment: state.comment,
-        tag: state.tag
+        tag: state.tag,
+        global: state.global
     }
 }
 
@@ -66,7 +67,27 @@ export default class App extends BaseComponent {
     }
 
 
+    getMenuBlock() {
+        if (!this.props.global.menuEnabled) return null;
 
+        let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
+            return <NavLink key={tag.id} activeClassName='active' to={`/${tag.alias}`}>{tag.title}</NavLink>
+        });
+
+        return (
+            <div className="row top_block">
+                <nav className={classNames("menu", {active: this.state.menuCollaped})}>
+                    <div className="menu_collapse" onClick={this.menuCollapseClick.bind(this)}></div>
+                    <ul>
+                        <NavLink activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
+                        {linksBlock}
+
+                    </ul>
+                </nav>
+
+            </div>
+        )
+    }
 
     menuCollapseClick() {
         this.setState({menuCollaped: !this.state.menuCollaped})
@@ -74,9 +95,7 @@ export default class App extends BaseComponent {
 
     render() {
 
-      let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
-      return <NavLink key={tag.id} activeClassName='active' to={`/${tag.alias}`}>{tag.title}</NavLink>
-    });
+
 
     return (
     <div>
@@ -84,17 +103,7 @@ export default class App extends BaseComponent {
             <div className="max_width">
             <Helmet {...config.app.head} title={config.app.title}/>
              <Header {...this.props} />
-          <div className="row top_block">
-                  <nav className={classNames("menu", {active: this.state.menuCollaped})}>
-                      <div className="menu_collapse" onClick={this.menuCollapseClick.bind(this)}></div>
-                      <ul>
-              <NavLink activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
-            {linksBlock}
-
-          </ul>
-                          </nav>
-           
-          </div>
+                {this.getMenuBlock()}
             <BreadCrumbs {...this.props}/>
             {this.props.children}
          </div>

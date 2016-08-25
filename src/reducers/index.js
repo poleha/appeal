@@ -6,6 +6,7 @@ import comment from './comment'
 import tag from './tag'
 import user from './user'
 import account from './account'
+import global from './global'
 import { reducer as reduxAsyncConnect } from 'redux-async-connect'
 
 export default combineReducers({
@@ -16,5 +17,6 @@ export default combineReducers({
   post,
   comment,
   user,
-  account
+  account,
+  global
 })

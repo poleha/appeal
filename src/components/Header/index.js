@@ -4,6 +4,9 @@ import { Link } from 'react-router'
 
 export default class Header extends Component {
 
+
+ 
+
     render() {
         return (
 
@@ -22,10 +25,10 @@ export default class Header extends Component {
                     <div className="head_auth">
 
                         <Auth
+                            disabled={!this.props.global.loginBlockEnabled}
                             data={this.props.auth}
                             actions={this.props.authActions}
                         />
-
 
                         
                     </div>

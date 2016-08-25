@@ -409,7 +409,7 @@ getLoginBlockTemplate () {
 
                 </div>
                 <div key="logged_block" className="logged_block">
-                <input className="button button_small" type="button" value="Войти" onClick={this.showLoginBlock.bind(this)}/>
+                <input disabled={this.props.disabled} className="button button_small" type="button" value="Войти" onClick={this.showLoginBlock.bind(this)}/>
                  </div>
                 </div>
         )

@@ -3,7 +3,8 @@ import { render } from 'react-dom'
 import { useRouterHistory } from 'react-router'
 import { createHistory } from 'history';
 import withScroll from 'scroll-behavior';
-const appHistory = withScroll((useRouterHistory(createHistory))());
+
+const appHistory = withScroll(useRouterHistory(createHistory)());
 
 
 import { syncHistoryWithStore } from 'react-router-redux'

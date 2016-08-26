@@ -1,6 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { browserHistory } from 'react-router'
+import { useRouterHistory } from 'react-router'
+import { createHistory } from 'history';
+import withScroll from 'scroll-behavior';
+const appHistory = withScroll((useRouterHistory(createHistory))());
+
+
 import { syncHistoryWithStore } from 'react-router-redux'
 import Root from './containers/Root'
 import configureStore from './store/configureStore'
@@ -8,7 +13,7 @@ const dest = document.getElementById('app_root');
 
 
 const store = configureStore(window.__data);
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(appHistory, store);
 
 render(
     <Root store={store} history={history} />,

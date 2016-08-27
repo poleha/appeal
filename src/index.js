@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { useRouterHistory } from 'react-router'
-import { createHistory } from 'history';
+import createHistory from 'history/lib/createBrowserHistory'; // Reducing package size
 import withScroll from 'scroll-behavior';
 
 const appHistory = withScroll(useRouterHistory(createHistory)());
@@ -14,7 +14,7 @@ const dest = document.getElementById('app_root');
 
 
 const store = configureStore(window.__data);
-const history = syncHistoryWithStore(appHistory, store);
+const history = syncHistoryWithStore(appHistory, store); // Sync is not really necessary
 
 render(
     <Root store={store} history={history} />,

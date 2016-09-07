@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import config from '../../config'
 
 export default class BaseComponent extends Component {
 
@@ -46,5 +47,17 @@ export default class BaseComponent extends Component {
             )
         }
     }
+
+
+    processSmileyText(text) {
+    let changedText = text;
+
+        config.smiley.forEach((smiley) => {
+        changedText = changedText.replace(smiley.data, `<img src="/static/images/smileys/${smiley.filename}" alt="${smiley.alt}"/>`)
+    })
+        return <p dangerouslySetInnerHTML={{__html: changedText}} />
+    }
+    
+
 
 }

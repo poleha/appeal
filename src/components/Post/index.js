@@ -1,10 +1,11 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes } from 'react'
+import BaseComponent from '../../components/BaseComponent'
 import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Post'
 import classNames from 'classnames'
 import { Link } from 'react-router'
 import { mapNodes } from '../../helpers/helper'
 
-export default class Post extends Component {
+export default class Post extends BaseComponent {
 
     getRateBlock(post) {
         //let key = post.id;
@@ -89,7 +90,7 @@ export default class Post extends Component {
                 <ul className="card_table">
                 <li>
                     <div className="content">
-                        {post.body}
+                        {this.processSmileyText(post.body)}
                     </div>
                 </li>
                     {this.getRateBlock(post)}

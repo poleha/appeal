@@ -1,9 +1,9 @@
 import React, { PropTypes, Component } from 'react'
 import classNames from 'classnames'
 import { Link } from 'react-router'
+import BaseComponent from '../../components/BaseComponent'
 
-
-export default class Comment extends Component {
+export default class Comment extends BaseComponent {
 
 
     getUserBlock(component) {
@@ -45,7 +45,9 @@ export default class Comment extends Component {
                     <span>{this.getUpdateBlock(comment)}</span>
                 </div>
                 </div>
-            <div>{comment.body}</div>
+            <div>
+                {this.processSmileyText(comment.body)}
+            </div>
 
         </div>
     }

@@ -14,7 +14,7 @@ export default class BaseSmileyForm extends BaseComponent {
     }
 
     addPostBodyOnFocus(e) {
-        if (e.type == 'focus') this.setState({bodyFocus:true});
+        if (e.type == 'focus' && !this.state.bodyFocus) this.setState({bodyFocus:true});
         //else this.setState({bodyFocus:false});
 
     }

@@ -33,8 +33,8 @@ export default class BaseSmileyForm extends BaseComponent {
     }
 
     getSmileys() {
-        return config.smiley.map((smiley) => {
-            return <img src={`/static/images/smileys/${smiley.filename}`} alt="" data-smile={smiley.data}/>
+        return config.smiley.map((smiley, i) => {
+            return <img key={i} src={`/static/images/smileys/${smiley.filename}`} alt="" data-smile={smiley.data}/>
         })
     }
 

@@ -68,10 +68,10 @@ export default class App extends BaseComponent {
 
 
     getMenuBlock() {
-        if (!this.props.global.menuEnabled) return null;
 
-        let linksBlock = mapNodes(this.props.tag.tags, function (tag) {
-            return <NavLink key={tag.id} activeClassName='active' to={`/${tag.alias}`}>{tag.title}</NavLink>
+
+        let linksBlock = mapNodes(this.props.tag.tags, (tag) => {
+            return <NavLink disabled={!this.props.global.menuEnabled} key={tag.id} activeClassName='active' to={`/${tag.alias}`}>{tag.title}</NavLink>
         });
 
         return (
@@ -79,7 +79,7 @@ export default class App extends BaseComponent {
                 <nav className={classNames("menu", {active: this.state.menuCollaped})}>
                     <div className="menu_collapse" onClick={this.menuCollapseClick.bind(this)}></div>
                     <ul>
-                        <NavLink activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
+                        <NavLink disabled={!this.props.global.menuEnabled} activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
                         {linksBlock}
 
                     </ul>

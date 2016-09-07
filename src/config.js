@@ -27,5 +27,19 @@ export default {
     cookie : {
         expireDays: 7
     },
-    domen: __DEVELOPMENT__ ? 'localhost:3000' : 'qblik.ru'
+    domen: __DEVELOPMENT__ ? 'localhost:3000' : 'qblik.ru',
+    smiley: [
+        {filename: '1.png', data: '(inlove)'},
+        {filename: '2.png', data: ':^)'},
+        {filename: '3.png', data: ':D'},
+        {filename: '4.png', data: ''},
+        {filename: '5.png', data: ''},
+        {filename: '6.png', data: ''},
+        {filename: '7.png', data: ''},
+        {filename: '8.png', data: ''},
+        {filename: '9.png', data: ''},
+        {filename: '10.png', data: ''},
+        {filename: '11.png', data: ''},
+        {filename: '12.png', data: ''}
+    ]
 }

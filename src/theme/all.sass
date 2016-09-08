@@ -262,7 +262,7 @@ $var_w_logo: 201
 	.add_params
 		margin: 0 -10px
 		
-		padding: 8px 0 37px 0
+		padding: 8px 0 37px 10px
 		&::after
 			+clear
 		label
@@ -870,3 +870,15 @@ body .button_reload_search
 	text-align: center
 	font-size: 1.8em
 	margin-bottom: 20px
+
+
+.errors
+	font-size: 0.9em
+	color: #f26d62
+
+
+.form_field
+	&.has_errors
+		border: thin solid #f26d62
+		padding: 5px
+		margin: 8px

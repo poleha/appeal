@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 
 import BaseSmileyForm from '../../components/BaseSmileyForm'
 import { formArrayToJson, mapNodes } from '../../helpers/helper'
-
+import classNames from 'classnames'
 
 class BasePostForm extends BaseSmileyForm {
 
@@ -68,8 +68,10 @@ class BasePostForm extends BaseSmileyForm {
 
 
 
-
-
+        let body_errors = this.getFieldErrors('body', 'post')
+        let tags_errors = this.getFieldErrors('tags', 'post')
+        
+ 
         return (
             <section className="add bg_grey">
                 <h1 className="section_name">Добавить предложение</h1>
@@ -84,14 +86,14 @@ class BasePostForm extends BaseSmileyForm {
                     {this.getAdditionalFields()}
 
 
-                    <div className="form_field">
-                        {this.getFieldErrors('body', 'post')}
+                    <div className={classNames("form_field", {has_errors: body_errors})}>
+                        {body_errors}
                         {this.getBodyField()}
 
                     </div>
 
-                    <div className="form_field">
-                        {this.getFieldErrors('tags', 'post')}
+                    <div className={classNames("form_field", {has_errors: tags_errors})}>
+                        {tags_errors}
                         <div className="add_params">
                         <ul
                             className='tags_add row'
@@ -186,10 +188,13 @@ export class PostCreateForm extends BasePostForm {
 
     getAdditionalFields() {
         if (!this.state.bodyFocus) return null;
+        
+        let username_errors = this.getFieldErrors('username', 'post')
+        
         return (
             <div>
-        <div className="form_field" hidden={this.props.userId}>
-            {this.getFieldErrors('username', 'post')}
+        <div className={classNames("form_field", {has_errors: username_errors})} hidden={this.props.userId}>
+            {username_errors}
 
 
             <input

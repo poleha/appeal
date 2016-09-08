@@ -137,18 +137,23 @@ getLoginBlockTemplate () {
     if (!this.props.data.userId) {
 
         if(this.state.activeForm == USER_FORM_LOGIN){
+
+            let non_field_errors = this.getFieldErrors('non_field_errors','data', 'loginErrors')
+            let username_errors = this.getFieldErrors('username', 'data','loginErrors')
+            let password_errors = this.getFieldErrors('password', 'data','loginErrors')
+
             loginBlockTemplate = (
                 <div className="login_block">
                     <div className="errors">
-                        {this.getFieldErrors('non_field_errors','data', 'loginErrors')}
+                        {non_field_errors}
                     </div>
                     <form
                         onSubmit={this.loginFormSubmit.bind(this)}
                         className="login_form"
                         ref={(c) => this._login_form = c}
                     >
-                        <div className="form_field">
-                        {this.getFieldErrors('username', 'data','loginErrors')}
+                        <div className={classNames("form_field", {has_errors: username_errors})}>
+                        {username_errors}
                         <input
                             type="text"
                             ref={(c) => this._username = c}
@@ -158,8 +163,8 @@ getLoginBlockTemplate () {
                             required
                         />
                          </div>
-                        <div className="form_field">
-                        {this.getFieldErrors('password', 'data','loginErrors')}
+                        <div className={classNames("form_field", {has_errors: password_errors})}>
+                        {password_errors}
                         <input
                             ref={(c) => this._password = c}
                             placeholder="Пароль"
@@ -207,6 +212,13 @@ getLoginBlockTemplate () {
             )
         }
         else if(this.state.activeForm == USER_FORM_REGISTRATION) {
+
+            let non_field_errors = this.getFieldErrors('non_field_errors', 'data','registerErrors')
+            let email_errors = this.getFieldErrors('email', 'data','registerErrors')
+            let username_errors = this.getFieldErrors('username', 'data','registerErrors')
+            let password_errors = this.getFieldErrors('password', 'data','registerErrors')
+            let password2_errors = this.getFieldErrors('password2', 'data','registerErrors')
+
             loginBlockTemplate = (
                 <div className="registration_block">
                     <form
@@ -214,9 +226,9 @@ getLoginBlockTemplate () {
                         onSubmit={this.registrationFormSubmit.bind(this)}
                         ref={(c) => this._register_form = c}
                     >
-                        {this.getFieldErrors('non_field_errors', 'data','registerErrors')}
-                        <div className="form_field">
-                        {this.getFieldErrors('email', 'data','registerErrors')}
+                        {non_field_errors}
+                        <div className={classNames("form_field", {has_errors: email_errors})}>
+                        {email_errors}
                         <input
                             type="text"
                             ref={(c) => this._email = c}
@@ -227,8 +239,8 @@ getLoginBlockTemplate () {
                             required
                         />
                             </div>
-                        <div className="form_field">
-                        {this.getFieldErrors('username', 'data','registerErrors')}
+                        <div className={classNames("form_field", {has_errors: username_errors})}>
+                        {username_errors}
                         <input
                             type="text"
                             ref={(c) => this._username = c}
@@ -239,8 +251,8 @@ getLoginBlockTemplate () {
                             required
                         />
                             </div>
-                        <div className="form_field">
-                        {this.getFieldErrors('password', 'data','registerErrors')}
+                        <div className={classNames("form_field", {has_errors: password_errors})}>
+                        {password_errors}
                         <input
                             type="text"
                             ref={(c) => this._password = c}
@@ -252,8 +264,8 @@ getLoginBlockTemplate () {
                             required
                         />
                             </div>
-                        <div className="form_field">
-                        {this.getFieldErrors('password2', 'data','registerErrors')}
+                        <div className={classNames("form_field", {has_errors: password2_errors})}>
+                        {password2_errors}
                         <input
                             type="text"
                             ref={(c) => this._password2 = c}

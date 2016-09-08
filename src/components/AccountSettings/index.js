@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import BaseComponent from '../../components/BaseComponent'
-
+import classNames from 'classnames'
 
 export default class AccountSettings extends BaseComponent {
 
@@ -64,19 +64,22 @@ export default class AccountSettings extends BaseComponent {
 
     getChangeUsernameForm() {
         if (this.state.activeDialog == 'change_username') {
+            let non_field_errors = this.getFieldErrors('non_field_errors','account')
+            let new_username_errors = this.getFieldErrors('new_username', 'account')
+            let current_password_errors = this.getFieldErrors('current_password', 'account')
             return (
                 <div>
                     <div className="errors">
-                        {this.getFieldErrors('non_field_errors','account')}
+                        {non_field_errors}
                     </div>
                     <form onSubmit={this.changeUsernameOnSubmit.bind(this)}>
-                        <div className="form_field">
-                            {this.getFieldErrors('new_username', 'account')}
+                        <div className={classNames("form_field", {has_errors: new_username_errors})}>
+                            {new_username_errors}
                             <label htmlFor="username">Новое имя пользователя</label>
                             <input id="username" name="username" onChange={this.onChangeUsernameFormFieldChange.bind(this)} type="text" value={this.state.username}/>
                         </div>
-                        <div className="form_field">
-                            {this.getFieldErrors('current_password', 'account')}
+                        <div className={classNames("form_field", {has_errors: current_password_errors})}>
+                            {current_password_errors}
                             <label htmlFor="password">Текущий пароль</label>
                             <input id="password" name="password" onChange={this.onChangeUsernameFormFieldChange.bind(this)} type="password" value={this.state.password}/>
                         </div>
@@ -119,19 +122,22 @@ export default class AccountSettings extends BaseComponent {
 
     getSetEmailForm() {
         if (this.state.activeDialog == 'set_email') {
+            let non_field_errors = this.getFieldErrors('non_field_errors','account')
+            let email_errors = this.getFieldErrors('email', 'account')
+            let password_errors = this.getFieldErrors('password', 'account')
             return (
                 <div>
                     <div className="errors">
-                        {this.getFieldErrors('non_field_errors','account')}
+                        {non_field_errors}
                     </div>
                     <form onSubmit={this.setEmailOnSubmit.bind(this)}>
-                        <div className="form_field">
-                            {this.getFieldErrors('email', 'account')}
+                        <div className={classNames("form_field", {has_errors: email_errors})}>
+                            {email_errors}
                             <label htmlFor="email">E-MAIL</label>
                             <input id="email" name="email" onChange={this.onChangeEmailFormFieldChange.bind(this)} type="email" value={this.state.email}/>
                         </div>
-                        <div className="form_field">
-                            {this.getFieldErrors('password', 'account')}
+                        <div className={classNames("form_field", {has_errors: password_errors})}>
+                            {password_errors}
                             <label htmlFor="password">Текущий пароль</label>
                             <input id="password" name="password" onChange={this.onChangeUsernameFormFieldChange.bind(this)} type="password" value={this.state.password}/>
                         </div>
@@ -182,24 +188,28 @@ export default class AccountSettings extends BaseComponent {
 
     getChangePasswordForm() {
         if (this.state.activeDialog == 'change_password') {
+            let non_field_errors = this.getFieldErrors('non_field_errors','account')
+            let new_password_errors = this.getFieldErrors('new_password', 'account')
+            let re_new_password_errors = this.getFieldErrors('re_new_password', 'account')
+            let current_password_errors = this.getFieldErrors('current_password', 'account')
             return (
                 <div>
                     <div className="errors">
-                        {this.getFieldErrors('non_field_errors','account')}
+                        {non_field_errors}
                     </div>
                     <form onSubmit={this.changePasswordOnSubmit.bind(this)}>
-                        <div className="form_field">
-                            {this.getFieldErrors('new_password', 'account')}
+                        <div className={classNames("form_field", {has_errors: new_password_errors})}>
+                            {new_password_errors}
                             <label htmlFor="new_password">Новый пароль</label>
                             <input id="new_password" name="new_password" onChange={this.onChangePasswordFormFieldChange.bind(this)} type="password" value={this.state.newPassword1}/>
                         </div>
-                        <div className="form_field">
-                            {this.getFieldErrors('re_new_password', 'account')}
+                        <div className={classNames("form_field", {has_errors: re_new_password_errors})}>
+                            {re_new_password_errors}
                             <label htmlFor="re_new_password">Новый пароль еще раз</label>
                             <input id="re_new_password" name="re_new_password" onChange={this.onChangePasswordFormFieldChange.bind(this)} type="password" value={this.state.newPassword2}/>
                         </div>
-                        <div className="form_field">
-                            {this.getFieldErrors('current_password', 'account')}
+                        <div className={classNames("form_field", {has_errors: current_password_errors})}>
+                            {current_password_errors}
                             <label htmlFor="current_password">Текущий пароль</label>
                             <input id="current_password" name="current_password" onChange={this.onChangePasswordFormFieldChange.bind(this)} type="password" value={this.state.password}/>
                         </div>

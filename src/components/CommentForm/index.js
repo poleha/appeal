@@ -15,14 +15,20 @@ class BaseCommentForm extends BaseSmileyForm {
 
 
     render() {
+
+        let username_errors = this.getFieldErrors('username', 'comment')
+        let email_errors = this.getFieldErrors('email', 'comment')
+
         let usernameInputClass = classNames('form_field',
             {
-                hidden: this.props.userId
+                hidden: this.props.userId,
+                has_errors: username_errors
             });
 
         let emailImputClass = classNames('form_field',
             {
-                hidden: this.props.userId
+                hidden: this.props.userId,
+                has_errors: email_errors
             });
         return (
             <section className="add bg_grey">
@@ -33,7 +39,7 @@ class BaseCommentForm extends BaseSmileyForm {
                     ref={(c) => this._addCommentForm = c}
                 >
                     <div className={usernameInputClass}>
-                        {this.getFieldErrors('username', 'comment')}
+                        {username_errors}
                         <input
                             ref={(c) => this._addCommentUserName = c}
                             placeholder="Автор"
@@ -41,7 +47,7 @@ class BaseCommentForm extends BaseSmileyForm {
                         />
                     </div>
                     <div className={emailImputClass}>
-                        {this.getFieldErrors('email', 'comment')}
+                        {email_errors}
                         <input
                             ref={(c) => this._addCommentEmail = c}
                             placeholder="E-mail(не обязательно)"
@@ -80,8 +86,9 @@ export class CommentCreateForm extends BaseCommentForm {
 
     getBodyField() {
         let bodyField = this.getSmileyForm()
+        let body_errors = this.getFieldErrors('email', 'comment')
         return (
-            <div className="form_field">
+            <div className={classNames("form_field", {has_errors: body_errors})}>
                 {this.getFieldErrors('body', 'comment')}
                 {bodyField}
             </div>
@@ -116,9 +123,11 @@ export class CommentUpdateForm extends BaseCommentForm {
     getBodyField() {
         let comment = this.props.comment.comments.entities[this.props.params.id];
         let bodyField = this.getSmileyForm(comment.body)
+        let body_errors = this.getFieldErrors('email', 'comment')
+                
         return (
-            <div className="form_field">
-                {this.getFieldErrors('body', 'comment')}
+            <div className={classNames("form_field", {has_errors: body_errors})}>
+                {body_errors}
                 {bodyField}
             </div>
         )

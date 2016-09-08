@@ -1,9 +1,31 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
-
+import config from '../../config'
 
 
 export default class BreadCrumbs extends Component {
+
+
+
+    removeSmiley(text) {
+        let changedText = text;
+
+        config.smiley.forEach((smiley) => {
+            changedText = changedText.replace(smiley.data, ``)
+        })
+        return changedText;
+    }
+
+    prepareBody(text, length) {
+        text = this.removeSmiley(text)
+        let toRemove = ['.', ',', ':', ';', '!']
+        toRemove.forEach((elem) => {
+            text = text.replace(elem, ' ')
+        })
+        text = text.trim()
+        return text.slice(0, 20)
+    }
+
 
 
     getBreadCrumbs() {
@@ -23,7 +45,7 @@ export default class BreadCrumbs extends Component {
 
                     <li className="active">
 
-                        {post.body.slice(0, 20)}
+                        {this.prepareBody(post.body, 20)}
                     </li>
 
                 </ol>
@@ -45,7 +67,7 @@ export default class BreadCrumbs extends Component {
                     </li>
 
                     <li>
-                        <Link to={`/post/${post.id}`}>{post.body.slice(0, 20)}</Link>
+                        <Link to={`/post/${post.id}`}>{this.prepareBody(post.body, 20)}</Link>
                     </li>
                     <li className="active">
                         Редактировать
@@ -70,12 +92,12 @@ export default class BreadCrumbs extends Component {
                     </li>
 
                     <li>
-                        <Link to={`/post/${post.id}`}>{post.body.slice(0, 20)}</Link>
+                        <Link to={`/post/${post.id}`}>{this.prepareBody(post.body, 20)}</Link>
                     </li>
 
                     <li>
 
-                        {comment.body.slice(0, 20)}
+                        {this.prepareBody(comment.body, 20)}
                     </li>
                     <li className="active">
 

@@ -96,9 +96,8 @@ export class CommentCreateForm extends BaseCommentForm {
             this._addCommentEmail.value = '';
             this._body.value = '';
 
-
             $('html, body').animate({
-                scrollTop: $(".cards").offset().top + $('.card .added').height()
+                scrollTop: $(".added").offset().top
             }, 500);
 
 

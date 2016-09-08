@@ -242,7 +242,7 @@ export class PostCreateForm extends BasePostForm {
 
         if (this.props.post.added) {
             $('html, body').animate({
-                scrollTop: $(".cards").offset().top + $('.card .added').height()
+                scrollTop: $(".added").offset().top
             }, 500);
 
         }

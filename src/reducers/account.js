@@ -11,7 +11,8 @@ var newState;
 const initialState = {
     errors: {},
     updating: false,
-    updated: false
+    updated: false,
+    mailSent: false
 };
 
 
@@ -20,6 +21,7 @@ function cloneState(state) {
         errors: {$set: {}},
         updating: {$set: false},
         updated: {$set: false}
+        //mailSent: false
 
     });
     return newState;
@@ -138,7 +140,8 @@ export default function app(state = initialState, action) {
                 newState = cloneState(state);
                 newState = update(state, {
                     updating: {$set: true},
-                    updated: {$set: false}
+                    updated: {$set: false},
+                    mailSent: {$set: false}
                 });
                 return newState;
 
@@ -147,7 +150,8 @@ export default function app(state = initialState, action) {
                 newState = update(state, {
                     updating: {$set: false},
                     updated: {$set: true},
-                    errors: {$set: {}}
+                    errors: {$set: {}},
+                    mailSent: {$set: true}
 
                 });
                 return newState;
@@ -156,7 +160,8 @@ export default function app(state = initialState, action) {
                 newState = update(state, {
                     updating: {$set: false},
                     updated: {$set: false},
-                    errors: {$set: action.payload}
+                    errors: {$set: action.payload},
+                    mailSent: {$set: false}
                 });
                 return newState;
 

@@ -7,7 +7,7 @@ import { API_KEY } from '../middleware/api'
 import { post } from '../schemas'
 import { serializeParams, apiHost} from '../helpers/helper'
 
-let endpoint = apiHost + '/posts/';
+const endpoint = apiHost + '/posts/';
 
 
 export function loadPosts(params) {

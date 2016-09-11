@@ -59,7 +59,7 @@ export function changePassword(data) {
 
 export function saveProfile(data) {
     return function (dispatch, getState) {
-        endpoint = apiHost;
+        let endpoint = apiHost;
         let userId = data.userId;
         delete data.userId;
         let action = {

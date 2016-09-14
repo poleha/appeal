@@ -4,6 +4,8 @@ import { RATE_POST_TYPE_LIKE, RATE_POST_TYPE_DISLIKE } from '../../constants/Pos
 import classNames from 'classnames'
 import { Link } from 'react-router'
 import { mapNodes } from '../../helpers/helper'
+import { removeSmiley, prepareBody } from '../../helpers/helper'
+import config from '../../config'
 
 export default class Post extends BaseComponent {
 
@@ -66,6 +68,26 @@ export default class Post extends BaseComponent {
         return userBlock
     }
 
+
+    getShareBlock() {
+        let post = this.props.post;
+        let title = prepareBody(post.body)
+        let body = removeSmiley(post.body)
+        let url = `http://qblik.ru/post/${post.id}`
+        return (
+        <span 
+            className="ya-share2 card_info_item"
+            data-services="vkontakte,facebook,odnoklassniki,gplus" 
+            data-counter=""
+            data-title={title}
+            data-description={body}
+            data-url={url}
+        >
+            
+        </span>
+        )
+    }
+
     render() {
         let post = this.props.post;
         let key =  post.id;
@@ -80,8 +102,9 @@ export default class Post extends BaseComponent {
                         <span>{post.created}</span>
                     </div>
                     <div className="info_right">
-                        <span>{this.getUpdateBlock(post)}</span>
-                        <span><Link to={'/post/' + key}>Комментариев: {post.comment_count}</Link></span>
+                        <span className="card_info_item">{this.getUpdateBlock(post)}</span>
+                        <span className="card_info_item"><Link to={'/post/' + key}>Комментариев: {post.comment_count}</Link></span>
+                        { this.getShareBlock() }
                     </div>
                 </div>
 

@@ -309,9 +309,11 @@ $var_w_logo: 201
 		box-shadow: 0 5px 5px rgba(223, 223, 223, 0.75)
 		margin-bottom: 25px
 	.card_info
-		span
+		span:not('.ya-share2')
 			margin: 0 10px 0 0
 			line-height: 30px
+		.card_info_item
+			margin-left: 30px
 		.name
 			span
 				color: #52a3f2
@@ -883,3 +885,9 @@ body .button_reload_search
 		border: thin solid #f26d62
 		padding: 5px
 		margin: 8px
+
+
+.ya-share2
+	*
+		display: inline
+

@@ -83,4 +83,27 @@ export function serializeParams(obj) {
     return str.join('&');
 }
 
+
+export function removeSmiley(text) {
+    let changedText = text;
+
+    config.smiley.forEach((smiley) => {
+        changedText = changedText.replace(smiley.data, ``)
+    })
+    return changedText;
+}
+
+
+export function prepareBody(text, length=20) {
+    text = removeSmiley(text)
+    let toRemove = ['.', ',', ':', ';', '!']
+    toRemove.forEach((elem) => {
+        text = text.replace(elem, ' ')
+    })
+    text = text.trim()
+    return text.slice(0, length)    
+    
+}
+
+
 export const apiHost = 'http://' + config.api.host + ':' + config.api.port;

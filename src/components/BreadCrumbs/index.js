@@ -1,29 +1,13 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import config from '../../config'
-
+import { prepareBody } from '../../helpers/helper'
 
 export default class BreadCrumbs extends Component {
 
 
-
-    removeSmiley(text) {
-        let changedText = text;
-
-        config.smiley.forEach((smiley) => {
-            changedText = changedText.replace(smiley.data, ``)
-        })
-        return changedText;
-    }
-
-    prepareBody(text, length) {
-        text = this.removeSmiley(text)
-        let toRemove = ['.', ',', ':', ';', '!']
-        toRemove.forEach((elem) => {
-            text = text.replace(elem, ' ')
-        })
-        text = text.trim()
-        return text.slice(0, 20)
+    prepareBody(text) {
+       return prepareBody(text)
     }
 
 

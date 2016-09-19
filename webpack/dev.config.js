@@ -1,3 +1,4 @@
+var path = require('path');
 const webpack = require('webpack');
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -6,8 +7,8 @@ module.exports = {
   devtool: 'source-map',
   debug: true,
   entry: [
+    'webpack-hot-middleware/client',
     'bootstrap-loader',
-    //'webpack-hot-middleware/client',
     './src/index',
   ],
   output: {
@@ -16,10 +17,12 @@ module.exports = {
 
   module: {
     loaders: [
-      //{
-      //  test: /\.less$/,
-      //  loader: "style!css!less"
-     // }
+      {
+        test: /\.js$/,
+        loaders: ['react-hot', 'babel-loader'],
+        include: path.join(__dirname, 'src'),
+        exclude: /node_modules/
+      }
     ]
   },
 
@@ -31,9 +34,9 @@ module.exports = {
       __DEVELOPMENT__: true,
     }),
     //new ExtractTextPlugin('bundle.css'),
-    //new webpack.optimize.OccurenceOrderPlugin(),
-    //new webpack.HotModuleReplacementPlugin(),
-    //new webpack.NoErrorsPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
     //new webpack.ProvidePlugin({
     //  jQuery: 'jquery',
     //}),

@@ -34,10 +34,14 @@ if (__DEVELOPMENT__) {
 
 })();
 }
+else {
+  app.use(compression());
+
+}
 
 
 app.use(cookieParser())
-app.use(compression());
+
 app.use((req, res) => {
 
   const memoryHistory = createHistory(req.originalUrl);

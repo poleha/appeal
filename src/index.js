@@ -24,3 +24,7 @@ if (process.env.NODE_ENV !== 'production') {
         console.error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
     }
 }
+
+if (module.hot) {
+    module.hot.accept();
+}

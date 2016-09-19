@@ -3,12 +3,6 @@ import config from '../../config'
 
 export default class VKLogin extends Component {
 
-    componentDidMount() {
-        VK.init({
-            apiId: 5414620
-        });
-    }
-
 
     loginOnClick(e) {
         e.preventDefault();

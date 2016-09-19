@@ -54,9 +54,6 @@ export default class Html extends Component {
 
             <meta name="google-signin-client_id" content="652386564088-g829fhjk5jqdpuerod7qi2srp3tn42l4.apps.googleusercontent.com"/>
 
-                <script src="//vk.com/js/api/openapi.js" type="text/javascript"></script>
-
-
             <div><div id="app_root" dangerouslySetInnerHTML={{__html: content}}/></div>
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
             <script src="/dist/bundle.js" charSet="UTF-8"></script>

@@ -31,34 +31,34 @@ class BaseCommentForm extends BaseSmileyForm {
                 has_errors: email_errors
             });
         return (
-            <section className="add bg_grey">
-            <div key="add_comment_form_key" className="in">
+            <section className='add bg_grey'>
+            <div key='add_comment_form_key' className='in'>
                 <form
                     onSubmit={this.addCommentFormSubmit.bind(this)}
-                    className="add_comment_form"
+                    className='add_comment_form'
                     ref={(c) => this._addCommentForm = c}
                 >
                     <div className={usernameInputClass}>
                         {username_errors}
                         <input
                             ref={(c) => this._addCommentUserName = c}
-                            placeholder="Автор"
-                            type="text"
+                            placeholder='Автор'
+                            type='text'
                         />
                     </div>
                     <div className={emailImputClass}>
                         {email_errors}
                         <input
                             ref={(c) => this._addCommentEmail = c}
-                            placeholder="E-mail(не обязательно)"
-                            type="text"
+                            placeholder='E-mail(не обязательно)'
+                            type='text'
                         />
                     </div>
                     {this.getBodyField()}
                     <input
-                        type="submit"
-                        className="btn btn-default"
-                        value="Добавить"
+                        type='submit'
+                        className='btn btn-default'
+                        value='Добавить'
                     />
                 </form>
                 
@@ -88,7 +88,7 @@ export class CommentCreateForm extends BaseCommentForm {
         let bodyField = this.getSmileyForm()
         let body_errors = this.getFieldErrors('email', 'comment')
         return (
-            <div className={classNames("form_field", {has_errors: body_errors})}>
+            <div className={classNames('form_field', {has_errors: body_errors})}>
                 {this.getFieldErrors('body', 'comment')}
                 {bodyField}
             </div>
@@ -104,7 +104,7 @@ export class CommentCreateForm extends BaseCommentForm {
             this._body.value = '';
 
             $('html, body').animate({
-                scrollTop: $(".added").offset().top
+                scrollTop: $('.added').offset().top
             }, 500);
 
 
@@ -126,7 +126,7 @@ export class CommentUpdateForm extends BaseCommentForm {
         let body_errors = this.getFieldErrors('email', 'comment')
                 
         return (
-            <div className={classNames("form_field", {has_errors: body_errors})}>
+            <div className={classNames('form_field', {has_errors: body_errors})}>
                 {body_errors}
                 {bodyField}
             </div>

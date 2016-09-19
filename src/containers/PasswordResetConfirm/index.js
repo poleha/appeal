@@ -30,7 +30,7 @@ export default class PasswordResetConfirm extends BaseComponent {
         super(props);
 
         this.state = {
-            password: ""
+            password: ''
         }
     }
 
@@ -55,12 +55,12 @@ export default class PasswordResetConfirm extends BaseComponent {
             return (
                 <form onSubmit={this.changePasswordFormSubmit.bind(this)}>
                     {this.getFieldErrors('non_field_errors', 'account')}
-                    <div className="form_field">
+                    <div className='form_field'>
                         {this.getFieldErrors('new_password', 'account')}
-                        <input type="password" value={this.state.password} placeholder="Введите новый пароль"
+                        <input type='password' value={this.state.password} placeholder='Введите новый пароль'
                                onChange={this.changePassword.bind(this)}/>
                     </div>
-                    <input type="submit" value="Отправить" className="button button_left"/>
+                    <input type='submit' value='Отправить' className='button button_left'/>
                 </form>
             )
         }
@@ -74,8 +74,8 @@ export default class PasswordResetConfirm extends BaseComponent {
     render() {
 
       return (
-          <section className="password_reset_done">
-            <Helmet title="Подтверждение сброса пароля"/>
+          <section className='password_reset_done'>
+            <Helmet title='Подтверждение сброса пароля'/>
               {this.getPasswordResetDoneForm()}
         </section>
 

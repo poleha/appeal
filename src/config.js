@@ -29,17 +29,17 @@ export default {
     },
     domen: __DEVELOPMENT__ ? 'localhost:3000' : 'qblik.ru',
     smiley: [
-        {filename: '1.png', data: '(inlove)', alt: ""},
-        {filename: '2.png', data: ':^)', alt: ""},
-        {filename: '3.png', data: ':D', alt: ""},
-        {filename: '4.png', data: ':D', alt: ""},
-        {filename: '5.png', data: ':D', alt: ""},
-        {filename: '6.png', data: ':D', alt: ""},
-        {filename: '7.png', data: ':D', alt: ""},
-        {filename: '8.png', data: ':D', alt: ""},
-        {filename: '9.png', data: ':D', alt: ""},
-        {filename: '10.png', data: ':D', alt: ""},
-        {filename: '11.png', data: ':D', alt: ""},
-        {filename: '12.png', data: ':D', alt: ""}
+        {filename: '1.png', data: '(inlove)', alt: ''},
+        {filename: '2.png', data: ':^)', alt: ''},
+        {filename: '3.png', data: ':D', alt: ''},
+        {filename: '4.png', data: ':D', alt: ''},
+        {filename: '5.png', data: ':D', alt: ''},
+        {filename: '6.png', data: ':D', alt: ''},
+        {filename: '7.png', data: ':D', alt: ''},
+        {filename: '8.png', data: ':D', alt: ''},
+        {filename: '9.png', data: ':D', alt: ''},
+        {filename: '10.png', data: ':D', alt: ''},
+        {filename: '11.png', data: ':D', alt: ''},
+        {filename: '12.png', data: ':D', alt: ''}
     ]
 }

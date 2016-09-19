@@ -34,7 +34,7 @@ export default class BaseSmileyForm extends BaseComponent {
 
     getSmileys() {
         return config.smiley.map((smiley, i) => {
-            return <img key={i} src={`/static/images/smileys/${smiley.filename}`} alt="" data-smile={smiley.data}/>
+            return <img key={i} src={`/static/images/smileys/${smiley.filename}`} alt='' data-smile={smiley.data}/>
         })
     }
 
@@ -44,7 +44,7 @@ export default class BaseSmileyForm extends BaseComponent {
         if ( hideSmileys && !this.state.bodyFocus ) smileysBlock = null;
         else {
             smileysBlock = (
-            <div className="smileys" onClick={this.smileyOnClick.bind(this)}>
+            <div className='smileys' onClick={this.smileyOnClick.bind(this)}>
                 {this.getSmileys()}
             </div>
             )
@@ -54,13 +54,13 @@ export default class BaseSmileyForm extends BaseComponent {
             <div>
             
             <textarea
-                cols="70" rows="10"
+                cols='70' rows='10'
                 className={classNames('add_post_body', {expanded: this.state.bodyFocus || (this._body && this._body.value.length > 0)})}
-                name="body"
-                placeholder="Сообщение"
+                name='body'
+                placeholder='Сообщение'
                 defaultValue={defaultValue}
                 ref={(c) => this._body = c}
-                id="add_post_body"
+                id='add_post_body'
                 onFocus={this.addPostBodyOnFocus.bind(this)}
             />
 

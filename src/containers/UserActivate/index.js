@@ -41,7 +41,7 @@ export default class UserActivate extends BaseComponent {
                 <form onSubmit={this.userActivateFormSubmit.bind(this)}>
                     {this.getFieldErrors('non_field_errors', 'account')}
                     {this.getFieldErrors('detail', 'account')}
-                    <input type="submit" value="Активировать" className="button button_left"/>
+                    <input type='submit' value='Активировать' className='button button_left'/>
                 </form>
             )
         }
@@ -55,8 +55,8 @@ export default class UserActivate extends BaseComponent {
     render() {
 
       return (
-          <section className="user_activat">
-            <Helmet title="Активация учетной записи"/>
+          <section className='user_activat'>
+            <Helmet title='Активация учетной записи'/>
               {this.getPasswordResetDoneForm()}
         </section>
 

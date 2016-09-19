@@ -55,7 +55,7 @@ app.use((req, res) => {
     } else if (renderProps) {
       loadOnServer({...renderProps, store }).then(() => {
         const component = (
-            <Provider store={store} key="provider">
+            <Provider store={store} key='provider'>
               <ReduxAsyncConnect {...renderProps} />
             </Provider>
         );

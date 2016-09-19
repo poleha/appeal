@@ -1,3 +1,4 @@
+import ExecutionEnvironment from 'fbjs/lib/ExecutionEnvironment';
 import config from '../config'
 
 var expires, date, nameEQ, ca, c;
@@ -28,12 +29,10 @@ export function readCookie(name, req) {
 }
 
 export function eraseCookie(name) {
-    try {
+    if (ExecutionEnvironment.canUseDOM) {
     createCookie(name,'',-1);
     }
-    catch (e) {
 
-    }
 }
 
 
@@ -88,7 +87,7 @@ export function removeSmiley(text) {
     let changedText = text;
 
     config.smiley.forEach((smiley) => {
-        changedText = changedText.replace(smiley.data, ``)
+        changedText = changedText.replace(smiley.data, '')
     })
     return changedText;
 }

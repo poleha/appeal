@@ -86,7 +86,7 @@ export default class PostDetail extends BaseComponent {
 
     getAddedBlock() {
         if (this.props.comment.added) {
-            return <div className="added_message">
+            return <div className='added_message'>
                 Ваш комментарий добавлен
             </div>
         }
@@ -118,11 +118,11 @@ export default class PostDetail extends BaseComponent {
         if (post.comments.length > this.props.comment.comments.ids.length) {
             showMoreInput = (
                 <input
-                    key="comment_show_more_button"
+                    key='comment_show_more_button'
                     onClick={this.loadMoreCommentsClick.bind(this)}
-                    type="button"
-                    className="button button_middle button_height"
-                    value="Показать еще"
+                    type='button'
+                    className='button button_middle button_height'
+                    value='Показать еще'
                 />
             )
         }
@@ -134,10 +134,10 @@ export default class PostDetail extends BaseComponent {
        let post = this.getPost();
       return (
 
-        <div className="full_post">
+        <div className='full_post'>
             <Helmet title={post.body.slice(0, 20)}/>
-            <section className="cards">
-            <div className="full_post_detail">
+            <section className='cards'>
+            <div className='full_post_detail'>
             <Post
                 key={post.id}
                 post={post}
@@ -152,28 +152,28 @@ export default class PostDetail extends BaseComponent {
             </section>
 
             
-             <h1 className="section_name">Отправить комментарий</h1>
+             <h1 className='section_name'>Отправить комментарий</h1>
         
             
                 <CommentCreateForm {...this.props}/>
                 {this.getAddedBlock()}
-            <div className="section_name_small">Комментарии</div>
+            <div className='section_name_small'>Комментарии</div>
             <a
                 onClick={this.refreshCommentsClick.bind(this)}
-                type="button"
-                className="button button_left button_height button_reload"
+                type='button'
+                className='button button_left button_height button_reload'
             >
                 Обновить
             </a>
-            <section className="cards">
+            <section className='cards'>
             <ReactCSSTransitionGroup
-                transitionName="comments"
+                transitionName='comments'
                 transitionEnterTimeout={1000}
                 transitionLeaveTimeout={1}
                 className='comments'
             >
             {this.getCommentsBlock()}
-                <p className="text-center">
+                <p className='text-center'>
                 {this.getShowMoreButton()}
                   </p>
             </ReactCSSTransitionGroup>

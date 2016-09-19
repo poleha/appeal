@@ -11,16 +11,16 @@ import UserActivate from './containers/UserActivate'
 import VkLoginRedirect from './containers/VkLoginRedirect'
 
 export default (
-  <Route path="/" component={App}>
+  <Route path='/' component={App}>
      <IndexRoute component={PostList} />
-      <Route path="/vk_login_redirect" component={VkLoginRedirect} />
-      <Route path=":tag" component={PostList} />
-    <Route path="/post/:id" component={PostDetail} />
-    <Route path="/post/:id/update" component={PostUpdate} />
-      <Route path="/comment/:id/update" component={CommentUpdate} />
-     <Route path="/user/:id" component={UserDetail} />
-      <Route path="/password/reset/confirm/:uid/:token" component={PasswordResetConfirm} />
-      <Route path="/activate/:uid/:token" component={UserActivate} />
+      <Route path='/vk_login_redirect' component={VkLoginRedirect} />
+      <Route path=':tag' component={PostList} />
+    <Route path='/post/:id' component={PostDetail} />
+    <Route path='/post/:id/update' component={PostUpdate} />
+      <Route path='/comment/:id/update' component={CommentUpdate} />
+     <Route path='/user/:id' component={UserDetail} />
+      <Route path='/password/reset/confirm/:uid/:token' component={PasswordResetConfirm} />
+      <Route path='/activate/:uid/:token' component={UserActivate} />
 
   </Route>
 )

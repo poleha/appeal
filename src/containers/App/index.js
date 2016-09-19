@@ -75,9 +75,9 @@ export default class App extends BaseComponent {
         });
 
         return (
-            <div className="row top_block">
-                <nav className={classNames("menu", {active: this.state.menuCollaped})}>
-                    <div className="menu_collapse" onClick={this.menuCollapseClick.bind(this)}></div>
+            <div className='row top_block'>
+                <nav className={classNames('menu', {active: this.state.menuCollaped})}>
+                    <div className='menu_collapse' onClick={this.menuCollapseClick.bind(this)}></div>
                     <ul>
                         <NavLink disabled={!this.props.global.menuEnabled} activeClassName='active' onlyActiveOnIndex={true} to='/'>Все</NavLink>
                         {linksBlock}
@@ -99,8 +99,8 @@ export default class App extends BaseComponent {
 
     return (
     <div>
-    <div className="root to_mobile" ref={(c) => this._root = c}>
-            <div className="max_width">
+    <div className='root to_mobile' ref={(c) => this._root = c}>
+            <div className='max_width'>
             <Helmet {...config.app.head} title={config.app.title}/>
              <Header {...this.props} />
                 {this.getMenuBlock()}
@@ -108,9 +108,9 @@ export default class App extends BaseComponent {
             {this.props.children}
          </div>
          </div>
-        <div className="max_width">
-            <footer className="footer to_mobile">
-            <p className="text-center">Qblik.ru 2016</p>
+        <div className='max_width'>
+            <footer className='footer to_mobile'>
+            <p className='text-center'>Qblik.ru 2016</p>
         </footer>
         </div>
         </div>

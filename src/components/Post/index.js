@@ -18,7 +18,7 @@ export default class Post extends BaseComponent {
                 <li className={classNames('rate', {disable: rateBlockDisabled})}>
                     <div
                         onClick={this.ratePostClick.bind(this, RATE_POST_TYPE_LIKE)}
-                        type="button"
+                        type='button'
                         className={classNames('up', {active:post.rated == RATE_POST_TYPE_LIKE})}
 
                     >
@@ -26,7 +26,7 @@ export default class Post extends BaseComponent {
                     </div>
                     <div
                         onClick={this.ratePostClick.bind(this, RATE_POST_TYPE_DISLIKE)}
-                        type="button"
+                        type='button'
                         className={classNames('down', {active:post.rated == RATE_POST_TYPE_DISLIKE})}
 
                     >
@@ -84,7 +84,7 @@ export default class Post extends BaseComponent {
             },
             theme: {
                 counter: true,
-                services: "vkontakte,facebook,odnoklassniki,gplus"
+                services: 'vkontakte,facebook,odnoklassniki,gplus'
             }
 
         });
@@ -100,9 +100,9 @@ export default class Post extends BaseComponent {
         let url = `http://qblik.ru/post/${post.id}`
         return (
         <span 
-            className="ya-share2 card_info_item"
-            data-services="vkontakte,facebook,odnoklassniki,gplus" 
-            data-counter=""
+            className='ya-share2 card_info_item'
+            data-services='vkontakte,facebook,odnoklassniki,gplus' 
+            data-counter=''
             data-title={title}
             data-description={body}
             data-url={url}
@@ -122,23 +122,23 @@ export default class Post extends BaseComponent {
 
 
 
-                <div className="card_info">
-                    <div className="info_left">
-                        <div className="name"> {this.getUserBlock(post)}</div>
+                <div className='card_info'>
+                    <div className='info_left'>
+                        <div className='name'> {this.getUserBlock(post)}</div>
                         <span>{post.created}</span>
                     </div>
-                    <div className="info_right">
-                        <span className="card_info_item">{this.getUpdateBlock(post)}</span>
-                        <span className="card_info_item"><Link to={'/post/' + key}>Комментариев: {post.comment_count}</Link></span>
-                        <span className="yandex-share-block" ref={(c) => this._yandex_share = c}/>
+                    <div className='info_right'>
+                        <span className='card_info_item'>{this.getUpdateBlock(post)}</span>
+                        <span className='card_info_item'><Link to={'/post/' + key}>Комментариев: {post.comment_count}</Link></span>
+                        <span className='yandex-share-block' ref={(c) => this._yandex_share = c}/>
                     </div>
                 </div>
 
 
 
-                <ul className="card_table">
+                <ul className='card_table'>
                 <li>
-                    <div className="content">
+                    <div className='content'>
                         {this.processSmileyText(post.body)}
                     </div>
                 </li>
@@ -146,14 +146,14 @@ export default class Post extends BaseComponent {
                 </ul>
                
                 
-                <div className="post_tags">
+                <div className='post_tags'>
                 <p>Метки:</p>
-                <ul className="tags">
+                <ul className='tags'>
                     {
                         mapNodes(this.props.tags, function(tag) {
                             if (post.tags.indexOf(tag.id) >= 0) {
                                 return (
-                                    <li className="tag_elem inline" key={tag.id}>
+                                    <li className='tag_elem inline' key={tag.id}>
                                         <Link to={`/${tag.alias}`}>{tag.title}</Link>
                                     </li>
                                 )

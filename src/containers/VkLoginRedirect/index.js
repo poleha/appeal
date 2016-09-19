@@ -38,8 +38,8 @@ export default class VkLoginRedirect extends BaseComponent {
     render() {
 
       return (
-          <section className="vk_login_redirect">
-            <Helmet title="Авторизация VK"/>
+          <section className='vk_login_redirect'>
+            <Helmet title='Авторизация VK'/>
         <div>
             Вы будете перенаправлены на сайт через несколько секунд...
         </div>

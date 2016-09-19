@@ -12,7 +12,7 @@ export default class Root extends Component {
         const { store, history } = this.props
         return (
             <Provider store={store}>
-                <Router history={history} key="provider" routes={routes} render={(props) =>
+                <Router history={history} key='provider' routes={routes} render={(props) =>
                 <ReduxAsyncConnect { ...props } />}
                 />
             </Provider>

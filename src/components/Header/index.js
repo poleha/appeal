@@ -10,19 +10,19 @@ export default class Header extends Component {
     render() {
         return (
 
-            <header className="head">
-                <div className="logo"><p><Link to="/"><img src="/static/images/logo.png" width="201" height="62" alt=""/></Link></p></div>
-                <div className="head_right">
+            <header className='head'>
+                <div className='logo'><p><Link to='/'><img src='/static/images/logo.png' width='201' height='62' alt=''/></Link></p></div>
+                <div className='head_right'>
                     {/*
-                    <div className="head_search">
-                        <form action="/">
-                            <input type="submit" value=""/>
-                                <div className="input"><input type="text" placeholder="Поиск" required/></div>
+                    <div className='head_search'>
+                        <form action='/'>
+                            <input type='submit' value=''/>
+                                <div className='input'><input type='text' placeholder='Поиск' required/></div>
                         </form>
                     </div>
                     */}
 
-                    <div className="head_auth">
+                    <div className='head_auth'>
 
                         <Auth
                             disabled={!this.props.global.loginBlockEnabled}

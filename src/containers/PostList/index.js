@@ -141,9 +141,9 @@ export default class PostList extends BaseComponent {
             showMoreInput = (
                 <input
                     onClick={this.loadMorePostsClick.bind(this)}
-                    className="button button_middle button_height"
-                    type="button"
-                    value="Показать еще">
+                    className='button button_middle button_height'
+                    type='button'
+                    value='Показать еще'>
                 </input>
             )
         }
@@ -176,7 +176,7 @@ export default class PostList extends BaseComponent {
 
     getAddedBlock() {
         if (this.props.post.added) {
-            return <div className="added_message">
+            return <div className='added_message'>
                 Ваше предложение добавлено
             </div>
         }
@@ -193,11 +193,11 @@ getSearchInput() {
     let searchPlaceholder = this.state.searchPlaceholder;
 
     return (
-        <div className="post_search">
+        <div className='post_search'>
         <input onChange={this.searchInputChange.bind(this)}
-         type="text"
-        defaultValue=""
-         name="query"
+         type='text'
+        defaultValue=''
+         name='query'
          placeholder={searchPlaceholder}
          ref={(c) => this._query = c}
         />
@@ -214,36 +214,36 @@ getSearchInput() {
           if (tag.alias == this.props.params.tag) currentTagTitle = tag.title;
       }.bind(this))
 
-      return <div className="post_list" ref={(c) => this._post_list = c}>
+      return <div className='post_list' ref={(c) => this._post_list = c}>
           <Helmet title={currentTagTitle} />
 
 
 
-          <div className="add_post_form_block">
+          <div className='add_post_form_block'>
              
 
             <PostCreateForm {...this.props}/>
              
         </div>
           {this.getAddedBlock()}
-          <div className="box_search">
-              <div className="in">
+          <div className='box_search'>
+              <div className='in'>
               {this.getSearchInput()}
               </div>
               </div>
           <a
             onClick={this.refreshPostsClick.bind(this)}
             disabled={this.getAddPostButtonDisabled()}
-            type="button"
-            className="button button_left button_height button_reload button_reload_search"
+            type='button'
+            className='button button_left button_height button_reload button_reload_search'
          >
               Обновить
         </a>
 
-          <section className="cards">
+          <section className='cards'>
 
             {this.getPostsBlock()}
-              <p className="text-center">
+              <p className='text-center'>
               {this.getShowMoreInput()}
               </p>
 

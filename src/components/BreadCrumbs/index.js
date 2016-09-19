@@ -22,12 +22,12 @@ export default class BreadCrumbs extends Component {
             let post = this.props.post.posts.entities[id];
             let firstTag = this.props.tag.tags.entities[post.tags[0]];
             return (
-                <ol className="breadcrumb">
+                <ol className='breadcrumb'>
                     <li>
                         <Link to={`/${firstTag.alias}`}>{firstTag.title}</Link>
                     </li>
 
-                    <li className="active">
+                    <li className='active'>
 
                         {this.prepareBody(post.body, 20)}
                     </li>
@@ -45,7 +45,7 @@ export default class BreadCrumbs extends Component {
             if (post == null) return null;
             let firstTag = this.props.tag.tags.entities[post.tags[0]];
             return (
-                <ol className="breadcrumb">
+                <ol className='breadcrumb'>
                     <li>
                         <Link to={`/${firstTag.alias}`}>{firstTag.title}</Link>
                     </li>
@@ -53,7 +53,7 @@ export default class BreadCrumbs extends Component {
                     <li>
                         <Link to={`/post/${post.id}`}>{this.prepareBody(post.body, 20)}</Link>
                     </li>
-                    <li className="active">
+                    <li className='active'>
                         Редактировать
                         </li>
 
@@ -70,7 +70,7 @@ export default class BreadCrumbs extends Component {
             let post = this.props.post.posts.entities[comment.post];
             let firstTag = this.props.tag.tags.entities[post.tags[0]];
             return (
-                <ol className="breadcrumb">
+                <ol className='breadcrumb'>
                     <li>
                         <Link to={`/${firstTag.alias}`}>{firstTag.title}</Link>
                     </li>
@@ -83,7 +83,7 @@ export default class BreadCrumbs extends Component {
 
                         {this.prepareBody(comment.body, 20)}
                     </li>
-                    <li className="active">
+                    <li className='active'>
 
                         Редактировать
                     </li>
@@ -99,7 +99,7 @@ export default class BreadCrumbs extends Component {
 
 render() {
     return (
-        <div className="breadcrumbs">
+        <div className='breadcrumbs'>
             {this.getBreadCrumbs()}
         </div>
     )

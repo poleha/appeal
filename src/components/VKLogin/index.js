@@ -12,7 +12,7 @@ export default class VKLogin extends Component {
     render() {
     return (
         <a
-            className="vk_login_button"
+            className='vk_login_button'
             onClick={this.loginOnClick.bind(this)}
         />
 

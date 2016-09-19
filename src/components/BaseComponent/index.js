@@ -17,7 +17,7 @@ export default class BaseComponent extends Component {
             if (fieldErrors instanceof Array) {
                 errorsBlock = fieldErrors.map(function (error, index) {
                     return (
-                        <li className="error" key={index}>
+                        <li className='error' key={index}>
                             {error}
                         </li>
                     )
@@ -25,20 +25,20 @@ export default class BaseComponent extends Component {
             }
             else {
                 errorsBlock = (
-                        <li className="error" key="0">
+                        <li className='error' key='0'>
                             {fieldErrors}
                         </li>
                 )
             }
             return (
             <ReactCSSTransitionGroup
-            transitionName="errors"
+            transitionName='errors'
             transitionAppear={true}
             transitionAppearTimeout={1000}
             transitionEnterTimeout = {1000}
             transitionLeaveTimeout={1}
             className='errors'
-            component="div"
+            component='div'
             >
                     <ul>
                         {errorsBlock}
@@ -53,7 +53,7 @@ export default class BaseComponent extends Component {
     let changedText = text;
 
         config.smiley.forEach((smiley) => {
-        changedText = changedText.replace(smiley.data, `<img src="/static/images/smileys/${smiley.filename}" alt="${smiley.alt}"/>`)
+        changedText = changedText.replace(smiley.data, `<img src='/static/images/smileys/${smiley.filename}' alt='${smiley.alt}'/>`)
     })
         return <p dangerouslySetInnerHTML={{__html: changedText}} />
     }

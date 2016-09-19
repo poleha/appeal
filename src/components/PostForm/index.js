@@ -26,7 +26,7 @@ class BasePostForm extends BaseSmileyForm {
                 let key = elem.id;
                 return <li
                     key={key}
-                    className="col-xs-6"
+                    className='col-xs-6'
                 >
                     <label>
                         <input
@@ -34,7 +34,7 @@ class BasePostForm extends BaseSmileyForm {
                             defaultChecked={this.getTagChecked(elem)}
                             data-id={key}
                             id={`tags_input-${key}`}
-                            type="checkbox"
+                            type='checkbox'
                             ref={(c) => this[`_tag_to_add__${elem.alias}`] = c}
                             name={`tags__${key}`}
                             //disabled={this.getAddPostButtonDisabled()}
@@ -55,9 +55,9 @@ class BasePostForm extends BaseSmileyForm {
             return (
         <input
             disabled={this.getAddPostButtonDisabled()}
-            type="submit"
-            className="button button_left"
-            value="Отправить"
+            type='submit'
+            className='button button_left'
+            value='Отправить'
         />
             )
         }
@@ -73,32 +73,32 @@ class BasePostForm extends BaseSmileyForm {
         
  
         return (
-            <section className="add bg_grey">
-                <h1 className="section_name">Добавить предложение</h1>
-                <div className="in">
+            <section className='add bg_grey'>
+                <h1 className='section_name'>Добавить предложение</h1>
+                <div className='in'>
                 <form
-                    key="add_post_form"
+                    key='add_post_form'
                     onSubmit={this.addPostSubmit.bind(this)}
-                    className="add_post_form"
+                    className='add_post_form'
                     ref={(c) => this._addPostForm = c}
                 >
                    
                     {this.getAdditionalFields()}
 
 
-                    <div className={classNames("form_field", {has_errors: body_errors})}>
+                    <div className={classNames('form_field', {has_errors: body_errors})}>
                         {body_errors}
                         {this.getBodyField()}
 
                     </div>
 
-                    <div className={classNames("form_field", {has_errors: tags_errors})}>
+                    <div className={classNames('form_field', {has_errors: tags_errors})}>
                         {tags_errors}
-                        <div className="add_params">
+                        <div className='add_params'>
                         <ul
                             className='tags_add row'
-                            //ref="tags"
-                            id="tags_add_ul">
+                            //ref='tags'
+                            id='tags_add_ul'>
                             {this.getTagField()}
                         </ul>
                             </div>
@@ -193,31 +193,31 @@ export class PostCreateForm extends BasePostForm {
         
         return (
             <div>
-        <div className={classNames("form_field", {has_errors: username_errors})} hidden={this.props.userId}>
+        <div className={classNames('form_field', {has_errors: username_errors})} hidden={this.props.userId}>
             {username_errors}
 
 
             <input
                 ref={(c) => this._addPostUserName = c}
-                className="add_post_username"
-                id="add_post_username"
-                name="username"
-                placeholder="Автор"
-                type="text"
+                className='add_post_username'
+                id='add_post_username'
+                name='username'
+                placeholder='Автор'
+                type='text'
             />
 
 
         </div>
 
-        <div className="form_field" hidden={this.props.userId}>
+        <div className='form_field' hidden={this.props.userId}>
 
     <input
         ref={(c) => this._addPostEmail = c}
-        className="add_post_email"
-        id="add_post_email"
-        name="email"
-        placeholder="E-mail(не обязательно)"
-        type="text"
+        className='add_post_email'
+        id='add_post_email'
+        name='email'
+        placeholder='E-mail(не обязательно)'
+        type='text'
             />
             {this.getFieldErrors('email', 'post')}
     </div>
@@ -247,7 +247,7 @@ export class PostCreateForm extends BasePostForm {
 
         if (this.props.post.added) {
             $('html, body').animate({
-                scrollTop: $(".added").offset().top
+                scrollTop: $('.added').offset().top
             }, 500);
 
         }

@@ -68,9 +68,9 @@ export default class PostList extends BaseComponent {
        if (pathChanged ) {
            this._query.value = null;
 
-           let root = $(this._post_list)
-           root.fadeOut();
-           root.fadeIn();
+           //let root = $(this._post_list)
+           //root.fadeOut();
+           //root.fadeIn();
        }
    }
 
@@ -241,17 +241,12 @@ getSearchInput() {
         </a>
 
           <section className="cards">
-          <ReactCSSTransitionGroup
-              transitionName="posts"
-              transitionEnterTimeout={1000}
-              transitionLeaveTimeout={1}
-              className='posts'
-          >
+
             {this.getPostsBlock()}
               <p className="text-center">
               {this.getShowMoreInput()}
               </p>
-          </ReactCSSTransitionGroup>
+
 </section>
 
       </div>

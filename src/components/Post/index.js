@@ -69,7 +69,31 @@ export default class Post extends BaseComponent {
     }
 
 
+
+    componentDidMount() {
+
+        let myShare = this._yandex_share;
+        let post = this.props.post;
+
+        let share = Ya.share2(myShare, {
+            content: {
+                url: `http://qblik.ru/post/${post.id}`,
+                title: prepareBody(post.body),
+                description: removeSmiley(post.body),
+
+            },
+            theme: {
+                counter: true,
+                services: "vkontakte,facebook,odnoklassniki,gplus"
+            }
+
+        });
+
+    }
+
     getShareBlock() {
+
+        /*
         let post = this.props.post;
         let title = prepareBody(post.body)
         let body = removeSmiley(post.body)
@@ -86,6 +110,8 @@ export default class Post extends BaseComponent {
             
         </span>
         )
+         */
+
     }
 
     render() {
@@ -104,7 +130,7 @@ export default class Post extends BaseComponent {
                     <div className="info_right">
                         <span className="card_info_item">{this.getUpdateBlock(post)}</span>
                         <span className="card_info_item"><Link to={'/post/' + key}>Комментариев: {post.comment_count}</Link></span>
-                        { this.getShareBlock() }
+                        <span className="yandex-share-block" ref={(c) => this._yandex_share = c}/>
                     </div>
                 </div>
 

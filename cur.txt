@@ -29,12 +29,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 
+remove warnings
+
 Формы для изменения паролей и прочее некрасиво
 
 
 Поделиться в соцсетях +
 
-Сделать hot reload *
+Сделать hot reload +
 
 Подобрать правильные смайлики.
 

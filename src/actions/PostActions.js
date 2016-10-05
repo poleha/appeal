@@ -107,7 +107,7 @@ export function ratePost(data) {
     return function (dispatch, getState) {
         let action = {
             [API_KEY]: {
-                method: 'put',
+                method: 'PATCH',
                 endpoint: `${endpoint}${data.id}/rate/`,
                 body: data,
                 actions: [RATE_POST_START, RATE_POST_SUCCESS, RATE_POST_FAIL]

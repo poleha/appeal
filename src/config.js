@@ -22,7 +22,8 @@ export default {
     },
     api: {
       host: __DEVELOPMENT__ ? 'localhost' : '5.45.112.163',
-      port: 8000  
+      port: 8000,
+      version: 1  
     },
     cookie : {
         expireDays: 7

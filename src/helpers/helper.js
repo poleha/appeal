@@ -105,4 +105,4 @@ export function prepareBody(text, length=20) {
 }
 
 
-export const apiHost = 'http://' + config.api.host + ':' + config.api.port;
+export const apiHost = 'http://' + config.api.host + ':' + config.api.port + '/api/v' + config.api.version;
